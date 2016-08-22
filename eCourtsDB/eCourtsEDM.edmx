@@ -1,0 +1,2282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NYCOURTSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appearance">
+          <Key>
+            <PropertyRef Name="AppearanceId" />
+          </Key>
+          <Property Name="AppearanceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="MotionSeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="AppearanceDate" Type="date" />
+          <Property Name="Series" Type="varchar" MaxLength="3" />
+          <Property Name="CourtPartsId" Type="varchar" MaxLength="5" />
+          <Property Name="TimeStamp" Type="datetime" />
+          <Property Name="AssignedJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="CalendarMarkId" Type="varchar" MaxLength="5" />
+          <Property Name="AppearanceType" Type="varchar" MaxLength="6" />
+          <Property Name="AppearanceTypeDescription" Type="varchar" MaxLength="50" />
+          <Property Name="Comments1" Type="varchar" MaxLength="20" />
+          <Property Name="Comments2" Type="varchar" MaxLength="20" />
+          <Property Name="ConferenceGroup" Type="varchar" MaxLength="2" />
+          <Property Name="Conferencebuilding" Type="varchar" MaxLength="1" />
+          <Property Name="ConferenceNotePrintDate" Type="date" />
+          <Property Name="MotionPositionNumber" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Attorney">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="AttorneyOfRecordId" Type="varchar" MaxLength="9" />
+          <Property Name="NameAttorneyOfRecord" Type="varchar" MaxLength="20" />
+          <Property Name="NotifyAttorneyOfRecord" Type="varchar" MaxLength="1" />
+          <Property Name="TrialCounselId" Type="varchar" MaxLength="9" />
+          <Property Name="TrialCounselName" Type="varchar" MaxLength="20" />
+          <Property Name="NotifyTrialCounsel" Type="varchar" MaxLength="1" />
+          <Property Name="PartyIndicator" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="10" />
+          <Property Name="NumOfAttorneysRetained" Type="int" />
+          <Property Name="DateFirstRetainerStatementFiled" Type="date" />
+          <Property Name="DateCurrentRetainerStatementFiled" Type="date" />
+          <Property Name="DateAttorneyTerminated" Type="date" />
+          <Property Name="DateAttorneyClosingStatementFiled" Type="date" />
+          <Property Name="AttorneyRegistrationNumber" Type="varchar" MaxLength="7" />
+          <Property Name="ProseIndicator" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Case">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="CaseIndexNumberExternal" Type="varchar" MaxLength="15" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" />
+          <Property Name="CourtType" Type="varchar" MaxLength="20" />
+          <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+          <Property Name="PostDispositionIndicator" Type="varchar" MaxLength="50" />
+          <Property Name="CourtCalendarNumber" Type="varchar" MaxLength="13" />
+          <Property Name="PremliminaryConferenceIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="NumberOfComments" Type="int" />
+          <Property Name="PreIASJHOId" Type="varchar" MaxLength="5" />
+          <Property Name="PreIASTAPId" Type="varchar" MaxLength="5" />
+          <Property Name="PlaintiffName" Type="varchar" MaxLength="30" />
+          <Property Name="DefendantName" Type="varchar" MaxLength="30" />
+          <Property Name="MunicipalityInvolvement" Type="varchar" MaxLength="30" />
+          <Property Name="CaseComplexity" Type="varchar" MaxLength="50" />
+          <Property Name="RJIDispositionDeadlineDate" Type="date" />
+          <Property Name="RJIPreNOIDeadlineDate" Type="date" />
+          <Property Name="PostNOIDispositionDeadlineDate" Type="date" />
+          <Property Name="DateRJIFiled" Type="date" />
+          <Property Name="DateNOIFiled" Type="date" />
+          <Property Name="TimeStampNOIEntered" Type="datetime" />
+          <Property Name="DateIssueJoined" Type="date" />
+          <Property Name="JuryStatus1" Type="varchar" MaxLength="50" />
+          <Property Name="JuryStatusRequestDate1" Type="date" />
+          <Property Name="JuryStatus2" Type="varchar" MaxLength="50" />
+          <Property Name="JuryStatusRequestDate2" Type="date" />
+          <Property Name="JuryStatus3" Type="varchar" MaxLength="50" />
+          <Property Name="JuryStatusRequestDate3" Type="date" />
+          <Property Name="ActionOrCaseTypeId" Type="varchar" MaxLength="5" />
+          <Property Name="ActionOrCaseTypeDescription" Type="varchar" MaxLength="20" />
+          <Property Name="DamagesSought" Type="varchar" MaxLength="75" />
+          <Property Name="GeneralPreference" Type="varchar" MaxLength="75" />
+          <Property Name="SpecialPreference" Type="varchar" MaxLength="50" />
+          <Property Name="CaseDispositionDate" Type="date" />
+          <Property Name="JoinedCasePreviousIndex" Type="varchar" MaxLength="11" />
+          <Property Name="JoinedCaseNextIndex" Type="varchar" MaxLength="11" />
+          <Property Name="RJITypeCode" Type="varchar" MaxLength="5" />
+          <Property Name="TypeOfRJI" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfRJI" Type="date" />
+          <Property Name="RJICourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="CommentForOtherRJIType" Type="varchar" MaxLength="20" />
+          <Property Name="EstimatedTrialTime" Type="int" />
+          <Property Name="ActualTrialTime" Type="int" />
+          <Property Name="PropertySection" Type="varchar" MaxLength="5" />
+          <Property Name="PropertyBlock" Type="varchar" MaxLength="10" />
+          <Property Name="PropertyLot" Type="varchar" MaxLength="20" />
+          <Property Name="PropertySchoolDistrict" Type="varchar" MaxLength="10" />
+          <Property Name="AssessmentAmount" Type="float" />
+          <Property Name="AmountAwarded" Type="float" />
+          <Property Name="LandUse" Type="varchar" MaxLength="20" />
+          <Property Name="PreliminaryCalendarNumber" Type="varchar" MaxLength="13" />
+          <Property Name="IASCategoryId" Type="varchar" MaxLength="5" />
+          <Property Name="IASJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="IASAssignmentDate" Type="date" />
+          <Property Name="TimeStampLastIASInformationEntered" Type="datetime" />
+          <Property Name="PostDispositionActionJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="PROSEIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="AmountSuedFor" Type="int" />
+          <Property Name="BillOfParticularServed" Type="varchar" MaxLength="1" />
+          <Property Name="NumberOfTitleRecords" Type="int" />
+          <Property Name="NumberOfAttorneyRecords" Type="int" />
+          <Property Name="NumberOfCarrierRecords" Type="int" />
+          <Property Name="DateRJIEntered" Type="date" />
+          <Property Name="DateCertOfReadinessFiled" Type="date" />
+          <Property Name="CertOfReadinessDueDate" Type="date" />
+          <Property Name="NOIDueDate" Type="date" />
+          <Property Name="LatestStatusConferenceSchdDate" Type="date" />
+          <Property Name="LatestStatusConferenceHeldDate" Type="date" />
+          <Property Name="LatestPreTrialConfSchdDate" Type="date" />
+          <Property Name="LatestPreTrialConferenceHeldDate" Type="date" />
+          <Property Name="LatestPreliminaryConferenceReqDate" Type="date" />
+          <Property Name="LatestPreliminaryConferenceSchdDate" Type="date" />
+          <Property Name="PreliminaryConferenceHeldDate" Type="date" />
+          <Property Name="ComplianceConferenceSchdDate" Type="date" />
+          <Property Name="ComplianceConferenceHeldDate" Type="date" />
+          <Property Name="LastComplianceConferenceDate" Type="date" />
+          <Property Name="PrivateCaseIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="IsEfiled" Type="varchar" MaxLength="1" />
+          <Property Name="DateOfGoodService" Type="date" />
+          <Property Name="DateForeclosureSettelementConfScheduled" Type="date" />
+          <Property Name="DateForeclosureSettelementConfHeld" Type="date" />
+        </EntityType>
+        <EntityType Name="Motion">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="DataEntryDate" Type="date" />
+          <Property Name="OriginalDate" Type="date" />
+          <Property Name="OriginalDateTimeStamp" Type="datetime" />
+          <Property Name="OriginalCourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="PreviousDate" Type="date" />
+          <Property Name="PreviousCourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="AdjournmetCounter" Type="int" />
+          <Property Name="ProceedingTypeId" Type="varchar" MaxLength="5" />
+          <Property Name="ReliefSoughtId" Type="varchar" MaxLength="5" />
+          <Property Name="PartyApplyingForMotion" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="PartyOpposedToMotion" Type="varchar" MaxLength="23" Nullable="false" />
+          <Property Name="DatePapersFiledForApplyingParty" Type="date" />
+          <Property Name="DatePapersFiledForOpposingParty" Type="date" />
+          <Property Name="DateDecisionOnMotionRendered" Type="date" />
+          <Property Name="DecisionRendered" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="DateOrderSigned" Type="date" />
+          <Property Name="EffectOrDecisionId" Type="varchar" MaxLength="5" />
+          <Property Name="AssignedJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="DateCountyClerkNotifiedOfOroder" Type="date" />
+          <Property Name="ConsolidatedIndexNumber" Type="varchar" MaxLength="11" />
+          <Property Name="ConsolidatedCalendarNumber" Type="varchar" MaxLength="13" />
+          <Property Name="TransferComment" Type="varchar" MaxLength="20" />
+          <Property Name="ReferralDate" Type="date" />
+          <Property Name="ReferralCourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="DaysToDecision" Type="int" />
+          <Property Name="ComplexityIndicator" Type="varchar" MaxLength="9" />
+          <Property Name="DateMotionDecisionDue" Type="date" />
+          <Property Name="Date50DayWarning" Type="date" />
+          <Property Name="DateAllPapersDue" Type="date" />
+          <Property Name="SettlementDate" Type="date" />
+          <Property Name="DateBackOfficeReceivedPapers" Type="date" />
+          <Property Name="DateJudgeReceivedPapers" Type="date" />
+          <Property Name="DateFullySubmitted" Type="date" />
+          <Property Name="MotionPositionFullySubmitted" Type="varchar" MaxLength="3" />
+          <Property Name="MovingAttorneyId" Type="varchar" MaxLength="9" />
+          <Property Name="DecisionComment" Type="varchar" MaxLength="20" />
+          <Property Name="DecisionDataEntryTimeStamp" Type="datetime" />
+          <Property Name="MultipeReliefFlag" Type="varchar" MaxLength="1" />
+          <Property Name="Answer2214Flag" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Title">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="PlaintiffDetailedName" Type="varchar" MaxLength="370" />
+          <Property Name="Plaintiff" Type="varchar" MaxLength="370" />
+          <Property Name="DefendantDetailedName" Type="varchar" MaxLength="370" />
+          <Property Name="Defendant" Type="varchar" MaxLength="370" />
+        </EntityType>
+        <EntityType Name="GeneralData">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="KeyValue" />
+            <PropertyRef Name="Seq" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="KeyValue" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="Seq" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="EnteredCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="DataEntryDateTime" Type="datetime" />
+          <Property Name="BookTypeId" Type="varchar" MaxLength="3" />
+          <Property Name="NumOfDebtorsOnDocument" Type="varchar" MaxLength="2" />
+          <Property Name="DataEntryOperatorId" Type="varchar" MaxLength="8" />
+          <Property Name="EffectiveDateTime" Type="datetime" />
+          <Property Name="ExpirationDate" Type="date" />
+          <Property Name="SourceDocumentTypeId" Type="varchar" MaxLength="2" />
+          <Property Name="SourceCourtTypeId" Type="varchar" MaxLength="2" />
+          <Property Name="SourceCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="CCISCountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SourceDocumentIndexNumber" Type="varchar" MaxLength="10" />
+          <Property Name="CCISCaseIndexNumber" Type="varchar" MaxLength="15" />
+          <Property Name="DocumentNumber" Type="varchar" MaxLength="4" />
+          <Property Name="SystemGeneratedFilingFee" Type="varchar" MaxLength="1" />
+          <Property Name="DateOfAccident" Type="date" />
+          <Property Name="DebtorCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="DebtorType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DebtorLastName" Type="varchar" MaxLength="16" />
+          <Property Name="DebtorFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="DebtorMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="DebtorCompanyName" Type="varchar" MaxLength="40" />
+          <Property Name="DebtorStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="DebtorStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="DebtorCityState" Type="varchar" MaxLength="20" />
+          <Property Name="DebtorZip" Type="varchar" MaxLength="5" />
+          <Property Name="DebtorZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="DebtorOccupation" Type="varchar" MaxLength="10" />
+          <Property Name="PropertyCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="PropertyBlock" Type="varchar" MaxLength="5" />
+          <Property Name="PropertyLot" Type="varchar" MaxLength="5" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" />
+          <Property Name="CompressedNameCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="CompressedNameEntityType" Type="varchar" MaxLength="1" />
+          <Property Name="CompressedName" Type="varchar" MaxLength="40" />
+          <Property Name="CreditorType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CreditorLastName" Type="varchar" MaxLength="16" />
+          <Property Name="CreditorFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="CreditorMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="CreditorCompanyName" Type="varchar" MaxLength="40" />
+          <Property Name="CreditorStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="CreditorStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="CreditorCityState" Type="varchar" MaxLength="20" />
+          <Property Name="CreditorZip" Type="varchar" MaxLength="5" />
+          <Property Name="CreditorZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="AttorneyType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AttorneyLastName" Type="varchar" MaxLength="16" />
+          <Property Name="AttorneyFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="AttorneyMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="AttorneyFirmName" Type="varchar" MaxLength="40" />
+          <Property Name="AttorneyStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="AttorneyStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="AttorneyCityState" Type="varchar" MaxLength="20" />
+          <Property Name="AttorneyZip" Type="varchar" MaxLength="5" />
+          <Property Name="AttorneyZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="ThirdPartyType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ThirdPartyLastName" Type="varchar" MaxLength="16" />
+          <Property Name="ThirdPartyFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="ThirdPartyMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="ThirdPartyCompanyName" Type="varchar" MaxLength="40" />
+          <Property Name="ThirdPartyStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="ThirdPartyStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="ThirdPartyCityState" Type="varchar" MaxLength="20" />
+          <Property Name="ThirdPartyZip" Type="varchar" MaxLength="5" />
+          <Property Name="ThirdPartyZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="MoneyAmount" Type="float" />
+          <Property Name="InterimDispositionId0" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId1" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId2" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId3" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId4" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId5" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId6" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId7" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId8" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDispositionId9" Type="varchar" MaxLength="1" />
+          <Property Name="SatisfactionDate" Type="date" />
+          <Property Name="SatisfactionType" Type="varchar" MaxLength="50" />
+          <Property Name="SheriffExecutionRequired" Type="varchar" MaxLength="1" />
+          <Property Name="SatifactionDataEntryOperator" Type="varchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="RemarkData">
+          <Key>
+            <PropertyRef Name="RemarkId" />
+          </Key>
+          <Property Name="RemarkId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="KeyValue" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="Seq" Type="varchar" MaxLength="2" />
+          <Property Name="Date" Type="date" />
+          <Property Name="LineNumber" Type="varchar" MaxLength="4" />
+          <Property Name="Remark" Type="varchar" MaxLength="70" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCOURTS.ccis.vwAppearanceExpanded' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAppearanceExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="MotionSeqNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="MotionSeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="AppearanceDate" Type="date" />
+          <Property Name="Series" Type="varchar" MaxLength="3" />
+          <Property Name="CourtPartsId" Type="varchar" MaxLength="5" />
+          <Property Name="CourtPart" Type="varchar" MaxLength="30" />
+          <Property Name="TimeStamp" Type="datetime" />
+          <Property Name="AssignedJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="AssignedJudgeName" Type="varchar" MaxLength="30" />
+          <Property Name="CalendarMarkId" Type="varchar" MaxLength="5" />
+          <Property Name="ActionAtAppearance" Type="varchar" MaxLength="30" />
+          <Property Name="AppearanceType" Type="varchar" MaxLength="6" />
+          <Property Name="AppearanceTypeDescription" Type="varchar" MaxLength="50" />
+          <Property Name="Comments1" Type="varchar" MaxLength="20" />
+          <Property Name="Comments2" Type="varchar" MaxLength="20" />
+          <Property Name="ConferenceGroup" Type="varchar" MaxLength="2" />
+          <Property Name="Conferencebuilding" Type="varchar" MaxLength="1" />
+          <Property Name="ConferenceNotePrintDate" Type="date" />
+          <Property Name="MotionPositionNumber" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCOURTS.ccis.vwAttorneyExpanded' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAttorneyExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+            <PropertyRef Name="PartyIndicator" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="AttorneyOfRecordId" Type="varchar" MaxLength="9" />
+          <Property Name="AttorneyOfRecordFirmName" Type="varchar" MaxLength="30" />
+          <Property Name="NameAttorneyOfRecord" Type="varchar" MaxLength="20" />
+          <Property Name="NotifyAttorneyOfRecord" Type="varchar" MaxLength="1" />
+          <Property Name="TrialCounselId" Type="varchar" MaxLength="9" />
+          <Property Name="TrialCounselFirmName" Type="varchar" MaxLength="30" />
+          <Property Name="TrialCounselName" Type="varchar" MaxLength="20" />
+          <Property Name="NotifyTrialCounsel" Type="varchar" MaxLength="1" />
+          <Property Name="PartyIndicator" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="10" />
+          <Property Name="NumOfAttorneysRetained" Type="int" />
+          <Property Name="DateFirstRetainerStatementFiled" Type="date" />
+          <Property Name="DateCurrentRetainerStatementFiled" Type="date" />
+          <Property Name="DateAttorneyTerminated" Type="date" />
+          <Property Name="DateAttorneyClosingStatementFiled" Type="date" />
+          <Property Name="AttorneyRegistrationNumber" Type="varchar" MaxLength="7" />
+          <Property Name="ProseIndicator" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCOURTS.ccis.vwCaseExpanded' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwCaseExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="CaseIndexNumberExternal" Type="varchar" MaxLength="15" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" />
+          <Property Name="CourtType" Type="varchar" MaxLength="20" />
+          <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+          <Property Name="PostDispositionIndicator" Type="varchar" MaxLength="50" />
+          <Property Name="CourtCalendarNumber" Type="varchar" MaxLength="13" />
+          <Property Name="PremliminaryConferenceIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="NumberOfComments" Type="int" />
+          <Property Name="PreIASJHOId" Type="varchar" MaxLength="5" />
+          <Property Name="PreIASJHOName" Type="varchar" MaxLength="30" />
+          <Property Name="PreIASTAPId" Type="varchar" MaxLength="5" />
+          <Property Name="PreIASTAPName" Type="varchar" MaxLength="30" />
+          <Property Name="PlaintiffName" Type="varchar" MaxLength="30" />
+          <Property Name="DefendantName" Type="varchar" MaxLength="30" />
+          <Property Name="MunicipalityInvolvement" Type="varchar" MaxLength="30" />
+          <Property Name="CaseComplexity" Type="varchar" MaxLength="50" />
+          <Property Name="RJIDispositionDeadlineDate" Type="date" />
+          <Property Name="RJIPreNOIDeadlineDate" Type="date" />
+          <Property Name="PostNOIDispositionDeadlineDate" Type="date" />
+          <Property Name="DateRJIFiled" Type="date" />
+          <Property Name="DateNOIFiled" Type="date" />
+          <Property Name="TimeStampNOIEntered" Type="datetime" />
+          <Property Name="DateIssueJoined" Type="date" />
+          <Property Name="JuryStatus1" Type="varchar" MaxLength="50" />
+          <Property Name="JuryStatusRequestDate1" Type="date" />
+          <Property Name="JuryStatus2" Type="varchar" MaxLength="50" />
+          <Property Name="JuryStatusRequestDate2" Type="date" />
+          <Property Name="JuryStatus3" Type="varchar" MaxLength="50" />
+          <Property Name="JuryStatusRequestDate3" Type="date" />
+          <Property Name="ActionOrCaseTypeId" Type="varchar" MaxLength="5" />
+          <Property Name="ActionOrCaseType" Type="varchar" MaxLength="30" />
+          <Property Name="ActionOrCaseTypeDescription" Type="varchar" MaxLength="20" />
+          <Property Name="DamagesSought" Type="varchar" MaxLength="75" />
+          <Property Name="GeneralPreference" Type="varchar" MaxLength="75" />
+          <Property Name="SpecialPreference" Type="varchar" MaxLength="50" />
+          <Property Name="CaseDispositionDate" Type="date" />
+          <Property Name="JoinedCasePreviousIndex" Type="varchar" MaxLength="11" />
+          <Property Name="JoinedCaseNextIndex" Type="varchar" MaxLength="11" />
+          <Property Name="RJITypeCode" Type="varchar" MaxLength="5" />
+          <Property Name="TypeOfRJI" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfRJI" Type="date" />
+          <Property Name="RJICourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="RJICourtPart" Type="varchar" MaxLength="30" />
+          <Property Name="CommentForOtherRJIType" Type="varchar" MaxLength="20" />
+          <Property Name="EstimatedTrialTime" Type="int" />
+          <Property Name="ActualTrialTime" Type="int" />
+          <Property Name="PropertySection" Type="varchar" MaxLength="5" />
+          <Property Name="PropertyBlock" Type="varchar" MaxLength="10" />
+          <Property Name="PropertyLot" Type="varchar" MaxLength="20" />
+          <Property Name="PropertySchoolDistrict" Type="varchar" MaxLength="10" />
+          <Property Name="AssessmentAmount" Type="float" />
+          <Property Name="AmountAwarded" Type="float" />
+          <Property Name="LandUse" Type="varchar" MaxLength="20" />
+          <Property Name="PreliminaryCalendarNumber" Type="varchar" MaxLength="13" />
+          <Property Name="IASCategoryId" Type="varchar" MaxLength="5" />
+          <Property Name="IASCategory" Type="varchar" MaxLength="30" />
+          <Property Name="IASJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="IASJudgeName" Type="varchar" MaxLength="30" />
+          <Property Name="IASAssignmentDate" Type="date" />
+          <Property Name="TimeStampLastIASInformationEntered" Type="datetime" />
+          <Property Name="PostDispositionActionJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="PostDispositionActionJudgeName" Type="varchar" MaxLength="30" />
+          <Property Name="PROSEIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="AmountSuedFor" Type="int" />
+          <Property Name="BillOfParticularServed" Type="varchar" MaxLength="1" />
+          <Property Name="NumberOfTitleRecords" Type="int" />
+          <Property Name="NumberOfAttorneyRecords" Type="int" />
+          <Property Name="NumberOfCarrierRecords" Type="int" />
+          <Property Name="DateRJIEntered" Type="date" />
+          <Property Name="DateCertOfReadinessFiled" Type="date" />
+          <Property Name="CertOfReadinessDueDate" Type="date" />
+          <Property Name="NOIDueDate" Type="date" />
+          <Property Name="LatestStatusConferenceSchdDate" Type="date" />
+          <Property Name="LatestStatusConferenceHeldDate" Type="date" />
+          <Property Name="LatestPreTrialConfSchdDate" Type="date" />
+          <Property Name="LatestPreTrialConferenceHeldDate" Type="date" />
+          <Property Name="LatestPreliminaryConferenceReqDate" Type="date" />
+          <Property Name="LatestPreliminaryConferenceSchdDate" Type="date" />
+          <Property Name="PreliminaryConferenceHeldDate" Type="date" />
+          <Property Name="ComplianceConferenceSchdDate" Type="date" />
+          <Property Name="ComplianceConferenceHeldDate" Type="date" />
+          <Property Name="LastComplianceConferenceDate" Type="date" />
+          <Property Name="PrivateCaseIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="IsEfiled" Type="varchar" MaxLength="1" />
+          <Property Name="DateOfGoodService" Type="date" />
+          <Property Name="DateForeclosureSettelementConfScheduled" Type="date" />
+          <Property Name="DateForeclosureSettelementConfHeld" Type="date" />
+          <Property Name="Comment" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCOURTS.ccis.vwMotionExpanded' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwMotionExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+            <PropertyRef Name="PartyApplyingForMotion" />
+            <PropertyRef Name="PartyOpposedToMotion" />
+            <PropertyRef Name="DecisionRendered" />
+          </Key>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="DataEntryDate" Type="date" />
+          <Property Name="OriginalDate" Type="date" />
+          <Property Name="OriginalDateTimeStamp" Type="datetime" />
+          <Property Name="OriginalCourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="OriginalCourtPart" Type="varchar" MaxLength="30" />
+          <Property Name="PreviousDate" Type="date" />
+          <Property Name="PreviousCourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="PreviousCourtPart" Type="varchar" MaxLength="30" />
+          <Property Name="AdjournmetCounter" Type="int" />
+          <Property Name="ProceedingTypeId" Type="varchar" MaxLength="5" />
+          <Property Name="ProceedingType" Type="varchar" MaxLength="30" />
+          <Property Name="ReliefSoughtId" Type="varchar" MaxLength="5" />
+          <Property Name="ReliefSought" Type="varchar" MaxLength="30" />
+          <Property Name="PartyApplyingForMotion" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="PartyOpposedToMotion" Type="varchar" MaxLength="23" Nullable="false" />
+          <Property Name="DatePapersFiledForApplyingParty" Type="date" />
+          <Property Name="DatePapersFiledForOpposingParty" Type="date" />
+          <Property Name="DateDecisionOnMotionRendered" Type="date" />
+          <Property Name="DecisionRendered" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="DateOrderSigned" Type="date" />
+          <Property Name="EffectOrDecisionId" Type="varchar" MaxLength="5" />
+          <Property Name="EffectOrDecision" Type="varchar" MaxLength="30" />
+          <Property Name="AssignedJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="AssignedJudgeName" Type="varchar" MaxLength="30" />
+          <Property Name="DateCountyClerkNotifiedOfOroder" Type="date" />
+          <Property Name="ConsolidatedIndexNumber" Type="varchar" MaxLength="11" />
+          <Property Name="ConsolidatedCalendarNumber" Type="varchar" MaxLength="13" />
+          <Property Name="TransferComment" Type="varchar" MaxLength="20" />
+          <Property Name="ReferralDate" Type="date" />
+          <Property Name="ReferralCourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="ReferralCourtPart" Type="varchar" MaxLength="30" />
+          <Property Name="DaysToDecision" Type="int" />
+          <Property Name="ComplexityIndicator" Type="varchar" MaxLength="9" />
+          <Property Name="DateMotionDecisionDue" Type="date" />
+          <Property Name="Date50DayWarning" Type="date" />
+          <Property Name="DateAllPapersDue" Type="date" />
+          <Property Name="SettlementDate" Type="date" />
+          <Property Name="DateBackOfficeReceivedPapers" Type="date" />
+          <Property Name="DateJudgeReceivedPapers" Type="date" />
+          <Property Name="DateFullySubmitted" Type="date" />
+          <Property Name="MotionPositionFullySubmitted" Type="varchar" MaxLength="3" />
+          <Property Name="MovingAttorneyId" Type="varchar" MaxLength="9" />
+          <Property Name="MovingAttorneyFirmName" Type="varchar" MaxLength="30" />
+          <Property Name="DecisionComment" Type="varchar" MaxLength="20" />
+          <Property Name="DecisionDataEntryTimeStamp" Type="datetime" />
+          <Property Name="MultipeReliefFlag" Type="varchar" MaxLength="1" />
+          <Property Name="Answer2214Flag" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwGeneralDataExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="KeyValue" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="CCISCountyId" />
+            <PropertyRef Name="DebtorType" />
+            <PropertyRef Name="CreditorType" />
+            <PropertyRef Name="AttorneyType" />
+            <PropertyRef Name="ThirdPartyType" />
+          </Key>
+          <Property Name="County" Type="varchar" MaxLength="25" />
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="KeyValue" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="Seq" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="EnteredCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="EnteredCounty" Type="varchar" MaxLength="25" />
+          <Property Name="DataEntryDateTime" Type="datetime" />
+          <Property Name="BookTypeId" Type="varchar" MaxLength="3" />
+          <Property Name="BookTypeName" Type="varchar" MaxLength="25" />
+          <Property Name="NumOfDebtorsOnDocument" Type="varchar" MaxLength="2" />
+          <Property Name="DataEntryOperatorId" Type="varchar" MaxLength="8" />
+          <Property Name="EffectiveDateTime" Type="datetime" />
+          <Property Name="ExpirationDate" Type="date" />
+          <Property Name="SourceDocumentTypeId" Type="varchar" MaxLength="2" />
+          <Property Name="SourceDocument" Type="varchar" MaxLength="25" />
+          <Property Name="SourceCourtTypeId" Type="varchar" MaxLength="2" />
+          <Property Name="SourceCourt" Type="varchar" MaxLength="25" />
+          <Property Name="SourceCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="CCISCountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SourceDocumentIndexNumber" Type="varchar" MaxLength="10" />
+          <Property Name="CCISCaseIndexNumber" Type="varchar" MaxLength="15" />
+          <Property Name="DocumentNumber" Type="varchar" MaxLength="4" />
+          <Property Name="SystemGeneratedFilingFee" Type="varchar" MaxLength="1" />
+          <Property Name="DateOfAccident" Type="date" />
+          <Property Name="DebtorType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DebtorLastName" Type="varchar" MaxLength="16" />
+          <Property Name="DebtorFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="DebtorMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="DebtorCompanyName" Type="varchar" MaxLength="40" />
+          <Property Name="DebtorStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="DebtorStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="DebtorCityState" Type="varchar" MaxLength="20" />
+          <Property Name="DebtorZip" Type="varchar" MaxLength="5" />
+          <Property Name="DebtorZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="DebtorOccupation" Type="varchar" MaxLength="10" />
+          <Property Name="PropertyCounty" Type="varchar" MaxLength="25" />
+          <Property Name="PropertyCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="PropertyBlock" Type="varchar" MaxLength="5" />
+          <Property Name="PropertyLot" Type="varchar" MaxLength="5" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" />
+          <Property Name="CompressedNameCountyId" Type="varchar" MaxLength="2" />
+          <Property Name="CompressedNameEntityType" Type="varchar" MaxLength="1" />
+          <Property Name="CompressedName" Type="varchar" MaxLength="40" />
+          <Property Name="CreditorType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CreditorLastName" Type="varchar" MaxLength="16" />
+          <Property Name="CreditorFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="CreditorMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="CreditorCompanyName" Type="varchar" MaxLength="40" />
+          <Property Name="CreditorStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="CreditorStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="CreditorCityState" Type="varchar" MaxLength="20" />
+          <Property Name="CreditorZip" Type="varchar" MaxLength="5" />
+          <Property Name="CreditorZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="AttorneyType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AttorneyLastName" Type="varchar" MaxLength="16" />
+          <Property Name="AttorneyFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="AttorneyMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="AttorneyFirmName" Type="varchar" MaxLength="40" />
+          <Property Name="AttorneyStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="AttorneyStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="AttorneyCityState" Type="varchar" MaxLength="20" />
+          <Property Name="AttorneyZip" Type="varchar" MaxLength="5" />
+          <Property Name="AttorneyZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="ThirdPartyType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ThirdPartyLastName" Type="varchar" MaxLength="16" />
+          <Property Name="ThirdPartyFirstName" Type="varchar" MaxLength="12" />
+          <Property Name="ThirdPartyMiddleName" Type="varchar" MaxLength="12" />
+          <Property Name="ThirdPartyCompanyName" Type="varchar" MaxLength="40" />
+          <Property Name="ThirdPartyStreetNumber" Type="varchar" MaxLength="6" />
+          <Property Name="ThirdPartyStreetName" Type="varchar" MaxLength="25" />
+          <Property Name="ThirdPartyCityState" Type="varchar" MaxLength="20" />
+          <Property Name="ThirdPartyZip" Type="varchar" MaxLength="5" />
+          <Property Name="ThirdPartyZipExtended" Type="varchar" MaxLength="4" />
+          <Property Name="MoneyAmount" Type="float" />
+          <Property Name="InterimDispositionId0" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition0" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId1" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition1" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId2" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition2" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId3" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition3" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId4" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition4" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId5" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition5" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId6" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition6" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId7" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition7" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId8" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition8" Type="varchar" MaxLength="25" />
+          <Property Name="InterimDispositionId9" Type="varchar" MaxLength="1" />
+          <Property Name="InterimDisposition9" Type="varchar" MaxLength="25" />
+          <Property Name="SatisfactionDate" Type="date" />
+          <Property Name="SatisfactionType" Type="varchar" MaxLength="50" />
+          <Property Name="SheriffExecutionRequired" Type="varchar" MaxLength="1" />
+          <Property Name="SatifactionDataEntryOperator" Type="varchar" MaxLength="8" />
+          <Property Name="Remarks" Type="varchar(max)" />
+        </EntityType>
+        <Function Name="tfnGetCaseUpdates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
+          <Parameter Name="CountyId" Type="varchar" Mode="In" />
+          <Parameter Name="CaseIndexNumber" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Entity" Type="varchar" MaxLength="10" Nullable="false" />
+                <Property Name="EntityReference" Type="varchar" MaxLength="22" />
+                <Property Name="Operation" Type="varchar" MaxLength="6" />
+                <Property Name="ColumnName" Type="varchar" MaxLength="100" />
+                <Property Name="NewValue" Type="varchar" MaxLength="500" />
+                <Property Name="OldValue" Type="varchar" MaxLength="500" />
+                <Property Name="TransactionDateTime" Type="datetime" />
+                <Property Name="DateTimeProcessed" Type="datetime" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="NYCOURTSModelStoreContainer">
+          <EntitySet Name="Appearance" EntityType="Self.Appearance" Schema="ccis" store:Type="Tables" />
+          <EntitySet Name="Attorney" EntityType="Self.Attorney" Schema="ccis" store:Type="Tables" />
+          <EntitySet Name="Case" EntityType="Self.Case" Schema="ccis" store:Type="Tables" />
+          <EntitySet Name="Motion" EntityType="Self.Motion" Schema="ccis" store:Type="Tables" />
+          <EntitySet Name="Title" EntityType="Self.Title" Schema="ccis" store:Type="Tables" />
+          <EntitySet Name="GeneralData" EntityType="Self.GeneralData" Schema="jdls" store:Type="Tables" />
+          <EntitySet Name="RemarkData" EntityType="Self.RemarkData" Schema="jdls" store:Type="Tables" />
+          <EntitySet Name="vwAppearanceExpanded" EntityType="Self.vwAppearanceExpanded" store:Type="Views" store:Schema="ccis">
+            <DefiningQuery>SELECT 
+    [vwAppearanceExpanded].[CountyId] AS [CountyId], 
+    [vwAppearanceExpanded].[CaseIndexNumber] AS [CaseIndexNumber], 
+    [vwAppearanceExpanded].[MotionSeqNumber] AS [MotionSeqNumber], 
+    [vwAppearanceExpanded].[SeqNumber] AS [SeqNumber], 
+    [vwAppearanceExpanded].[AppearanceDate] AS [AppearanceDate], 
+    [vwAppearanceExpanded].[Series] AS [Series], 
+    [vwAppearanceExpanded].[CourtPartsId] AS [CourtPartsId], 
+    [vwAppearanceExpanded].[CourtPart] AS [CourtPart], 
+    [vwAppearanceExpanded].[TimeStamp] AS [TimeStamp], 
+    [vwAppearanceExpanded].[AssignedJudgeId] AS [AssignedJudgeId], 
+    [vwAppearanceExpanded].[AssignedJudgeName] AS [AssignedJudgeName], 
+    [vwAppearanceExpanded].[CalendarMarkId] AS [CalendarMarkId], 
+    [vwAppearanceExpanded].[ActionAtAppearance] AS [ActionAtAppearance], 
+    [vwAppearanceExpanded].[AppearanceType] AS [AppearanceType], 
+    [vwAppearanceExpanded].[AppearanceTypeDescription] AS [AppearanceTypeDescription], 
+    [vwAppearanceExpanded].[Comments1] AS [Comments1], 
+    [vwAppearanceExpanded].[Comments2] AS [Comments2], 
+    [vwAppearanceExpanded].[ConferenceGroup] AS [ConferenceGroup], 
+    [vwAppearanceExpanded].[Conferencebuilding] AS [Conferencebuilding], 
+    [vwAppearanceExpanded].[ConferenceNotePrintDate] AS [ConferenceNotePrintDate], 
+    [vwAppearanceExpanded].[MotionPositionNumber] AS [MotionPositionNumber]
+    FROM [ccis].[vwAppearanceExpanded] AS [vwAppearanceExpanded]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwAttorneyExpanded" EntityType="Self.vwAttorneyExpanded" store:Type="Views" store:Schema="ccis">
+            <DefiningQuery>SELECT 
+    [vwAttorneyExpanded].[CountyId] AS [CountyId], 
+    [vwAttorneyExpanded].[CaseIndexNumber] AS [CaseIndexNumber], 
+    [vwAttorneyExpanded].[SeqNumber] AS [SeqNumber], 
+    [vwAttorneyExpanded].[AttorneyOfRecordId] AS [AttorneyOfRecordId], 
+    [vwAttorneyExpanded].[AttorneyOfRecordFirmName] AS [AttorneyOfRecordFirmName], 
+    [vwAttorneyExpanded].[NameAttorneyOfRecord] AS [NameAttorneyOfRecord], 
+    [vwAttorneyExpanded].[NotifyAttorneyOfRecord] AS [NotifyAttorneyOfRecord], 
+    [vwAttorneyExpanded].[TrialCounselId] AS [TrialCounselId], 
+    [vwAttorneyExpanded].[TrialCounselFirmName] AS [TrialCounselFirmName], 
+    [vwAttorneyExpanded].[TrialCounselName] AS [TrialCounselName], 
+    [vwAttorneyExpanded].[NotifyTrialCounsel] AS [NotifyTrialCounsel], 
+    [vwAttorneyExpanded].[PartyIndicator] AS [PartyIndicator], 
+    [vwAttorneyExpanded].[ClientName] AS [ClientName], 
+    [vwAttorneyExpanded].[NumOfAttorneysRetained] AS [NumOfAttorneysRetained], 
+    [vwAttorneyExpanded].[DateFirstRetainerStatementFiled] AS [DateFirstRetainerStatementFiled], 
+    [vwAttorneyExpanded].[DateCurrentRetainerStatementFiled] AS [DateCurrentRetainerStatementFiled], 
+    [vwAttorneyExpanded].[DateAttorneyTerminated] AS [DateAttorneyTerminated], 
+    [vwAttorneyExpanded].[DateAttorneyClosingStatementFiled] AS [DateAttorneyClosingStatementFiled], 
+    [vwAttorneyExpanded].[AttorneyRegistrationNumber] AS [AttorneyRegistrationNumber], 
+    [vwAttorneyExpanded].[ProseIndicator] AS [ProseIndicator]
+    FROM [ccis].[vwAttorneyExpanded] AS [vwAttorneyExpanded]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwCaseExpanded" EntityType="Self.vwCaseExpanded" store:Type="Views" store:Schema="ccis">
+            <DefiningQuery>SELECT 
+    [vwCaseExpanded].[CountyId] AS [CountyId], 
+    [vwCaseExpanded].[CaseIndexNumber] AS [CaseIndexNumber], 
+    [vwCaseExpanded].[CaseIndexNumberExternal] AS [CaseIndexNumberExternal], 
+    [vwCaseExpanded].[SeqNumber] AS [SeqNumber], 
+    [vwCaseExpanded].[CourtType] AS [CourtType], 
+    [vwCaseExpanded].[CaseStatus] AS [CaseStatus], 
+    [vwCaseExpanded].[PostDispositionIndicator] AS [PostDispositionIndicator], 
+    [vwCaseExpanded].[CourtCalendarNumber] AS [CourtCalendarNumber], 
+    [vwCaseExpanded].[PremliminaryConferenceIndicator] AS [PremliminaryConferenceIndicator], 
+    [vwCaseExpanded].[NumberOfComments] AS [NumberOfComments], 
+    [vwCaseExpanded].[PreIASJHOId] AS [PreIASJHOId], 
+    [vwCaseExpanded].[PreIASJHOName] AS [PreIASJHOName], 
+    [vwCaseExpanded].[PreIASTAPId] AS [PreIASTAPId], 
+    [vwCaseExpanded].[PreIASTAPName] AS [PreIASTAPName], 
+    [vwCaseExpanded].[PlaintiffName] AS [PlaintiffName], 
+    [vwCaseExpanded].[DefendantName] AS [DefendantName], 
+    [vwCaseExpanded].[MunicipalityInvolvement] AS [MunicipalityInvolvement], 
+    [vwCaseExpanded].[CaseComplexity] AS [CaseComplexity], 
+    [vwCaseExpanded].[RJIDispositionDeadlineDate] AS [RJIDispositionDeadlineDate], 
+    [vwCaseExpanded].[RJIPreNOIDeadlineDate] AS [RJIPreNOIDeadlineDate], 
+    [vwCaseExpanded].[PostNOIDispositionDeadlineDate] AS [PostNOIDispositionDeadlineDate], 
+    [vwCaseExpanded].[DateRJIFiled] AS [DateRJIFiled], 
+    [vwCaseExpanded].[DateNOIFiled] AS [DateNOIFiled], 
+    [vwCaseExpanded].[TimeStampNOIEntered] AS [TimeStampNOIEntered], 
+    [vwCaseExpanded].[DateIssueJoined] AS [DateIssueJoined], 
+    [vwCaseExpanded].[JuryStatus1] AS [JuryStatus1], 
+    [vwCaseExpanded].[JuryStatusRequestDate1] AS [JuryStatusRequestDate1], 
+    [vwCaseExpanded].[JuryStatus2] AS [JuryStatus2], 
+    [vwCaseExpanded].[JuryStatusRequestDate2] AS [JuryStatusRequestDate2], 
+    [vwCaseExpanded].[JuryStatus3] AS [JuryStatus3], 
+    [vwCaseExpanded].[JuryStatusRequestDate3] AS [JuryStatusRequestDate3], 
+    [vwCaseExpanded].[ActionOrCaseTypeId] AS [ActionOrCaseTypeId], 
+    [vwCaseExpanded].[ActionOrCaseType] AS [ActionOrCaseType], 
+    [vwCaseExpanded].[ActionOrCaseTypeDescription] AS [ActionOrCaseTypeDescription], 
+    [vwCaseExpanded].[DamagesSought] AS [DamagesSought], 
+    [vwCaseExpanded].[GeneralPreference] AS [GeneralPreference], 
+    [vwCaseExpanded].[SpecialPreference] AS [SpecialPreference], 
+    [vwCaseExpanded].[CaseDispositionDate] AS [CaseDispositionDate], 
+    [vwCaseExpanded].[JoinedCasePreviousIndex] AS [JoinedCasePreviousIndex], 
+    [vwCaseExpanded].[JoinedCaseNextIndex] AS [JoinedCaseNextIndex], 
+    [vwCaseExpanded].[RJITypeCode] AS [RJITypeCode], 
+    [vwCaseExpanded].[TypeOfRJI] AS [TypeOfRJI], 
+    [vwCaseExpanded].[DateOfRJI] AS [DateOfRJI], 
+    [vwCaseExpanded].[RJICourtPartId] AS [RJICourtPartId], 
+    [vwCaseExpanded].[RJICourtPart] AS [RJICourtPart], 
+    [vwCaseExpanded].[CommentForOtherRJIType] AS [CommentForOtherRJIType], 
+    [vwCaseExpanded].[EstimatedTrialTime] AS [EstimatedTrialTime], 
+    [vwCaseExpanded].[ActualTrialTime] AS [ActualTrialTime], 
+    [vwCaseExpanded].[PropertySection] AS [PropertySection], 
+    [vwCaseExpanded].[PropertyBlock] AS [PropertyBlock], 
+    [vwCaseExpanded].[PropertyLot] AS [PropertyLot], 
+    [vwCaseExpanded].[PropertySchoolDistrict] AS [PropertySchoolDistrict], 
+    [vwCaseExpanded].[AssessmentAmount] AS [AssessmentAmount], 
+    [vwCaseExpanded].[AmountAwarded] AS [AmountAwarded], 
+    [vwCaseExpanded].[LandUse] AS [LandUse], 
+    [vwCaseExpanded].[PreliminaryCalendarNumber] AS [PreliminaryCalendarNumber], 
+    [vwCaseExpanded].[IASCategoryId] AS [IASCategoryId], 
+    [vwCaseExpanded].[IASCategory] AS [IASCategory], 
+    [vwCaseExpanded].[IASJudgeId] AS [IASJudgeId], 
+    [vwCaseExpanded].[IASJudgeName] AS [IASJudgeName], 
+    [vwCaseExpanded].[IASAssignmentDate] AS [IASAssignmentDate], 
+    [vwCaseExpanded].[TimeStampLastIASInformationEntered] AS [TimeStampLastIASInformationEntered], 
+    [vwCaseExpanded].[PostDispositionActionJudgeId] AS [PostDispositionActionJudgeId], 
+    [vwCaseExpanded].[PostDispositionActionJudgeName] AS [PostDispositionActionJudgeName], 
+    [vwCaseExpanded].[PROSEIndicator] AS [PROSEIndicator], 
+    [vwCaseExpanded].[AmountSuedFor] AS [AmountSuedFor], 
+    [vwCaseExpanded].[BillOfParticularServed] AS [BillOfParticularServed], 
+    [vwCaseExpanded].[NumberOfTitleRecords] AS [NumberOfTitleRecords], 
+    [vwCaseExpanded].[NumberOfAttorneyRecords] AS [NumberOfAttorneyRecords], 
+    [vwCaseExpanded].[NumberOfCarrierRecords] AS [NumberOfCarrierRecords], 
+    [vwCaseExpanded].[DateRJIEntered] AS [DateRJIEntered], 
+    [vwCaseExpanded].[DateCertOfReadinessFiled] AS [DateCertOfReadinessFiled], 
+    [vwCaseExpanded].[CertOfReadinessDueDate] AS [CertOfReadinessDueDate], 
+    [vwCaseExpanded].[NOIDueDate] AS [NOIDueDate], 
+    [vwCaseExpanded].[LatestStatusConferenceSchdDate] AS [LatestStatusConferenceSchdDate], 
+    [vwCaseExpanded].[LatestStatusConferenceHeldDate] AS [LatestStatusConferenceHeldDate], 
+    [vwCaseExpanded].[LatestPreTrialConfSchdDate] AS [LatestPreTrialConfSchdDate], 
+    [vwCaseExpanded].[LatestPreTrialConferenceHeldDate] AS [LatestPreTrialConferenceHeldDate], 
+    [vwCaseExpanded].[LatestPreliminaryConferenceReqDate] AS [LatestPreliminaryConferenceReqDate], 
+    [vwCaseExpanded].[LatestPreliminaryConferenceSchdDate] AS [LatestPreliminaryConferenceSchdDate], 
+    [vwCaseExpanded].[PreliminaryConferenceHeldDate] AS [PreliminaryConferenceHeldDate], 
+    [vwCaseExpanded].[ComplianceConferenceSchdDate] AS [ComplianceConferenceSchdDate], 
+    [vwCaseExpanded].[ComplianceConferenceHeldDate] AS [ComplianceConferenceHeldDate], 
+    [vwCaseExpanded].[LastComplianceConferenceDate] AS [LastComplianceConferenceDate], 
+    [vwCaseExpanded].[PrivateCaseIndicator] AS [PrivateCaseIndicator], 
+    [vwCaseExpanded].[IsEfiled] AS [IsEfiled], 
+    [vwCaseExpanded].[DateOfGoodService] AS [DateOfGoodService], 
+    [vwCaseExpanded].[DateForeclosureSettelementConfScheduled] AS [DateForeclosureSettelementConfScheduled], 
+    [vwCaseExpanded].[DateForeclosureSettelementConfHeld] AS [DateForeclosureSettelementConfHeld], 
+    [vwCaseExpanded].[Comment] AS [Comment]
+    FROM [ccis].[vwCaseExpanded] AS [vwCaseExpanded]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwMotionExpanded" EntityType="Self.vwMotionExpanded" store:Type="Views" store:Schema="ccis">
+            <DefiningQuery>SELECT 
+    [vwMotionExpanded].[CountyId] AS [CountyId], 
+    [vwMotionExpanded].[CaseIndexNumber] AS [CaseIndexNumber], 
+    [vwMotionExpanded].[SeqNumber] AS [SeqNumber], 
+    [vwMotionExpanded].[DataEntryDate] AS [DataEntryDate], 
+    [vwMotionExpanded].[OriginalDate] AS [OriginalDate], 
+    [vwMotionExpanded].[OriginalDateTimeStamp] AS [OriginalDateTimeStamp], 
+    [vwMotionExpanded].[OriginalCourtPartId] AS [OriginalCourtPartId], 
+    [vwMotionExpanded].[OriginalCourtPart] AS [OriginalCourtPart], 
+    [vwMotionExpanded].[PreviousDate] AS [PreviousDate], 
+    [vwMotionExpanded].[PreviousCourtPartId] AS [PreviousCourtPartId], 
+    [vwMotionExpanded].[PreviousCourtPart] AS [PreviousCourtPart], 
+    [vwMotionExpanded].[AdjournmetCounter] AS [AdjournmetCounter], 
+    [vwMotionExpanded].[ProceedingTypeId] AS [ProceedingTypeId], 
+    [vwMotionExpanded].[ProceedingType] AS [ProceedingType], 
+    [vwMotionExpanded].[ReliefSoughtId] AS [ReliefSoughtId], 
+    [vwMotionExpanded].[ReliefSought] AS [ReliefSought], 
+    [vwMotionExpanded].[PartyApplyingForMotion] AS [PartyApplyingForMotion], 
+    [vwMotionExpanded].[PartyOpposedToMotion] AS [PartyOpposedToMotion], 
+    [vwMotionExpanded].[DatePapersFiledForApplyingParty] AS [DatePapersFiledForApplyingParty], 
+    [vwMotionExpanded].[DatePapersFiledForOpposingParty] AS [DatePapersFiledForOpposingParty], 
+    [vwMotionExpanded].[DateDecisionOnMotionRendered] AS [DateDecisionOnMotionRendered], 
+    [vwMotionExpanded].[DecisionRendered] AS [DecisionRendered], 
+    [vwMotionExpanded].[DateOrderSigned] AS [DateOrderSigned], 
+    [vwMotionExpanded].[EffectOrDecisionId] AS [EffectOrDecisionId], 
+    [vwMotionExpanded].[EffectOrDecision] AS [EffectOrDecision], 
+    [vwMotionExpanded].[AssignedJudgeId] AS [AssignedJudgeId], 
+    [vwMotionExpanded].[AssignedJudgeName] AS [AssignedJudgeName], 
+    [vwMotionExpanded].[DateCountyClerkNotifiedOfOroder] AS [DateCountyClerkNotifiedOfOroder], 
+    [vwMotionExpanded].[ConsolidatedIndexNumber] AS [ConsolidatedIndexNumber], 
+    [vwMotionExpanded].[ConsolidatedCalendarNumber] AS [ConsolidatedCalendarNumber], 
+    [vwMotionExpanded].[TransferComment] AS [TransferComment], 
+    [vwMotionExpanded].[ReferralDate] AS [ReferralDate], 
+    [vwMotionExpanded].[ReferralCourtPartId] AS [ReferralCourtPartId], 
+    [vwMotionExpanded].[ReferralCourtPart] AS [ReferralCourtPart], 
+    [vwMotionExpanded].[DaysToDecision] AS [DaysToDecision], 
+    [vwMotionExpanded].[ComplexityIndicator] AS [ComplexityIndicator], 
+    [vwMotionExpanded].[DateMotionDecisionDue] AS [DateMotionDecisionDue], 
+    [vwMotionExpanded].[Date50DayWarning] AS [Date50DayWarning], 
+    [vwMotionExpanded].[DateAllPapersDue] AS [DateAllPapersDue], 
+    [vwMotionExpanded].[SettlementDate] AS [SettlementDate], 
+    [vwMotionExpanded].[DateBackOfficeReceivedPapers] AS [DateBackOfficeReceivedPapers], 
+    [vwMotionExpanded].[DateJudgeReceivedPapers] AS [DateJudgeReceivedPapers], 
+    [vwMotionExpanded].[DateFullySubmitted] AS [DateFullySubmitted], 
+    [vwMotionExpanded].[MotionPositionFullySubmitted] AS [MotionPositionFullySubmitted], 
+    [vwMotionExpanded].[MovingAttorneyId] AS [MovingAttorneyId], 
+    [vwMotionExpanded].[MovingAttorneyFirmName] AS [MovingAttorneyFirmName], 
+    [vwMotionExpanded].[DecisionComment] AS [DecisionComment], 
+    [vwMotionExpanded].[DecisionDataEntryTimeStamp] AS [DecisionDataEntryTimeStamp], 
+    [vwMotionExpanded].[MultipeReliefFlag] AS [MultipeReliefFlag], 
+    [vwMotionExpanded].[Answer2214Flag] AS [Answer2214Flag]
+    FROM [ccis].[vwMotionExpanded] AS [vwMotionExpanded]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwGeneralDataExpanded" EntityType="Self.vwGeneralDataExpanded" store:Type="Views" store:Schema="jdls">
+            <DefiningQuery>SELECT 
+    [vwGeneralDataExpanded].[County] AS [County], 
+    [vwGeneralDataExpanded].[CountyId] AS [CountyId], 
+    [vwGeneralDataExpanded].[KeyValue] AS [KeyValue], 
+    [vwGeneralDataExpanded].[Seq] AS [Seq], 
+    [vwGeneralDataExpanded].[EnteredCountyId] AS [EnteredCountyId], 
+    [vwGeneralDataExpanded].[EnteredCounty] AS [EnteredCounty], 
+    [vwGeneralDataExpanded].[DataEntryDateTime] AS [DataEntryDateTime], 
+    [vwGeneralDataExpanded].[BookTypeId] AS [BookTypeId], 
+    [vwGeneralDataExpanded].[BookTypeName] AS [BookTypeName], 
+    [vwGeneralDataExpanded].[NumOfDebtorsOnDocument] AS [NumOfDebtorsOnDocument], 
+    [vwGeneralDataExpanded].[DataEntryOperatorId] AS [DataEntryOperatorId], 
+    [vwGeneralDataExpanded].[EffectiveDateTime] AS [EffectiveDateTime], 
+    [vwGeneralDataExpanded].[ExpirationDate] AS [ExpirationDate], 
+    [vwGeneralDataExpanded].[SourceDocumentTypeId] AS [SourceDocumentTypeId], 
+    [vwGeneralDataExpanded].[SourceDocument] AS [SourceDocument], 
+    [vwGeneralDataExpanded].[SourceCourtTypeId] AS [SourceCourtTypeId], 
+    [vwGeneralDataExpanded].[SourceCourt] AS [SourceCourt], 
+    [vwGeneralDataExpanded].[SourceCountyId] AS [SourceCountyId], 
+    [vwGeneralDataExpanded].[CCISCountyId] AS [CCISCountyId], 
+    [vwGeneralDataExpanded].[SourceDocumentIndexNumber] AS [SourceDocumentIndexNumber], 
+    [vwGeneralDataExpanded].[CCISCaseIndexNumber] AS [CCISCaseIndexNumber], 
+    [vwGeneralDataExpanded].[DocumentNumber] AS [DocumentNumber], 
+    [vwGeneralDataExpanded].[SystemGeneratedFilingFee] AS [SystemGeneratedFilingFee], 
+    [vwGeneralDataExpanded].[DateOfAccident] AS [DateOfAccident], 
+    [vwGeneralDataExpanded].[DebtorType] AS [DebtorType], 
+    [vwGeneralDataExpanded].[DebtorLastName] AS [DebtorLastName], 
+    [vwGeneralDataExpanded].[DebtorFirstName] AS [DebtorFirstName], 
+    [vwGeneralDataExpanded].[DebtorMiddleName] AS [DebtorMiddleName], 
+    [vwGeneralDataExpanded].[DebtorCompanyName] AS [DebtorCompanyName], 
+    [vwGeneralDataExpanded].[DebtorStreetNumber] AS [DebtorStreetNumber], 
+    [vwGeneralDataExpanded].[DebtorStreetName] AS [DebtorStreetName], 
+    [vwGeneralDataExpanded].[DebtorCityState] AS [DebtorCityState], 
+    [vwGeneralDataExpanded].[DebtorZip] AS [DebtorZip], 
+    [vwGeneralDataExpanded].[DebtorZipExtended] AS [DebtorZipExtended], 
+    [vwGeneralDataExpanded].[DebtorOccupation] AS [DebtorOccupation], 
+    [vwGeneralDataExpanded].[PropertyCounty] AS [PropertyCounty], 
+    [vwGeneralDataExpanded].[PropertyCountyId] AS [PropertyCountyId], 
+    [vwGeneralDataExpanded].[PropertyBlock] AS [PropertyBlock], 
+    [vwGeneralDataExpanded].[PropertyLot] AS [PropertyLot], 
+    [vwGeneralDataExpanded].[BBL] AS [BBL], 
+    [vwGeneralDataExpanded].[CompressedNameCountyId] AS [CompressedNameCountyId], 
+    [vwGeneralDataExpanded].[CompressedNameEntityType] AS [CompressedNameEntityType], 
+    [vwGeneralDataExpanded].[CompressedName] AS [CompressedName], 
+    [vwGeneralDataExpanded].[CreditorType] AS [CreditorType], 
+    [vwGeneralDataExpanded].[CreditorLastName] AS [CreditorLastName], 
+    [vwGeneralDataExpanded].[CreditorFirstName] AS [CreditorFirstName], 
+    [vwGeneralDataExpanded].[CreditorMiddleName] AS [CreditorMiddleName], 
+    [vwGeneralDataExpanded].[CreditorCompanyName] AS [CreditorCompanyName], 
+    [vwGeneralDataExpanded].[CreditorStreetNumber] AS [CreditorStreetNumber], 
+    [vwGeneralDataExpanded].[CreditorStreetName] AS [CreditorStreetName], 
+    [vwGeneralDataExpanded].[CreditorCityState] AS [CreditorCityState], 
+    [vwGeneralDataExpanded].[CreditorZip] AS [CreditorZip], 
+    [vwGeneralDataExpanded].[CreditorZipExtended] AS [CreditorZipExtended], 
+    [vwGeneralDataExpanded].[AttorneyType] AS [AttorneyType], 
+    [vwGeneralDataExpanded].[AttorneyLastName] AS [AttorneyLastName], 
+    [vwGeneralDataExpanded].[AttorneyFirstName] AS [AttorneyFirstName], 
+    [vwGeneralDataExpanded].[AttorneyMiddleName] AS [AttorneyMiddleName], 
+    [vwGeneralDataExpanded].[AttorneyFirmName] AS [AttorneyFirmName], 
+    [vwGeneralDataExpanded].[AttorneyStreetNumber] AS [AttorneyStreetNumber], 
+    [vwGeneralDataExpanded].[AttorneyStreetName] AS [AttorneyStreetName], 
+    [vwGeneralDataExpanded].[AttorneyCityState] AS [AttorneyCityState], 
+    [vwGeneralDataExpanded].[AttorneyZip] AS [AttorneyZip], 
+    [vwGeneralDataExpanded].[AttorneyZipExtended] AS [AttorneyZipExtended], 
+    [vwGeneralDataExpanded].[ThirdPartyType] AS [ThirdPartyType], 
+    [vwGeneralDataExpanded].[ThirdPartyLastName] AS [ThirdPartyLastName], 
+    [vwGeneralDataExpanded].[ThirdPartyFirstName] AS [ThirdPartyFirstName], 
+    [vwGeneralDataExpanded].[ThirdPartyMiddleName] AS [ThirdPartyMiddleName], 
+    [vwGeneralDataExpanded].[ThirdPartyCompanyName] AS [ThirdPartyCompanyName], 
+    [vwGeneralDataExpanded].[ThirdPartyStreetNumber] AS [ThirdPartyStreetNumber], 
+    [vwGeneralDataExpanded].[ThirdPartyStreetName] AS [ThirdPartyStreetName], 
+    [vwGeneralDataExpanded].[ThirdPartyCityState] AS [ThirdPartyCityState], 
+    [vwGeneralDataExpanded].[ThirdPartyZip] AS [ThirdPartyZip], 
+    [vwGeneralDataExpanded].[ThirdPartyZipExtended] AS [ThirdPartyZipExtended], 
+    [vwGeneralDataExpanded].[MoneyAmount] AS [MoneyAmount], 
+    [vwGeneralDataExpanded].[InterimDispositionId0] AS [InterimDispositionId0], 
+    [vwGeneralDataExpanded].[InterimDisposition0] AS [InterimDisposition0], 
+    [vwGeneralDataExpanded].[InterimDispositionId1] AS [InterimDispositionId1], 
+    [vwGeneralDataExpanded].[InterimDisposition1] AS [InterimDisposition1], 
+    [vwGeneralDataExpanded].[InterimDispositionId2] AS [InterimDispositionId2], 
+    [vwGeneralDataExpanded].[InterimDisposition2] AS [InterimDisposition2], 
+    [vwGeneralDataExpanded].[InterimDispositionId3] AS [InterimDispositionId3], 
+    [vwGeneralDataExpanded].[InterimDisposition3] AS [InterimDisposition3], 
+    [vwGeneralDataExpanded].[InterimDispositionId4] AS [InterimDispositionId4], 
+    [vwGeneralDataExpanded].[InterimDisposition4] AS [InterimDisposition4], 
+    [vwGeneralDataExpanded].[InterimDispositionId5] AS [InterimDispositionId5], 
+    [vwGeneralDataExpanded].[InterimDisposition5] AS [InterimDisposition5], 
+    [vwGeneralDataExpanded].[InterimDispositionId6] AS [InterimDispositionId6], 
+    [vwGeneralDataExpanded].[InterimDisposition6] AS [InterimDisposition6], 
+    [vwGeneralDataExpanded].[InterimDispositionId7] AS [InterimDispositionId7], 
+    [vwGeneralDataExpanded].[InterimDisposition7] AS [InterimDisposition7], 
+    [vwGeneralDataExpanded].[InterimDispositionId8] AS [InterimDispositionId8], 
+    [vwGeneralDataExpanded].[InterimDisposition8] AS [InterimDisposition8], 
+    [vwGeneralDataExpanded].[InterimDispositionId9] AS [InterimDispositionId9], 
+    [vwGeneralDataExpanded].[InterimDisposition9] AS [InterimDisposition9], 
+    [vwGeneralDataExpanded].[SatisfactionDate] AS [SatisfactionDate], 
+    [vwGeneralDataExpanded].[SatisfactionType] AS [SatisfactionType], 
+    [vwGeneralDataExpanded].[SheriffExecutionRequired] AS [SheriffExecutionRequired], 
+    [vwGeneralDataExpanded].[SatifactionDataEntryOperator] AS [SatifactionDataEntryOperator], 
+    [vwGeneralDataExpanded].[Remarks] AS [Remarks]
+    FROM [jdls].[vwGeneralDataExpanded] AS [vwGeneralDataExpanded]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NYCOURTSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Case">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+          </Key>
+          <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CaseIndexNumberExternal" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CourtType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CaseStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostDispositionIndicator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CourtCalendarNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="PremliminaryConferenceIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="NumberOfComments" Type="Int32" />
+          <Property Name="PreIASJHOId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PreIASTAPId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PlaintiffName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DefendantName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MunicipalityInvolvement" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CaseComplexity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RJIDispositionDeadlineDate" Type="DateTime" Precision="0" />
+          <Property Name="RJIPreNOIDeadlineDate" Type="DateTime" Precision="0" />
+          <Property Name="PostNOIDispositionDeadlineDate" Type="DateTime" Precision="0" />
+          <Property Name="DateRJIFiled" Type="DateTime" Precision="0" />
+          <Property Name="DateNOIFiled" Type="DateTime" Precision="0" />
+          <Property Name="TimeStampNOIEntered" Type="DateTime" Precision="3" />
+          <Property Name="DateIssueJoined" Type="DateTime" Precision="0" />
+          <Property Name="JuryStatus1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JuryStatusRequestDate1" Type="DateTime" Precision="0" />
+          <Property Name="JuryStatus2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JuryStatusRequestDate2" Type="DateTime" Precision="0" />
+          <Property Name="JuryStatus3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JuryStatusRequestDate3" Type="DateTime" Precision="0" />
+          <Property Name="ActionOrCaseTypeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ActionOrCaseTypeDescription" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DamagesSought" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="GeneralPreference" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialPreference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CaseDispositionDate" Type="DateTime" Precision="0" />
+          <Property Name="JoinedCasePreviousIndex" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="JoinedCaseNextIndex" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="RJITypeCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="TypeOfRJI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfRJI" Type="DateTime" Precision="0" />
+          <Property Name="RJICourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CommentForOtherRJIType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EstimatedTrialTime" Type="Int32" />
+          <Property Name="ActualTrialTime" Type="Int32" />
+          <Property Name="PropertySection" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyBlock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyLot" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PropertySchoolDistrict" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AssessmentAmount" Type="Double" />
+          <Property Name="AmountAwarded" Type="Double" />
+          <Property Name="LandUse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PreliminaryCalendarNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="IASCategoryId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="IASJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="IASAssignmentDate" Type="DateTime" Precision="0" />
+          <Property Name="TimeStampLastIASInformationEntered" Type="DateTime" Precision="3" />
+          <Property Name="PostDispositionActionJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PROSEIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="AmountSuedFor" Type="Int32" />
+          <Property Name="BillOfParticularServed" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="NumberOfTitleRecords" Type="Int32" />
+          <Property Name="NumberOfAttorneyRecords" Type="Int32" />
+          <Property Name="NumberOfCarrierRecords" Type="Int32" />
+          <Property Name="DateRJIEntered" Type="DateTime" Precision="0" />
+          <Property Name="DateCertOfReadinessFiled" Type="DateTime" Precision="0" />
+          <Property Name="CertOfReadinessDueDate" Type="DateTime" Precision="0" />
+          <Property Name="NOIDueDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestStatusConferenceSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestStatusConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreTrialConfSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreTrialConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreliminaryConferenceReqDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreliminaryConferenceSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="PreliminaryConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="ComplianceConferenceSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="ComplianceConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="LastComplianceConferenceDate" Type="DateTime" Precision="0" />
+          <Property Name="PrivateCaseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IsEfiled" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfGoodService" Type="DateTime" Precision="0" />
+          <Property Name="DateForeclosureSettelementConfScheduled" Type="DateTime" Precision="0" />
+          <Property Name="DateForeclosureSettelementConfHeld" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityContainer Name="NYCOURTSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cases" EntityType="Self.Case" />
+          <EntitySet Name="Appearances" EntityType="NYCOURTSModel.Appearance" />
+          <EntitySet Name="Motions" EntityType="NYCOURTSModel.Motion" />
+          <EntitySet Name="vwAppearanceExpandeds" EntityType="NYCOURTSModel.vwAppearanceExpanded" />
+          <EntitySet Name="vwCaseExpandeds" EntityType="NYCOURTSModel.vwCaseExpanded" />
+          <EntitySet Name="vwMotionExpandeds" EntityType="NYCOURTSModel.vwMotionExpanded" />
+          <EntitySet Name="Attorneys" EntityType="NYCOURTSModel.Attorney" />
+          <EntitySet Name="Titles" EntityType="NYCOURTSModel.Title" />
+          <EntitySet Name="GeneralDatas" EntityType="NYCOURTSModel.GeneralData" />
+          <EntitySet Name="vwAttorneyExpandeds" EntityType="NYCOURTSModel.vwAttorneyExpanded" />
+          <EntitySet Name="vwGeneralDataExpandeds" EntityType="NYCOURTSModel.vwGeneralDataExpanded" />
+          <FunctionImport Name="tfnGetCaseUpdates" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseUpdates_Result)">
+            <Parameter Name="CountyId" Mode="In" Type="String" />
+            <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="RemarkDatas" EntityType="NYCOURTSModel.RemarkData" />
+        </EntityContainer>
+        <EntityType Name="Appearance">
+          <Key>
+            <PropertyRef Name="AppearanceId" />
+          </Key>
+          <Property Name="AppearanceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="MotionSeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="AppearanceDate" Type="DateTime" Precision="0" />
+          <Property Name="Series" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CourtPartsId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="TimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="AssignedJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CalendarMarkId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AppearanceType" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="AppearanceTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comments1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Comments2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ConferenceGroup" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Conferencebuilding" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ConferenceNotePrintDate" Type="DateTime" Precision="0" />
+          <Property Name="MotionPositionNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Motion">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DataEntryDate" Type="DateTime" Precision="0" />
+          <Property Name="OriginalDate" Type="DateTime" Precision="0" />
+          <Property Name="OriginalDateTimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="OriginalCourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PreviousDate" Type="DateTime" Precision="0" />
+          <Property Name="PreviousCourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AdjournmetCounter" Type="Int32" />
+          <Property Name="ProceedingTypeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ReliefSoughtId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PartyApplyingForMotion" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="PartyOpposedToMotion" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="DatePapersFiledForApplyingParty" Type="DateTime" Precision="0" />
+          <Property Name="DatePapersFiledForOpposingParty" Type="DateTime" Precision="0" />
+          <Property Name="DateDecisionOnMotionRendered" Type="DateTime" Precision="0" />
+          <Property Name="DecisionRendered" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="DateOrderSigned" Type="DateTime" Precision="0" />
+          <Property Name="EffectOrDecisionId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DateCountyClerkNotifiedOfOroder" Type="DateTime" Precision="0" />
+          <Property Name="ConsolidatedIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="ConsolidatedCalendarNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="TransferComment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ReferralDate" Type="DateTime" Precision="0" />
+          <Property Name="ReferralCourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DaysToDecision" Type="Int32" />
+          <Property Name="ComplexityIndicator" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DateMotionDecisionDue" Type="DateTime" Precision="0" />
+          <Property Name="Date50DayWarning" Type="DateTime" Precision="0" />
+          <Property Name="DateAllPapersDue" Type="DateTime" Precision="0" />
+          <Property Name="SettlementDate" Type="DateTime" Precision="0" />
+          <Property Name="DateBackOfficeReceivedPapers" Type="DateTime" Precision="0" />
+          <Property Name="DateJudgeReceivedPapers" Type="DateTime" Precision="0" />
+          <Property Name="DateFullySubmitted" Type="DateTime" Precision="0" />
+          <Property Name="MotionPositionFullySubmitted" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="MovingAttorneyId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DecisionComment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DecisionDataEntryTimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="MultipeReliefFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Answer2214Flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwAppearanceExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="MotionSeqNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="MotionSeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="AppearanceDate" Type="DateTime" Precision="0" />
+          <Property Name="Series" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CourtPartsId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CourtPart" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="AssignedJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedJudgeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CalendarMarkId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ActionAtAppearance" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppearanceType" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="AppearanceTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comments1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Comments2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ConferenceGroup" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Conferencebuilding" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ConferenceNotePrintDate" Type="DateTime" Precision="0" />
+          <Property Name="MotionPositionNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwCaseExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumberExternal" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CourtType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CaseStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostDispositionIndicator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CourtCalendarNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="PremliminaryConferenceIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="NumberOfComments" Type="Int32" />
+          <Property Name="PreIASJHOId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PreIASJHOName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PreIASTAPId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PreIASTAPName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PlaintiffName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DefendantName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MunicipalityInvolvement" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CaseComplexity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RJIDispositionDeadlineDate" Type="DateTime" Precision="0" />
+          <Property Name="RJIPreNOIDeadlineDate" Type="DateTime" Precision="0" />
+          <Property Name="PostNOIDispositionDeadlineDate" Type="DateTime" Precision="0" />
+          <Property Name="DateRJIFiled" Type="DateTime" Precision="0" />
+          <Property Name="DateNOIFiled" Type="DateTime" Precision="0" />
+          <Property Name="TimeStampNOIEntered" Type="DateTime" Precision="3" />
+          <Property Name="DateIssueJoined" Type="DateTime" Precision="0" />
+          <Property Name="JuryStatus1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JuryStatusRequestDate1" Type="DateTime" Precision="0" />
+          <Property Name="JuryStatus2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JuryStatusRequestDate2" Type="DateTime" Precision="0" />
+          <Property Name="JuryStatus3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JuryStatusRequestDate3" Type="DateTime" Precision="0" />
+          <Property Name="ActionOrCaseTypeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ActionOrCaseType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ActionOrCaseTypeDescription" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DamagesSought" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="GeneralPreference" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialPreference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CaseDispositionDate" Type="DateTime" Precision="0" />
+          <Property Name="JoinedCasePreviousIndex" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="JoinedCaseNextIndex" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="RJITypeCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="TypeOfRJI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfRJI" Type="DateTime" Precision="0" />
+          <Property Name="RJICourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="RJICourtPart" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CommentForOtherRJIType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EstimatedTrialTime" Type="Int32" />
+          <Property Name="ActualTrialTime" Type="Int32" />
+          <Property Name="PropertySection" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyBlock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyLot" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PropertySchoolDistrict" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AssessmentAmount" Type="Double" />
+          <Property Name="AmountAwarded" Type="Double" />
+          <Property Name="LandUse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PreliminaryCalendarNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="IASCategoryId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="IASCategory" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IASJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="IASJudgeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IASAssignmentDate" Type="DateTime" Precision="0" />
+          <Property Name="TimeStampLastIASInformationEntered" Type="DateTime" Precision="3" />
+          <Property Name="PostDispositionActionJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PostDispositionActionJudgeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PROSEIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="AmountSuedFor" Type="Int32" />
+          <Property Name="BillOfParticularServed" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="NumberOfTitleRecords" Type="Int32" />
+          <Property Name="NumberOfAttorneyRecords" Type="Int32" />
+          <Property Name="NumberOfCarrierRecords" Type="Int32" />
+          <Property Name="DateRJIEntered" Type="DateTime" Precision="0" />
+          <Property Name="DateCertOfReadinessFiled" Type="DateTime" Precision="0" />
+          <Property Name="CertOfReadinessDueDate" Type="DateTime" Precision="0" />
+          <Property Name="NOIDueDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestStatusConferenceSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestStatusConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreTrialConfSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreTrialConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreliminaryConferenceReqDate" Type="DateTime" Precision="0" />
+          <Property Name="LatestPreliminaryConferenceSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="PreliminaryConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="ComplianceConferenceSchdDate" Type="DateTime" Precision="0" />
+          <Property Name="ComplianceConferenceHeldDate" Type="DateTime" Precision="0" />
+          <Property Name="LastComplianceConferenceDate" Type="DateTime" Precision="0" />
+          <Property Name="PrivateCaseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IsEfiled" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfGoodService" Type="DateTime" Precision="0" />
+          <Property Name="DateForeclosureSettelementConfScheduled" Type="DateTime" Precision="0" />
+          <Property Name="DateForeclosureSettelementConfHeld" Type="DateTime" Precision="0" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwMotionExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+            <PropertyRef Name="PartyApplyingForMotion" />
+            <PropertyRef Name="PartyOpposedToMotion" />
+            <PropertyRef Name="DecisionRendered" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DataEntryDate" Type="DateTime" Precision="0" />
+          <Property Name="OriginalDate" Type="DateTime" Precision="0" />
+          <Property Name="OriginalDateTimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="OriginalCourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="OriginalCourtPart" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PreviousDate" Type="DateTime" Precision="0" />
+          <Property Name="PreviousCourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PreviousCourtPart" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AdjournmetCounter" Type="Int32" />
+          <Property Name="ProceedingTypeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ProceedingType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ReliefSoughtId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ReliefSought" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PartyApplyingForMotion" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="PartyOpposedToMotion" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+          <Property Name="DatePapersFiledForApplyingParty" Type="DateTime" Precision="0" />
+          <Property Name="DatePapersFiledForOpposingParty" Type="DateTime" Precision="0" />
+          <Property Name="DateDecisionOnMotionRendered" Type="DateTime" Precision="0" />
+          <Property Name="DecisionRendered" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="DateOrderSigned" Type="DateTime" Precision="0" />
+          <Property Name="EffectOrDecisionId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EffectOrDecision" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedJudgeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DateCountyClerkNotifiedOfOroder" Type="DateTime" Precision="0" />
+          <Property Name="ConsolidatedIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="ConsolidatedCalendarNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="TransferComment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ReferralDate" Type="DateTime" Precision="0" />
+          <Property Name="ReferralCourtPartId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ReferralCourtPart" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DaysToDecision" Type="Int32" />
+          <Property Name="ComplexityIndicator" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DateMotionDecisionDue" Type="DateTime" Precision="0" />
+          <Property Name="Date50DayWarning" Type="DateTime" Precision="0" />
+          <Property Name="DateAllPapersDue" Type="DateTime" Precision="0" />
+          <Property Name="SettlementDate" Type="DateTime" Precision="0" />
+          <Property Name="DateBackOfficeReceivedPapers" Type="DateTime" Precision="0" />
+          <Property Name="DateJudgeReceivedPapers" Type="DateTime" Precision="0" />
+          <Property Name="DateFullySubmitted" Type="DateTime" Precision="0" />
+          <Property Name="MotionPositionFullySubmitted" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="MovingAttorneyId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="MovingAttorneyFirmName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DecisionComment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DecisionDataEntryTimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="MultipeReliefFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Answer2214Flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Attorney">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyOfRecordId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="NameAttorneyOfRecord" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NotifyAttorneyOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TrialCounselId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="TrialCounselName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NotifyTrialCounsel" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PartyIndicator" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumOfAttorneysRetained" Type="Int32" />
+          <Property Name="DateFirstRetainerStatementFiled" Type="DateTime" Precision="0" />
+          <Property Name="DateCurrentRetainerStatementFiled" Type="DateTime" Precision="0" />
+          <Property Name="DateAttorneyTerminated" Type="DateTime" Precision="0" />
+          <Property Name="DateAttorneyClosingStatementFiled" Type="DateTime" Precision="0" />
+          <Property Name="AttorneyRegistrationNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Title">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="PlaintiffDetailedName" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+          <Property Name="Plaintiff" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+          <Property Name="DefendantDetailedName" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+          <Property Name="Defendant" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="GeneralData">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="KeyValue" />
+            <PropertyRef Name="Seq" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Seq" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="EnteredCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DataEntryDateTime" Type="DateTime" Precision="3" />
+          <Property Name="BookTypeId" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NumOfDebtorsOnDocument" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DataEntryOperatorId" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EffectiveDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <Property Name="SourceDocumentTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SourceCourtTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SourceCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CCISCountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SourceDocumentIndexNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CCISCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="SystemGeneratedFilingFee" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfAccident" Type="DateTime" Precision="0" />
+          <Property Name="DebtorCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorOccupation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyBlock" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyLot" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CompressedNameCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CompressedNameEntityType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CompressedName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyFirmName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="MoneyAmount" Type="Double" />
+          <Property Name="InterimDispositionId0" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId3" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId4" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId5" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId6" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId7" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId8" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId9" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SatisfactionDate" Type="DateTime" Precision="0" />
+          <Property Name="SatisfactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SheriffExecutionRequired" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SatifactionDataEntryOperator" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwAttorneyExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="CaseIndexNumber" />
+            <PropertyRef Name="SeqNumber" />
+            <PropertyRef Name="PartyIndicator" />
+          </Key>
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyOfRecordId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyOfRecordFirmName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NameAttorneyOfRecord" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NotifyAttorneyOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TrialCounselId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="TrialCounselFirmName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TrialCounselName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NotifyTrialCounsel" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PartyIndicator" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumOfAttorneysRetained" Type="Int32" />
+          <Property Name="DateFirstRetainerStatementFiled" Type="DateTime" Precision="0" />
+          <Property Name="DateCurrentRetainerStatementFiled" Type="DateTime" Precision="0" />
+          <Property Name="DateAttorneyTerminated" Type="DateTime" Precision="0" />
+          <Property Name="DateAttorneyClosingStatementFiled" Type="DateTime" Precision="0" />
+          <Property Name="AttorneyRegistrationNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ProseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwGeneralDataExpanded">
+          <Key>
+            <PropertyRef Name="CountyId" />
+            <PropertyRef Name="KeyValue" />
+            <PropertyRef Name="Seq" />
+            <PropertyRef Name="CCISCountyId" />
+            <PropertyRef Name="DebtorType" />
+            <PropertyRef Name="CreditorType" />
+            <PropertyRef Name="AttorneyType" />
+            <PropertyRef Name="ThirdPartyType" />
+          </Key>
+          <Property Name="County" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Seq" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="EnteredCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="EnteredCounty" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DataEntryDateTime" Type="DateTime" Precision="3" />
+          <Property Name="BookTypeId" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="BookTypeName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="NumOfDebtorsOnDocument" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DataEntryOperatorId" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EffectiveDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <Property Name="SourceDocumentTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SourceDocument" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SourceCourtTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SourceCourt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SourceCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CCISCountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SourceDocumentIndexNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CCISCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="SystemGeneratedFilingFee" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfAccident" Type="DateTime" Precision="0" />
+          <Property Name="DebtorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="DebtorOccupation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyCounty" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyBlock" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyLot" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CompressedNameCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CompressedNameEntityType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CompressedName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CreditorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyFirmName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AttorneyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="MoneyAmount" Type="Double" />
+          <Property Name="InterimDispositionId0" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition0" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition2" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId3" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition3" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId4" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition4" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId5" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition5" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId6" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition6" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId7" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition7" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId8" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition8" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDispositionId9" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="InterimDisposition9" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SatisfactionDate" Type="DateTime" Precision="0" />
+          <Property Name="SatisfactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SheriffExecutionRequired" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SatifactionDataEntryOperator" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="tfnGetCaseUpdates_Result">
+          <Property Type="String" Name="Entity" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="EntityReference" Nullable="true" MaxLength="22" />
+          <Property Type="String" Name="Operation" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="ColumnName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="NewValue" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="OldValue" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="TransactionDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DateTimeProcessed" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="RemarkData">
+          <Key>
+            <PropertyRef Name="RemarkId" />
+          </Key>
+          <Property Name="RemarkId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Seq" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="LineNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NYCOURTSModelStoreContainer" CdmEntityContainer="NYCOURTSEntities">
+          <EntitySetMapping Name="Cases">
+            <EntityTypeMapping TypeName="NYCOURTSModel.Case">
+              <MappingFragment StoreEntitySet="Case">
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CaseIndexNumberExternal" ColumnName="CaseIndexNumberExternal" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CourtType" ColumnName="CourtType" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="PostDispositionIndicator" ColumnName="PostDispositionIndicator" />
+                <ScalarProperty Name="CourtCalendarNumber" ColumnName="CourtCalendarNumber" />
+                <ScalarProperty Name="PremliminaryConferenceIndicator" ColumnName="PremliminaryConferenceIndicator" />
+                <ScalarProperty Name="NumberOfComments" ColumnName="NumberOfComments" />
+                <ScalarProperty Name="PreIASJHOId" ColumnName="PreIASJHOId" />
+                <ScalarProperty Name="PreIASTAPId" ColumnName="PreIASTAPId" />
+                <ScalarProperty Name="PlaintiffName" ColumnName="PlaintiffName" />
+                <ScalarProperty Name="DefendantName" ColumnName="DefendantName" />
+                <ScalarProperty Name="MunicipalityInvolvement" ColumnName="MunicipalityInvolvement" />
+                <ScalarProperty Name="CaseComplexity" ColumnName="CaseComplexity" />
+                <ScalarProperty Name="RJIDispositionDeadlineDate" ColumnName="RJIDispositionDeadlineDate" />
+                <ScalarProperty Name="RJIPreNOIDeadlineDate" ColumnName="RJIPreNOIDeadlineDate" />
+                <ScalarProperty Name="PostNOIDispositionDeadlineDate" ColumnName="PostNOIDispositionDeadlineDate" />
+                <ScalarProperty Name="DateRJIFiled" ColumnName="DateRJIFiled" />
+                <ScalarProperty Name="DateNOIFiled" ColumnName="DateNOIFiled" />
+                <ScalarProperty Name="TimeStampNOIEntered" ColumnName="TimeStampNOIEntered" />
+                <ScalarProperty Name="DateIssueJoined" ColumnName="DateIssueJoined" />
+                <ScalarProperty Name="JuryStatus1" ColumnName="JuryStatus1" />
+                <ScalarProperty Name="JuryStatusRequestDate1" ColumnName="JuryStatusRequestDate1" />
+                <ScalarProperty Name="JuryStatus2" ColumnName="JuryStatus2" />
+                <ScalarProperty Name="JuryStatusRequestDate2" ColumnName="JuryStatusRequestDate2" />
+                <ScalarProperty Name="JuryStatus3" ColumnName="JuryStatus3" />
+                <ScalarProperty Name="JuryStatusRequestDate3" ColumnName="JuryStatusRequestDate3" />
+                <ScalarProperty Name="ActionOrCaseTypeId" ColumnName="ActionOrCaseTypeId" />
+                <ScalarProperty Name="ActionOrCaseTypeDescription" ColumnName="ActionOrCaseTypeDescription" />
+                <ScalarProperty Name="DamagesSought" ColumnName="DamagesSought" />
+                <ScalarProperty Name="GeneralPreference" ColumnName="GeneralPreference" />
+                <ScalarProperty Name="SpecialPreference" ColumnName="SpecialPreference" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="JoinedCasePreviousIndex" ColumnName="JoinedCasePreviousIndex" />
+                <ScalarProperty Name="JoinedCaseNextIndex" ColumnName="JoinedCaseNextIndex" />
+                <ScalarProperty Name="RJITypeCode" ColumnName="RJITypeCode" />
+                <ScalarProperty Name="TypeOfRJI" ColumnName="TypeOfRJI" />
+                <ScalarProperty Name="DateOfRJI" ColumnName="DateOfRJI" />
+                <ScalarProperty Name="RJICourtPartId" ColumnName="RJICourtPartId" />
+                <ScalarProperty Name="CommentForOtherRJIType" ColumnName="CommentForOtherRJIType" />
+                <ScalarProperty Name="EstimatedTrialTime" ColumnName="EstimatedTrialTime" />
+                <ScalarProperty Name="ActualTrialTime" ColumnName="ActualTrialTime" />
+                <ScalarProperty Name="PropertySection" ColumnName="PropertySection" />
+                <ScalarProperty Name="PropertyBlock" ColumnName="PropertyBlock" />
+                <ScalarProperty Name="PropertyLot" ColumnName="PropertyLot" />
+                <ScalarProperty Name="PropertySchoolDistrict" ColumnName="PropertySchoolDistrict" />
+                <ScalarProperty Name="AssessmentAmount" ColumnName="AssessmentAmount" />
+                <ScalarProperty Name="AmountAwarded" ColumnName="AmountAwarded" />
+                <ScalarProperty Name="LandUse" ColumnName="LandUse" />
+                <ScalarProperty Name="PreliminaryCalendarNumber" ColumnName="PreliminaryCalendarNumber" />
+                <ScalarProperty Name="IASCategoryId" ColumnName="IASCategoryId" />
+                <ScalarProperty Name="IASJudgeId" ColumnName="IASJudgeId" />
+                <ScalarProperty Name="IASAssignmentDate" ColumnName="IASAssignmentDate" />
+                <ScalarProperty Name="TimeStampLastIASInformationEntered" ColumnName="TimeStampLastIASInformationEntered" />
+                <ScalarProperty Name="PostDispositionActionJudgeId" ColumnName="PostDispositionActionJudgeId" />
+                <ScalarProperty Name="PROSEIndicator" ColumnName="PROSEIndicator" />
+                <ScalarProperty Name="AmountSuedFor" ColumnName="AmountSuedFor" />
+                <ScalarProperty Name="BillOfParticularServed" ColumnName="BillOfParticularServed" />
+                <ScalarProperty Name="NumberOfTitleRecords" ColumnName="NumberOfTitleRecords" />
+                <ScalarProperty Name="NumberOfAttorneyRecords" ColumnName="NumberOfAttorneyRecords" />
+                <ScalarProperty Name="NumberOfCarrierRecords" ColumnName="NumberOfCarrierRecords" />
+                <ScalarProperty Name="DateRJIEntered" ColumnName="DateRJIEntered" />
+                <ScalarProperty Name="DateCertOfReadinessFiled" ColumnName="DateCertOfReadinessFiled" />
+                <ScalarProperty Name="CertOfReadinessDueDate" ColumnName="CertOfReadinessDueDate" />
+                <ScalarProperty Name="NOIDueDate" ColumnName="NOIDueDate" />
+                <ScalarProperty Name="LatestStatusConferenceSchdDate" ColumnName="LatestStatusConferenceSchdDate" />
+                <ScalarProperty Name="LatestStatusConferenceHeldDate" ColumnName="LatestStatusConferenceHeldDate" />
+                <ScalarProperty Name="LatestPreTrialConfSchdDate" ColumnName="LatestPreTrialConfSchdDate" />
+                <ScalarProperty Name="LatestPreTrialConferenceHeldDate" ColumnName="LatestPreTrialConferenceHeldDate" />
+                <ScalarProperty Name="LatestPreliminaryConferenceReqDate" ColumnName="LatestPreliminaryConferenceReqDate" />
+                <ScalarProperty Name="LatestPreliminaryConferenceSchdDate" ColumnName="LatestPreliminaryConferenceSchdDate" />
+                <ScalarProperty Name="PreliminaryConferenceHeldDate" ColumnName="PreliminaryConferenceHeldDate" />
+                <ScalarProperty Name="ComplianceConferenceSchdDate" ColumnName="ComplianceConferenceSchdDate" />
+                <ScalarProperty Name="ComplianceConferenceHeldDate" ColumnName="ComplianceConferenceHeldDate" />
+                <ScalarProperty Name="LastComplianceConferenceDate" ColumnName="LastComplianceConferenceDate" />
+                <ScalarProperty Name="PrivateCaseIndicator" ColumnName="PrivateCaseIndicator" />
+                <ScalarProperty Name="IsEfiled" ColumnName="IsEfiled" />
+                <ScalarProperty Name="DateOfGoodService" ColumnName="DateOfGoodService" />
+                <ScalarProperty Name="DateForeclosureSettelementConfScheduled" ColumnName="DateForeclosureSettelementConfScheduled" />
+                <ScalarProperty Name="DateForeclosureSettelementConfHeld" ColumnName="DateForeclosureSettelementConfHeld" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appearances">
+            <EntityTypeMapping TypeName="NYCOURTSModel.Appearance">
+              <MappingFragment StoreEntitySet="Appearance">
+                <ScalarProperty Name="MotionPositionNumber" ColumnName="MotionPositionNumber" />
+                <ScalarProperty Name="ConferenceNotePrintDate" ColumnName="ConferenceNotePrintDate" />
+                <ScalarProperty Name="Conferencebuilding" ColumnName="Conferencebuilding" />
+                <ScalarProperty Name="ConferenceGroup" ColumnName="ConferenceGroup" />
+                <ScalarProperty Name="Comments2" ColumnName="Comments2" />
+                <ScalarProperty Name="Comments1" ColumnName="Comments1" />
+                <ScalarProperty Name="AppearanceTypeDescription" ColumnName="AppearanceTypeDescription" />
+                <ScalarProperty Name="AppearanceType" ColumnName="AppearanceType" />
+                <ScalarProperty Name="CalendarMarkId" ColumnName="CalendarMarkId" />
+                <ScalarProperty Name="AssignedJudgeId" ColumnName="AssignedJudgeId" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="CourtPartsId" ColumnName="CourtPartsId" />
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="AppearanceDate" ColumnName="AppearanceDate" />
+                <ScalarProperty Name="MotionSeqNumber" ColumnName="MotionSeqNumber" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="AppearanceId" ColumnName="AppearanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Motions">
+            <EntityTypeMapping TypeName="NYCOURTSModel.Motion">
+              <MappingFragment StoreEntitySet="Motion">
+                <ScalarProperty Name="Answer2214Flag" ColumnName="Answer2214Flag" />
+                <ScalarProperty Name="MultipeReliefFlag" ColumnName="MultipeReliefFlag" />
+                <ScalarProperty Name="DecisionDataEntryTimeStamp" ColumnName="DecisionDataEntryTimeStamp" />
+                <ScalarProperty Name="DecisionComment" ColumnName="DecisionComment" />
+                <ScalarProperty Name="MovingAttorneyId" ColumnName="MovingAttorneyId" />
+                <ScalarProperty Name="MotionPositionFullySubmitted" ColumnName="MotionPositionFullySubmitted" />
+                <ScalarProperty Name="DateFullySubmitted" ColumnName="DateFullySubmitted" />
+                <ScalarProperty Name="DateJudgeReceivedPapers" ColumnName="DateJudgeReceivedPapers" />
+                <ScalarProperty Name="DateBackOfficeReceivedPapers" ColumnName="DateBackOfficeReceivedPapers" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="DateAllPapersDue" ColumnName="DateAllPapersDue" />
+                <ScalarProperty Name="Date50DayWarning" ColumnName="Date50DayWarning" />
+                <ScalarProperty Name="DateMotionDecisionDue" ColumnName="DateMotionDecisionDue" />
+                <ScalarProperty Name="ComplexityIndicator" ColumnName="ComplexityIndicator" />
+                <ScalarProperty Name="DaysToDecision" ColumnName="DaysToDecision" />
+                <ScalarProperty Name="ReferralCourtPartId" ColumnName="ReferralCourtPartId" />
+                <ScalarProperty Name="ReferralDate" ColumnName="ReferralDate" />
+                <ScalarProperty Name="TransferComment" ColumnName="TransferComment" />
+                <ScalarProperty Name="ConsolidatedCalendarNumber" ColumnName="ConsolidatedCalendarNumber" />
+                <ScalarProperty Name="ConsolidatedIndexNumber" ColumnName="ConsolidatedIndexNumber" />
+                <ScalarProperty Name="DateCountyClerkNotifiedOfOroder" ColumnName="DateCountyClerkNotifiedOfOroder" />
+                <ScalarProperty Name="AssignedJudgeId" ColumnName="AssignedJudgeId" />
+                <ScalarProperty Name="EffectOrDecisionId" ColumnName="EffectOrDecisionId" />
+                <ScalarProperty Name="DateOrderSigned" ColumnName="DateOrderSigned" />
+                <ScalarProperty Name="DecisionRendered" ColumnName="DecisionRendered" />
+                <ScalarProperty Name="DateDecisionOnMotionRendered" ColumnName="DateDecisionOnMotionRendered" />
+                <ScalarProperty Name="DatePapersFiledForOpposingParty" ColumnName="DatePapersFiledForOpposingParty" />
+                <ScalarProperty Name="DatePapersFiledForApplyingParty" ColumnName="DatePapersFiledForApplyingParty" />
+                <ScalarProperty Name="PartyOpposedToMotion" ColumnName="PartyOpposedToMotion" />
+                <ScalarProperty Name="PartyApplyingForMotion" ColumnName="PartyApplyingForMotion" />
+                <ScalarProperty Name="ReliefSoughtId" ColumnName="ReliefSoughtId" />
+                <ScalarProperty Name="ProceedingTypeId" ColumnName="ProceedingTypeId" />
+                <ScalarProperty Name="AdjournmetCounter" ColumnName="AdjournmetCounter" />
+                <ScalarProperty Name="PreviousCourtPartId" ColumnName="PreviousCourtPartId" />
+                <ScalarProperty Name="PreviousDate" ColumnName="PreviousDate" />
+                <ScalarProperty Name="OriginalCourtPartId" ColumnName="OriginalCourtPartId" />
+                <ScalarProperty Name="OriginalDateTimeStamp" ColumnName="OriginalDateTimeStamp" />
+                <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAppearanceExpandeds">
+            <EntityTypeMapping TypeName="NYCOURTSModel.vwAppearanceExpanded">
+              <MappingFragment StoreEntitySet="vwAppearanceExpanded">
+                <ScalarProperty Name="MotionPositionNumber" ColumnName="MotionPositionNumber" />
+                <ScalarProperty Name="ConferenceNotePrintDate" ColumnName="ConferenceNotePrintDate" />
+                <ScalarProperty Name="Conferencebuilding" ColumnName="Conferencebuilding" />
+                <ScalarProperty Name="ConferenceGroup" ColumnName="ConferenceGroup" />
+                <ScalarProperty Name="Comments2" ColumnName="Comments2" />
+                <ScalarProperty Name="Comments1" ColumnName="Comments1" />
+                <ScalarProperty Name="AppearanceTypeDescription" ColumnName="AppearanceTypeDescription" />
+                <ScalarProperty Name="AppearanceType" ColumnName="AppearanceType" />
+                <ScalarProperty Name="ActionAtAppearance" ColumnName="ActionAtAppearance" />
+                <ScalarProperty Name="CalendarMarkId" ColumnName="CalendarMarkId" />
+                <ScalarProperty Name="AssignedJudgeName" ColumnName="AssignedJudgeName" />
+                <ScalarProperty Name="AssignedJudgeId" ColumnName="AssignedJudgeId" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="CourtPart" ColumnName="CourtPart" />
+                <ScalarProperty Name="CourtPartsId" ColumnName="CourtPartsId" />
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="AppearanceDate" ColumnName="AppearanceDate" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="MotionSeqNumber" ColumnName="MotionSeqNumber" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwCaseExpandeds">
+            <EntityTypeMapping TypeName="NYCOURTSModel.vwCaseExpanded">
+              <MappingFragment StoreEntitySet="vwCaseExpanded">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="DateForeclosureSettelementConfHeld" ColumnName="DateForeclosureSettelementConfHeld" />
+                <ScalarProperty Name="DateForeclosureSettelementConfScheduled" ColumnName="DateForeclosureSettelementConfScheduled" />
+                <ScalarProperty Name="DateOfGoodService" ColumnName="DateOfGoodService" />
+                <ScalarProperty Name="IsEfiled" ColumnName="IsEfiled" />
+                <ScalarProperty Name="PrivateCaseIndicator" ColumnName="PrivateCaseIndicator" />
+                <ScalarProperty Name="LastComplianceConferenceDate" ColumnName="LastComplianceConferenceDate" />
+                <ScalarProperty Name="ComplianceConferenceHeldDate" ColumnName="ComplianceConferenceHeldDate" />
+                <ScalarProperty Name="ComplianceConferenceSchdDate" ColumnName="ComplianceConferenceSchdDate" />
+                <ScalarProperty Name="PreliminaryConferenceHeldDate" ColumnName="PreliminaryConferenceHeldDate" />
+                <ScalarProperty Name="LatestPreliminaryConferenceSchdDate" ColumnName="LatestPreliminaryConferenceSchdDate" />
+                <ScalarProperty Name="LatestPreliminaryConferenceReqDate" ColumnName="LatestPreliminaryConferenceReqDate" />
+                <ScalarProperty Name="LatestPreTrialConferenceHeldDate" ColumnName="LatestPreTrialConferenceHeldDate" />
+                <ScalarProperty Name="LatestPreTrialConfSchdDate" ColumnName="LatestPreTrialConfSchdDate" />
+                <ScalarProperty Name="LatestStatusConferenceHeldDate" ColumnName="LatestStatusConferenceHeldDate" />
+                <ScalarProperty Name="LatestStatusConferenceSchdDate" ColumnName="LatestStatusConferenceSchdDate" />
+                <ScalarProperty Name="NOIDueDate" ColumnName="NOIDueDate" />
+                <ScalarProperty Name="CertOfReadinessDueDate" ColumnName="CertOfReadinessDueDate" />
+                <ScalarProperty Name="DateCertOfReadinessFiled" ColumnName="DateCertOfReadinessFiled" />
+                <ScalarProperty Name="DateRJIEntered" ColumnName="DateRJIEntered" />
+                <ScalarProperty Name="NumberOfCarrierRecords" ColumnName="NumberOfCarrierRecords" />
+                <ScalarProperty Name="NumberOfAttorneyRecords" ColumnName="NumberOfAttorneyRecords" />
+                <ScalarProperty Name="NumberOfTitleRecords" ColumnName="NumberOfTitleRecords" />
+                <ScalarProperty Name="BillOfParticularServed" ColumnName="BillOfParticularServed" />
+                <ScalarProperty Name="AmountSuedFor" ColumnName="AmountSuedFor" />
+                <ScalarProperty Name="PROSEIndicator" ColumnName="PROSEIndicator" />
+                <ScalarProperty Name="PostDispositionActionJudgeName" ColumnName="PostDispositionActionJudgeName" />
+                <ScalarProperty Name="PostDispositionActionJudgeId" ColumnName="PostDispositionActionJudgeId" />
+                <ScalarProperty Name="TimeStampLastIASInformationEntered" ColumnName="TimeStampLastIASInformationEntered" />
+                <ScalarProperty Name="IASAssignmentDate" ColumnName="IASAssignmentDate" />
+                <ScalarProperty Name="IASJudgeName" ColumnName="IASJudgeName" />
+                <ScalarProperty Name="IASJudgeId" ColumnName="IASJudgeId" />
+                <ScalarProperty Name="IASCategory" ColumnName="IASCategory" />
+                <ScalarProperty Name="IASCategoryId" ColumnName="IASCategoryId" />
+                <ScalarProperty Name="PreliminaryCalendarNumber" ColumnName="PreliminaryCalendarNumber" />
+                <ScalarProperty Name="LandUse" ColumnName="LandUse" />
+                <ScalarProperty Name="AmountAwarded" ColumnName="AmountAwarded" />
+                <ScalarProperty Name="AssessmentAmount" ColumnName="AssessmentAmount" />
+                <ScalarProperty Name="PropertySchoolDistrict" ColumnName="PropertySchoolDistrict" />
+                <ScalarProperty Name="PropertyLot" ColumnName="PropertyLot" />
+                <ScalarProperty Name="PropertyBlock" ColumnName="PropertyBlock" />
+                <ScalarProperty Name="PropertySection" ColumnName="PropertySection" />
+                <ScalarProperty Name="ActualTrialTime" ColumnName="ActualTrialTime" />
+                <ScalarProperty Name="EstimatedTrialTime" ColumnName="EstimatedTrialTime" />
+                <ScalarProperty Name="CommentForOtherRJIType" ColumnName="CommentForOtherRJIType" />
+                <ScalarProperty Name="RJICourtPart" ColumnName="RJICourtPart" />
+                <ScalarProperty Name="RJICourtPartId" ColumnName="RJICourtPartId" />
+                <ScalarProperty Name="DateOfRJI" ColumnName="DateOfRJI" />
+                <ScalarProperty Name="TypeOfRJI" ColumnName="TypeOfRJI" />
+                <ScalarProperty Name="RJITypeCode" ColumnName="RJITypeCode" />
+                <ScalarProperty Name="JoinedCaseNextIndex" ColumnName="JoinedCaseNextIndex" />
+                <ScalarProperty Name="JoinedCasePreviousIndex" ColumnName="JoinedCasePreviousIndex" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="SpecialPreference" ColumnName="SpecialPreference" />
+                <ScalarProperty Name="GeneralPreference" ColumnName="GeneralPreference" />
+                <ScalarProperty Name="DamagesSought" ColumnName="DamagesSought" />
+                <ScalarProperty Name="ActionOrCaseTypeDescription" ColumnName="ActionOrCaseTypeDescription" />
+                <ScalarProperty Name="ActionOrCaseType" ColumnName="ActionOrCaseType" />
+                <ScalarProperty Name="ActionOrCaseTypeId" ColumnName="ActionOrCaseTypeId" />
+                <ScalarProperty Name="JuryStatusRequestDate3" ColumnName="JuryStatusRequestDate3" />
+                <ScalarProperty Name="JuryStatus3" ColumnName="JuryStatus3" />
+                <ScalarProperty Name="JuryStatusRequestDate2" ColumnName="JuryStatusRequestDate2" />
+                <ScalarProperty Name="JuryStatus2" ColumnName="JuryStatus2" />
+                <ScalarProperty Name="JuryStatusRequestDate1" ColumnName="JuryStatusRequestDate1" />
+                <ScalarProperty Name="JuryStatus1" ColumnName="JuryStatus1" />
+                <ScalarProperty Name="DateIssueJoined" ColumnName="DateIssueJoined" />
+                <ScalarProperty Name="TimeStampNOIEntered" ColumnName="TimeStampNOIEntered" />
+                <ScalarProperty Name="DateNOIFiled" ColumnName="DateNOIFiled" />
+                <ScalarProperty Name="DateRJIFiled" ColumnName="DateRJIFiled" />
+                <ScalarProperty Name="PostNOIDispositionDeadlineDate" ColumnName="PostNOIDispositionDeadlineDate" />
+                <ScalarProperty Name="RJIPreNOIDeadlineDate" ColumnName="RJIPreNOIDeadlineDate" />
+                <ScalarProperty Name="RJIDispositionDeadlineDate" ColumnName="RJIDispositionDeadlineDate" />
+                <ScalarProperty Name="CaseComplexity" ColumnName="CaseComplexity" />
+                <ScalarProperty Name="MunicipalityInvolvement" ColumnName="MunicipalityInvolvement" />
+                <ScalarProperty Name="DefendantName" ColumnName="DefendantName" />
+                <ScalarProperty Name="PlaintiffName" ColumnName="PlaintiffName" />
+                <ScalarProperty Name="PreIASTAPName" ColumnName="PreIASTAPName" />
+                <ScalarProperty Name="PreIASTAPId" ColumnName="PreIASTAPId" />
+                <ScalarProperty Name="PreIASJHOName" ColumnName="PreIASJHOName" />
+                <ScalarProperty Name="PreIASJHOId" ColumnName="PreIASJHOId" />
+                <ScalarProperty Name="NumberOfComments" ColumnName="NumberOfComments" />
+                <ScalarProperty Name="PremliminaryConferenceIndicator" ColumnName="PremliminaryConferenceIndicator" />
+                <ScalarProperty Name="CourtCalendarNumber" ColumnName="CourtCalendarNumber" />
+                <ScalarProperty Name="PostDispositionIndicator" ColumnName="PostDispositionIndicator" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="CourtType" ColumnName="CourtType" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CaseIndexNumberExternal" ColumnName="CaseIndexNumberExternal" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwMotionExpandeds">
+            <EntityTypeMapping TypeName="NYCOURTSModel.vwMotionExpanded">
+              <MappingFragment StoreEntitySet="vwMotionExpanded">
+                <ScalarProperty Name="Answer2214Flag" ColumnName="Answer2214Flag" />
+                <ScalarProperty Name="MultipeReliefFlag" ColumnName="MultipeReliefFlag" />
+                <ScalarProperty Name="DecisionDataEntryTimeStamp" ColumnName="DecisionDataEntryTimeStamp" />
+                <ScalarProperty Name="DecisionComment" ColumnName="DecisionComment" />
+                <ScalarProperty Name="MovingAttorneyFirmName" ColumnName="MovingAttorneyFirmName" />
+                <ScalarProperty Name="MovingAttorneyId" ColumnName="MovingAttorneyId" />
+                <ScalarProperty Name="MotionPositionFullySubmitted" ColumnName="MotionPositionFullySubmitted" />
+                <ScalarProperty Name="DateFullySubmitted" ColumnName="DateFullySubmitted" />
+                <ScalarProperty Name="DateJudgeReceivedPapers" ColumnName="DateJudgeReceivedPapers" />
+                <ScalarProperty Name="DateBackOfficeReceivedPapers" ColumnName="DateBackOfficeReceivedPapers" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="DateAllPapersDue" ColumnName="DateAllPapersDue" />
+                <ScalarProperty Name="Date50DayWarning" ColumnName="Date50DayWarning" />
+                <ScalarProperty Name="DateMotionDecisionDue" ColumnName="DateMotionDecisionDue" />
+                <ScalarProperty Name="ComplexityIndicator" ColumnName="ComplexityIndicator" />
+                <ScalarProperty Name="DaysToDecision" ColumnName="DaysToDecision" />
+                <ScalarProperty Name="ReferralCourtPart" ColumnName="ReferralCourtPart" />
+                <ScalarProperty Name="ReferralCourtPartId" ColumnName="ReferralCourtPartId" />
+                <ScalarProperty Name="ReferralDate" ColumnName="ReferralDate" />
+                <ScalarProperty Name="TransferComment" ColumnName="TransferComment" />
+                <ScalarProperty Name="ConsolidatedCalendarNumber" ColumnName="ConsolidatedCalendarNumber" />
+                <ScalarProperty Name="ConsolidatedIndexNumber" ColumnName="ConsolidatedIndexNumber" />
+                <ScalarProperty Name="DateCountyClerkNotifiedOfOroder" ColumnName="DateCountyClerkNotifiedOfOroder" />
+                <ScalarProperty Name="AssignedJudgeName" ColumnName="AssignedJudgeName" />
+                <ScalarProperty Name="AssignedJudgeId" ColumnName="AssignedJudgeId" />
+                <ScalarProperty Name="EffectOrDecision" ColumnName="EffectOrDecision" />
+                <ScalarProperty Name="EffectOrDecisionId" ColumnName="EffectOrDecisionId" />
+                <ScalarProperty Name="DateOrderSigned" ColumnName="DateOrderSigned" />
+                <ScalarProperty Name="DecisionRendered" ColumnName="DecisionRendered" />
+                <ScalarProperty Name="DateDecisionOnMotionRendered" ColumnName="DateDecisionOnMotionRendered" />
+                <ScalarProperty Name="DatePapersFiledForOpposingParty" ColumnName="DatePapersFiledForOpposingParty" />
+                <ScalarProperty Name="DatePapersFiledForApplyingParty" ColumnName="DatePapersFiledForApplyingParty" />
+                <ScalarProperty Name="PartyOpposedToMotion" ColumnName="PartyOpposedToMotion" />
+                <ScalarProperty Name="PartyApplyingForMotion" ColumnName="PartyApplyingForMotion" />
+                <ScalarProperty Name="ReliefSought" ColumnName="ReliefSought" />
+                <ScalarProperty Name="ReliefSoughtId" ColumnName="ReliefSoughtId" />
+                <ScalarProperty Name="ProceedingType" ColumnName="ProceedingType" />
+                <ScalarProperty Name="ProceedingTypeId" ColumnName="ProceedingTypeId" />
+                <ScalarProperty Name="AdjournmetCounter" ColumnName="AdjournmetCounter" />
+                <ScalarProperty Name="PreviousCourtPart" ColumnName="PreviousCourtPart" />
+                <ScalarProperty Name="PreviousCourtPartId" ColumnName="PreviousCourtPartId" />
+                <ScalarProperty Name="PreviousDate" ColumnName="PreviousDate" />
+                <ScalarProperty Name="OriginalCourtPart" ColumnName="OriginalCourtPart" />
+                <ScalarProperty Name="OriginalCourtPartId" ColumnName="OriginalCourtPartId" />
+                <ScalarProperty Name="OriginalDateTimeStamp" ColumnName="OriginalDateTimeStamp" />
+                <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+                <ScalarProperty Name="DataEntryDate" ColumnName="DataEntryDate" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attorneys">
+            <EntityTypeMapping TypeName="NYCOURTSModel.Attorney">
+              <MappingFragment StoreEntitySet="Attorney">
+                <ScalarProperty Name="ProseIndicator" ColumnName="ProseIndicator" />
+                <ScalarProperty Name="AttorneyRegistrationNumber" ColumnName="AttorneyRegistrationNumber" />
+                <ScalarProperty Name="DateAttorneyClosingStatementFiled" ColumnName="DateAttorneyClosingStatementFiled" />
+                <ScalarProperty Name="DateAttorneyTerminated" ColumnName="DateAttorneyTerminated" />
+                <ScalarProperty Name="DateCurrentRetainerStatementFiled" ColumnName="DateCurrentRetainerStatementFiled" />
+                <ScalarProperty Name="DateFirstRetainerStatementFiled" ColumnName="DateFirstRetainerStatementFiled" />
+                <ScalarProperty Name="NumOfAttorneysRetained" ColumnName="NumOfAttorneysRetained" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="PartyIndicator" ColumnName="PartyIndicator" />
+                <ScalarProperty Name="NotifyTrialCounsel" ColumnName="NotifyTrialCounsel" />
+                <ScalarProperty Name="TrialCounselName" ColumnName="TrialCounselName" />
+                <ScalarProperty Name="TrialCounselId" ColumnName="TrialCounselId" />
+                <ScalarProperty Name="NotifyAttorneyOfRecord" ColumnName="NotifyAttorneyOfRecord" />
+                <ScalarProperty Name="NameAttorneyOfRecord" ColumnName="NameAttorneyOfRecord" />
+                <ScalarProperty Name="AttorneyOfRecordId" ColumnName="AttorneyOfRecordId" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Titles">
+            <EntityTypeMapping TypeName="NYCOURTSModel.Title">
+              <MappingFragment StoreEntitySet="Title">
+                <ScalarProperty Name="Defendant" ColumnName="Defendant" />
+                <ScalarProperty Name="DefendantDetailedName" ColumnName="DefendantDetailedName" />
+                <ScalarProperty Name="Plaintiff" ColumnName="Plaintiff" />
+                <ScalarProperty Name="PlaintiffDetailedName" ColumnName="PlaintiffDetailedName" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeneralDatas">
+            <EntityTypeMapping TypeName="NYCOURTSModel.GeneralData">
+              <MappingFragment StoreEntitySet="GeneralData">
+                <ScalarProperty Name="SatifactionDataEntryOperator" ColumnName="SatifactionDataEntryOperator" />
+                <ScalarProperty Name="SheriffExecutionRequired" ColumnName="SheriffExecutionRequired" />
+                <ScalarProperty Name="SatisfactionType" ColumnName="SatisfactionType" />
+                <ScalarProperty Name="SatisfactionDate" ColumnName="SatisfactionDate" />
+                <ScalarProperty Name="InterimDispositionId9" ColumnName="InterimDispositionId9" />
+                <ScalarProperty Name="InterimDispositionId8" ColumnName="InterimDispositionId8" />
+                <ScalarProperty Name="InterimDispositionId7" ColumnName="InterimDispositionId7" />
+                <ScalarProperty Name="InterimDispositionId6" ColumnName="InterimDispositionId6" />
+                <ScalarProperty Name="InterimDispositionId5" ColumnName="InterimDispositionId5" />
+                <ScalarProperty Name="InterimDispositionId4" ColumnName="InterimDispositionId4" />
+                <ScalarProperty Name="InterimDispositionId3" ColumnName="InterimDispositionId3" />
+                <ScalarProperty Name="InterimDispositionId2" ColumnName="InterimDispositionId2" />
+                <ScalarProperty Name="InterimDispositionId1" ColumnName="InterimDispositionId1" />
+                <ScalarProperty Name="InterimDispositionId0" ColumnName="InterimDispositionId0" />
+                <ScalarProperty Name="MoneyAmount" ColumnName="MoneyAmount" />
+                <ScalarProperty Name="ThirdPartyZipExtended" ColumnName="ThirdPartyZipExtended" />
+                <ScalarProperty Name="ThirdPartyZip" ColumnName="ThirdPartyZip" />
+                <ScalarProperty Name="ThirdPartyCityState" ColumnName="ThirdPartyCityState" />
+                <ScalarProperty Name="ThirdPartyStreetName" ColumnName="ThirdPartyStreetName" />
+                <ScalarProperty Name="ThirdPartyStreetNumber" ColumnName="ThirdPartyStreetNumber" />
+                <ScalarProperty Name="ThirdPartyCompanyName" ColumnName="ThirdPartyCompanyName" />
+                <ScalarProperty Name="ThirdPartyMiddleName" ColumnName="ThirdPartyMiddleName" />
+                <ScalarProperty Name="ThirdPartyFirstName" ColumnName="ThirdPartyFirstName" />
+                <ScalarProperty Name="ThirdPartyLastName" ColumnName="ThirdPartyLastName" />
+                <ScalarProperty Name="ThirdPartyType" ColumnName="ThirdPartyType" />
+                <ScalarProperty Name="AttorneyZipExtended" ColumnName="AttorneyZipExtended" />
+                <ScalarProperty Name="AttorneyZip" ColumnName="AttorneyZip" />
+                <ScalarProperty Name="AttorneyCityState" ColumnName="AttorneyCityState" />
+                <ScalarProperty Name="AttorneyStreetName" ColumnName="AttorneyStreetName" />
+                <ScalarProperty Name="AttorneyStreetNumber" ColumnName="AttorneyStreetNumber" />
+                <ScalarProperty Name="AttorneyFirmName" ColumnName="AttorneyFirmName" />
+                <ScalarProperty Name="AttorneyMiddleName" ColumnName="AttorneyMiddleName" />
+                <ScalarProperty Name="AttorneyFirstName" ColumnName="AttorneyFirstName" />
+                <ScalarProperty Name="AttorneyLastName" ColumnName="AttorneyLastName" />
+                <ScalarProperty Name="AttorneyType" ColumnName="AttorneyType" />
+                <ScalarProperty Name="CreditorZipExtended" ColumnName="CreditorZipExtended" />
+                <ScalarProperty Name="CreditorZip" ColumnName="CreditorZip" />
+                <ScalarProperty Name="CreditorCityState" ColumnName="CreditorCityState" />
+                <ScalarProperty Name="CreditorStreetName" ColumnName="CreditorStreetName" />
+                <ScalarProperty Name="CreditorStreetNumber" ColumnName="CreditorStreetNumber" />
+                <ScalarProperty Name="CreditorCompanyName" ColumnName="CreditorCompanyName" />
+                <ScalarProperty Name="CreditorMiddleName" ColumnName="CreditorMiddleName" />
+                <ScalarProperty Name="CreditorFirstName" ColumnName="CreditorFirstName" />
+                <ScalarProperty Name="CreditorLastName" ColumnName="CreditorLastName" />
+                <ScalarProperty Name="CreditorType" ColumnName="CreditorType" />
+                <ScalarProperty Name="CompressedName" ColumnName="CompressedName" />
+                <ScalarProperty Name="CompressedNameEntityType" ColumnName="CompressedNameEntityType" />
+                <ScalarProperty Name="CompressedNameCountyId" ColumnName="CompressedNameCountyId" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="PropertyLot" ColumnName="PropertyLot" />
+                <ScalarProperty Name="PropertyBlock" ColumnName="PropertyBlock" />
+                <ScalarProperty Name="PropertyCountyId" ColumnName="PropertyCountyId" />
+                <ScalarProperty Name="DebtorOccupation" ColumnName="DebtorOccupation" />
+                <ScalarProperty Name="DebtorZipExtended" ColumnName="DebtorZipExtended" />
+                <ScalarProperty Name="DebtorZip" ColumnName="DebtorZip" />
+                <ScalarProperty Name="DebtorCityState" ColumnName="DebtorCityState" />
+                <ScalarProperty Name="DebtorStreetName" ColumnName="DebtorStreetName" />
+                <ScalarProperty Name="DebtorStreetNumber" ColumnName="DebtorStreetNumber" />
+                <ScalarProperty Name="DebtorCompanyName" ColumnName="DebtorCompanyName" />
+                <ScalarProperty Name="DebtorMiddleName" ColumnName="DebtorMiddleName" />
+                <ScalarProperty Name="DebtorFirstName" ColumnName="DebtorFirstName" />
+                <ScalarProperty Name="DebtorLastName" ColumnName="DebtorLastName" />
+                <ScalarProperty Name="DebtorType" ColumnName="DebtorType" />
+                <ScalarProperty Name="DebtorCountyId" ColumnName="DebtorCountyId" />
+                <ScalarProperty Name="DateOfAccident" ColumnName="DateOfAccident" />
+                <ScalarProperty Name="SystemGeneratedFilingFee" ColumnName="SystemGeneratedFilingFee" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="CCISCaseIndexNumber" ColumnName="CCISCaseIndexNumber" />
+                <ScalarProperty Name="SourceDocumentIndexNumber" ColumnName="SourceDocumentIndexNumber" />
+                <ScalarProperty Name="CCISCountyId" ColumnName="CCISCountyId" />
+                <ScalarProperty Name="SourceCountyId" ColumnName="SourceCountyId" />
+                <ScalarProperty Name="SourceCourtTypeId" ColumnName="SourceCourtTypeId" />
+                <ScalarProperty Name="SourceDocumentTypeId" ColumnName="SourceDocumentTypeId" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="EffectiveDateTime" ColumnName="EffectiveDateTime" />
+                <ScalarProperty Name="DataEntryOperatorId" ColumnName="DataEntryOperatorId" />
+                <ScalarProperty Name="NumOfDebtorsOnDocument" ColumnName="NumOfDebtorsOnDocument" />
+                <ScalarProperty Name="BookTypeId" ColumnName="BookTypeId" />
+                <ScalarProperty Name="DataEntryDateTime" ColumnName="DataEntryDateTime" />
+                <ScalarProperty Name="EnteredCountyId" ColumnName="EnteredCountyId" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAttorneyExpandeds">
+            <EntityTypeMapping TypeName="NYCOURTSModel.vwAttorneyExpanded">
+              <MappingFragment StoreEntitySet="vwAttorneyExpanded">
+                <ScalarProperty Name="ProseIndicator" ColumnName="ProseIndicator" />
+                <ScalarProperty Name="AttorneyRegistrationNumber" ColumnName="AttorneyRegistrationNumber" />
+                <ScalarProperty Name="DateAttorneyClosingStatementFiled" ColumnName="DateAttorneyClosingStatementFiled" />
+                <ScalarProperty Name="DateAttorneyTerminated" ColumnName="DateAttorneyTerminated" />
+                <ScalarProperty Name="DateCurrentRetainerStatementFiled" ColumnName="DateCurrentRetainerStatementFiled" />
+                <ScalarProperty Name="DateFirstRetainerStatementFiled" ColumnName="DateFirstRetainerStatementFiled" />
+                <ScalarProperty Name="NumOfAttorneysRetained" ColumnName="NumOfAttorneysRetained" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="PartyIndicator" ColumnName="PartyIndicator" />
+                <ScalarProperty Name="NotifyTrialCounsel" ColumnName="NotifyTrialCounsel" />
+                <ScalarProperty Name="TrialCounselName" ColumnName="TrialCounselName" />
+                <ScalarProperty Name="TrialCounselFirmName" ColumnName="TrialCounselFirmName" />
+                <ScalarProperty Name="TrialCounselId" ColumnName="TrialCounselId" />
+                <ScalarProperty Name="NotifyAttorneyOfRecord" ColumnName="NotifyAttorneyOfRecord" />
+                <ScalarProperty Name="NameAttorneyOfRecord" ColumnName="NameAttorneyOfRecord" />
+                <ScalarProperty Name="AttorneyOfRecordFirmName" ColumnName="AttorneyOfRecordFirmName" />
+                <ScalarProperty Name="AttorneyOfRecordId" ColumnName="AttorneyOfRecordId" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwGeneralDataExpandeds">
+            <EntityTypeMapping TypeName="NYCOURTSModel.vwGeneralDataExpanded">
+              <MappingFragment StoreEntitySet="vwGeneralDataExpanded">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="SatifactionDataEntryOperator" ColumnName="SatifactionDataEntryOperator" />
+                <ScalarProperty Name="SheriffExecutionRequired" ColumnName="SheriffExecutionRequired" />
+                <ScalarProperty Name="SatisfactionType" ColumnName="SatisfactionType" />
+                <ScalarProperty Name="SatisfactionDate" ColumnName="SatisfactionDate" />
+                <ScalarProperty Name="InterimDisposition9" ColumnName="InterimDisposition9" />
+                <ScalarProperty Name="InterimDispositionId9" ColumnName="InterimDispositionId9" />
+                <ScalarProperty Name="InterimDisposition8" ColumnName="InterimDisposition8" />
+                <ScalarProperty Name="InterimDispositionId8" ColumnName="InterimDispositionId8" />
+                <ScalarProperty Name="InterimDisposition7" ColumnName="InterimDisposition7" />
+                <ScalarProperty Name="InterimDispositionId7" ColumnName="InterimDispositionId7" />
+                <ScalarProperty Name="InterimDisposition6" ColumnName="InterimDisposition6" />
+                <ScalarProperty Name="InterimDispositionId6" ColumnName="InterimDispositionId6" />
+                <ScalarProperty Name="InterimDisposition5" ColumnName="InterimDisposition5" />
+                <ScalarProperty Name="InterimDispositionId5" ColumnName="InterimDispositionId5" />
+                <ScalarProperty Name="InterimDisposition4" ColumnName="InterimDisposition4" />
+                <ScalarProperty Name="InterimDispositionId4" ColumnName="InterimDispositionId4" />
+                <ScalarProperty Name="InterimDisposition3" ColumnName="InterimDisposition3" />
+                <ScalarProperty Name="InterimDispositionId3" ColumnName="InterimDispositionId3" />
+                <ScalarProperty Name="InterimDisposition2" ColumnName="InterimDisposition2" />
+                <ScalarProperty Name="InterimDispositionId2" ColumnName="InterimDispositionId2" />
+                <ScalarProperty Name="InterimDisposition1" ColumnName="InterimDisposition1" />
+                <ScalarProperty Name="InterimDispositionId1" ColumnName="InterimDispositionId1" />
+                <ScalarProperty Name="InterimDisposition0" ColumnName="InterimDisposition0" />
+                <ScalarProperty Name="InterimDispositionId0" ColumnName="InterimDispositionId0" />
+                <ScalarProperty Name="MoneyAmount" ColumnName="MoneyAmount" />
+                <ScalarProperty Name="ThirdPartyZipExtended" ColumnName="ThirdPartyZipExtended" />
+                <ScalarProperty Name="ThirdPartyZip" ColumnName="ThirdPartyZip" />
+                <ScalarProperty Name="ThirdPartyCityState" ColumnName="ThirdPartyCityState" />
+                <ScalarProperty Name="ThirdPartyStreetName" ColumnName="ThirdPartyStreetName" />
+                <ScalarProperty Name="ThirdPartyStreetNumber" ColumnName="ThirdPartyStreetNumber" />
+                <ScalarProperty Name="ThirdPartyCompanyName" ColumnName="ThirdPartyCompanyName" />
+                <ScalarProperty Name="ThirdPartyMiddleName" ColumnName="ThirdPartyMiddleName" />
+                <ScalarProperty Name="ThirdPartyFirstName" ColumnName="ThirdPartyFirstName" />
+                <ScalarProperty Name="ThirdPartyLastName" ColumnName="ThirdPartyLastName" />
+                <ScalarProperty Name="ThirdPartyType" ColumnName="ThirdPartyType" />
+                <ScalarProperty Name="AttorneyZipExtended" ColumnName="AttorneyZipExtended" />
+                <ScalarProperty Name="AttorneyZip" ColumnName="AttorneyZip" />
+                <ScalarProperty Name="AttorneyCityState" ColumnName="AttorneyCityState" />
+                <ScalarProperty Name="AttorneyStreetName" ColumnName="AttorneyStreetName" />
+                <ScalarProperty Name="AttorneyStreetNumber" ColumnName="AttorneyStreetNumber" />
+                <ScalarProperty Name="AttorneyFirmName" ColumnName="AttorneyFirmName" />
+                <ScalarProperty Name="AttorneyMiddleName" ColumnName="AttorneyMiddleName" />
+                <ScalarProperty Name="AttorneyFirstName" ColumnName="AttorneyFirstName" />
+                <ScalarProperty Name="AttorneyLastName" ColumnName="AttorneyLastName" />
+                <ScalarProperty Name="AttorneyType" ColumnName="AttorneyType" />
+                <ScalarProperty Name="CreditorZipExtended" ColumnName="CreditorZipExtended" />
+                <ScalarProperty Name="CreditorZip" ColumnName="CreditorZip" />
+                <ScalarProperty Name="CreditorCityState" ColumnName="CreditorCityState" />
+                <ScalarProperty Name="CreditorStreetName" ColumnName="CreditorStreetName" />
+                <ScalarProperty Name="CreditorStreetNumber" ColumnName="CreditorStreetNumber" />
+                <ScalarProperty Name="CreditorCompanyName" ColumnName="CreditorCompanyName" />
+                <ScalarProperty Name="CreditorMiddleName" ColumnName="CreditorMiddleName" />
+                <ScalarProperty Name="CreditorFirstName" ColumnName="CreditorFirstName" />
+                <ScalarProperty Name="CreditorLastName" ColumnName="CreditorLastName" />
+                <ScalarProperty Name="CreditorType" ColumnName="CreditorType" />
+                <ScalarProperty Name="CompressedName" ColumnName="CompressedName" />
+                <ScalarProperty Name="CompressedNameEntityType" ColumnName="CompressedNameEntityType" />
+                <ScalarProperty Name="CompressedNameCountyId" ColumnName="CompressedNameCountyId" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="PropertyLot" ColumnName="PropertyLot" />
+                <ScalarProperty Name="PropertyBlock" ColumnName="PropertyBlock" />
+                <ScalarProperty Name="PropertyCountyId" ColumnName="PropertyCountyId" />
+                <ScalarProperty Name="PropertyCounty" ColumnName="PropertyCounty" />
+                <ScalarProperty Name="DebtorOccupation" ColumnName="DebtorOccupation" />
+                <ScalarProperty Name="DebtorZipExtended" ColumnName="DebtorZipExtended" />
+                <ScalarProperty Name="DebtorZip" ColumnName="DebtorZip" />
+                <ScalarProperty Name="DebtorCityState" ColumnName="DebtorCityState" />
+                <ScalarProperty Name="DebtorStreetName" ColumnName="DebtorStreetName" />
+                <ScalarProperty Name="DebtorStreetNumber" ColumnName="DebtorStreetNumber" />
+                <ScalarProperty Name="DebtorCompanyName" ColumnName="DebtorCompanyName" />
+                <ScalarProperty Name="DebtorMiddleName" ColumnName="DebtorMiddleName" />
+                <ScalarProperty Name="DebtorFirstName" ColumnName="DebtorFirstName" />
+                <ScalarProperty Name="DebtorLastName" ColumnName="DebtorLastName" />
+                <ScalarProperty Name="DebtorType" ColumnName="DebtorType" />
+                <ScalarProperty Name="DateOfAccident" ColumnName="DateOfAccident" />
+                <ScalarProperty Name="SystemGeneratedFilingFee" ColumnName="SystemGeneratedFilingFee" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="CCISCaseIndexNumber" ColumnName="CCISCaseIndexNumber" />
+                <ScalarProperty Name="SourceDocumentIndexNumber" ColumnName="SourceDocumentIndexNumber" />
+                <ScalarProperty Name="CCISCountyId" ColumnName="CCISCountyId" />
+                <ScalarProperty Name="SourceCountyId" ColumnName="SourceCountyId" />
+                <ScalarProperty Name="SourceCourt" ColumnName="SourceCourt" />
+                <ScalarProperty Name="SourceCourtTypeId" ColumnName="SourceCourtTypeId" />
+                <ScalarProperty Name="SourceDocument" ColumnName="SourceDocument" />
+                <ScalarProperty Name="SourceDocumentTypeId" ColumnName="SourceDocumentTypeId" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="EffectiveDateTime" ColumnName="EffectiveDateTime" />
+                <ScalarProperty Name="DataEntryOperatorId" ColumnName="DataEntryOperatorId" />
+                <ScalarProperty Name="NumOfDebtorsOnDocument" ColumnName="NumOfDebtorsOnDocument" />
+                <ScalarProperty Name="BookTypeName" ColumnName="BookTypeName" />
+                <ScalarProperty Name="BookTypeId" ColumnName="BookTypeId" />
+                <ScalarProperty Name="DataEntryDateTime" ColumnName="DataEntryDateTime" />
+                <ScalarProperty Name="EnteredCounty" ColumnName="EnteredCounty" />
+                <ScalarProperty Name="EnteredCountyId" ColumnName="EnteredCountyId" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="County" ColumnName="County" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetCaseUpdates" FunctionName="NYCOURTSModel.Store.tfnGetCaseUpdates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCaseUpdates_Result">
+                <ScalarProperty Name="Entity" ColumnName="Entity" />
+                <ScalarProperty Name="EntityReference" ColumnName="EntityReference" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="TransactionDateTime" ColumnName="TransactionDateTime" />
+                <ScalarProperty Name="DateTimeProcessed" ColumnName="DateTimeProcessed" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="RemarkDatas">
+            <EntityTypeMapping TypeName="NYCOURTSModel.RemarkData">
+              <MappingFragment StoreEntitySet="RemarkData">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
