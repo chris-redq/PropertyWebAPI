@@ -45,3 +45,5 @@ C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\eCourtsWebAPI.dll
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\eCourtsWebAPI.pdb
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\obj\Debug\eCourtsWebAPI.dll
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\obj\Debug\eCourtsWebAPI.pdb
+C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\WebAPISecurityDB.dll
+C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\WebAPISecurityDB.pdb

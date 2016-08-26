@@ -45,3 +45,5 @@ C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\System.Web.Http.W
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\obj\Release\eCourtsWebAPI.csprojResolveAssemblyReference.cache
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\obj\Release\eCourtsWebAPI.dll
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\obj\Release\eCourtsWebAPI.pdb
+C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\WebAPISecurityDB.dll
+C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\WebAPISecurityDB.pdb

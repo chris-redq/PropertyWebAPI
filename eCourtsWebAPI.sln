@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCourtsWebAPI", "eCourtsWeb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCourtsDB", "eCourtsDB\eCourtsDB.csproj", "{D93D40B6-428C-4628-9B06-E1FD2976465C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateKey", "CreateKey\CreateKey.csproj", "{581F46B5-E42B-417B-8080-321AD7963389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPISecurityDB", "WebAPISecurityDB\WebAPISecurityDB.csproj", "{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{D93D40B6-428C-4628-9B06-E1FD2976465C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D93D40B6-428C-4628-9B06-E1FD2976465C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D93D40B6-428C-4628-9B06-E1FD2976465C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581F46B5-E42B-417B-8080-321AD7963389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581F46B5-E42B-417B-8080-321AD7963389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581F46B5-E42B-417B-8080-321AD7963389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581F46B5-E42B-417B-8080-321AD7963389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

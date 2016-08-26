@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WebAPISecurityModelStoreContainer" CdmEntityContainer="WebAPISecurityEntities">
+    <EntitySetMapping Name="APIKeyUsers">
+      <EntityTypeMapping TypeName="WebAPISecurityModel.APIKeyUser">
+        <MappingFragment StoreEntitySet="APIKeyUser">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

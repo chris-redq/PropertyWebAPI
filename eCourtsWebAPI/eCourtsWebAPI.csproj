@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="APIKeySecurityHandler.cs" />
     <Compile Include="Controllers\CasesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,6 +151,10 @@
     <ProjectReference Include="..\eCourtsDB\eCourtsDB.csproj">
       <Project>{d93d40b6-428c-4628-9b06-e1fd2976465c}</Project>
       <Name>eCourtsDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebAPISecurityDB\WebAPISecurityDB.csproj">
+      <Project>{c0c00ed9-ddc7-4626-8817-482a6e5b5bd9}</Project>
+      <Name>WebAPISecurityDB</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

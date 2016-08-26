@@ -43,6 +43,9 @@ namespace eCourtsWebAPI
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{countyId}/{caseIndexNumber}",
                 defaults: new { countyId = RouteParameter.Optional, caseIndexNumber = RouteParameter.Optional });
+
+            // Configure APIKey Authentication Handler
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new APIKeySecurityHandler());
            
         }
     }

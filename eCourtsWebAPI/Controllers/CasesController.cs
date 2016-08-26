@@ -9,12 +9,13 @@ using System.Web.Http.Description;
 
 namespace eCourtsWebAPI.Controllers
 {
+    [Authorize]
     public class CasesController : ApiController
     {
         //NYCOURTSEntities nycourtsE = new NYCOURTSEntities();
 
         //../api/Cases/7326457
-         
+        
         [ResponseType(typeof(vwCaseExpanded))]
         public IHttpActionResult Get(string countyId, string caseIndexNumber)
         {
@@ -49,7 +50,6 @@ namespace eCourtsWebAPI.Controllers
             }
             return NotFound();
         }
-
 
         [Route("api/cases/{countyId}/{caseIndexNumber}/appearances")]
         [ResponseType(typeof(List<vwAppearanceExpanded>))]
