@@ -636,6 +636,22 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
     <Property Name="SatifactionDataEntryOperator" Type="varchar" MaxLength="8" />
     <Property Name="Remarks" Type="varchar(max)" />
   </EntityType>
+  <Function Name="tfnGetCasesForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
+    <Parameter Name="BBL" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="County" Type="varchar" MaxLength="25" />
+          <Property Name="FormattedCaseIndexNumber" Type="varchar" MaxLength="15" />
+          <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+          <Property Name="CaseDispositionDate" Type="date" />
+          <Property Name="CaseType" Type="varchar" MaxLength="30" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="tfnGetCaseUpdates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
     <Parameter Name="CountyId" Type="varchar" Mode="In" />
     <Parameter Name="CaseIndexNumber" Type="varchar" Mode="In" />

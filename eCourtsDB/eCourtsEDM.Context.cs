@@ -53,5 +53,15 @@ namespace eCourtsDB
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCaseUpdates_Result>("[NYCOURTSEntities].[tfnGetCaseUpdates](@CountyId, @CaseIndexNumber)", countyIdParameter, caseIndexNumberParameter);
         }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetCasesForaProperty")]
+        public virtual IQueryable<tfnGetCasesForaProperty_Result> tfnGetCasesForaProperty(string bBL)
+        {
+            var bBLParameter = bBL != null ?
+                new ObjectParameter("BBL", bBL) :
+                new ObjectParameter("BBL", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCasesForaProperty_Result>("[NYCOURTSEntities].[tfnGetCasesForaProperty](@BBL)", bBLParameter);
+        }
     }
 }

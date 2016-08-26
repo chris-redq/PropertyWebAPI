@@ -641,6 +641,22 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="SatifactionDataEntryOperator" Type="varchar" MaxLength="8" />
           <Property Name="Remarks" Type="varchar(max)" />
         </EntityType>
+        <Function Name="tfnGetCasesForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
+          <Parameter Name="BBL" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+                <Property Name="County" Type="varchar" MaxLength="25" />
+                <Property Name="FormattedCaseIndexNumber" Type="varchar" MaxLength="15" />
+                <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+                <Property Name="CaseDispositionDate" Type="date" />
+                <Property Name="CaseType" Type="varchar" MaxLength="30" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="tfnGetCaseUpdates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
           <Parameter Name="CountyId" Type="varchar" Mode="In" />
           <Parameter Name="CaseIndexNumber" Type="varchar" Mode="In" />
@@ -1077,6 +1093,9 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
             <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="RemarkDatas" EntityType="NYCOURTSModel.RemarkData" />
+          <FunctionImport Name="tfnGetCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCasesForaProperty_Result)">
+            <Parameter Name="BBL" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Appearance">
           <Key>
@@ -1626,6 +1645,15 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="LineNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="tfnGetCasesForaProperty_Result">
+          <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2256,6 +2284,19 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetCasesForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetCasesForaProperty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCasesForaProperty_Result">
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="FormattedCaseIndexNumber" ColumnName="FormattedCaseIndexNumber" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

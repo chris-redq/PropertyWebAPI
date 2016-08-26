@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="NYCOURTSEntities-Web.config Connection String" description="NYCOURTSEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/eCourtsEDM.csdl|res://*/eCourtsEDM.ssdl|res://*/eCourtsEDM.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=MIPSV001RAJ,4436;initial catalog=NYCOURTS;uid=sa;password=WPb7YLosuEkQ9suY;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\code\\Visual\ Studio\\Projects\\eCourtsWebAPI\\eCourtsWebAPI\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='NYCOURTSEntities']/@connectionString" />
+  </parameter>
+</parameters>

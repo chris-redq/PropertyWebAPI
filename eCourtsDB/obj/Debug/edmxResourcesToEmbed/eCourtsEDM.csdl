@@ -105,6 +105,9 @@
       <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="RemarkDatas" EntityType="NYCOURTSModel.RemarkData" />
+    <FunctionImport Name="tfnGetCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCasesForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Appearance">
     <Key>
@@ -654,4 +657,13 @@
     <Property Name="LineNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
     <Property Name="Remark" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
   </EntityType>
+  <ComplexType Name="tfnGetCasesForaProperty_Result">
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+  </ComplexType>
 </Schema>

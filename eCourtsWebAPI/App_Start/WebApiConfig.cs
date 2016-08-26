@@ -35,6 +35,11 @@ namespace eCourtsWebAPI
                defaults: new { controller = "Cases" });
 
             config.Routes.MapHttpRoute(
+               name: "CasesByBBL",
+               routeTemplate: "api/cases/{BBL}",
+               defaults: new { controller = "Cases" });
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{countyId}/{caseIndexNumber}",
                 defaults: new { countyId = RouteParameter.Optional, caseIndexNumber = RouteParameter.Optional });

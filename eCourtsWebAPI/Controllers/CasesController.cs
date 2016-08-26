@@ -11,7 +11,7 @@ namespace eCourtsWebAPI.Controllers
 {
     public class CasesController : ApiController
     {
-        NYCOURTSEntities nycourtsE = new NYCOURTSEntities();
+        //NYCOURTSEntities nycourtsE = new NYCOURTSEntities();
 
         //../api/Cases/7326457
          
@@ -21,9 +21,12 @@ namespace eCourtsWebAPI.Controllers
             //nycourtsE
             if (countyId.Length == 2 && caseIndexNumber.Length == 11)
             {
-                vwCaseExpanded caseObj= nycourtsE.vwCaseExpandeds.Find(countyId, caseIndexNumber);
-                if (caseObj != null)
-                    return Ok(caseObj);
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    vwCaseExpanded caseObj = nycourtsE.vwCaseExpandeds.Find(countyId, caseIndexNumber);
+                    if (caseObj != null)
+                        return Ok(caseObj);
+                }
             }
             return NotFound();
         }
@@ -35,9 +38,14 @@ namespace eCourtsWebAPI.Controllers
             //nycourtsE
             if (countyId.Length == 2 && caseIndexNumber.Length == 11)
             {
-                List<vwMotionExpanded> motions = nycourtsE.vwMotionExpandeds.Where(i => i.CountyId == countyId && i.CaseIndexNumber == caseIndexNumber).OrderByDescending(m=> m.SeqNumber).ToList<vwMotionExpanded>();
-                if (motions != null)
-                    return Ok(motions);
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    List<vwMotionExpanded> motions = nycourtsE.vwMotionExpandeds
+                                                        .Where(i => i.CountyId == countyId && i.CaseIndexNumber == caseIndexNumber)
+                                                        .OrderByDescending(m => m.SeqNumber).ToList<vwMotionExpanded>();
+                    if (motions != null)
+                        return Ok(motions);
+                }
             }
             return NotFound();
         }
@@ -50,9 +58,14 @@ namespace eCourtsWebAPI.Controllers
             //nycourtsE
             if (countyId.Length == 2 && caseIndexNumber.Length == 11)
             {
-                List<vwAppearanceExpanded> appearances = nycourtsE.vwAppearanceExpandeds.Where(i => i.CountyId == countyId && i.CaseIndexNumber == caseIndexNumber).OrderBy(m=> m.AppearanceDate).ToList<vwAppearanceExpanded>();
-                if (appearances != null)
-                    return Ok(appearances);
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    List<vwAppearanceExpanded> appearances = nycourtsE.vwAppearanceExpandeds
+                                                                .Where(i => i.CountyId == countyId && i.CaseIndexNumber == caseIndexNumber)
+                                                                .OrderBy(m => m.AppearanceDate).ToList<vwAppearanceExpanded>();
+                    if (appearances != null)
+                        return Ok(appearances);
+                }
             }
             return NotFound();
         }
@@ -64,9 +77,14 @@ namespace eCourtsWebAPI.Controllers
             //nycourtsE
             if (countyId.Length == 2 && caseIndexNumber.Length == 11)
             {
-                List<vwAttorneyExpanded> attorneys = nycourtsE.vwAttorneyExpandeds.Where(i => i.CountyId == countyId && i.CaseIndexNumber == caseIndexNumber).OrderByDescending(m => m.SeqNumber).ToList<vwAttorneyExpanded>();
-                if (attorneys != null)
-                    return Ok(attorneys);
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    List<vwAttorneyExpanded> attorneys = nycourtsE.vwAttorneyExpandeds
+                                                            .Where(i => i.CountyId == countyId && i.CaseIndexNumber == caseIndexNumber)
+                                                            .OrderByDescending(m => m.SeqNumber).ToList<vwAttorneyExpanded>();
+                    if (attorneys != null)
+                        return Ok(attorneys);
+                }
             }
             return NotFound();
         }
@@ -78,11 +96,32 @@ namespace eCourtsWebAPI.Controllers
             //nycourtsE
             if (countyId.Length == 2 && caseIndexNumber.Length == 11)
             {
-                List<tfnGetCaseUpdates_Result> historyRecords = nycourtsE.tfnGetCaseUpdates(countyId, caseIndexNumber)
-                                                                            .OrderBy(m => m.TransactionDateTime)
-                                                                            .ThenBy(m => m.DateTimeProcessed).ToList<tfnGetCaseUpdates_Result>();
-                if (historyRecords != null)
-                    return Ok(historyRecords);
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    List<tfnGetCaseUpdates_Result> historyRecords = nycourtsE.tfnGetCaseUpdates(countyId, caseIndexNumber)
+                                                                        .OrderBy(m => m.TransactionDateTime)
+                                                                        .ThenBy(m => m.DateTimeProcessed).ToList<tfnGetCaseUpdates_Result>();
+                    if (historyRecords != null)
+                        return Ok(historyRecords);
+                }
+            }
+            return NotFound();
+        }
+
+        [Route("api/cases/{BBL}")]
+        [ResponseType(typeof(List<tfnGetCasesForaProperty_Result>))]
+        public IHttpActionResult GetCasesForaProperty(string BBL)
+        {
+            //nycourtsE
+            if (BBL.Length == 10)
+            {
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    List<tfnGetCasesForaProperty_Result> casesList = nycourtsE.tfnGetCasesForaProperty(BBL)
+                                                                                .ToList<tfnGetCasesForaProperty_Result>();
+                    if (casesList != null)
+                        return Ok(casesList);
+                }
             }
             return NotFound();
         }
