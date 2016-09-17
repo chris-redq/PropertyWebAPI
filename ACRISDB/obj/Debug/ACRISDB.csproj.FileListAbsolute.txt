@@ -1,0 +1,10 @@
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\bin\Debug\ACRISDB.dll.config
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\bin\Debug\ACRISDB.dll
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\bin\Debug\ACRISDB.pdb
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\bin\Debug\EntityFramework.dll
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\bin\Debug\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\bin\Debug\EntityFramework.xml
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\bin\Debug\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\obj\Debug\ACRISDB.dll
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\obj\Debug\ACRISDB.pdb
+C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\obj\Debug\ACRISDB.csprojResolveAssemblyReference.cache

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCourtsWebAPI", "eCourtsWebAPI\eCourtsWebAPI.csproj", "{61E1BF56-0EC2-4E0D-AD4F-064DEEA80380}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyWebAPI", "PropertyWebAPI\PropertyWebAPI.csproj", "{61E1BF56-0EC2-4E0D-AD4F-064DEEA80380}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCourtsDB", "eCourtsDB\eCourtsDB.csproj", "{D93D40B6-428C-4628-9B06-E1FD2976465C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateKey", "CreateKey\CreateKey.csproj", "{581F46B5-E42B-417B-8080-321AD7963389}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPISecurityDB", "WebAPISecurityDB\WebAPISecurityDB.csproj", "{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACRISDB", "ACRISDB\ACRISDB.csproj", "{44E581F8-7B90-478B-860C-CFAACC4C688C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0C00ED9-DDC7-4626-8817-482A6E5B5BD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44E581F8-7B90-478B-860C-CFAACC4C688C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44E581F8-7B90-478B-860C-CFAACC4C688C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44E581F8-7B90-478B-860C-CFAACC4C688C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44E581F8-7B90-478B-860C-CFAACC4C688C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

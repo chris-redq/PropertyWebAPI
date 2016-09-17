@@ -17,3 +17,4 @@ C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\bin\Debug\EntityFramework
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\obj\Debug\eCourtsDB.dll
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\obj\Debug\eCourtsDB.pdb
+C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\obj\Debug\eCourtsDB.csprojResolveAssemblyReference.cache

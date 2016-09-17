@@ -47,3 +47,5 @@ C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\obj\Debug\eCourtsWebA
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\obj\Debug\eCourtsWebAPI.pdb
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\WebAPISecurityDB.dll
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\WebAPISecurityDB.pdb
+C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\ACRISDB.dll
+C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsWebAPI\bin\ACRISDB.pdb

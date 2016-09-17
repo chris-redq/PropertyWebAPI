@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ACRISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DocumentControlCode">
+    <Key>
+      <PropertyRef Name="DocumentType" />
+    </Key>
+    <Property Name="RecordType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+    <Property Name="Party1Type" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="Party2Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Party3Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="MortgageDeedCrossReference">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentIdReference" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="ReelYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ReelBorough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ReelNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ReelPage" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="MortgageDeedLot">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Easement" />
+    </Key>
+    <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Borough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Block" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Lot" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Easement" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartialLot" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="AirRights" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SubterraneanRights" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyTypeCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="StreetNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="UnitNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="MortgageDeedMaster">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateFileCreated" Type="DateTime" Precision="0" />
+    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="RecordedBorough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentTypeCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="ReelYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ReelNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ReelPage" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="PercentageOftransaction" Type="Decimal" Precision="15" Scale="6" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="MortgageDeedParty">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="PartyType" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CompressedName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Address1" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Address2" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Zip" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="MortgageDeedRemark">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Sequence" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sequence" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="232" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PropertyType">
+    <Key>
+      <PropertyRef Name="PropCode" />
+    </Key>
+    <Property Name="PropCode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PropTypeDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="UCCCrossReference">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentIdReference" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="FileNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UCCLot">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Easement" />
+    </Key>
+    <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Borough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Block" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Lot" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="Easement" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartialLot" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="AirRights" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SubterraneanRights" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyTypeCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="StreetNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="UnitNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UCCMaster">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateFileCreated" Type="DateTime" Precision="0" />
+    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="RecordedBorough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentTypeCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="UCCCollateral" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="FederalTaxSerialNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="FederalTaxAssessmentDate" Type="DateTime" Precision="0" />
+    <Property Name="RPTTLNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="ReelYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ReelNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ReelPage" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="FileNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UCCParty">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="PartyType" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CompressedName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Address1" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Address2" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Zip" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UCCRemark">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Sequence" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sequence" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="232" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="LatestContractOfSaleorMemorandumofContract">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="DateProcessed" />
+    </Key>
+    <Property Name="BBLE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="BoroughOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
+    <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="DateProcessed" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="LatestDeedDocument">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="DeedUniqueKey" />
+      <PropertyRef Name="DocumentType" />
+    </Key>
+    <Property Name="BBLE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DeedUniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="BoroughOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="DateProcessed" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="vwDeedsByBBLE">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="BBLE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="BoroughOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="vwDocumentPartiesByBBLE">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="PartyTypeCode" />
+    </Key>
+    <Property Name="BBLE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="PartyType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyTypeCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vwDocumentPartiesByUniqueKey">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="DocumentType" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="PartyTypeCode" />
+    </Key>
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="PartyType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyTypeCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vwDocumentsByBBLE">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="BBLE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+    <Property Name="DateModified" Type="DateTime" Precision="0" />
+    <Property Name="RecordedBorough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityContainer Name="ACRISEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DocumentControlCodes" EntityType="Self.DocumentControlCode" />
+    <EntitySet Name="MortgageDeedCrossReferences" EntityType="Self.MortgageDeedCrossReference" />
+    <EntitySet Name="MortgageDeedLots" EntityType="Self.MortgageDeedLot" />
+    <EntitySet Name="MortgageDeedMasters" EntityType="Self.MortgageDeedMaster" />
+    <EntitySet Name="MortgageDeedParties" EntityType="Self.MortgageDeedParty" />
+    <EntitySet Name="MortgageDeedRemarks" EntityType="Self.MortgageDeedRemark" />
+    <EntitySet Name="PropertyTypes" EntityType="Self.PropertyType" />
+    <EntitySet Name="UCCCrossReferences" EntityType="Self.UCCCrossReference" />
+    <EntitySet Name="UCCLots" EntityType="Self.UCCLot" />
+    <EntitySet Name="UCCMasters" EntityType="Self.UCCMaster" />
+    <EntitySet Name="UCCParties" EntityType="Self.UCCParty" />
+    <EntitySet Name="UCCRemarks" EntityType="Self.UCCRemark" />
+    <EntitySet Name="LatestContractOfSaleorMemorandumofContracts" EntityType="Self.LatestContractOfSaleorMemorandumofContract" />
+    <EntitySet Name="LatestDeedDocuments" EntityType="Self.LatestDeedDocument" />
+    <EntitySet Name="vwDeedsByBBLEs" EntityType="Self.vwDeedsByBBLE" />
+    <EntitySet Name="vwDocumentPartiesByBBLEs" EntityType="Self.vwDocumentPartiesByBBLE" />
+    <EntitySet Name="vwDocumentPartiesByUniqueKeys" EntityType="Self.vwDocumentPartiesByUniqueKey" />
+    <EntitySet Name="vwDocumentsByBBLEs" EntityType="Self.vwDocumentsByBBLE" />
+  </EntityContainer>
+</Schema>

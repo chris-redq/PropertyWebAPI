@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>eCourtsWebAPI</RootNamespace>
-    <AssemblyName>eCourtsWebAPI</AssemblyName>
+    <RootNamespace>PropertyWebAPI</RootNamespace>
+    <AssemblyName>PropertyWebAPI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -125,6 +125,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="APIKeySecurityHandler.cs" />
     <Compile Include="Controllers\CasesController.cs" />
+    <Compile Include="Controllers\MortgagesDeedsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -148,6 +149,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ACRISDB\ACRISDB.csproj">
+      <Project>{44e581f8-7b90-478b-860c-cfaacc4c688c}</Project>
+      <Name>ACRISDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\eCourtsDB\eCourtsDB.csproj">
       <Project>{d93d40b6-428c-4628-9b06-e1fd2976465c}</Project>
       <Name>eCourtsDB</Name>

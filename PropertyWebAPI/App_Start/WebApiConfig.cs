@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace eCourtsWebAPI
+namespace PropertyWebAPI
 {
     public static class WebApiConfig
     {
@@ -38,6 +38,11 @@ namespace eCourtsWebAPI
                name: "CasesByBBL",
                routeTemplate: "api/cases/{BBL}",
                defaults: new { controller = "Cases" });
+
+            config.Routes.MapHttpRoute(
+               name: "DocumentsByBBLE",
+               routeTemplate: "api/mortgagesdeeds/{BBLE}",
+               defaults: new { controller = "MortgagesDeeds" });
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

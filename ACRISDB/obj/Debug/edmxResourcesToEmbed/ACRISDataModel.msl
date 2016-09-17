@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ACRISModelStoreContainer" CdmEntityContainer="ACRISEntities">
+    <EntitySetMapping Name="DocumentControlCodes">
+      <EntityTypeMapping TypeName="ACRISModel.DocumentControlCode">
+        <MappingFragment StoreEntitySet="DocumentControlCodes">
+          <ScalarProperty Name="RecordType" ColumnName="RecordType" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="ClassCodeDescription" ColumnName="ClassCodeDescription" />
+          <ScalarProperty Name="Party1Type" ColumnName="Party1Type" />
+          <ScalarProperty Name="Party2Type" ColumnName="Party2Type" />
+          <ScalarProperty Name="Party3Type" ColumnName="Party3Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MortgageDeedCrossReferences">
+      <EntityTypeMapping TypeName="ACRISModel.MortgageDeedCrossReference">
+        <MappingFragment StoreEntitySet="MortgageDeedCrossReference">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
+          <ScalarProperty Name="DocumentIdReference" ColumnName="DocumentIdReference" />
+          <ScalarProperty Name="ReelYear" ColumnName="ReelYear" />
+          <ScalarProperty Name="ReelBorough" ColumnName="ReelBorough" />
+          <ScalarProperty Name="ReelNumber" ColumnName="ReelNumber" />
+          <ScalarProperty Name="ReelPage" ColumnName="ReelPage" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MortgageDeedLots">
+      <EntityTypeMapping TypeName="ACRISModel.MortgageDeedLot">
+        <MappingFragment StoreEntitySet="MortgageDeedLot">
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="Borough" ColumnName="Borough" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="Easement" ColumnName="Easement" />
+          <ScalarProperty Name="PartialLot" ColumnName="PartialLot" />
+          <ScalarProperty Name="AirRights" ColumnName="AirRights" />
+          <ScalarProperty Name="SubterraneanRights" ColumnName="SubterraneanRights" />
+          <ScalarProperty Name="PropertyTypeCode" ColumnName="PropertyTypeCode" />
+          <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MortgageDeedMasters">
+      <EntityTypeMapping TypeName="ACRISModel.MortgageDeedMaster">
+        <MappingFragment StoreEntitySet="MortgageDeedMaster">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="DateFileCreated" ColumnName="DateFileCreated" />
+          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
+          <ScalarProperty Name="RecordedBorough" ColumnName="RecordedBorough" />
+          <ScalarProperty Name="DocumentTypeCode" ColumnName="DocumentTypeCode" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="ReelYear" ColumnName="ReelYear" />
+          <ScalarProperty Name="ReelNumber" ColumnName="ReelNumber" />
+          <ScalarProperty Name="ReelPage" ColumnName="ReelPage" />
+          <ScalarProperty Name="PercentageOftransaction" ColumnName="PercentageOftransaction" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MortgageDeedParties">
+      <EntityTypeMapping TypeName="ACRISModel.MortgageDeedParty">
+        <MappingFragment StoreEntitySet="MortgageDeedParty">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="PartyType" ColumnName="PartyType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompressedName" ColumnName="CompressedName" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MortgageDeedRemarks">
+      <EntityTypeMapping TypeName="ACRISModel.MortgageDeedRemark">
+        <MappingFragment StoreEntitySet="MortgageDeedRemark">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PropertyTypes">
+      <EntityTypeMapping TypeName="ACRISModel.PropertyType">
+        <MappingFragment StoreEntitySet="PropertyTypes">
+          <ScalarProperty Name="PropCode" ColumnName="PropCode" />
+          <ScalarProperty Name="PropTypeDescription" ColumnName="PropTypeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UCCCrossReferences">
+      <EntityTypeMapping TypeName="ACRISModel.UCCCrossReference">
+        <MappingFragment StoreEntitySet="UCCCrossReference">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
+          <ScalarProperty Name="DocumentIdReference" ColumnName="DocumentIdReference" />
+          <ScalarProperty Name="FileNumber" ColumnName="FileNumber" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UCCLots">
+      <EntityTypeMapping TypeName="ACRISModel.UCCLot">
+        <MappingFragment StoreEntitySet="UCCLot">
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="Borough" ColumnName="Borough" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="Easement" ColumnName="Easement" />
+          <ScalarProperty Name="PartialLot" ColumnName="PartialLot" />
+          <ScalarProperty Name="AirRights" ColumnName="AirRights" />
+          <ScalarProperty Name="SubterraneanRights" ColumnName="SubterraneanRights" />
+          <ScalarProperty Name="PropertyTypeCode" ColumnName="PropertyTypeCode" />
+          <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UCCMasters">
+      <EntityTypeMapping TypeName="ACRISModel.UCCMaster">
+        <MappingFragment StoreEntitySet="UCCMaster">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="DateFileCreated" ColumnName="DateFileCreated" />
+          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
+          <ScalarProperty Name="RecordedBorough" ColumnName="RecordedBorough" />
+          <ScalarProperty Name="DocumentTypeCode" ColumnName="DocumentTypeCode" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="UCCCollateral" ColumnName="UCCCollateral" />
+          <ScalarProperty Name="FederalTaxSerialNumber" ColumnName="FederalTaxSerialNumber" />
+          <ScalarProperty Name="FederalTaxAssessmentDate" ColumnName="FederalTaxAssessmentDate" />
+          <ScalarProperty Name="RPTTLNumber" ColumnName="RPTTLNumber" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="ReelYear" ColumnName="ReelYear" />
+          <ScalarProperty Name="ReelNumber" ColumnName="ReelNumber" />
+          <ScalarProperty Name="ReelPage" ColumnName="ReelPage" />
+          <ScalarProperty Name="FileNumber" ColumnName="FileNumber" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UCCParties">
+      <EntityTypeMapping TypeName="ACRISModel.UCCParty">
+        <MappingFragment StoreEntitySet="UCCParty">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="PartyType" ColumnName="PartyType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompressedName" ColumnName="CompressedName" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UCCRemarks">
+      <EntityTypeMapping TypeName="ACRISModel.UCCRemark">
+        <MappingFragment StoreEntitySet="UCCRemark">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LatestContractOfSaleorMemorandumofContracts">
+      <EntityTypeMapping TypeName="ACRISModel.LatestContractOfSaleorMemorandumofContract">
+        <MappingFragment StoreEntitySet="LatestContractOfSaleorMemorandumofContract">
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="BoroughOfRecord" ColumnName="BoroughOfRecord" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+          <ScalarProperty Name="DateProcessed" ColumnName="DateProcessed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LatestDeedDocuments">
+      <EntityTypeMapping TypeName="ACRISModel.LatestDeedDocument">
+        <MappingFragment StoreEntitySet="LatestDeedDocument">
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
+          <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="BoroughOfRecord" ColumnName="BoroughOfRecord" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="DateProcessed" ColumnName="DateProcessed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwDeedsByBBLEs">
+      <EntityTypeMapping TypeName="ACRISModel.vwDeedsByBBLE">
+        <MappingFragment StoreEntitySet="vwDeedsByBBLE">
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
+          <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="BoroughOfRecord" ColumnName="BoroughOfRecord" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwDocumentPartiesByBBLEs">
+      <EntityTypeMapping TypeName="ACRISModel.vwDocumentPartiesByBBLE">
+        <MappingFragment StoreEntitySet="vwDocumentPartiesByBBLE">
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="PartyType" ColumnName="PartyType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PartyTypeCode" ColumnName="PartyTypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwDocumentPartiesByUniqueKeys">
+      <EntityTypeMapping TypeName="ACRISModel.vwDocumentPartiesByUniqueKey">
+        <MappingFragment StoreEntitySet="vwDocumentPartiesByUniqueKey">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="PartyType" ColumnName="PartyType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PartyTypeCode" ColumnName="PartyTypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwDocumentsByBBLEs">
+      <EntityTypeMapping TypeName="ACRISModel.vwDocumentsByBBLE">
+        <MappingFragment StoreEntitySet="vwDocumentsByBBLE">
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
+          <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="RecordedBorough" ColumnName="RecordedBorough" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -7,13 +7,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace eCourtsWebAPI.Controllers
+namespace PropertyWebAPI.Controllers
 {
     [Authorize]
     public class CasesController : ApiController
     {
-        //NYCOURTSEntities nycourtsE = new NYCOURTSEntities();
-
         //../api/Cases/7326457
         
         [ResponseType(typeof(vwCaseExpanded))]

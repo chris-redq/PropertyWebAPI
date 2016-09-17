@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using System.Web;
 using WebAPISecurityDB;
 
-namespace eCourtsWebAPI
+namespace PropertyWebAPI
 {
     public class APIKeySecurityHandler:DelegatingHandler
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            // Check if the api key is in the query string if not check the request header for the api key
             var queryString = request.RequestUri.ParseQueryString();
             var apiKey = queryString["apiKey"];
             if (apiKey == null)
@@ -28,6 +29,8 @@ namespace eCourtsWebAPI
                 }
             }
 
+            // Once the api key is found, check if valid api key. If valid key then create a principal with the 
+            // username and set the principal in HtppContext
             if (apiKey != null)
             {   WebAPISecurityEntities SE = new WebAPISecurityEntities();
                 var userObj = SE.APIKeyUsers.Where(x => x.APIKey.ToString() == apiKey).FirstOrDefault();
