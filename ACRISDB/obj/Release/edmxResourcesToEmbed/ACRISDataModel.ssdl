@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ACRISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DocumentControlCodes">
+    <Key>
+      <PropertyRef Name="DocumentType" />
+    </Key>
+    <Property Name="RecordType" Type="varchar" MaxLength="1" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="DocumentTypeDescription" Type="varchar" MaxLength="30" />
+    <Property Name="ClassCodeDescription" Type="varchar" MaxLength="27" />
+    <Property Name="Party1Type" Type="varchar" MaxLength="19" />
+    <Property Name="Party2Type" Type="varchar" MaxLength="20" />
+    <Property Name="Party3Type" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="MortgageDeedCrossReference">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="CRFN" Type="varchar" MaxLength="13" />
+    <Property Name="DocumentIdReference" Type="varchar" MaxLength="16" />
+    <Property Name="ReelYear" Type="varchar" MaxLength="4" />
+    <Property Name="ReelBorough" Type="varchar" MaxLength="1" />
+    <Property Name="ReelNumber" Type="varchar" MaxLength="5" />
+    <Property Name="ReelPage" Type="varchar" MaxLength="5" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MortgageDeedLot">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Easement" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="Borough" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Block" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="Lot" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Easement" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="PartialLot" Type="varchar" MaxLength="1" />
+    <Property Name="AirRights" Type="varchar" MaxLength="1" />
+    <Property Name="SubterraneanRights" Type="varchar" MaxLength="1" />
+    <Property Name="PropertyTypeCode" Type="varchar" MaxLength="2" />
+    <Property Name="StreetNumber" Type="varchar" MaxLength="12" />
+    <Property Name="StreetName" Type="varchar" MaxLength="32" />
+    <Property Name="UnitNumber" Type="varchar" MaxLength="7" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MortgageDeedMaster">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="DateFileCreated" Type="date" />
+    <Property Name="CRFN" Type="varchar" MaxLength="13" />
+    <Property Name="RecordedBorough" Type="varchar" MaxLength="1" />
+    <Property Name="DocumentTypeCode" Type="varchar" MaxLength="8" />
+    <Property Name="DocumentDate" Type="date" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="ReelYear" Type="varchar" MaxLength="4" />
+    <Property Name="ReelNumber" Type="varchar" MaxLength="5" />
+    <Property Name="ReelPage" Type="varchar" MaxLength="5" />
+    <Property Name="PercentageOftransaction" Type="numeric" Precision="15" Scale="6" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MortgageDeedParty">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="PartyType" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="PartyType" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="CompressedName" Type="varchar" MaxLength="70" />
+    <Property Name="Address1" Type="varchar" MaxLength="60" />
+    <Property Name="Address2" Type="varchar" MaxLength="60" />
+    <Property Name="Country" Type="varchar" MaxLength="2" />
+    <Property Name="City" Type="varchar" MaxLength="30" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="Zip" Type="varchar" MaxLength="9" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MortgageDeedRemark">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Sequence" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="Sequence" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Text" Type="varchar" MaxLength="232" Nullable="false" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PropertyTypes">
+    <Key>
+      <PropertyRef Name="PropCode" />
+    </Key>
+    <Property Name="PropCode" Type="nvarchar" MaxLength="2" Nullable="false" />
+    <Property Name="PropTypeDescription" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="UCCCrossReference">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="CRFN" Type="varchar" MaxLength="13" />
+    <Property Name="DocumentIdReference" Type="varchar" MaxLength="16" />
+    <Property Name="FileNumber" Type="varchar" MaxLength="12" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UCCLot">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Easement" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="Borough" Type="varchar" MaxLength="1" />
+    <Property Name="Block" Type="varchar" MaxLength="5" />
+    <Property Name="Lot" Type="varchar" MaxLength="4" />
+    <Property Name="Easement" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="PartialLot" Type="varchar" MaxLength="1" />
+    <Property Name="AirRights" Type="varchar" MaxLength="1" />
+    <Property Name="SubterraneanRights" Type="varchar" MaxLength="1" />
+    <Property Name="PropertyTypeCode" Type="varchar" MaxLength="2" />
+    <Property Name="StreetNumber" Type="varchar" MaxLength="12" />
+    <Property Name="StreetName" Type="varchar" MaxLength="32" />
+    <Property Name="UnitNumber" Type="varchar" MaxLength="7" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UCCMaster">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="DateFileCreated" Type="date" />
+    <Property Name="CRFN" Type="varchar" MaxLength="13" />
+    <Property Name="RecordedBorough" Type="varchar" MaxLength="1" />
+    <Property Name="DocumentTypeCode" Type="varchar" MaxLength="8" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="UCCCollateral" Type="varchar" MaxLength="1" />
+    <Property Name="FederalTaxSerialNumber" Type="varchar" MaxLength="12" />
+    <Property Name="FederalTaxAssessmentDate" Type="date" />
+    <Property Name="RPTTLNumber" Type="varchar" MaxLength="12" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="ReelYear" Type="varchar" MaxLength="4" />
+    <Property Name="ReelNumber" Type="varchar" MaxLength="5" />
+    <Property Name="ReelPage" Type="varchar" MaxLength="5" />
+    <Property Name="FileNumber" Type="varchar" MaxLength="12" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UCCParty">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="PartyType" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="PartyType" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="CompressedName" Type="varchar" MaxLength="70" />
+    <Property Name="Address1" Type="varchar" MaxLength="60" />
+    <Property Name="Address2" Type="varchar" MaxLength="60" />
+    <Property Name="Country" Type="varchar" MaxLength="2" />
+    <Property Name="City" Type="varchar" MaxLength="30" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="Zip" Type="varchar" MaxLength="9" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UCCRemark">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Sequence" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="Sequence" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="Text" Type="varchar" MaxLength="232" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AreaAbstractNew.dbo.LatestContractOfSaleorMemorandumofContract' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="LatestContractOfSaleorMemorandumofContract">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="DateProcessed" />
+    </Key>
+    <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="PropertyType" Type="varchar" MaxLength="2" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="8" />
+    <Property Name="DocumentTypeDescription" Type="varchar" MaxLength="30" />
+    <Property Name="DocumentClassCodeDescription" Type="varchar" MaxLength="27" />
+    <Property Name="DocumentDate" Type="date" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="numeric" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="BoroughOfRecord" Type="varchar" MaxLength="1" />
+    <Property Name="Remarks" Type="varchar" MaxLength="4096" />
+    <Property Name="LastUpdateDate" Type="datetime" />
+    <Property Name="DateProcessed" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AreaAbstractNew.dbo.LatestDeedDocument' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="LatestDeedDocument">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="DeedUniqueKey" />
+      <PropertyRef Name="DocumentType" />
+    </Key>
+    <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="DeedUniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="PropertyType" Type="varchar" MaxLength="2" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="DocumentTypeDescription" Type="varchar" MaxLength="30" />
+    <Property Name="DocumentClassCodeDescription" Type="varchar" MaxLength="27" />
+    <Property Name="DocumentDate" Type="date" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="numeric" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="BoroughOfRecord" Type="varchar" MaxLength="1" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="LastUpdatedDate" Type="datetime" />
+    <Property Name="DateProcessed" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'AreaAbstractNew.dbo.LotsPerLatestDeed' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="LotsPerLatestDeed">
+          <Property Name="DeedUniqueKey" Type="varchar" MaxLength="16" />
+          <Property Name="NumberOfLots" Type="int" />
+        </EntityType>-->
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AreaAbstractNew.Acris.vwDeedsByBBLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwDeedsByBBLE">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="BBLE" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="CRFN" Type="varchar" MaxLength="13" />
+    <Property Name="PropertyType" Type="varchar" MaxLength="2" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="8" />
+    <Property Name="DocumentTypeDescription" Type="varchar" MaxLength="30" />
+    <Property Name="DocumentClassCodeDescription" Type="varchar" MaxLength="27" />
+    <Property Name="DocumentDate" Type="date" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="numeric" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="BoroughOfRecord" Type="varchar" MaxLength="1" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentPartiesByBBLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwDocumentPartiesByBBLE">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="PartyTypeCode" />
+    </Key>
+    <Property Name="BBLE" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="DocumentDate" Type="date" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="8" />
+    <Property Name="DocumentTypeDescription" Type="varchar" MaxLength="30" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="PartyType" Type="varchar" MaxLength="20" />
+    <Property Name="Name" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="PartyTypeCode" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentPartiesByUniqueKey' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwDocumentPartiesByUniqueKey">
+    <Key>
+      <PropertyRef Name="UniqueKey" />
+      <PropertyRef Name="DocumentType" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="PartyTypeCode" />
+    </Key>
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="DocumentDate" Type="date" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="DocumentTypeDescription" Type="varchar" MaxLength="30" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="PartyType" Type="varchar" MaxLength="20" />
+    <Property Name="Name" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="PartyTypeCode" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwDocumentsByBBLE">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="UniqueKey" />
+    </Key>
+    <Property Name="BBLE" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="CRFN" Type="varchar" MaxLength="13" />
+    <Property Name="PropertyType" Type="varchar" MaxLength="2" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="8" />
+    <Property Name="DocumentTypeDescription" Type="varchar" MaxLength="30" />
+    <Property Name="DocumentClassCodeDescription" Type="varchar" MaxLength="27" />
+    <Property Name="DocumentDate" Type="date" />
+    <Property Name="DocumentAmount" Type="numeric" Precision="14" Scale="2" />
+    <Property Name="PercentageOfTransaction" Type="numeric" Precision="15" Scale="6" />
+    <Property Name="DateRecorded" Type="date" />
+    <Property Name="DateModified" Type="date" />
+    <Property Name="RecordedBorough" Type="varchar" MaxLength="1" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+  </EntityType>
+  <EntityContainer Name="ACRISModelStoreContainer">
+    <EntitySet Name="DocumentControlCodes" EntityType="Self.DocumentControlCodes" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="MortgageDeedCrossReference" EntityType="Self.MortgageDeedCrossReference" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="MortgageDeedLot" EntityType="Self.MortgageDeedLot" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="MortgageDeedMaster" EntityType="Self.MortgageDeedMaster" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="MortgageDeedParty" EntityType="Self.MortgageDeedParty" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="MortgageDeedRemark" EntityType="Self.MortgageDeedRemark" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="PropertyTypes" EntityType="Self.PropertyTypes" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="UCCCrossReference" EntityType="Self.UCCCrossReference" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="UCCLot" EntityType="Self.UCCLot" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="UCCMaster" EntityType="Self.UCCMaster" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="UCCParty" EntityType="Self.UCCParty" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="UCCRemark" EntityType="Self.UCCRemark" Schema="Acris" store:Type="Tables" />
+    <EntitySet Name="LatestContractOfSaleorMemorandumofContract" EntityType="Self.LatestContractOfSaleorMemorandumofContract" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [LatestContractOfSaleorMemorandumofContract].[BBLE] AS [BBLE], 
+    [LatestContractOfSaleorMemorandumofContract].[UniqueKey] AS [UniqueKey], 
+    [LatestContractOfSaleorMemorandumofContract].[PropertyType] AS [PropertyType], 
+    [LatestContractOfSaleorMemorandumofContract].[DocumentType] AS [DocumentType], 
+    [LatestContractOfSaleorMemorandumofContract].[DocumentTypeDescription] AS [DocumentTypeDescription], 
+    [LatestContractOfSaleorMemorandumofContract].[DocumentClassCodeDescription] AS [DocumentClassCodeDescription], 
+    [LatestContractOfSaleorMemorandumofContract].[DocumentDate] AS [DocumentDate], 
+    [LatestContractOfSaleorMemorandumofContract].[DocumentAmount] AS [DocumentAmount], 
+    [LatestContractOfSaleorMemorandumofContract].[PercentageOfTransaction] AS [PercentageOfTransaction], 
+    [LatestContractOfSaleorMemorandumofContract].[DateRecorded] AS [DateRecorded], 
+    [LatestContractOfSaleorMemorandumofContract].[DateModified] AS [DateModified], 
+    [LatestContractOfSaleorMemorandumofContract].[BoroughOfRecord] AS [BoroughOfRecord], 
+    [LatestContractOfSaleorMemorandumofContract].[Remarks] AS [Remarks], 
+    [LatestContractOfSaleorMemorandumofContract].[LastUpdateDate] AS [LastUpdateDate], 
+    [LatestContractOfSaleorMemorandumofContract].[DateProcessed] AS [DateProcessed]
+    FROM [dbo].[LatestContractOfSaleorMemorandumofContract] AS [LatestContractOfSaleorMemorandumofContract]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="LatestDeedDocument" EntityType="Self.LatestDeedDocument" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [LatestDeedDocument].[BBLE] AS [BBLE], 
+    [LatestDeedDocument].[DeedUniqueKey] AS [DeedUniqueKey], 
+    [LatestDeedDocument].[PropertyType] AS [PropertyType], 
+    [LatestDeedDocument].[DocumentType] AS [DocumentType], 
+    [LatestDeedDocument].[DocumentTypeDescription] AS [DocumentTypeDescription], 
+    [LatestDeedDocument].[DocumentClassCodeDescription] AS [DocumentClassCodeDescription], 
+    [LatestDeedDocument].[DocumentDate] AS [DocumentDate], 
+    [LatestDeedDocument].[DocumentAmount] AS [DocumentAmount], 
+    [LatestDeedDocument].[PercentageOfTransaction] AS [PercentageOfTransaction], 
+    [LatestDeedDocument].[DateRecorded] AS [DateRecorded], 
+    [LatestDeedDocument].[DateModified] AS [DateModified], 
+    [LatestDeedDocument].[BoroughOfRecord] AS [BoroughOfRecord], 
+    [LatestDeedDocument].[Remarks] AS [Remarks], 
+    [LatestDeedDocument].[LastUpdatedDate] AS [LastUpdatedDate], 
+    [LatestDeedDocument].[DateProcessed] AS [DateProcessed]
+    FROM [dbo].[LatestDeedDocument] AS [LatestDeedDocument]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwDeedsByBBLE" EntityType="Self.vwDeedsByBBLE" store:Type="Views" store:Schema="Acris">
+      <DefiningQuery>SELECT 
+    [vwDeedsByBBLE].[BBLE] AS [BBLE], 
+    [vwDeedsByBBLE].[UniqueKey] AS [UniqueKey], 
+    [vwDeedsByBBLE].[CRFN] AS [CRFN], 
+    [vwDeedsByBBLE].[PropertyType] AS [PropertyType], 
+    [vwDeedsByBBLE].[DocumentType] AS [DocumentType], 
+    [vwDeedsByBBLE].[DocumentTypeDescription] AS [DocumentTypeDescription], 
+    [vwDeedsByBBLE].[DocumentClassCodeDescription] AS [DocumentClassCodeDescription], 
+    [vwDeedsByBBLE].[DocumentDate] AS [DocumentDate], 
+    [vwDeedsByBBLE].[DocumentAmount] AS [DocumentAmount], 
+    [vwDeedsByBBLE].[PercentageOfTransaction] AS [PercentageOfTransaction], 
+    [vwDeedsByBBLE].[DateRecorded] AS [DateRecorded], 
+    [vwDeedsByBBLE].[DateModified] AS [DateModified], 
+    [vwDeedsByBBLE].[BoroughOfRecord] AS [BoroughOfRecord], 
+    [vwDeedsByBBLE].[DateLastUpdated] AS [DateLastUpdated]
+    FROM [Acris].[vwDeedsByBBLE] AS [vwDeedsByBBLE]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwDocumentPartiesByBBLE" EntityType="Self.vwDocumentPartiesByBBLE" store:Type="Views" store:Schema="Acris">
+      <DefiningQuery>SELECT 
+    [vwDocumentPartiesByBBLE].[BBLE] AS [BBLE], 
+    [vwDocumentPartiesByBBLE].[UniqueKey] AS [UniqueKey], 
+    [vwDocumentPartiesByBBLE].[DocumentDate] AS [DocumentDate], 
+    [vwDocumentPartiesByBBLE].[DocumentType] AS [DocumentType], 
+    [vwDocumentPartiesByBBLE].[DocumentTypeDescription] AS [DocumentTypeDescription], 
+    [vwDocumentPartiesByBBLE].[DocumentAmount] AS [DocumentAmount], 
+    [vwDocumentPartiesByBBLE].[DateRecorded] AS [DateRecorded], 
+    [vwDocumentPartiesByBBLE].[DateModified] AS [DateModified], 
+    [vwDocumentPartiesByBBLE].[PartyType] AS [PartyType], 
+    [vwDocumentPartiesByBBLE].[Name] AS [Name], 
+    [vwDocumentPartiesByBBLE].[PartyTypeCode] AS [PartyTypeCode]
+    FROM [Acris].[vwDocumentPartiesByBBLE] AS [vwDocumentPartiesByBBLE]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwDocumentPartiesByUniqueKey" EntityType="Self.vwDocumentPartiesByUniqueKey" store:Type="Views" store:Schema="Acris">
+      <DefiningQuery>SELECT 
+    [vwDocumentPartiesByUniqueKey].[UniqueKey] AS [UniqueKey], 
+    [vwDocumentPartiesByUniqueKey].[DocumentDate] AS [DocumentDate], 
+    [vwDocumentPartiesByUniqueKey].[DocumentType] AS [DocumentType], 
+    [vwDocumentPartiesByUniqueKey].[DocumentTypeDescription] AS [DocumentTypeDescription], 
+    [vwDocumentPartiesByUniqueKey].[DocumentAmount] AS [DocumentAmount], 
+    [vwDocumentPartiesByUniqueKey].[DateRecorded] AS [DateRecorded], 
+    [vwDocumentPartiesByUniqueKey].[DateModified] AS [DateModified], 
+    [vwDocumentPartiesByUniqueKey].[PartyType] AS [PartyType], 
+    [vwDocumentPartiesByUniqueKey].[Name] AS [Name], 
+    [vwDocumentPartiesByUniqueKey].[PartyTypeCode] AS [PartyTypeCode]
+    FROM [Acris].[vwDocumentPartiesByUniqueKey] AS [vwDocumentPartiesByUniqueKey]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwDocumentsByBBLE" EntityType="Self.vwDocumentsByBBLE" store:Type="Views" store:Schema="Acris">
+      <DefiningQuery>SELECT 
+    [vwDocumentsByBBLE].[BBLE] AS [BBLE], 
+    [vwDocumentsByBBLE].[UniqueKey] AS [UniqueKey], 
+    [vwDocumentsByBBLE].[CRFN] AS [CRFN], 
+    [vwDocumentsByBBLE].[PropertyType] AS [PropertyType], 
+    [vwDocumentsByBBLE].[DocumentType] AS [DocumentType], 
+    [vwDocumentsByBBLE].[DocumentTypeDescription] AS [DocumentTypeDescription], 
+    [vwDocumentsByBBLE].[DocumentClassCodeDescription] AS [DocumentClassCodeDescription], 
+    [vwDocumentsByBBLE].[DocumentDate] AS [DocumentDate], 
+    [vwDocumentsByBBLE].[DocumentAmount] AS [DocumentAmount], 
+    [vwDocumentsByBBLE].[PercentageOfTransaction] AS [PercentageOfTransaction], 
+    [vwDocumentsByBBLE].[DateRecorded] AS [DateRecorded], 
+    [vwDocumentsByBBLE].[DateModified] AS [DateModified], 
+    [vwDocumentsByBBLE].[RecordedBorough] AS [RecordedBorough], 
+    [vwDocumentsByBBLE].[DateLastUpdated] AS [DateLastUpdated]
+    FROM [Acris].[vwDocumentsByBBLE] AS [vwDocumentsByBBLE]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

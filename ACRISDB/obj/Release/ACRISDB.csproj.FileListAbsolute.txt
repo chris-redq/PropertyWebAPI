@@ -1,0 +1,10 @@
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\ACRISDB.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\ACRISDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\ACRISDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Release\ACRISDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Release\ACRISDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Release\ACRISDB.csprojResolveAssemblyReference.cache

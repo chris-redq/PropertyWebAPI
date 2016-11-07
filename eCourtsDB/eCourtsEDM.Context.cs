@@ -63,5 +63,61 @@ namespace eCourtsDB
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCasesForaProperty_Result>("[NYCOURTSEntities].[tfnGetCasesForaProperty](@BBL)", bBLParameter);
         }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetCaseColumnChanges")]
+        public virtual IQueryable<tfnGetCaseColumnChanges_Result> tfnGetCaseColumnChanges(string tablename, string columnName, Nullable<System.DateTime> startDateTime, Nullable<System.DateTime> endDateTime)
+        {
+            var tablenameParameter = tablename != null ?
+                new ObjectParameter("Tablename", tablename) :
+                new ObjectParameter("Tablename", typeof(string));
+    
+            var columnNameParameter = columnName != null ?
+                new ObjectParameter("ColumnName", columnName) :
+                new ObjectParameter("ColumnName", typeof(string));
+    
+            var startDateTimeParameter = startDateTime.HasValue ?
+                new ObjectParameter("StartDateTime", startDateTime) :
+                new ObjectParameter("StartDateTime", typeof(System.DateTime));
+    
+            var endDateTimeParameter = endDateTime.HasValue ?
+                new ObjectParameter("EndDateTime", endDateTime) :
+                new ObjectParameter("EndDateTime", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCaseColumnChanges_Result>("[NYCOURTSEntities].[tfnGetCaseColumnChanges](@Tablename, @ColumnName, @StartDateTime, @EndDateTime)", tablenameParameter, columnNameParameter, startDateTimeParameter, endDateTimeParameter);
+        }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetAllCasesForaProperty")]
+        public virtual IQueryable<tfnGetAllCasesForaProperty_Result> tfnGetAllCasesForaProperty(string bBL)
+        {
+            var bBLParameter = bBL != null ?
+                new ObjectParameter("BBL", bBL) :
+                new ObjectParameter("BBL", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetAllCasesForaProperty_Result>("[NYCOURTSEntities].[tfnGetAllCasesForaProperty](@BBL)", bBLParameter);
+        }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetMortgageForeclosureCasesForaProperty")]
+        public virtual IQueryable<tfnGetMortgageForeclosureCasesForaProperty_Result> tfnGetMortgageForeclosureCasesForaProperty(string bBL)
+        {
+            var bBLParameter = bBL != null ?
+                new ObjectParameter("BBL", bBL) :
+                new ObjectParameter("BBL", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetMortgageForeclosureCasesForaProperty_Result>("[NYCOURTSEntities].[tfnGetMortgageForeclosureCasesForaProperty](@BBL)", bBLParameter);
+        }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetNewMortgageForeclosureCases")]
+        public virtual IQueryable<tfnGetNewMortgageForeclosureCases_Result> tfnGetNewMortgageForeclosureCases(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetNewMortgageForeclosureCases_Result>("[NYCOURTSEntities].[tfnGetNewMortgageForeclosureCases](@StartDate, @EndDate)", startDateParameter, endDateParameter);
+        }
     }
 }

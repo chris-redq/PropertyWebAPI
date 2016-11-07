@@ -8,3 +8,13 @@ C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\bin\Release\EntityFramewo
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\obj\Release\eCourtsDB.csprojResolveAssemblyReference.cache
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\obj\Release\eCourtsDB.dll
 C:\code\Visual Studio\Projects\eCourtsWebAPI\eCourtsDB\obj\Release\eCourtsDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\eCourtsDB.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\eCourtsDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\eCourtsDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\obj\Release\eCourtsDB.csprojResolveAssemblyReference.cache
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\obj\Release\eCourtsDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\obj\Release\eCourtsDB.pdb

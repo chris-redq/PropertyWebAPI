@@ -85,10 +85,22 @@
     <Compile Include="RemarkData.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnGetAllCasesForaProperty_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tfnGetCaseColumnChanges_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="tfnGetCasesForaProperty_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetCaseUpdates_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tfnGetMortgageForeclosureCasesForaProperty_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tfnGetNewMortgageForeclosureCases_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Title.cs">

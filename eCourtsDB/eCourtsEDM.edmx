@@ -641,7 +641,7 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="SatifactionDataEntryOperator" Type="varchar" MaxLength="8" />
           <Property Name="Remarks" Type="varchar(max)" />
         </EntityType>
-        <Function Name="tfnGetCasesForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
+        <Function Name="tfnGetAllCasesForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
           <Parameter Name="BBL" Type="varchar" Mode="In" />
           <ReturnType>
             <CollectionType>
@@ -653,6 +653,25 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
                 <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
                 <Property Name="CaseDispositionDate" Type="date" />
                 <Property Name="CaseType" Type="varchar" MaxLength="30" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="tfnGetCaseColumnChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
+          <Parameter Name="Tablename" Type="varchar" Mode="In" />
+          <Parameter Name="ColumnName" Type="varchar" Mode="In" />
+          <Parameter Name="StartDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndDateTime" Type="datetime" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CountyId" Type="varchar" MaxLength="2" />
+                <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" />
+                <Property Name="ColumnName" Type="varchar" MaxLength="100" Nullable="false" />
+                <Property Name="NewValue" Type="varchar" MaxLength="500" />
+                <Property Name="OldValue" Type="varchar" MaxLength="500" />
+                <Property Name="TransactionDateTime" Type="datetime" />
+                <Property Name="DateTimeProcessed" Type="datetime" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -671,6 +690,40 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
                 <Property Name="OldValue" Type="varchar" MaxLength="500" />
                 <Property Name="TransactionDateTime" Type="datetime" />
                 <Property Name="DateTimeProcessed" Type="datetime" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="tfnGetMortgageForeclosureCasesForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
+          <Parameter Name="BBL" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+                <Property Name="County" Type="varchar" MaxLength="25" />
+                <Property Name="FormattedCaseIndexNumber" Type="varchar" MaxLength="15" />
+                <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+                <Property Name="CaseDispositionDate" Type="date" />
+                <Property Name="CaseType" Type="varchar" MaxLength="30" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="tfnGetNewMortgageForeclosureCases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BBL" Type="varchar" MaxLength="10" />
+                <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+                <Property Name="County" Type="varchar" MaxLength="25" />
+                <Property Name="FormattedCaseIndexNumber" Type="varchar" MaxLength="15" />
+                <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+                <Property Name="CaseDispositionDate" Type="date" />
+                <Property Name="CaseType" Type="varchar" MaxLength="30" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -1094,7 +1147,23 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           </FunctionImport>
           <EntitySet Name="RemarkDatas" EntityType="NYCOURTSModel.RemarkData" />
           <FunctionImport Name="tfnGetCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCasesForaProperty_Result)">
-            <Parameter Name="BBL" Mode="In" Type="String" />
+          <Parameter Name="BBL" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="tfnGetCaseColumnChanges" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseColumnChanges_Result)">
+            <Parameter Name="Tablename" Mode="In" Type="String" />
+            <Parameter Name="ColumnName" Mode="In" Type="String" />
+            <Parameter Name="StartDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDateTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="tfnGetAllCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetAllCasesForaProperty_Result)">
+          <Parameter Name="BBL" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="tfnGetMortgageForeclosureCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureCasesForaProperty_Result)">
+          <Parameter Name="BBL" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="tfnGetNewMortgageForeclosureCases" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result)">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Appearance">
@@ -1646,6 +1715,43 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="Remark" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="tfnGetCasesForaProperty_Result">
+          <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="tfnGetCaseColumnChanges_Result">
+          <Property Type="String" Name="CountyId" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="ColumnName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NewValue" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="OldValue" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="TransactionDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DateTimeProcessed" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="tfnGetAllCasesForaProperty_Result">
+          <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="tfnGetMortgageForeclosureCasesForaProperty_Result">
+          <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="tfnGetNewMortgageForeclosureCases_Result">
+          <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
           <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
           <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
@@ -2284,9 +2390,49 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="tfnGetCasesForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetCasesForaProperty">
+          <FunctionImportMapping FunctionImportName="tfnGetCaseColumnChanges" FunctionName="NYCOURTSModel.Store.tfnGetCaseColumnChanges">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCasesForaProperty_Result">
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCaseColumnChanges_Result">
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="TransactionDateTime" ColumnName="TransactionDateTime" />
+                <ScalarProperty Name="DateTimeProcessed" ColumnName="DateTimeProcessed" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetAllCasesForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetAllCasesForaProperty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetAllCasesForaProperty_Result">
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="FormattedCaseIndexNumber" ColumnName="FormattedCaseIndexNumber" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetMortgageForeclosureCasesForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetMortgageForeclosureCasesForaProperty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetMortgageForeclosureCasesForaProperty_Result">
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="FormattedCaseIndexNumber" ColumnName="FormattedCaseIndexNumber" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetNewMortgageForeclosureCases" FunctionName="NYCOURTSModel.Store.tfnGetNewMortgageForeclosureCases">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result">
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
                 <ScalarProperty Name="CountyId" ColumnName="CountyId" />
                 <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
                 <ScalarProperty Name="County" ColumnName="County" />

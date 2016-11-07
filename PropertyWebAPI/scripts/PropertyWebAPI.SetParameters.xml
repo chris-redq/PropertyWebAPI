@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="Default Web Site/property" />
+  <setParameter name="NYCOURTSEntities-Web.config Connection String" value="metadata=res://*/eCourtsEDM.csdl|res://*/eCourtsEDM.ssdl|res://*/eCourtsEDM.msl;provider=System.Data.SqlClient;provider connection string='Data Source=&quot;ec2-54-210-115-244.compute-1.amazonaws.com, 4436&quot;;Initial Catalog=NYCOURTS;Persist Security Info=True;User ID=sa;Password=eY2Fe6TN&lt;eDS'" />
+  <setParameter name="WebAPISecurityEntities-Web.config Connection String" value="metadata=res://*/WebAPISecurityDB.csdl|res://*/WebAPISecurityDB.ssdl|res://*/WebAPISecurityDB.msl;provider=System.Data.SqlClient;provider connection string='Data Source=&quot;ec2-54-210-115-244.compute-1.amazonaws.com, 4436&quot;;Initial Catalog=WebAPISecurity;Persist Security Info=True;User ID=sa;Password=eY2Fe6TN&lt;eDS'" />
+  <setParameter name="ACRISEntities-Web.config Connection String" value="metadata=res://*/ACRISDataModel.csdl|res://*/ACRISDataModel.ssdl|res://*/ACRISDataModel.msl;provider=System.Data.SqlClient;provider connection string='Data Source=&quot;ec2-54-210-115-244.compute-1.amazonaws.com, 4436&quot;;Initial Catalog=AreaAbstractNew;Persist Security Info=True;User ID=sa;Password=eY2Fe6TN&lt;eDS'" />
+</parameters>

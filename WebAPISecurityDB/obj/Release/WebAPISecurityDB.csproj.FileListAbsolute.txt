@@ -8,3 +8,13 @@ C:\code\Visual Studio\Projects\eCourtsWebAPI\WebAPISecurityDB\bin\Release\Entity
 C:\code\Visual Studio\Projects\eCourtsWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.csprojResolveAssemblyReference.cache
 C:\code\Visual Studio\Projects\eCourtsWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.dll
 C:\code\Visual Studio\Projects\eCourtsWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\WebAPISecurityDB.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\WebAPISecurityDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\WebAPISecurityDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.csprojResolveAssemblyReference.cache

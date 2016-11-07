@@ -625,9 +625,49 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="tfnGetCasesForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetCasesForaProperty">
+    <FunctionImportMapping FunctionImportName="tfnGetCaseColumnChanges" FunctionName="NYCOURTSModel.Store.tfnGetCaseColumnChanges">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCasesForaProperty_Result">
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCaseColumnChanges_Result">
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+          <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+          <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+          <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+          <ScalarProperty Name="TransactionDateTime" ColumnName="TransactionDateTime" />
+          <ScalarProperty Name="DateTimeProcessed" ColumnName="DateTimeProcessed" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetAllCasesForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetAllCasesForaProperty">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetAllCasesForaProperty_Result">
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+          <ScalarProperty Name="County" ColumnName="County" />
+          <ScalarProperty Name="FormattedCaseIndexNumber" ColumnName="FormattedCaseIndexNumber" />
+          <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+          <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+          <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetMortgageForeclosureCasesForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetMortgageForeclosureCasesForaProperty">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetMortgageForeclosureCasesForaProperty_Result">
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+          <ScalarProperty Name="County" ColumnName="County" />
+          <ScalarProperty Name="FormattedCaseIndexNumber" ColumnName="FormattedCaseIndexNumber" />
+          <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+          <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+          <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetNewMortgageForeclosureCases" FunctionName="NYCOURTSModel.Store.tfnGetNewMortgageForeclosureCases">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result">
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
           <ScalarProperty Name="CountyId" ColumnName="CountyId" />
           <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
           <ScalarProperty Name="County" ColumnName="County" />

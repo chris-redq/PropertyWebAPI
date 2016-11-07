@@ -108,6 +108,22 @@
     <FunctionImport Name="tfnGetCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCasesForaProperty_Result)">
       <Parameter Name="BBL" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="tfnGetCaseColumnChanges" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseColumnChanges_Result)">
+      <Parameter Name="Tablename" Mode="In" Type="String" />
+      <Parameter Name="ColumnName" Mode="In" Type="String" />
+      <Parameter Name="StartDateTime" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDateTime" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetAllCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetAllCasesForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetMortgageForeclosureCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureCasesForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetNewMortgageForeclosureCases" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result)">
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Appearance">
     <Key>
@@ -658,6 +674,43 @@
     <Property Name="Remark" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
   </EntityType>
   <ComplexType Name="tfnGetCasesForaProperty_Result">
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="tfnGetCaseColumnChanges_Result">
+    <Property Type="String" Name="CountyId" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="true" MaxLength="11" />
+    <Property Type="String" Name="ColumnName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="NewValue" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="OldValue" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="TransactionDateTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateTimeProcessed" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="tfnGetAllCasesForaProperty_Result">
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="tfnGetMortgageForeclosureCasesForaProperty_Result">
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="tfnGetNewMortgageForeclosureCases_Result">
+    <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
     <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
     <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
     <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
