@@ -100,6 +100,9 @@
     <Compile Include="tfnGetMortgageForeclosureCasesForaProperty_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnGetMortgageForeclosureLPsForaProperty_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="tfnGetNewMortgageForeclosureCases_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>

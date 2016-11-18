@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\code\Visual Studio\Projects\eCourtsWebAPI\ACRISDB\ACRISDataModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\ACRISDataModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

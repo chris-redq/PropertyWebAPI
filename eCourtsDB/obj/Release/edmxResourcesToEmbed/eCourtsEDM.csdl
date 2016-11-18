@@ -124,6 +124,10 @@
       <Parameter Name="StartDate" Mode="In" Type="DateTime" />
       <Parameter Name="EndDate" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="tfnGetMortgageForeclosureLPsForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureLPsForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Appearance">
     <Key>
@@ -718,5 +722,26 @@
     <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
     <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
     <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="tfnGetMortgageForeclosureLPsForaProperty_Result">
+    <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="KeyValue" Nullable="false" MaxLength="9" />
+    <Property Type="String" Name="Seq" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="JDLSCaseIndexNumber" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Debtor" Nullable="true" />
+    <Property Type="String" Name="Creditor" Nullable="true" />
+    <Property Type="DateTime" Name="EffectiveDateTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="SatisfactionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="SatisfactionType" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Remarks" Nullable="true" />
+    <Property Type="String" Name="CountyName" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="CCISCaseIndexNumber" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CaseFound" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="NameMatch" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="Comment" Nullable="true" />
   </ComplexType>
 </Schema>

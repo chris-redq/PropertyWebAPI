@@ -16,6 +16,12 @@ namespace PropertyWebAPI.Controllers
     using System.Text.RegularExpressions;
     using ACRISDB;
 
+    public class DeedDetails
+    {
+        public LatestDeedDocument DeedDocument;
+        public List<tfnGetDocumentParties_Result> Owners;
+    }
+
     /// <summary>  
     ///     This controller handles all ACRIS related requests for Mortgage and Deed related documents
     /// </summary>
@@ -92,6 +98,41 @@ namespace PropertyWebAPI.Controllers
 
                         return NotFound();
                     }
+                }
+            }
+
+            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+        }
+
+        // ../api/MortgagesDeeds/3001670091/deeds
+        /// <summary>  
+        ///     Use this method to retrieve details about the latest deed for a property
+        /// </summary>  
+        /// <param name="propertyBBLE">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with oprion alpha caharcter indicating the easement associated with the property</param>  
+        /// <returns>
+        ///     Returns deed details and owners filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+        /// </returns>
+        [Route("api/mortgagesdeeds/{propertyBBLE}/latestdeed")]
+        [ResponseType(typeof(DeedDetails))]
+        public IHttpActionResult GetLatestDeedDetails(string propertyBBLE)
+        {
+
+            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            {
+                using (ACRISEntities acrisDBEntities = new ACRISEntities())
+                {
+                    LatestDeedDocument documentObj =  acrisDBEntities.LatestDeedDocuments.FirstOrDefault(i => i.BBLE == propertyBBLE);
+
+                    if (documentObj == null)
+                        return NotFound();
+
+                    DeedDetails deedDetailsObj = new DeedDetails();
+                    deedDetailsObj.DeedDocument = documentObj;
+                    deedDetailsObj.Owners = acrisDBEntities.tfnGetDocumentParties(documentObj.DeedUniqueKey, "BUYER").ToList();
+
+                    return Ok(deedDetailsObj);
                 }
             }
 

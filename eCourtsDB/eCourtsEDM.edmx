@@ -703,6 +703,7 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
                 <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
                 <Property Name="County" Type="varchar" MaxLength="25" />
                 <Property Name="FormattedCaseIndexNumber" Type="varchar" MaxLength="15" />
+                <Property Name="JDLSCaseIndexNumber" Type="varchar" MaxLength="10" />
                 <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
                 <Property Name="CaseDispositionDate" Type="date" />
                 <Property Name="CaseType" Type="varchar" MaxLength="30" />
@@ -724,6 +725,35 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
                 <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
                 <Property Name="CaseDispositionDate" Type="date" />
                 <Property Name="CaseType" Type="varchar" MaxLength="30" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="tfnGetMortgageForeclosureLPsForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="jdls">
+          <Parameter Name="BBL" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BBL" Type="varchar" MaxLength="10" />
+                <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="KeyValue" Type="varchar" MaxLength="9" Nullable="false" />
+                <Property Name="Seq" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="JDLSCaseIndexNumber" Type="varchar" MaxLength="10" />
+                <Property Name="Debtor" Type="varchar(max)" />
+                <Property Name="Creditor" Type="varchar(max)" />
+                <Property Name="EffectiveDateTime" Type="datetime" />
+                <Property Name="SatisfactionDate" Type="date" />
+                <Property Name="SatisfactionType" Type="varchar" MaxLength="50" />
+                <Property Name="Remarks" Type="varchar(max)" />
+                <Property Name="CountyName" Type="varchar" MaxLength="25" />
+                <Property Name="CCISCaseIndexNumber" Type="varchar" MaxLength="50" />
+                <Property Name="CaseFound" Type="varchar" MaxLength="1" Nullable="false" />
+                <Property Name="NameMatch" Type="varchar" MaxLength="1" Nullable="false" />
+                <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+                <Property Name="CaseDispositionDate" Type="date" />
+                <Property Name="CaseType" Type="varchar" MaxLength="30" />
+                <Property Name="Comment" Type="varchar(max)" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -1164,6 +1194,10 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <FunctionImport Name="tfnGetNewMortgageForeclosureCases" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result)">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="tfnGetMortgageForeclosureLPsForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureLPsForaProperty_Result)">
+          <Parameter Name="BBL" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Appearance">
@@ -1759,6 +1793,27 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
           <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="tfnGetMortgageForeclosureLPsForaProperty_Result">
+          <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="KeyValue" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="Seq" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="JDLSCaseIndexNumber" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Debtor" Nullable="true" />
+          <Property Type="String" Name="Creditor" Nullable="true" />
+          <Property Type="DateTime" Name="EffectiveDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="SatisfactionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="SatisfactionType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Remarks" Nullable="true" />
+          <Property Type="String" Name="CountyName" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="CCISCaseIndexNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CaseFound" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="NameMatch" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Comment" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2440,6 +2495,31 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
                 <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
                 <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
                 <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetMortgageForeclosureLPsForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetMortgageForeclosureLPsForaProperty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetMortgageForeclosureLPsForaProperty_Result">
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="JDLSCaseIndexNumber" ColumnName="JDLSCaseIndexNumber" />
+                <ScalarProperty Name="Debtor" ColumnName="Debtor" />
+                <ScalarProperty Name="Creditor" ColumnName="Creditor" />
+                <ScalarProperty Name="EffectiveDateTime" ColumnName="EffectiveDateTime" />
+                <ScalarProperty Name="SatisfactionDate" ColumnName="SatisfactionDate" />
+                <ScalarProperty Name="SatisfactionType" ColumnName="SatisfactionType" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="CCISCaseIndexNumber" ColumnName="CCISCaseIndexNumber" />
+                <ScalarProperty Name="CaseFound" ColumnName="CaseFound" />
+                <ScalarProperty Name="NameMatch" ColumnName="NameMatch" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -197,6 +197,53 @@ namespace PropertyWebAPI.Controllers
         }
 
         /// <summary>  
+        ///     Use this api to find all Mortgage Foreclosure related LPs for a property in NYC in the JDLS system and their corresponding cases in the NYS Supreme Court CCIS System. 
+        /// </summary>  
+        /// <param name="propertyBBL">
+        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+        /// </param> 
+        /// <param name="effectiveDate">
+        ///     Optional Paramter incase LPs are requested on or after the supplied effectiveDate
+        /// </param> 
+        /// <returns>
+        ///     Returns a list of LPs and their respective cases in eCourts for the given property identified by BBL - Borough Block Lot Number.
+        /// </returns>
+        [Route("api/cases/mortgageforeclosurelps/{propertyBBL}")]
+        [ResponseType(typeof(List<tfnGetMortgageForeclosureLPsForaProperty_Result>))]
+        public IHttpActionResult GetMortgageForeclosureLPsForaProperty(string propertyBBL, string effectiveDate="")
+        {
+            if (Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}$"))
+            {
+                DateTime? sDateTime = null;
+                DateTime actualDateTime = DateTime.MinValue;
+
+                if (effectiveDate!="" && !DateTime.TryParseExact(effectiveDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out actualDateTime))
+                {
+                    return this.BadRequest("Incorrect Date Format - use yyyyMMdd format for dates - Eg: 20161030 which Oct 30, 2016");
+                }
+
+                if (effectiveDate != "")
+                    sDateTime = actualDateTime;
+
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    List<tfnGetMortgageForeclosureLPsForaProperty_Result> lpsList = nycourtsE.tfnGetMortgageForeclosureLPsForaProperty(propertyBBL, sDateTime)
+                                                                                             .OrderByDescending(m => m.EffectiveDateTime).ToList();
+                    if (lpsList != null)
+                    {
+                        return Ok(lpsList);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+
+            return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+        }
+
+        /// <summary>  
         ///     Use this api to get all new mortgage foreclosure cases added for a select set of counties within a data range. The select set currently is 5 Boroughs and LI counties 
         /// </summary>  
         /// <param name="startDate">
@@ -222,8 +269,7 @@ namespace PropertyWebAPI.Controllers
 
             using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
             {
-                List<tfnGetNewMortgageForeclosureCases_Result> casesList = nycourtsE.tfnGetNewMortgageForeclosureCases(sDateTime, eDateTime)
-                                                                                    .ToList<tfnGetNewMortgageForeclosureCases_Result>();
+                List<tfnGetNewMortgageForeclosureCases_Result> casesList = nycourtsE.tfnGetNewMortgageForeclosureCases(sDateTime, eDateTime).ToList();
                 if (casesList != null)
                 {
                     return Ok(casesList);
@@ -235,6 +281,7 @@ namespace PropertyWebAPI.Controllers
             }
             
         }
+
 
         /// <summary>  
         ///     Use this api to find any changes in a specific column on the CCIS Case table for a given date range. 

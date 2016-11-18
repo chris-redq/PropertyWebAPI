@@ -678,5 +678,30 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetMortgageForeclosureLPsForaProperty" FunctionName="NYCOURTSModel.Store.tfnGetMortgageForeclosureLPsForaProperty">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetMortgageForeclosureLPsForaProperty_Result">
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="JDLSCaseIndexNumber" ColumnName="JDLSCaseIndexNumber" />
+          <ScalarProperty Name="Debtor" ColumnName="Debtor" />
+          <ScalarProperty Name="Creditor" ColumnName="Creditor" />
+          <ScalarProperty Name="EffectiveDateTime" ColumnName="EffectiveDateTime" />
+          <ScalarProperty Name="SatisfactionDate" ColumnName="SatisfactionDate" />
+          <ScalarProperty Name="SatisfactionType" ColumnName="SatisfactionType" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="CCISCaseIndexNumber" ColumnName="CCISCaseIndexNumber" />
+          <ScalarProperty Name="CaseFound" ColumnName="CaseFound" />
+          <ScalarProperty Name="NameMatch" ColumnName="NameMatch" />
+          <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+          <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+          <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

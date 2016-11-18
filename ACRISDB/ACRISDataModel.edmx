@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ACRISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ACRISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DocumentControlCodes">
           <Key>
             <PropertyRef Name="DocumentType" />
@@ -17,6 +17,8 @@
           <Property Name="Party2Type" Type="varchar" MaxLength="20" />
           <Property Name="Party3Type" Type="varchar" MaxLength="20" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AreaAbstractNew.Acris.MortgageDeedCrossReference' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="MortgageDeedCrossReference">
           <Key>
             <PropertyRef Name="UniqueKey" />
@@ -186,13 +188,9 @@
           <Property Name="Text" Type="varchar" MaxLength="232" />
           <Property Name="DateLastUpdated" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'AreaAbstractNew.dbo.LatestContractOfSaleorMemorandumofContract' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LatestContractOfSaleorMemorandumofContract">
           <Key>
             <PropertyRef Name="BBLE" />
-            <PropertyRef Name="UniqueKey" />
-            <PropertyRef Name="DateProcessed" />
           </Key>
           <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
@@ -206,17 +204,14 @@ warning 6002: The table/view 'AreaAbstractNew.dbo.LatestContractOfSaleorMemorand
           <Property Name="DateRecorded" Type="date" />
           <Property Name="DateModified" Type="date" />
           <Property Name="BoroughOfRecord" Type="varchar" MaxLength="1" />
-          <Property Name="Remarks" Type="varchar" MaxLength="4096" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="URL" Type="varchar" MaxLength="1024" />
           <Property Name="LastUpdateDate" Type="datetime" />
           <Property Name="DateProcessed" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'AreaAbstractNew.dbo.LatestDeedDocument' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LatestDeedDocument">
           <Key>
             <PropertyRef Name="BBLE" />
-            <PropertyRef Name="DeedUniqueKey" />
-            <PropertyRef Name="DocumentType" />
           </Key>
           <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="DeedUniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
@@ -231,15 +226,10 @@ warning 6002: The table/view 'AreaAbstractNew.dbo.LatestDeedDocument' does not h
           <Property Name="DateModified" Type="date" />
           <Property Name="BoroughOfRecord" Type="varchar" MaxLength="1" />
           <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="URL" Type="varchar" MaxLength="1024" />
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="DateProcessed" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'AreaAbstractNew.dbo.LotsPerLatestDeed' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="LotsPerLatestDeed">
-          <Property Name="DeedUniqueKey" Type="varchar" MaxLength="16" />
-          <Property Name="NumberOfLots" Type="int" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'AreaAbstractNew.Acris.vwDeedsByBBLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwDeedsByBBLE">
@@ -324,10 +314,32 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
           <Property Name="DateModified" Type="date" />
           <Property Name="RecordedBorough" Type="varchar" MaxLength="1" />
           <Property Name="DateLastUpdated" Type="datetime" />
+          <Property Name="ReelYear" Type="varchar" MaxLength="4" />
+          <Property Name="ReelNumber" Type="varchar" MaxLength="5" />
+          <Property Name="ReelPage" Type="varchar" MaxLength="5" />
         </EntityType>
+        <Function Name="tfnGetDocumentParties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Acris">
+          <Parameter Name="UniqueKey" Type="varchar" Mode="In" />
+          <Parameter Name="PartyType" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+                <Property Name="PartyType" Type="varchar" MaxLength="20" />
+                <Property Name="Name" Type="varchar" MaxLength="70" Nullable="false" />
+                <Property Name="PartyTypeCode" Type="varchar" MaxLength="1" Nullable="false" />
+                <Property Name="Address1" Type="varchar" MaxLength="60" />
+                <Property Name="Address2" Type="varchar" MaxLength="60" />
+                <Property Name="City" Type="varchar" MaxLength="30" />
+                <Property Name="State" Type="varchar" MaxLength="2" />
+                <Property Name="Zip" Type="varchar" MaxLength="9" />
+                <Property Name="Country" Type="varchar" MaxLength="2" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="ACRISModelStoreContainer">
           <EntitySet Name="DocumentControlCodes" EntityType="Self.DocumentControlCodes" Schema="Acris" store:Type="Tables" />
-          <EntitySet Name="MortgageDeedCrossReference" EntityType="Self.MortgageDeedCrossReference" Schema="Acris" store:Type="Tables" />
           <EntitySet Name="MortgageDeedLot" EntityType="Self.MortgageDeedLot" Schema="Acris" store:Type="Tables" />
           <EntitySet Name="MortgageDeedMaster" EntityType="Self.MortgageDeedMaster" Schema="Acris" store:Type="Tables" />
           <EntitySet Name="MortgageDeedParty" EntityType="Self.MortgageDeedParty" Schema="Acris" store:Type="Tables" />
@@ -338,43 +350,19 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
           <EntitySet Name="UCCMaster" EntityType="Self.UCCMaster" Schema="Acris" store:Type="Tables" />
           <EntitySet Name="UCCParty" EntityType="Self.UCCParty" Schema="Acris" store:Type="Tables" />
           <EntitySet Name="UCCRemark" EntityType="Self.UCCRemark" Schema="Acris" store:Type="Tables" />
-          <EntitySet Name="LatestContractOfSaleorMemorandumofContract" EntityType="Self.LatestContractOfSaleorMemorandumofContract" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="LatestContractOfSaleorMemorandumofContract" EntityType="Self.LatestContractOfSaleorMemorandumofContract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LatestDeedDocument" EntityType="Self.LatestDeedDocument" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MortgageDeedCrossReference" EntityType="Self.MortgageDeedCrossReference" store:Type="Tables" store:Schema="Acris">
             <DefiningQuery>SELECT 
-    [LatestContractOfSaleorMemorandumofContract].[BBLE] AS [BBLE], 
-    [LatestContractOfSaleorMemorandumofContract].[UniqueKey] AS [UniqueKey], 
-    [LatestContractOfSaleorMemorandumofContract].[PropertyType] AS [PropertyType], 
-    [LatestContractOfSaleorMemorandumofContract].[DocumentType] AS [DocumentType], 
-    [LatestContractOfSaleorMemorandumofContract].[DocumentTypeDescription] AS [DocumentTypeDescription], 
-    [LatestContractOfSaleorMemorandumofContract].[DocumentClassCodeDescription] AS [DocumentClassCodeDescription], 
-    [LatestContractOfSaleorMemorandumofContract].[DocumentDate] AS [DocumentDate], 
-    [LatestContractOfSaleorMemorandumofContract].[DocumentAmount] AS [DocumentAmount], 
-    [LatestContractOfSaleorMemorandumofContract].[PercentageOfTransaction] AS [PercentageOfTransaction], 
-    [LatestContractOfSaleorMemorandumofContract].[DateRecorded] AS [DateRecorded], 
-    [LatestContractOfSaleorMemorandumofContract].[DateModified] AS [DateModified], 
-    [LatestContractOfSaleorMemorandumofContract].[BoroughOfRecord] AS [BoroughOfRecord], 
-    [LatestContractOfSaleorMemorandumofContract].[Remarks] AS [Remarks], 
-    [LatestContractOfSaleorMemorandumofContract].[LastUpdateDate] AS [LastUpdateDate], 
-    [LatestContractOfSaleorMemorandumofContract].[DateProcessed] AS [DateProcessed]
-    FROM [dbo].[LatestContractOfSaleorMemorandumofContract] AS [LatestContractOfSaleorMemorandumofContract]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="LatestDeedDocument" EntityType="Self.LatestDeedDocument" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [LatestDeedDocument].[BBLE] AS [BBLE], 
-    [LatestDeedDocument].[DeedUniqueKey] AS [DeedUniqueKey], 
-    [LatestDeedDocument].[PropertyType] AS [PropertyType], 
-    [LatestDeedDocument].[DocumentType] AS [DocumentType], 
-    [LatestDeedDocument].[DocumentTypeDescription] AS [DocumentTypeDescription], 
-    [LatestDeedDocument].[DocumentClassCodeDescription] AS [DocumentClassCodeDescription], 
-    [LatestDeedDocument].[DocumentDate] AS [DocumentDate], 
-    [LatestDeedDocument].[DocumentAmount] AS [DocumentAmount], 
-    [LatestDeedDocument].[PercentageOfTransaction] AS [PercentageOfTransaction], 
-    [LatestDeedDocument].[DateRecorded] AS [DateRecorded], 
-    [LatestDeedDocument].[DateModified] AS [DateModified], 
-    [LatestDeedDocument].[BoroughOfRecord] AS [BoroughOfRecord], 
-    [LatestDeedDocument].[Remarks] AS [Remarks], 
-    [LatestDeedDocument].[LastUpdatedDate] AS [LastUpdatedDate], 
-    [LatestDeedDocument].[DateProcessed] AS [DateProcessed]
-    FROM [dbo].[LatestDeedDocument] AS [LatestDeedDocument]</DefiningQuery>
+    [MortgageDeedCrossReference].[UniqueKey] AS [UniqueKey], 
+    [MortgageDeedCrossReference].[CRFN] AS [CRFN], 
+    [MortgageDeedCrossReference].[DocumentIdReference] AS [DocumentIdReference], 
+    [MortgageDeedCrossReference].[ReelYear] AS [ReelYear], 
+    [MortgageDeedCrossReference].[ReelBorough] AS [ReelBorough], 
+    [MortgageDeedCrossReference].[ReelNumber] AS [ReelNumber], 
+    [MortgageDeedCrossReference].[ReelPage] AS [ReelPage], 
+    [MortgageDeedCrossReference].[DateLastUpdated] AS [DateLastUpdated]
+    FROM [Acris].[MortgageDeedCrossReference] AS [MortgageDeedCrossReference]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwDeedsByBBLE" EntityType="Self.vwDeedsByBBLE" store:Type="Views" store:Schema="Acris">
             <DefiningQuery>SELECT 
@@ -438,12 +426,14 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
     [vwDocumentsByBBLE].[DateRecorded] AS [DateRecorded], 
     [vwDocumentsByBBLE].[DateModified] AS [DateModified], 
     [vwDocumentsByBBLE].[RecordedBorough] AS [RecordedBorough], 
-    [vwDocumentsByBBLE].[DateLastUpdated] AS [DateLastUpdated]
+    [vwDocumentsByBBLE].[DateLastUpdated] AS [DateLastUpdated], 
+    [vwDocumentsByBBLE].[ReelYear] AS [ReelYear], 
+    [vwDocumentsByBBLE].[ReelNumber] AS [ReelNumber], 
+    [vwDocumentsByBBLE].[ReelPage] AS [ReelPage]
     FROM [Acris].[vwDocumentsByBBLE] AS [vwDocumentsByBBLE]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ACRISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -628,50 +618,6 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
           <Property Name="Text" Type="String" MaxLength="232" FixedLength="false" Unicode="false" />
           <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="LatestContractOfSaleorMemorandumofContract">
-          <Key>
-            <PropertyRef Name="BBLE" />
-            <PropertyRef Name="UniqueKey" />
-            <PropertyRef Name="DateProcessed" />
-          </Key>
-          <Property Name="BBLE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentDate" Type="DateTime" Precision="0" />
-          <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
-          <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
-          <Property Name="DateRecorded" Type="DateTime" Precision="0" />
-          <Property Name="DateModified" Type="DateTime" Precision="0" />
-          <Property Name="BoroughOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Remarks" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
-          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="DateProcessed" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="LatestDeedDocument">
-          <Key>
-            <PropertyRef Name="BBLE" />
-            <PropertyRef Name="DeedUniqueKey" />
-            <PropertyRef Name="DocumentType" />
-          </Key>
-          <Property Name="BBLE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DeedUniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentDate" Type="DateTime" Precision="0" />
-          <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
-          <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
-          <Property Name="DateRecorded" Type="DateTime" Precision="0" />
-          <Property Name="DateModified" Type="DateTime" Precision="0" />
-          <Property Name="BoroughOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="DateProcessed" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="vwDeedsByBBLE">
           <Key>
             <PropertyRef Name="BBLE" />
@@ -748,6 +694,9 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
           <Property Name="DateModified" Type="DateTime" Precision="0" />
           <Property Name="RecordedBorough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="ReelYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ReelNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ReelPage" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="ACRISEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="DocumentControlCodes" EntityType="Self.DocumentControlCode" />
@@ -762,13 +711,71 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
           <EntitySet Name="UCCMasters" EntityType="Self.UCCMaster" />
           <EntitySet Name="UCCParties" EntityType="Self.UCCParty" />
           <EntitySet Name="UCCRemarks" EntityType="Self.UCCRemark" />
-          <EntitySet Name="LatestContractOfSaleorMemorandumofContracts" EntityType="Self.LatestContractOfSaleorMemorandumofContract" />
-          <EntitySet Name="LatestDeedDocuments" EntityType="Self.LatestDeedDocument" />
           <EntitySet Name="vwDeedsByBBLEs" EntityType="Self.vwDeedsByBBLE" />
           <EntitySet Name="vwDocumentPartiesByBBLEs" EntityType="Self.vwDocumentPartiesByBBLE" />
           <EntitySet Name="vwDocumentPartiesByUniqueKeys" EntityType="Self.vwDocumentPartiesByUniqueKey" />
           <EntitySet Name="vwDocumentsByBBLEs" EntityType="Self.vwDocumentsByBBLE" />
+          <FunctionImport Name="tfnGetDocumentParties" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetDocumentParties_Result)">
+            <Parameter Name="UniqueKey" Mode="In" Type="String" />
+            <Parameter Name="PartyType" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="LatestContractOfSaleorMemorandumofContracts" EntityType="ACRISModel.LatestContractOfSaleorMemorandumofContract" />
+          <EntitySet Name="LatestDeedDocuments" EntityType="ACRISModel.LatestDeedDocument" />
         </EntityContainer>
+        <ComplexType Name="tfnGetDocumentParties_Result">
+          <Property Type="String" Name="UniqueKey" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="PartyType" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="70" />
+          <Property Type="String" Name="PartyTypeCode" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Address1" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Address2" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="Zip" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <EntityType Name="LatestContractOfSaleorMemorandumofContract">
+          <Key>
+            <PropertyRef Name="BBLE" />
+          </Key>
+          <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueKey" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+          <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
+          <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+          <Property Name="DateModified" Type="DateTime" Precision="0" />
+          <Property Name="BoroughOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="DateProcessed" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="LatestDeedDocument">
+          <Key>
+            <PropertyRef Name="BBLE" />
+          </Key>
+          <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="DeedUniqueKey" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentType" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+          <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
+          <Property Name="DateRecorded" Type="DateTime" Precision="0" />
+          <Property Name="DateModified" Type="DateTime" Precision="0" />
+          <Property Name="BoroughOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="DateProcessed" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -958,48 +965,6 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LatestContractOfSaleorMemorandumofContracts">
-            <EntityTypeMapping TypeName="ACRISModel.LatestContractOfSaleorMemorandumofContract">
-              <MappingFragment StoreEntitySet="LatestContractOfSaleorMemorandumofContract">
-                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
-                <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
-                <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
-                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
-                <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
-                <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
-                <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
-                <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
-                <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
-                <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="BoroughOfRecord" ColumnName="BoroughOfRecord" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="DateProcessed" ColumnName="DateProcessed" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LatestDeedDocuments">
-            <EntityTypeMapping TypeName="ACRISModel.LatestDeedDocument">
-              <MappingFragment StoreEntitySet="LatestDeedDocument">
-                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
-                <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
-                <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
-                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
-                <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
-                <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
-                <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
-                <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
-                <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
-                <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="BoroughOfRecord" ColumnName="BoroughOfRecord" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="DateProcessed" ColumnName="DateProcessed" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwDeedsByBBLEs">
             <EntityTypeMapping TypeName="ACRISModel.vwDeedsByBBLE">
               <MappingFragment StoreEntitySet="vwDeedsByBBLE">
@@ -1056,6 +1021,9 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
           <EntitySetMapping Name="vwDocumentsByBBLEs">
             <EntityTypeMapping TypeName="ACRISModel.vwDocumentsByBBLE">
               <MappingFragment StoreEntitySet="vwDocumentsByBBLE">
+                <ScalarProperty Name="ReelPage" ColumnName="ReelPage" />
+                <ScalarProperty Name="ReelNumber" ColumnName="ReelNumber" />
+                <ScalarProperty Name="ReelYear" ColumnName="ReelYear" />
                 <ScalarProperty Name="BBLE" ColumnName="BBLE" />
                 <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
                 <ScalarProperty Name="CRFN" ColumnName="CRFN" />
@@ -1070,6 +1038,66 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="RecordedBorough" ColumnName="RecordedBorough" />
                 <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetDocumentParties" FunctionName="ACRISModel.Store.tfnGetDocumentParties">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ACRISModel.tfnGetDocumentParties_Result">
+                <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+                <ScalarProperty Name="PartyType" ColumnName="PartyType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PartyTypeCode" ColumnName="PartyTypeCode" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="LatestContractOfSaleorMemorandumofContracts">
+            <EntityTypeMapping TypeName="ACRISModel.LatestContractOfSaleorMemorandumofContract">
+              <MappingFragment StoreEntitySet="LatestContractOfSaleorMemorandumofContract">
+                <ScalarProperty Name="DateProcessed" ColumnName="DateProcessed" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="BoroughOfRecord" ColumnName="BoroughOfRecord" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+                <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
+                <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+                <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+                <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
+                <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+                <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LatestDeedDocuments">
+            <EntityTypeMapping TypeName="ACRISModel.LatestDeedDocument">
+              <MappingFragment StoreEntitySet="LatestDeedDocument">
+                <ScalarProperty Name="DateProcessed" ColumnName="DateProcessed" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="BoroughOfRecord" ColumnName="BoroughOfRecord" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+                <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
+                <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+                <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+                <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
+                <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+                <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
+                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

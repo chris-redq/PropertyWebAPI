@@ -27,6 +27,7 @@ namespace ACRISDB
         public Nullable<System.DateTime> DateModified { get; set; }
         public string BoroughOfRecord { get; set; }
         public string Remarks { get; set; }
+        public string URL { get; set; }
         public Nullable<System.DateTime> LastUpdatedDate { get; set; }
         public Nullable<System.DateTime> DateProcessed { get; set; }
     }

@@ -62,3 +62,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\System.Web.Http
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\obj\Release\PropertyWebAPI.csprojResolveAssemblyReference.cache
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\obj\Release\PropertyWebAPI.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\obj\Release\PropertyWebAPI.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\log4net.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\log4net.xml

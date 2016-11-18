@@ -94,6 +94,9 @@
     <Compile Include="PropertyType.cs">
       <DependentUpon>ACRISDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnGetDocumentParties_Result.cs">
+      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UCCCrossReference.cs">
       <DependentUpon>ACRISDataModel.tt</DependentUpon>
     </Compile>

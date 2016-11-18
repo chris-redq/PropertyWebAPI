@@ -12,6 +12,8 @@ namespace ACRISDB
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ACRISEntities : DbContext
     {
@@ -37,11 +39,25 @@ namespace ACRISDB
         public virtual DbSet<UCCMaster> UCCMasters { get; set; }
         public virtual DbSet<UCCParty> UCCParties { get; set; }
         public virtual DbSet<UCCRemark> UCCRemarks { get; set; }
-        public virtual DbSet<LatestContractOfSaleorMemorandumofContract> LatestContractOfSaleorMemorandumofContracts { get; set; }
-        public virtual DbSet<LatestDeedDocument> LatestDeedDocuments { get; set; }
         public virtual DbSet<vwDeedsByBBLE> vwDeedsByBBLEs { get; set; }
         public virtual DbSet<vwDocumentPartiesByBBLE> vwDocumentPartiesByBBLEs { get; set; }
         public virtual DbSet<vwDocumentPartiesByUniqueKey> vwDocumentPartiesByUniqueKeys { get; set; }
         public virtual DbSet<vwDocumentsByBBLE> vwDocumentsByBBLEs { get; set; }
+        public virtual DbSet<LatestContractOfSaleorMemorandumofContract> LatestContractOfSaleorMemorandumofContracts { get; set; }
+        public virtual DbSet<LatestDeedDocument> LatestDeedDocuments { get; set; }
+    
+        [DbFunction("ACRISEntities", "tfnGetDocumentParties")]
+        public virtual IQueryable<tfnGetDocumentParties_Result> tfnGetDocumentParties(string uniqueKey, string partyType)
+        {
+            var uniqueKeyParameter = uniqueKey != null ?
+                new ObjectParameter("UniqueKey", uniqueKey) :
+                new ObjectParameter("UniqueKey", typeof(string));
+    
+            var partyTypeParameter = partyType != null ?
+                new ObjectParameter("PartyType", partyType) :
+                new ObjectParameter("PartyType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetDocumentParties_Result>("[ACRISEntities].[tfnGetDocumentParties](@UniqueKey, @PartyType)", uniqueKeyParameter, partyTypeParameter);
+        }
     }
 }

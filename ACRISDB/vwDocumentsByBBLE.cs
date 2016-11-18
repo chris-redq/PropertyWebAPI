@@ -28,5 +28,8 @@ namespace ACRISDB
         public Nullable<System.DateTime> DateModified { get; set; }
         public string RecordedBorough { get; set; }
         public Nullable<System.DateTime> DateLastUpdated { get; set; }
+        public string ReelYear { get; set; }
+        public string ReelNumber { get; set; }
+        public string ReelPage { get; set; }
     }
 }

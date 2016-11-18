@@ -119,5 +119,19 @@ namespace eCourtsDB
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetNewMortgageForeclosureCases_Result>("[NYCOURTSEntities].[tfnGetNewMortgageForeclosureCases](@StartDate, @EndDate)", startDateParameter, endDateParameter);
         }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetMortgageForeclosureLPsForaProperty")]
+        public virtual IQueryable<tfnGetMortgageForeclosureLPsForaProperty_Result> tfnGetMortgageForeclosureLPsForaProperty(string bBL, Nullable<System.DateTime> startDate)
+        {
+            var bBLParameter = bBL != null ?
+                new ObjectParameter("BBL", bBL) :
+                new ObjectParameter("BBL", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetMortgageForeclosureLPsForaProperty_Result>("[NYCOURTSEntities].[tfnGetMortgageForeclosureLPsForaProperty](@BBL, @StartDate)", bBLParameter, startDateParameter);
+        }
     }
 }

@@ -165,3 +165,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\obj\Debug\PropertyW
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\obj\Debug\PropertyWebAPI.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\obj\Debug\PropertyWebAPI.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\PropertyWebAPI.XML
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\log4net.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\log4net.xml

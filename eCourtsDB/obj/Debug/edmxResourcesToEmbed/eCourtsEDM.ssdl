@@ -698,6 +698,7 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="County" Type="varchar" MaxLength="25" />
           <Property Name="FormattedCaseIndexNumber" Type="varchar" MaxLength="15" />
+          <Property Name="JDLSCaseIndexNumber" Type="varchar" MaxLength="10" />
           <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
           <Property Name="CaseDispositionDate" Type="date" />
           <Property Name="CaseType" Type="varchar" MaxLength="30" />
@@ -719,6 +720,35 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
           <Property Name="CaseDispositionDate" Type="date" />
           <Property Name="CaseType" Type="varchar" MaxLength="30" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="tfnGetMortgageForeclosureLPsForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="jdls">
+    <Parameter Name="BBL" Type="varchar" Mode="In" />
+    <Parameter Name="StartDate" Type="datetime" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="BBL" Type="varchar" MaxLength="10" />
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="KeyValue" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="Seq" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="JDLSCaseIndexNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Debtor" Type="varchar(max)" />
+          <Property Name="Creditor" Type="varchar(max)" />
+          <Property Name="EffectiveDateTime" Type="datetime" />
+          <Property Name="SatisfactionDate" Type="date" />
+          <Property Name="SatisfactionType" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="CountyName" Type="varchar" MaxLength="25" />
+          <Property Name="CCISCaseIndexNumber" Type="varchar" MaxLength="50" />
+          <Property Name="CaseFound" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="NameMatch" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+          <Property Name="CaseDispositionDate" Type="date" />
+          <Property Name="CaseType" Type="varchar" MaxLength="30" />
+          <Property Name="Comment" Type="varchar(max)" />
         </RowType>
       </CollectionType>
     </ReturnType>

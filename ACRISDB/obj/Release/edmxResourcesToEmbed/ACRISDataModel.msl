@@ -187,6 +187,7 @@
     <EntitySetMapping Name="LatestContractOfSaleorMemorandumofContracts">
       <EntityTypeMapping TypeName="ACRISModel.LatestContractOfSaleorMemorandumofContract">
         <MappingFragment StoreEntitySet="LatestContractOfSaleorMemorandumofContract">
+          <ScalarProperty Name="URL" ColumnName="URL" />
           <ScalarProperty Name="BBLE" ColumnName="BBLE" />
           <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
           <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
@@ -208,6 +209,7 @@
     <EntitySetMapping Name="LatestDeedDocuments">
       <EntityTypeMapping TypeName="ACRISModel.LatestDeedDocument">
         <MappingFragment StoreEntitySet="LatestDeedDocument">
+          <ScalarProperty Name="URL" ColumnName="URL" />
           <ScalarProperty Name="BBLE" ColumnName="BBLE" />
           <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
           <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
@@ -282,6 +284,9 @@
     <EntitySetMapping Name="vwDocumentsByBBLEs">
       <EntityTypeMapping TypeName="ACRISModel.vwDocumentsByBBLE">
         <MappingFragment StoreEntitySet="vwDocumentsByBBLE">
+          <ScalarProperty Name="ReelPage" ColumnName="ReelPage" />
+          <ScalarProperty Name="ReelNumber" ColumnName="ReelNumber" />
+          <ScalarProperty Name="ReelYear" ColumnName="ReelYear" />
           <ScalarProperty Name="BBLE" ColumnName="BBLE" />
           <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
           <ScalarProperty Name="CRFN" ColumnName="CRFN" />
@@ -299,5 +304,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetDocumentParties" FunctionName="ACRISModel.Store.tfnGetDocumentParties">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ACRISModel.tfnGetDocumentParties_Result">
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="PartyType" ColumnName="PartyType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PartyTypeCode" ColumnName="PartyTypeCode" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

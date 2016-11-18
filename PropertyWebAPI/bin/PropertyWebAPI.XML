@@ -559,6 +559,20 @@
                 Returns a list of cases and their status in eCourts for the given property identified by BBL - Borough Block Lot Number.
             </returns>
         </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMortgageForeclosureLPsForaProperty(System.String,System.String)">
+            <summary>  
+                Use this api to find all Mortgage Foreclosure related LPs for a property in NYC in the JDLS system and their corresponding cases in the NYS Supreme Court CCIS System. 
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param> 
+            <param name="effectiveDate">
+                Optional Paramter incase LPs are requested on or after the supplied effectiveDate
+            </param> 
+            <returns>
+                Returns a list of LPs and their respective cases in eCourts for the given property identified by BBL - Borough Block Lot Number.
+            </returns>
+        </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.GetNewMortgageForeclosureCases(System.String,System.String)">
             <summary>  
                 Use this api to get all new mortgage foreclosure cases added for a select set of counties within a data range. The select set currently is 5 Boroughs and LI counties 
@@ -598,7 +612,7 @@
         </member>
         <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.Get(System.String)">
             <summary>  
-                Use this method to retrieve all Mortgage and Deed related documents for a property in NYC from the ACRIS system, in a reverse chronological order. 
+                Use this method to retrieve all Mortgage and Deed related documents for a property in NYC from the ACRIS system, in a reverse chronological order by recording date (document date is sometimes NULL). 
             </summary>  
             <param name="propertyBBLE">
                 Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
@@ -617,6 +631,17 @@
                 followed by 0 padded 4 digit lot number and finally ending with oprion alpha caharcter indicating the easement associated with the property</param>  
             <returns>
                 Returns a list of all deeds filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetLatestDeedDetails(System.String)">
+            <summary>  
+                Use this method to retrieve details about the latest deed for a property
+            </summary>  
+            <param name="propertyBBLE">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with oprion alpha caharcter indicating the easement associated with the property</param>  
+            <returns>
+                Returns deed details and owners filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
             </returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetAllContractsOfSaleAndMemorandumsOfContract(System.String)">
