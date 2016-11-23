@@ -10,26 +10,28 @@
 namespace ACRISDB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UCCMaster
+    public partial class tfnGetUnsatisfiedMortgages_Result
     {
+        public int RowNo { get; set; }
+        public string BBLE { get; set; }
         public string UniqueKey { get; set; }
-        public Nullable<System.DateTime> DateFileCreated { get; set; }
         public string CRFN { get; set; }
-        public string RecordedBorough { get; set; }
-        public string DocumentTypeCode { get; set; }
+        public string PropertyType { get; set; }
+        public string DocumentType { get; set; }
+        public string DocumentTypeDescription { get; set; }
+        public string DocumentClassCodeDescription { get; set; }
+        public Nullable<System.DateTime> DocumentDate { get; set; }
         public Nullable<decimal> DocumentAmount { get; set; }
+        public Nullable<decimal> PercentageOfTransaction { get; set; }
         public Nullable<System.DateTime> DateRecorded { get; set; }
-        public string UCCCollateral { get; set; }
-        public string FederalTaxSerialNumber { get; set; }
-        public Nullable<System.DateTime> FederalTaxAssessmentDate { get; set; }
-        public string RPTTLNumber { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
+        public string RecordedBorough { get; set; }
+        public string Remarks { get; set; }
+        public Nullable<System.DateTime> DateLastUpdated { get; set; }
+        public string URL { get; set; }
         public string ReelYear { get; set; }
         public string ReelNumber { get; set; }
         public string ReelPage { get; set; }
-        public string FileNumber { get; set; }
-        public Nullable<System.DateTime> DateLastUpdated { get; set; }
     }
 }

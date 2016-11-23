@@ -27,24 +27,14 @@ namespace ACRISDB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DocumentControlCode> DocumentControlCodes { get; set; }
-        public virtual DbSet<MortgageDeedCrossReference> MortgageDeedCrossReferences { get; set; }
-        public virtual DbSet<MortgageDeedLot> MortgageDeedLots { get; set; }
-        public virtual DbSet<MortgageDeedMaster> MortgageDeedMasters { get; set; }
-        public virtual DbSet<MortgageDeedParty> MortgageDeedParties { get; set; }
-        public virtual DbSet<MortgageDeedRemark> MortgageDeedRemarks { get; set; }
-        public virtual DbSet<PropertyType> PropertyTypes { get; set; }
-        public virtual DbSet<UCCCrossReference> UCCCrossReferences { get; set; }
-        public virtual DbSet<UCCLot> UCCLots { get; set; }
-        public virtual DbSet<UCCMaster> UCCMasters { get; set; }
-        public virtual DbSet<UCCParty> UCCParties { get; set; }
-        public virtual DbSet<UCCRemark> UCCRemarks { get; set; }
+        public virtual DbSet<LatestContractOfSaleorMemorandumofContract> LatestContractOfSaleorMemorandumofContracts { get; set; }
+        public virtual DbSet<LatestDeedDocument> LatestDeedDocuments { get; set; }
         public virtual DbSet<vwDeedsByBBLE> vwDeedsByBBLEs { get; set; }
         public virtual DbSet<vwDocumentPartiesByBBLE> vwDocumentPartiesByBBLEs { get; set; }
         public virtual DbSet<vwDocumentPartiesByUniqueKey> vwDocumentPartiesByUniqueKeys { get; set; }
         public virtual DbSet<vwDocumentsByBBLE> vwDocumentsByBBLEs { get; set; }
-        public virtual DbSet<LatestContractOfSaleorMemorandumofContract> LatestContractOfSaleorMemorandumofContracts { get; set; }
-        public virtual DbSet<LatestDeedDocument> LatestDeedDocuments { get; set; }
+        public virtual DbSet<vwMortgageDeedMaster> vwMortgageDeedMasters { get; set; }
+        public virtual DbSet<vwSatisfactionAndAssignmentCrossReeferenceRecord> vwSatisfactionAndAssignmentCrossReeferenceRecords { get; set; }
     
         [DbFunction("ACRISEntities", "tfnGetDocumentParties")]
         public virtual IQueryable<tfnGetDocumentParties_Result> tfnGetDocumentParties(string uniqueKey, string partyType)
@@ -58,6 +48,30 @@ namespace ACRISDB
                 new ObjectParameter("PartyType", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetDocumentParties_Result>("[ACRISEntities].[tfnGetDocumentParties](@UniqueKey, @PartyType)", uniqueKeyParameter, partyTypeParameter);
+        }
+    
+        [DbFunction("ACRISEntities", "tfnGetDocumentPartiesByKey")]
+        public virtual IQueryable<tfnGetDocumentPartiesByKey_Result> tfnGetDocumentPartiesByKey(string key, string partyType)
+        {
+            var keyParameter = key != null ?
+                new ObjectParameter("Key", key) :
+                new ObjectParameter("Key", typeof(string));
+    
+            var partyTypeParameter = partyType != null ?
+                new ObjectParameter("PartyType", partyType) :
+                new ObjectParameter("PartyType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetDocumentPartiesByKey_Result>("[ACRISEntities].[tfnGetDocumentPartiesByKey](@Key, @PartyType)", keyParameter, partyTypeParameter);
+        }
+    
+        [DbFunction("ACRISEntities", "tfnGetUnsatisfiedMortgages")]
+        public virtual IQueryable<tfnGetUnsatisfiedMortgages_Result> tfnGetUnsatisfiedMortgages(string bBLE)
+        {
+            var bBLEParameter = bBLE != null ?
+                new ObjectParameter("BBLE", bBLE) :
+                new ObjectParameter("BBLE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetUnsatisfiedMortgages_Result>("[ACRISEntities].[tfnGetUnsatisfiedMortgages](@BBLE)", bBLEParameter);
         }
     }
 }

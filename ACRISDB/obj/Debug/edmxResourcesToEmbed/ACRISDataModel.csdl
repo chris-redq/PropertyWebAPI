@@ -284,6 +284,9 @@
     </FunctionImport>
     <EntitySet Name="LatestContractOfSaleorMemorandumofContracts" EntityType="ACRISModel.LatestContractOfSaleorMemorandumofContract" />
     <EntitySet Name="LatestDeedDocuments" EntityType="ACRISModel.LatestDeedDocument" />
+    <FunctionImport Name="tfnGetUnsatisfiedMortgages" IsComposable="true" ReturnType="Collection(String)">
+      <Parameter Name="BBLE" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="tfnGetDocumentParties_Result">
     <Property Type="String" Name="UniqueKey" Nullable="false" MaxLength="16" />

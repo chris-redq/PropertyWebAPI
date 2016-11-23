@@ -203,7 +203,7 @@ namespace PropertyWebAPI.Controllers
         ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
         /// </param> 
         /// <param name="effectiveDate">
-        ///     Optional Paramter incase LPs are requested on or after the supplied effectiveDate
+        ///     AreaAbstractEntities Paramter incase LPs are requested on or after the supplied effectiveDate
         /// </param> 
         /// <returns>
         ///     Returns a list of LPs and their respective cases in eCourts for the given property identified by BBL - Borough Block Lot Number.

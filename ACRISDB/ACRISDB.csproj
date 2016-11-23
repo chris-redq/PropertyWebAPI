@@ -51,107 +51,81 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACRISDataModel.Context.cs">
+    <Compile Include="acrisDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ACRISDataModel.Context.tt</DependentUpon>
+      <DependentUpon>acrisDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ACRISDataModel.cs">
+    <Compile Include="acrisDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ACRISDataModel.Designer.cs">
+    <Compile Include="acrisDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ACRISDataModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DocumentControlCode.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="LatestContractOfSaleorMemorandumofContract.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="LatestDeedDocument.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MortgageDeedCrossReference.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MortgageDeedLot.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MortgageDeedMaster.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MortgageDeedParty.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MortgageDeedRemark.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyType.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+    <Compile Include="tfnGetDocumentPartiesByKey_Result.cs">
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetDocumentParties_Result.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="UCCCrossReference.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UCCLot.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UCCMaster.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UCCParty.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UCCRemark.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+    <Compile Include="tfnGetUnsatisfiedMortgages_Result.cs">
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="vwDeedsByBBLE.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="vwDocumentPartiesByBBLE.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="vwDocumentPartiesByUniqueKey.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="vwDocumentsByBBLE.cs">
-      <DependentUpon>ACRISDataModel.tt</DependentUpon>
+      <DependentUpon>acrisDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwMortgageDeedMaster.cs">
+      <DependentUpon>acrisDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwSatisfactionAndAssignmentCrossReeferenceRecord.cs">
+      <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="ACRISDataModel.edmx">
+    <EntityDeploy Include="acrisDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ACRISDataModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>acrisDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ACRISDataModel.edmx.diagram">
-      <DependentUpon>ACRISDataModel.edmx</DependentUpon>
+    <None Include="acrisDB.edmx.diagram">
+      <DependentUpon>acrisDB.edmx</DependentUpon>
     </None>
     <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ACRISDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ACRISDataModel.Context.cs</LastGenOutput>
-      <DependentUpon>ACRISDataModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="ACRISDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ACRISDataModel.edmx</DependentUpon>
-      <LastGenOutput>ACRISDataModel.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="acrisDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>acrisDB.edmx</DependentUpon>
+      <LastGenOutput>acrisDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="acrisDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>acrisDB.edmx</DependentUpon>
+      <LastGenOutput>acrisDB.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

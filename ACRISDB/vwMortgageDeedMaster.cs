@@ -12,15 +12,21 @@ namespace ACRISDB
     using System;
     using System.Collections.Generic;
     
-    public partial class MortgageDeedCrossReference
+    public partial class vwMortgageDeedMaster
     {
         public string UniqueKey { get; set; }
+        public Nullable<System.DateTime> DateFileCreated { get; set; }
         public string CRFN { get; set; }
-        public string DocumentIdReference { get; set; }
+        public string RecordedBorough { get; set; }
+        public string DocumentTypeCode { get; set; }
+        public Nullable<System.DateTime> DocumentDate { get; set; }
+        public Nullable<decimal> DocumentAmount { get; set; }
+        public Nullable<System.DateTime> DateRecorded { get; set; }
+        public Nullable<System.DateTime> DateModified { get; set; }
         public string ReelYear { get; set; }
-        public string ReelBorough { get; set; }
         public string ReelNumber { get; set; }
         public string ReelPage { get; set; }
+        public Nullable<decimal> PercentageOftransaction { get; set; }
         public Nullable<System.DateTime> DateLastUpdated { get; set; }
     }
 }

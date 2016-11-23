@@ -320,5 +320,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetUnsatisfiedMortgages" FunctionName="ACRISModel.Store.tfnGetUnsatisfiedMortgages" />
   </EntityContainerMapping>
 </Mapping>

@@ -10,16 +10,19 @@
 namespace ACRISDB
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class DocumentControlCode
+    public partial class tfnGetDocumentPartiesByKey_Result
     {
-        public string RecordType { get; set; }
+        public int RowNo { get; set; }
+        public string UniqueKey { get; set; }
+        public Nullable<System.DateTime> DocumentDate { get; set; }
         public string DocumentType { get; set; }
         public string DocumentTypeDescription { get; set; }
-        public string ClassCodeDescription { get; set; }
-        public string Party1Type { get; set; }
-        public string Party2Type { get; set; }
-        public string Party3Type { get; set; }
+        public Nullable<decimal> DocumentAmount { get; set; }
+        public Nullable<System.DateTime> DateRecorded { get; set; }
+        public Nullable<System.DateTime> DateModified { get; set; }
+        public string PartyType { get; set; }
+        public string Name { get; set; }
+        public string PartyTypeCode { get; set; }
     }
 }

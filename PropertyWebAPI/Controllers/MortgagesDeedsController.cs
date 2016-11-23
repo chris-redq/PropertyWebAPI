@@ -35,7 +35,7 @@ namespace PropertyWebAPI.Controllers
         /// </summary>  
         /// <param name="propertyBBLE">
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
-        ///     followed by 0 padded 4 digit lot number and finally ending with oprion alpha caharcter indicating the easement associated with the property</param>  
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
         /// <returns>
         ///     Returns a list of all Mortagage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
@@ -73,7 +73,7 @@ namespace PropertyWebAPI.Controllers
         /// </summary>  
         /// <param name="propertyBBLE">
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
-        ///     followed by 0 padded 4 digit lot number and finally ending with oprion alpha caharcter indicating the easement associated with the property</param>  
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
         /// <returns>
         ///     Returns a list of all deeds filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
@@ -104,13 +104,13 @@ namespace PropertyWebAPI.Controllers
             return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
         }
 
-        // ../api/MortgagesDeeds/3001670091/deeds
+        // ../api/MortgagesDeeds/3001670091/latestdeed
         /// <summary>  
         ///     Use this method to retrieve details about the latest deed for a property
         /// </summary>  
         /// <param name="propertyBBLE">
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
-        ///     followed by 0 padded 4 digit lot number and finally ending with oprion alpha caharcter indicating the easement associated with the property</param>  
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
         /// <returns>
         ///     Returns deed details and owners filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
@@ -139,6 +139,42 @@ namespace PropertyWebAPI.Controllers
             return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
         }
 
+        // ../api/MortgagesDeeds/3001670091/unsatisfiedmortgages
+        /// <summary>  
+        ///     Use this method to retrieve all unsatsified mortgages for a property
+        /// </summary>  
+        /// <param name="propertyBBLE">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+        /// <returns>
+        ///     Returns unsatisfied mortgages in the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+        /// </returns>
+        [Route("api/mortgagesdeeds/{propertyBBLE}/unsatisfiedMortgages")]
+        [ResponseType(typeof(tfnGetUnsatisfiedMortgages_Result))]
+        public IHttpActionResult GetUnsatisfiedMortgages(string propertyBBLE)
+        {
+
+            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            {
+                using (ACRISEntities acrisDBEntities = new ACRISEntities())
+                {
+                    List<tfnGetUnsatisfiedMortgages_Result> mortgagesList = acrisDBEntities.tfnGetUnsatisfiedMortgages(propertyBBLE).ToList();
+
+                    if (mortgagesList != null)
+                    {
+                        if (mortgagesList.Count > 0)
+                        {
+                            return Ok(mortgagesList);
+                        }
+
+                        return NotFound();
+                    }
+                }
+            }
+
+            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+        }
+
         // ../api/MortgagesDeeds/3001670091/contractsofsale
         /// <summary>  
         ///     Use this method to retrieve all Contract of Sales as well as Memorandum of Contracts associated with a property in NYC from the ACRIS system, 
@@ -146,7 +182,7 @@ namespace PropertyWebAPI.Controllers
         /// </summary>  
         /// <param name="propertyBBLE">
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
-        ///     followed by 0 padded 4 digit lot number and finally ending with oprion alpha caharcter indicating the easement associated with the property</param>  
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
         /// <returns>
         ///     Returns a list of all all Contract of Sales as well as Memorandum of Contracts filed with the ACRIS system for a given property identified by a 
         ///     BBLE - Borough Block Lot and Easement Number.
