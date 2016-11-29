@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NYCDOFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="tfnGetGeneralPropertyInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dof">
+          <Parameter Name="BBLE" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
+                <Property Name="TaxClass" Type="varchar" MaxLength="2" />
+                <Property Name="LotFrontage" Type="float" />
+                <Property Name="LotDepth" Type="float" />
+                <Property Name="LotArea" Type="int" />
+                <Property Name="BuildingClassCode" Type="varchar" MaxLength="2" />
+                <Property Name="BuildingClass" Type="varchar" MaxLength="255" />
+                <Property Name="BuildingFrontage" Type="float" />
+                <Property Name="BuildingDepth" Type="float" />
+                <Property Name="Stories" Type="float" />
+                <Property Name="NumberOfBuildingsOnLot" Type="float" />
+                <Property Name="BuildingGrossArea" Type="int" />
+                <Property Name="BuiltFAR" Type="float" />
+                <Property Name="MaxResidentialFAR" Type="float" />
+                <Property Name="YearBuilt" Type="int" />
+                <Property Name="Borough" Type="varchar" MaxLength="15" />
+                <Property Name="Block" Type="int" />
+                <Property Name="Lot" Type="int" />
+                <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
+                <Property Name="StreetName" Type="varchar" MaxLength="20" />
+                <Property Name="NTA" Type="varchar" MaxLength="250" />
+                <Property Name="Zoning" Type="varchar" MaxLength="9" />
+                <Property Name="UnitNumber" Type="varchar" MaxLength="5" />
+                <Property Name="East" Type="int" />
+                <Property Name="North" Type="int" />
+                <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+                <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="NYCDOFModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NYCDOFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="tfnGetGeneralPropertyInformation_Result">
+          <Property Name="BBLE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="LotFrontage" Type="Double" />
+          <Property Name="LotDepth" Type="Double" />
+          <Property Name="LotArea" Type="Int32" />
+          <Property Name="BuildingClassCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingClass" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingFrontage" Type="Double" />
+          <Property Name="BuildingDepth" Type="Double" />
+          <Property Name="Stories" Type="Double" />
+          <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+          <Property Name="BuildingGrossArea" Type="Int32" />
+          <Property Name="BuiltFAR" Type="Double" />
+          <Property Name="MaxResidentialFAR" Type="Double" />
+          <Property Name="YearBuilt" Type="Int32" />
+          <Property Name="Borough" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Block" Type="Int32" />
+          <Property Name="Lot" Type="Int32" />
+          <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NTA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="East" Type="Int32" />
+          <Property Name="North" Type="Int32" />
+          <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+        </ComplexType>
+        <EntityContainer Name="NYCDOFEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="tfnGetGeneralPropertyInformation" IsComposable="true" ReturnType="Collection(NYCDOFModel.tfnGetGeneralPropertyInformation_Result)">
+            <Parameter Name="BBLE" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NYCDOFModelStoreContainer" CdmEntityContainer="NYCDOFEntities">
+          <FunctionImportMapping FunctionName="NYCDOFModel.Store.tfnGetGeneralPropertyInformation" FunctionImportName="tfnGetGeneralPropertyInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCDOFModel.tfnGetGeneralPropertyInformation_Result">
+                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+                <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
+                <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+                <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+                <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+                <ScalarProperty Name="BuildingClassCode" ColumnName="BuildingClassCode" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+                <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+                <ScalarProperty Name="Stories" ColumnName="Stories" />
+                <ScalarProperty Name="NumberOfBuildingsOnLot" ColumnName="NumberOfBuildingsOnLot" />
+                <ScalarProperty Name="BuildingGrossArea" ColumnName="BuildingGrossArea" />
+                <ScalarProperty Name="BuiltFAR" ColumnName="BuiltFAR" />
+                <ScalarProperty Name="MaxResidentialFAR" ColumnName="MaxResidentialFAR" />
+                <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+                <ScalarProperty Name="Borough" ColumnName="Borough" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="Lot" ColumnName="Lot" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="NTA" ColumnName="NTA" />
+                <ScalarProperty Name="Zoning" ColumnName="Zoning" />
+                <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+                <ScalarProperty Name="East" ColumnName="East" />
+                <ScalarProperty Name="North" ColumnName="North" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

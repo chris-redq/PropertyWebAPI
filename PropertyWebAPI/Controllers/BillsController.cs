@@ -19,17 +19,17 @@ namespace PropertyWebAPI.Controllers
 
     public class WaterBill
     {
-        public int      RequestId;
+        public int      requestId;
         public String   externalReferenceId;
-        public int      StatusTypeId;
+        public int      statusTypeId;
         public Double   billAmount;
     }
 
     public class TaxBill
     {
-        public int      RequestId;
+        public int      requestId;
         public String   externalReferenceId;
-        public int      StatusTypeId;
+        public int      statusTypeId;
         public Double   billAmount;
     }
 
@@ -80,7 +80,7 @@ namespace PropertyWebAPI.Controllers
                 {
                     billsObj.waterBill = new WaterBill();
                     billsObj.waterBill.externalReferenceId = externalRequestId;
-                    billsObj.waterBill.StatusTypeId = 0;
+                    billsObj.waterBill.statusTypeId = 0;
                     billsObj.waterBill.billAmount = 0;
 
 
@@ -100,7 +100,7 @@ namespace PropertyWebAPI.Controllers
                 {
                     billsObj.taxBill = new TaxBill();
                     billsObj.taxBill.externalReferenceId = externalRequestId;
-                    billsObj.taxBill.StatusTypeId = 0;
+                    billsObj.taxBill.statusTypeId = 0;
                     billsObj.taxBill.billAmount = 0;
                     //check if data available
                     //if not 

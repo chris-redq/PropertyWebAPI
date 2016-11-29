@@ -19,17 +19,17 @@ namespace PropertyWebAPI.Controllers
 
     public class ECBViolations
     {
-        public int RequestId;
+        public int requestId;
         public String externalReferenceId;
-        public int StatusTypeId;
+        public int statusTypeId;
         public Double violationAmount;
     }
 
     public class DOBViolations
     {
-        public int RequestId;
+        public int requestId;
         public String externalReferenceId;
-        public int StatusTypeId;
+        public int statusTypeId;
         public Double violationAmount;
     }
 
@@ -79,7 +79,7 @@ namespace PropertyWebAPI.Controllers
                 {
                     violationsObj.ecbViolations = new ECBViolations();
                     violationsObj.ecbViolations.externalReferenceId = externalRequestId;
-                    violationsObj.ecbViolations.StatusTypeId = 0;
+                    violationsObj.ecbViolations.statusTypeId = 0;
                     violationsObj.ecbViolations.violationAmount = 0;
 
                     //check if data available
@@ -98,7 +98,7 @@ namespace PropertyWebAPI.Controllers
                 {
                     violationsObj.dobViolations = new DOBViolations();
                     violationsObj.dobViolations.externalReferenceId = externalRequestId;
-                    violationsObj.dobViolations.StatusTypeId = 0;
+                    violationsObj.dobViolations.statusTypeId = 0;
                     violationsObj.dobViolations.violationAmount = 0;
                     //check if data available
                     //if not 

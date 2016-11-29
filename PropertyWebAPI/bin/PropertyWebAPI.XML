@@ -699,6 +699,16 @@
                 Helper class to return app_id and app_key fro GeoClient Api
             </summary>  
         </member>
+        <member name="T:PropertyWebAPI.Controllers.GeneralAddress">
+            <summary>  
+                Simple Address Class
+            </summary>  
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.GeneralPropertyInformation">
+            <summary>  
+                Helper class to return app_id and app_key fro GeoClient Api
+            </summary>  
+        </member>
         <member name="T:PropertyWebAPI.Controllers.PhysicalDataController">
             <summary>  
             This controller handles all api requests associated with phyical data associated with a property
@@ -726,7 +736,7 @@
         </member>
         <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCBBL(System.String,System.String,System.String)">
             <summary>  
-                Use this method to get Borough Block Lot NUmber associated with a property in NYC
+                Use this method to get Borough Block Lot Number associated with a property in NYC
             </summary>  
             <param name="streetNumber">
                 Street NUmber of teh property without or without hyphens
@@ -859,6 +869,17 @@
                         "lowHouseNumberOfDefiningAddressRange":"003015000AA","modeSwitchIn":"X","numberOfEntriesInListOfGeographicIdentifiers":"0001","numberOfExistingStructuresOnLot":"0001",
                         "numberOfStreetFrontagesOfLot":"01","returnCode1a":"00","rpadBuildingClassificationCode":"B1","rpadSelfCheckCodeForBbl":"5","sanbornBoroughCode":"2","sanbornPageNumber":"016",
                         "sanbornVolumeNumber":"13","taxMapNumberSectionAndVolume":"21201","workAreaFormatIndicatorIn":"C"}}
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCPropertyDetails(System.String)">
+            <summary>  
+                Use this method to get property address and physical data associated with a property in NYC
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>   
+            <returns>
+                Returns an object of contain cleaned property address and general information about the property
             </returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.ViolationsController">

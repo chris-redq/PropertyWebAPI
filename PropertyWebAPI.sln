@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPISecurityDB", "WebAPIS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACRISDB", "ACRISDB\ACRISDB.csproj", "{44E581F8-7B90-478B-860C-CFAACC4C688C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NYCDOF", "NYCDOF\NYCDOF.csproj", "{BE01F187-9AC1-440C-8096-9EA1109C6822}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{44E581F8-7B90-478B-860C-CFAACC4C688C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44E581F8-7B90-478B-860C-CFAACC4C688C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44E581F8-7B90-478B-860C-CFAACC4C688C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE01F187-9AC1-440C-8096-9EA1109C6822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE01F187-9AC1-440C-8096-9EA1109C6822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE01F187-9AC1-440C-8096-9EA1109C6822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE01F187-9AC1-440C-8096-9EA1109C6822}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

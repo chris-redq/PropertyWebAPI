@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-
-namespace PropertyWebAPI.Controllers
+﻿namespace PropertyWebAPI.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -18,6 +11,7 @@ namespace PropertyWebAPI.Controllers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using System.Configuration;
+    using NYCDOF;
 
     /// <summary>  
     ///     Helper class to return app_id and app_key fro GeoClient Api
@@ -26,6 +20,34 @@ namespace PropertyWebAPI.Controllers
     {
         public string appId;
         public string appKey;
+    }
+
+    /// <summary>  
+    ///     Simple Address Class
+    /// </summary>  
+    class GeneralAddress
+    {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string addressLine1;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string addressLine2;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string city;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string state;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string zip;
+    }
+
+    /// <summary>  
+    ///     Helper class to return app_id and app_key fro GeoClient Api
+    /// </summary>  
+    class GeneralPropertyInformation
+    {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public GeneralAddress address;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public tfnGetGeneralPropertyInformation_Result  propertyInformation;
     }
 
     /// <summary>  
@@ -40,8 +62,8 @@ namespace PropertyWebAPI.Controllers
             AppTokens appTokens= new AppTokens();
 
             appTokens.appId = ConfigurationManager.AppSettings["geoClientAppId"];
-
             appTokens.appKey = ConfigurationManager.AppSettings["geoClientAppKey"];
+
             return appTokens;
         }
 
@@ -131,7 +153,7 @@ namespace PropertyWebAPI.Controllers
 
         // ../api/physicaldata/nyc/11655/Queens Blvd/Queens/BBL
         /// <summary>  
-        ///     Use this method to get Borough Block Lot NUmber associated with a property in NYC
+        ///     Use this method to get Borough Block Lot Number associated with a property in NYC
         /// </summary>  
         /// <param name="streetNumber">
         ///     Street NUmber of teh property without or without hyphens
@@ -324,5 +346,52 @@ namespace PropertyWebAPI.Controllers
             return Ok(jsonObj);
         }
 
+        // ../api/nyc/4022680023/
+        /// <summary>  
+        ///     Use this method to get property address and physical data associated with a property in NYC
+        /// </summary>  
+        /// <param name="propertyBBL">
+        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+        /// </param>   
+        /// <returns>
+        ///     Returns an object of contain cleaned property address and general information about the property
+        /// </returns>
+        [Route("api/nyc/{propertyBBL}")]
+        [ResponseType(typeof(GeneralPropertyInformation))]
+        public IHttpActionResult GetNYCPropertyDetails(string propertyBBL)
+        {
+            if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}$"))
+                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
+            using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
+            {
+                List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation(propertyBBL).ToList();
+
+                if (propertyInfo != null && propertyInfo.Count > 0)
+                {
+                    GeneralAddress address = null;
+                    GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
+
+                    JObject jsonObj = GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
+                    if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address"))
+                    {
+                        address = new GeneralAddress();
+                        address.addressLine1 = propertyInfo[0].StreetNumber + " " + propertyInfo[0].StreetName;
+                        if (propertyInfo[0].UnitNumber!=null)
+                            address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
+                        address.city= (string)jsonObj.SelectToken("address.uspsPreferredCityName");
+                        address.state = "NY";
+                        address.zip= (string)jsonObj.SelectToken("address.zipCode");
+                    }
+                    propertyDetails.address = address;
+                    propertyDetails.propertyInformation = propertyInfo[0];
+                    return Ok(propertyDetails);
+                }
+                return NotFound();
+            }
+          
+        }
+
     }
+  
 }
