@@ -392,6 +392,56 @@
           
         }
 
+        // ../api/nyc/11655/Queens Blvd/Queens
+        /// <summary>  
+        ///     Use this method to get property address and physical data associated with a property in NYC
+        /// </summary>  
+        /// <param name="streetNumber">
+        ///     Street NUmber of teh property without or without hyphens
+        /// </param>  
+        /// <param name="streetName">
+        ///     Name of teh street where property is located 
+        /// </param>
+        /// <param name="borough">
+        ///     Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
+        /// </param>   
+        /// <returns>
+        ///     Returns an object of contain cleaned property address and general information about the property
+        /// </returns>
+        [Route("api/nyc/{streetNumber}/{streetName}/{borough}")]
+        [ResponseType(typeof(GeneralPropertyInformation))]
+        public IHttpActionResult GetNYCPropertyDetails(string streetNumber, string streetName, string borough)
+        {
+            JObject jsonObj = GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
+
+            if (jsonObj == null)
+                return NotFound();
+
+            if (CheckIfMessageContainsNotFound(jsonObj, "address"))
+                return NotFound();
+
+            using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
+            {
+                List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation((string)jsonObj.SelectToken("address.bbl")).ToList();
+
+                GeneralAddress address = new GeneralAddress();
+                address.addressLine1 = propertyInfo[0].StreetNumber + " " + propertyInfo[0].StreetName;
+                if (propertyInfo[0].UnitNumber != null)
+                    address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
+                address.city = (string)jsonObj.SelectToken("address.uspsPreferredCityName");
+                address.state = "NY";
+                address.zip = (string)jsonObj.SelectToken("address.zipCode");
+
+                GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
+                propertyDetails.address = address;
+
+                if (propertyInfo != null && propertyInfo.Count > 0)
+                   propertyDetails.propertyInformation = propertyInfo[0];
+                return Ok(propertyDetails);
+            }
+
+        }
+
     }
   
 }

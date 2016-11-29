@@ -882,6 +882,23 @@
                 Returns an object of contain cleaned property address and general information about the property
             </returns>
         </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCPropertyDetails(System.String,System.String,System.String)">
+            <summary>  
+                Use this method to get property address and physical data associated with a property in NYC
+            </summary>  
+            <param name="streetNumber">
+                Street NUmber of teh property without or without hyphens
+            </param>  
+            <param name="streetName">
+                Name of teh street where property is located 
+            </param>
+            <param name="borough">
+                Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
+            </param>   
+            <returns>
+                Returns an object of contain cleaned property address and general information about the property
+            </returns>
+        </member>
         <member name="T:PropertyWebAPI.Controllers.ViolationsController">
             <summary>  
             This controller handles all api requests associated with property violations
