@@ -376,10 +376,10 @@
                     if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address"))
                     {
                         address = new GeneralAddress();
-                        address.addressLine1 = propertyInfo[0].StreetNumber + " " + propertyInfo[0].StreetName;
+                        address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
                         if (propertyInfo[0].UnitNumber!=null)
                             address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
-                        address.city= (string)jsonObj.SelectToken("address.uspsPreferredCityName");
+                        address.city= StringUtilities.ToTitleCase((string)jsonObj.SelectToken("address.uspsPreferredCityName"));
                         address.state = "NY";
                         address.zip= (string)jsonObj.SelectToken("address.zipCode");
                     }
@@ -425,10 +425,10 @@
                 List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation((string)jsonObj.SelectToken("address.bbl")).ToList();
 
                 GeneralAddress address = new GeneralAddress();
-                address.addressLine1 = propertyInfo[0].StreetNumber + " " + propertyInfo[0].StreetName;
+                address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
                 if (propertyInfo[0].UnitNumber != null)
                     address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
-                address.city = (string)jsonObj.SelectToken("address.uspsPreferredCityName");
+                address.city = StringUtilities.ToTitleCase((string)jsonObj.SelectToken("address.uspsPreferredCityName"));
                 address.state = "NY";
                 address.zip = (string)jsonObj.SelectToken("address.zipCode");
 
