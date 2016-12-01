@@ -490,17 +490,17 @@
             <summary>  
                 Use this method to get tax bill for a property
             </summary>  
-            <param name="propertyBBLE">
+            <param name="propertyBBL">
                 Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
             </param>  
             <param name="externalRequestId">
                 The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
             </param>
-            <param name="waterBill">
+            <param name="needWaterBill">
                 Set this optional parameter to N if you do not want the waterbill. The default value for this parameter is Y
             </param>
-            /// <param name="taxBill">
+            /// <param name="needTaxBill">
                 Set this optional parameter to N if you do not want the taxbill. The default value for this parameter is Y
             </param>
             <returns>
@@ -924,6 +924,92 @@
             <returns>
                 Returns all the violation amounts and penalties requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
             </returns>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.DataRequestLog">
+            <summary>
+                This class abstracts all detailed level operations associated with finding, inserting and updating records in the DataRequestLog table in WebData DB.
+                In essence it abstracts symantic level operations for the table in the context of the API 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetPendingRequest(WebDataDB.WebDataEntities,System.String,System.Int32)">
+            <summary>
+                Gets a DataRequestLog object(row) from the DataRequestLog table for a given BBL and type of request with Pending status 
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="RequestTypeId"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)" -->
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="requestId"></param>
+            <param name="externalRequestId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.Request">
+            <summary>
+                This class abstracts all detailed level operations associated with finding, inserting and reading records in the Request table in WebData DB.
+                In essence it abstracts symantic level operations for the table in the context of the API 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
+            <summary>
+                Inserts a Request object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestStr">
+                Depending on the Request Type a helper class will be provided to convert business level variables into a string (in a specific format)
+                such that it is readable by the web scarpping service. 
+            </param>
+            <param name="requestTypeId"></param>
+            <param name="jobId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.RequestStatus">
+            <summary>
+            Types of Request Status 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.Pending">
+            <summary>
+            For requesting waiting to be processed
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.Error">
+            <summary>
+            For request that end up in error
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.Success">
+            <summary>
+            For requests completed successfully
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.SendForProcessing">
+            <summary>
+            For Requests send for Processing
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.RequestTypes">
+            <summary>
+            Types of Requests
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.WaterBill">
+            <summary>
+            Request for Water bill
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.TaxBill">
+            <summary>
+            Request for Tax bill
+            </summary>
         </member>
     </members>
 </doc>

@@ -62,7 +62,7 @@ namespace PropertyWebAPI.Controllers
         /// <summary>  
         ///     Use this method to get tax bill for a property
         /// </summary>  
-        /// <param name="propertyBBLE">
+        /// <param name="propertyBBL">
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
         ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
         /// </param>  
@@ -78,118 +78,135 @@ namespace PropertyWebAPI.Controllers
         /// <returns>
         ///     Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
         /// </returns>
-        [Route("api/bills/{propertyBBLE}")]
+        [Route("api/bills/{propertyBBL}")]
         [ResponseType(typeof(Bills))]
-        public IHttpActionResult GetBills(string propertyBBLE, string externalRequestId = null, string needWaterBill = "Y", string needTaxBill = "Y")
+        public IHttpActionResult GetBills(string propertyBBL, string externalRequestId = null, string needWaterBill = "Y", string needTaxBill = "Y")
         {
             Bills billsObj = new Bills();
 
-            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}[A-Z]??$"))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+
+            if (needWaterBill == "Y")
             {
-                if (needWaterBill == "Y")
+                billsObj.waterBill = new WaterBillDetails();
+                billsObj.waterBill.externalReferenceId = externalRequestId;
+                billsObj.waterBill.statusTypeId = 0;
+                billsObj.waterBill.billAmount = null;
+
+                using (WebDataEntities webDBEntities = new WebDataEntities())
                 {
-                    billsObj.waterBill = new WaterBillDetails();
-                    billsObj.waterBill.externalReferenceId = externalRequestId;
-                    billsObj.waterBill.statusTypeId = 0;
-                    billsObj.waterBill.billAmount = null;
-
-                    using (WebDataEntities webDBEntities = new WebDataEntities())
+                    using (var webDBEntitiestransaction = webDBEntities.Database.BeginTransaction())
                     {
-                        WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == propertyBBLE);
+                        try
+                        {
+                            //check if data available
+                            WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == propertyBBL);
 
-                        Boolean sendANewRequest = false;
-                        //check if data available
-                        if (waterBillObj == null)
-                        {
-                            //check request in queue, then send same request id
-                            DataRequestLog dataRequestLogObj = webDBEntities.DataRequestLogs.FirstOrDefault(i => i.RequestStatusTypeId == (int)RequestStatus.Pending
-                                                                                                                && i.RequestTypeId == (int)RequestTypes.WaterBill
-                                                                                                                && i.BBL == propertyBBLE);
-                            if (dataRequestLogObj == null)
-                                sendANewRequest = true;
-                            else
-                            {
-                                billsObj.waterBill.statusTypeId = (int)RequestStatus.Pending;
-                                billsObj.waterBill.requestId = 0; //to put valid value
-                            }
-                            //checked request in queue, then send same request id
-                            //insert a record into RequestDatalog
-                        }
-                        else
-                        {
-                            if (DateTime.Today.Subtract(waterBillObj.LastUpdated).Days <= 30)
+                            // record in database and data is not stale
+                            if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= 30)
                             {
                                 billsObj.waterBill.billAmount = waterBillObj.BillAmount;
-                                //insert a record into RequestDatalog
+
+                                DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.WaterBill, externalRequestId);
                             }
                             else
-                            {
-                                //check request in queue, then send same request id
-                                DataRequestLog dataRequestLogObj = webDBEntities.DataRequestLogs.FirstOrDefault(i => i.RequestStatusTypeId == (int)RequestStatus.Pending
-                                                                                                                    && i.RequestTypeId == (int)RequestTypes.WaterBill
-                                                                                                                    && i.BBL == propertyBBLE);
-                                if (dataRequestLogObj == null)
-                                    sendANewRequest = true;
-                                else
+                            {   //check if pending request in queue
+                                DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.WaterBill);
+
+                                if (dataRequestLogObj == null) //No Pending Request Create New Request
+                                {
+                                    string requestStr = propertyBBL; // we need a helper class to convert propertyBBL into a correct format so that the webscrapping service can read
+
+                                    Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.WaterBill, null);
+
+                                    dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.WaterBill, requestObj.RequestId, externalRequestId);
+
+                                    billsObj.waterBill.statusTypeId = (int)RequestStatus.Pending;
+                                    billsObj.waterBill.requestId = requestObj.RequestId;
+                                }
+                                else //Pending request in queue
                                 {
                                     billsObj.waterBill.statusTypeId = (int)RequestStatus.Pending;
+                                    //Send the RequestId for the pending request back
                                     billsObj.waterBill.requestId = dataRequestLogObj.RequestId;
                                 }
-
                             }
+                            webDBEntitiestransaction.Commit();
                         }
-
-                        if (sendANewRequest)
-                        {
-
+                        catch (Exception e)
+                        {   
+                            webDBEntitiestransaction.Rollback();
+                            billsObj.waterBill.statusTypeId = (int)RequestStatus.Error;
+                            //log externalrequestid error from exception
                         }
                     }
                 }
+            }
 
-                if (needTaxBill == "Y")
+            if (needTaxBill == "Y")
+            {
+                billsObj.taxBill = new TaxBillDetails();
+                billsObj.taxBill.externalReferenceId = externalRequestId;
+                billsObj.taxBill.statusTypeId = 0;
+                billsObj.taxBill.billAmount = null;
+
+                using (WebDataEntities webDBEntities = new WebDataEntities())
                 {
-                    billsObj.taxBill = new TaxBillDetails();
-                    billsObj.taxBill.externalReferenceId = externalRequestId;
-                    billsObj.taxBill.statusTypeId = 0;
-                    billsObj.taxBill.billAmount = null;
-
-                    using (WebDataEntities webDBEntities = new WebDataEntities())
+                    using (var webDBEntitiestransaction = webDBEntities.Database.BeginTransaction())
                     {
-                        TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == propertyBBLE);
+                        try
+                        {
+                            //check if data available
+                            TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == propertyBBL);
 
-                        //check if data available
-                        if (taxBillObj == null)
-                        {
-                            billsObj.taxBill.statusTypeId = 1;
-                            billsObj.taxBill.requestId = 0; //to put valid value
-                            //insert a record into RequestDatalog
-                        }
-                        else
-                        {
-                            if (DateTime.Today.Subtract(taxBillObj.LastUpdated).Days <= 30)
+                            // record in database and data is not stale
+                            if (taxBillObj != null && DateTime.UtcNow.Subtract(taxBillObj.LastUpdated).Days <= 30)
                             {
                                 billsObj.taxBill.billAmount = taxBillObj.BillAmount;
 
-                                //insert a record into RequestDatalog
+                                DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.TaxBill, externalRequestId);
                             }
                             else
-                            {
-                                billsObj.taxBill.statusTypeId = 1;
-                                billsObj.taxBill.requestId = 0; //to put valid value
-                                //insert a record into RequestDatalog
+                            {   //check if pending request in queue
+                                DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.TaxBill);
+
+                                if (dataRequestLogObj == null) //No Pending Request Create New Request
+                                {
+                                    string requestStr = propertyBBL; // we need a helper class to convert propertyBBL into a correct format so that the webscrapping service can read
+
+                                    Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.TaxBill, null);
+
+                                    dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.TaxBill, requestObj.RequestId, externalRequestId);
+
+                                    billsObj.taxBill.statusTypeId = (int)RequestStatus.Pending;
+                                    billsObj.taxBill.requestId = requestObj.RequestId;
+                                }
+                                else //Pending request in queue
+                                {
+                                    billsObj.taxBill.statusTypeId = (int)RequestStatus.Pending;
+                                    //Send the RequestId for the pending request back
+                                    billsObj.taxBill.requestId = dataRequestLogObj.RequestId;
+                                }
                             }
+                            webDBEntitiestransaction.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            webDBEntitiestransaction.Rollback();
+                            billsObj.taxBill.statusTypeId = (int)RequestStatus.Error;
+                            //log externalrequestid error from exception
                         }
                     }
                 }
-
-                // return final result
-
-                return Ok(billsObj);
-                
             }
 
-            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            // return final result
+
+            return Ok(billsObj);
+
         }
+
     }
 }
 

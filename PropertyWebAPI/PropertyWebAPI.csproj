@@ -194,6 +194,8 @@
     <Compile Include="Controllers\MortgagesDeedsController.cs" />
     <Compile Include="Controllers\PhysicalDataController.cs" />
     <Compile Include="Controllers\ViolationsController.cs" />
+    <Compile Include="DAL\DataRequestLog.cs" />
+    <Compile Include="DAL\Request.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
