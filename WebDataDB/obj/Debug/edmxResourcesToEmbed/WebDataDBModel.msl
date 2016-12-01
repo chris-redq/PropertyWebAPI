@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WebDataModelStoreContainer" CdmEntityContainer="WebDataEntities">
+    <EntitySetMapping Name="DataRequestLogs">
+      <EntityTypeMapping TypeName="WebDataModel.DataRequestLog">
+        <MappingFragment StoreEntitySet="DataRequestLog">
+          <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="WebDataRequestMade" ColumnName="WebDataRequestMade" />
+          <ScalarProperty Name="ServedFromCache" ColumnName="ServedFromCache" />
+          <ScalarProperty Name="ExternalRequestId" ColumnName="ExternalRequestId" />
+          <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOBViolations">
+      <EntityTypeMapping TypeName="WebDataModel.DOBViolation">
+        <MappingFragment StoreEntitySet="DOBViolation">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="StopWorkOrder" ColumnName="StopWorkOrder" />
+          <ScalarProperty Name="DOBCivilPenalties" ColumnName="DOBCivilPenalties" />
+          <ScalarProperty Name="ECBViolationAmount" ColumnName="ECBViolationAmount" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FannieMortgages">
+      <EntityTypeMapping TypeName="WebDataModel.FannieMortgage">
+        <MappingFragment StoreEntitySet="FannieMortgage">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="IsFannie" ColumnName="IsFannie" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FreddieMortgages">
+      <EntityTypeMapping TypeName="WebDataModel.FreddieMortgage">
+        <MappingFragment StoreEntitySet="FreddieMortgage">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="IsFreddie" ColumnName="IsFreddie" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MortgageServicers">
+      <EntityTypeMapping TypeName="WebDataModel.MortgageServicer">
+        <MappingFragment StoreEntitySet="MortgageServicer">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaxBills">
+      <EntityTypeMapping TypeName="WebDataModel.TaxBill">
+        <MappingFragment StoreEntitySet="TaxBill">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="BillAmount" ColumnName="BillAmount" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WaterBills">
+      <EntityTypeMapping TypeName="WebDataModel.WaterBill">
+        <MappingFragment StoreEntitySet="WaterBill">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="BillAmount" ColumnName="BillAmount" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DexiRequests">
+      <EntityTypeMapping TypeName="WebDataModel.DexiRequest">
+        <MappingFragment StoreEntitySet="DexiRequest">
+          <ScalarProperty Name="ExecutionId" ColumnName="ExecutionId" />
+          <ScalarProperty Name="RunId" ColumnName="RunId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DexiRequestTypes">
+      <EntityTypeMapping TypeName="WebDataModel.DexiRequestType">
+        <MappingFragment StoreEntitySet="DexiRequestType">
+          <ScalarProperty Name="RobotId" ColumnName="RobotId" />
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="WebDataModel.Request">
+        <MappingFragment StoreEntitySet="Request">
+          <ScalarProperty Name="ResponseData" ColumnName="ResponseData" />
+          <ScalarProperty Name="RequestData" ColumnName="RequestData" />
+          <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
+          <ScalarProperty Name="DateTimeEnded" ColumnName="DateTimeEnded" />
+          <ScalarProperty Name="DateTimeStarted" ColumnName="DateTimeStarted" />
+          <ScalarProperty Name="AttemptNumber" ColumnName="AttemptNumber" />
+          <ScalarProperty Name="DateTimeSubmitted" ColumnName="DateTimeSubmitted" />
+          <ScalarProperty Name="Priorty" ColumnName="Priorty" />
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestStatusTypes">
+      <EntityTypeMapping TypeName="WebDataModel.RequestStatusType">
+        <MappingFragment StoreEntitySet="RequestStatusType">
+          <ScalarProperty Name="RequestStatusTypeName" ColumnName="RequestStatusTypeName" />
+          <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestTypes">
+      <EntityTypeMapping TypeName="WebDataModel.RequestType">
+        <MappingFragment StoreEntitySet="RequestType">
+          <ScalarProperty Name="MaxAttempts" ColumnName="MaxAttempts" />
+          <ScalarProperty Name="RequestTypeName" ColumnName="RequestTypeName" />
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

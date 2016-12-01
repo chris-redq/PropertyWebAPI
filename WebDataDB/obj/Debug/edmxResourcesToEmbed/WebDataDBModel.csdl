@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WebDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="WebDataEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DataRequestLogs" EntityType="WebDataModel.DataRequestLog" />
+    <EntitySet Name="DOBViolations" EntityType="WebDataModel.DOBViolation" />
+    <EntitySet Name="FannieMortgages" EntityType="WebDataModel.FannieMortgage" />
+    <EntitySet Name="FreddieMortgages" EntityType="WebDataModel.FreddieMortgage" />
+    <EntitySet Name="MortgageServicers" EntityType="WebDataModel.MortgageServicer" />
+    <EntitySet Name="TaxBills" EntityType="WebDataModel.TaxBill" />
+    <EntitySet Name="WaterBills" EntityType="WebDataModel.WaterBill" />
+    <EntitySet Name="DexiRequests" EntityType="WebDataModel.DexiRequest" />
+    <EntitySet Name="DexiRequestTypes" EntityType="WebDataModel.DexiRequestType" />
+    <EntitySet Name="Requests" EntityType="WebDataModel.Request" />
+    <EntitySet Name="RequestStatusTypes" EntityType="WebDataModel.RequestStatusType" />
+    <EntitySet Name="RequestTypes" EntityType="WebDataModel.RequestType" />
+    <AssociationSet Name="Request1" Association="WebDataModel.Request1">
+      <End Role="Request" EntitySet="Requests" />
+      <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
+    </AssociationSet>
+    <AssociationSet Name="RequestType1" Association="WebDataModel.RequestType1">
+      <End Role="RequestType" EntitySet="RequestTypes" />
+      <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
+    </AssociationSet>
+    <AssociationSet Name="Dexi_Request_Details" Association="WebDataModel.Dexi_Request_Details">
+      <End Role="Request" EntitySet="Requests" />
+      <End Role="DexiRequest" EntitySet="DexiRequests" />
+    </AssociationSet>
+    <AssociationSet Name="Dexi_Details" Association="WebDataModel.Dexi_Details">
+      <End Role="RequestType" EntitySet="RequestTypes" />
+      <End Role="DexiRequestType" EntitySet="DexiRequestTypes" />
+    </AssociationSet>
+    <AssociationSet Name="Request_Status" Association="WebDataModel.Request_Status">
+      <End Role="RequestStatusType" EntitySet="RequestStatusTypes" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="Types_of_Request" Association="WebDataModel.Types_of_Request">
+      <End Role="RequestType" EntitySet="RequestTypes" />
+      <End Role="Request" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="RequestStatus" Association="WebDataModel.RequestStatus">
+      <End Role="RequestStatusType" EntitySet="RequestStatusTypes" />
+      <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DataRequestLog">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="RequestTypeId" />
+      <PropertyRef Name="RequestDateTime" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="RequestDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExternalRequestId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ServedFromCache" Type="Boolean" />
+    <Property Name="WebDataRequestMade" Type="Boolean" />
+    <Property Name="RequestId" Type="Int64" />
+    <NavigationProperty Name="Request" Relationship="WebDataModel.Request1" FromRole="DataRequestLog" ToRole="Request" />
+    <NavigationProperty Name="RequestType" Relationship="WebDataModel.RequestType1" FromRole="DataRequestLog" ToRole="RequestType" />
+    <Property Name="RequestStatusTypeId" Type="Int32" />
+    <NavigationProperty Name="RequestStatusType" Relationship="WebDataModel.RequestStatus" FromRole="DataRequestLog" ToRole="RequestStatusType" />
+  </EntityType>
+  <EntityType Name="DOBViolation">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ECBViolationAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="DOBCivilPenalties" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="StopWorkOrder" Type="Boolean" Nullable="false" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="FannieMortgage">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IsFannie" Type="Boolean" Nullable="false" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="FreddieMortgage">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IsFreddie" Type="Boolean" Nullable="false" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="MortgageServicer">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="TaxBill">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="BillAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="WaterBill">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="BillAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="DexiRequest">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="Int64" Nullable="false" />
+    <Property Name="RunId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ExecutionId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Request" Relationship="WebDataModel.Dexi_Request_Details" FromRole="DexiRequest" ToRole="Request" />
+  </EntityType>
+  <EntityType Name="DexiRequestType">
+    <Key>
+      <PropertyRef Name="RequestTypeId" />
+    </Key>
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="RobotId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="RequestType" Relationship="WebDataModel.Dexi_Details" FromRole="DexiRequestType" ToRole="RequestType" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestId" />
+    </Key>
+    <Property Name="RequestId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RequestTypeId" Type="Int32" />
+    <Property Name="Priorty" Type="Int32" />
+    <Property Name="DateTimeSubmitted" Type="DateTime" Precision="3" />
+    <Property Name="AttemptNumber" Type="Int32" />
+    <Property Name="DateTimeStarted" Type="DateTime" Precision="3" />
+    <Property Name="DateTimeEnded" Type="DateTime" Precision="3" />
+    <Property Name="RequestStatusTypeId" Type="Int32" Nullable="false" />
+    <Property Name="RequestData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ResponseData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DataRequestLogs" Relationship="WebDataModel.Request1" FromRole="Request" ToRole="DataRequestLog" />
+    <NavigationProperty Name="DexiRequest" Relationship="WebDataModel.Dexi_Request_Details" FromRole="Request" ToRole="DexiRequest" />
+    <NavigationProperty Name="RequestStatusType" Relationship="WebDataModel.Request_Status" FromRole="Request" ToRole="RequestStatusType" />
+    <NavigationProperty Name="RequestType" Relationship="WebDataModel.Types_of_Request" FromRole="Request" ToRole="RequestType" />
+  </EntityType>
+  <EntityType Name="RequestStatusType">
+    <Key>
+      <PropertyRef Name="RequestStatusTypeId" />
+    </Key>
+    <Property Name="RequestStatusTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Requests" Relationship="WebDataModel.Request_Status" FromRole="RequestStatusType" ToRole="Request" />
+    <Property Name="RequestStatusTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DataRequestLogs" Relationship="WebDataModel.RequestStatus" FromRole="RequestStatusType" ToRole="DataRequestLog" />
+  </EntityType>
+  <EntityType Name="RequestType">
+    <Key>
+      <PropertyRef Name="RequestTypeId" />
+    </Key>
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="RequestTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MaxAttempts" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DataRequestLogs" Relationship="WebDataModel.RequestType1" FromRole="RequestType" ToRole="DataRequestLog" />
+    <NavigationProperty Name="DexiRequestType" Relationship="WebDataModel.Dexi_Details" FromRole="RequestType" ToRole="DexiRequestType" />
+    <NavigationProperty Name="Requests" Relationship="WebDataModel.Types_of_Request" FromRole="RequestType" ToRole="Request" />
+  </EntityType>
+  <Association Name="Request1">
+    <End Type="WebDataModel.Request" Role="Request" Multiplicity="0..1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RequestType1">
+    <End Type="WebDataModel.RequestType" Role="RequestType" Multiplicity="1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="RequestTypeId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Dexi_Request_Details">
+    <End Type="WebDataModel.Request" Role="Request" Multiplicity="1" />
+    <End Type="WebDataModel.DexiRequest" Role="DexiRequest" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="DexiRequest">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Dexi_Details">
+    <End Type="WebDataModel.RequestType" Role="RequestType" Multiplicity="1" />
+    <End Type="WebDataModel.DexiRequestType" Role="DexiRequestType" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="RequestTypeId" />
+      </Principal>
+      <Dependent Role="DexiRequestType">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Request_Status">
+    <End Type="WebDataModel.RequestStatusType" Role="RequestStatusType" Multiplicity="1" />
+    <End Type="WebDataModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatusType">
+        <PropertyRef Name="RequestStatusTypeId" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="RequestStatusTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Types_of_Request">
+    <End Type="WebDataModel.RequestType" Role="RequestType" Multiplicity="0..1" />
+    <End Type="WebDataModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="RequestTypeId" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RequestStatus">
+    <End Type="WebDataModel.RequestStatusType" Role="RequestStatusType" Multiplicity="0..1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatusType">
+        <PropertyRef Name="RequestStatusTypeId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestStatusTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

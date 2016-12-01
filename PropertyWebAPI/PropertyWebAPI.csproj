@@ -158,6 +158,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="APIKeySecurityHandler.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Controllers\MortgagesDeedsController.cs" />
     <Compile Include="Controllers\PhysicalDataController.cs" />
     <Compile Include="Controllers\ViolationsController.cs" />
+    <Compile Include="Enumerations.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,6 +254,10 @@
     <ProjectReference Include="..\WebAPISecurityDB\WebAPISecurityDB.csproj">
       <Project>{c0c00ed9-ddc7-4626-8817-482a6e5b5bd9}</Project>
       <Name>WebAPISecurityDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebDataDB\WebDataDB.csproj">
+      <Project>{3fafa2a6-f72d-4679-9492-a38914aeaa35}</Project>
+      <Name>WebDataDB</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

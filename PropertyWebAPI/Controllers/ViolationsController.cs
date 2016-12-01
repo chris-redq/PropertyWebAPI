@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿//-----------------------------------------------------------------------
+// <copyright file="CasesController.cs" company="Redq Technologies, Inc.">
+//     Copyright (c) Redq Technologies, Inc. All rights reserved.
+// </copyright>
+// <author>Raj Sethi</author>
+//-----------------------------------------------------------------------
 
 namespace PropertyWebAPI.Controllers
 {

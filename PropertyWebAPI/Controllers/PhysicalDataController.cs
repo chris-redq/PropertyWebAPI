@@ -1,4 +1,10 @@
-﻿namespace PropertyWebAPI.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="CasesController.cs" company="Redq Technologies, Inc.">
+//     Copyright (c) Redq Technologies, Inc. All rights reserved.
+// </copyright>
+// <author>Raj Sethi</author>
+//-----------------------------------------------------------------------
+namespace PropertyWebAPI.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -10,9 +16,9 @@
     using System.Web.Http.Description;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using System.Configuration;
     using NYCDOF;
 
+    #region Local Helper Classes
     /// <summary>  
     ///     Helper class to return app_id and app_key fro GeoClient Api
     /// </summary>  
@@ -50,19 +56,22 @@
         public tfnGetGeneralPropertyInformation_Result  propertyInformation;
     }
 
+    #endregion
+
     /// <summary>  
     /// This controller handles all api requests associated with phyical data associated with a property
     /// </summary>  
     [Authorize]
     public class PhysicalDataController : ApiController
     {
-        
+        #region Private Helper Methods
+
         private AppTokens GetConfigurationTokens()
         {
             AppTokens appTokens= new AppTokens();
 
-            appTokens.appId = ConfigurationManager.AppSettings["geoClientAppId"];
-            appTokens.appKey = ConfigurationManager.AppSettings["geoClientAppKey"];
+            appTokens.appId = AppSettings.Get(AppSettings.GEO_CLIENT_APP_ID);
+            appTokens.appKey = AppSettings.Get(AppSettings.GEO_CLIENT_APP_KEY);
 
             return appTokens;
         }
@@ -150,6 +159,10 @@
                 return true;
             return false;
         }
+
+        #endregion
+
+        #region GeoClient APIs
 
         // ../api/physicaldata/nyc/11655/Queens Blvd/Queens/BBL
         /// <summary>  
@@ -345,8 +358,10 @@
                 return NotFound();
             return Ok(jsonObj);
         }
+        #endregion
 
-        // ../api/nyc/4022680023/
+        #region General Property Information APIs
+        // ../api/physicaldata/nyc/4022680023/GeneralInformation
         /// <summary>  
         ///     Use this method to get property address and physical data associated with a property in NYC
         /// </summary>  
@@ -356,7 +371,7 @@
         /// <returns>
         ///     Returns an object of contain cleaned property address and general information about the property
         /// </returns>
-        [Route("api/nyc/{propertyBBL}")]
+        [Route("api/physicaldata/nyc/{propertyBBL}/GeneralInformation")]
         [ResponseType(typeof(GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string propertyBBL)
         {
@@ -392,7 +407,7 @@
           
         }
 
-        // ../api/nyc/11655/Queens Blvd/Queens
+        // ../api/physicaldata/nyc/11655/Queens Blvd/Queens/GeneralInformation
         /// <summary>  
         ///     Use this method to get property address and physical data associated with a property in NYC
         /// </summary>  
@@ -408,7 +423,7 @@
         /// <returns>
         ///     Returns an object of contain cleaned property address and general information about the property
         /// </returns>
-        [Route("api/nyc/{streetNumber}/{streetName}/{borough}")]
+        [Route("api/physicaldata/nyc/{streetNumber}/{streetName}/{borough}/GeneralInformation")]
         [ResponseType(typeof(GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string streetNumber, string streetName, string borough)
         {
@@ -441,7 +456,8 @@
             }
 
         }
+        #endregion
 
     }
-  
+
 }

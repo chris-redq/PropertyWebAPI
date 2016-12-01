@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8aa681d1edd64eadb5ed4f99194183ad" Name="Diagram1">
+        <EntityTypeShape EntityType="WebDataModel.DataRequestLog" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="WebDataModel.DOBViolation" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebDataModel.FannieMortgage" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebDataModel.FreddieMortgage" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebDataModel.MortgageServicer" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="WebDataModel.TaxBill" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebDataModel.WaterBill" Width="1.5" PointX="5.75" PointY="9.75" />
+        <EntityTypeShape EntityType="WebDataModel.DexiRequest" Width="1.5" PointX="8.25" PointY="5.25" />
+        <EntityTypeShape EntityType="WebDataModel.DexiRequestType" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="WebDataModel.Request" Width="1.5" PointX="6" PointY="4.25" />
+        <EntityTypeShape EntityType="WebDataModel.RequestStatusType" Width="2.375" PointX="2.875" PointY="2.25" />
+        <EntityTypeShape EntityType="WebDataModel.RequestType" Width="1.5" PointX="0.75" PointY="5.125" />
+        <AssociationConnector Association="WebDataModel.Request1" />
+        <AssociationConnector Association="WebDataModel.RequestType1" />
+        <AssociationConnector Association="WebDataModel.Dexi_Request_Details" />
+        <AssociationConnector Association="WebDataModel.Dexi_Details" />
+        <AssociationConnector Association="WebDataModel.Request_Status" />
+        <AssociationConnector Association="WebDataModel.Types_of_Request" />
+        <AssociationConnector Association="WebDataModel.RequestStatus" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
