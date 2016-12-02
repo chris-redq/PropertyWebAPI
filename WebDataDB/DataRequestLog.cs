@@ -17,11 +17,12 @@ namespace WebDataDB
         public string BBL { get; set; }
         public int RequestTypeId { get; set; }
         public System.DateTime RequestDateTime { get; set; }
-        public string ExternalRequestId { get; set; }
         public Nullable<bool> ServedFromCache { get; set; }
         public Nullable<bool> WebDataRequestMade { get; set; }
         public Nullable<long> RequestId { get; set; }
         public Nullable<int> RequestStatusTypeId { get; set; }
+        public string RequestParameters { get; set; }
+        public string ExternalReferenceId { get; set; }
     
         public virtual Request Request { get; set; }
         public virtual RequestType RequestType { get; set; }

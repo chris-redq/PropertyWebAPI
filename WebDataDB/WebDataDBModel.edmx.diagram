@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8aa681d1edd64eadb5ed4f99194183ad" Name="Diagram1">
-        <EntityTypeShape EntityType="WebDataModel.DataRequestLog" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="WebDataModel.DataRequestLog" Width="1.875" PointX="3.5" PointY="4.75" />
         <EntityTypeShape EntityType="WebDataModel.DOBViolation" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="WebDataModel.FannieMortgage" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="WebDataModel.FreddieMortgage" Width="1.5" PointX="7.75" PointY="0.75" />

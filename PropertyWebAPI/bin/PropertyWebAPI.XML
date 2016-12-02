@@ -481,6 +481,112 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:PropertyWebAPI.BAL.TaxBillDetails">
+            <summary>
+            Helper class used to capture Tax bill details and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.TaxBillParameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.TaxBill">
+            <summary>
+                This class deals with all the details associated with either returning waterbill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all paramters required for Tax Bills into a JSON object
+            </summary>
+            <param name="propertyBBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into TaxBillParameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>TaxBillParameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the tax bill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the TaxBill table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.WaterBillDetails">
+            <summary>
+            Helper class used to capture Water bill details and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.WaterBillParameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get Water bill 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.WaterBill">
+            <summary>
+                This class deals with all the details associated with either returning waterbill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all paramters required for Water Bill into a JSON object
+            </summary>
+            <param name="propertyBBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into WaterBillParameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>waterBillParameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the waterbill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the WaterBill table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns></returns>
+        </member>
         <member name="T:PropertyWebAPI.Controllers.BillsController">
             <summary>  
             This controller handles all api requests associated with property bills
@@ -494,7 +600,7 @@
                 Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
             </param>  
-            <param name="externalRequestId">
+            <param name="externalReferenceId">
                 The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
             </param>
             <param name="needWaterBill">
@@ -925,23 +1031,92 @@
                 Returns all the violation amounts and penalties requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
             </returns>
         </member>
+        <member name="T:PropertyWebAPI.Controllers.WebDataController">
+            <summary>
+                This controller handles callbacks from Web Scrapping Job Managers when requests are processed. It also provides
+                current state of the request
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.PostProcessRequestResult(System.Int64)">
+            <summary>  
+            The DJM uses this API to inform WebData service that the given request has been processed
+            </summary>  
+            <param name="requestId">
+                Id of the request whose results need to be processed 
+            </param>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.GetRequest(System.Int64)">
+            <summary>  
+                Use this method to get tax bill for a property
+            </summary>  
+            <param name="requestId">
+                requestId sent back in the response when request was made for a specific data.
+            </param>  
+            <returns>
+                Returns data associated with the requestId
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.GetRequestByExternalReferenceId(System.String)">
+            <summary>  
+                Use this method to get tax bill for a property
+            </summary>  
+            <param name="externalReferenceId">
+                The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+            </param>
+            <returns>
+                Returns data associated with the requestId
+            </returns>
+        </member>
         <member name="T:PropertyWebAPI.DAL.DataRequestLog">
             <summary>
                 This class abstracts all detailed level operations associated with finding, inserting and updating records in the DataRequestLog table in WebData DB.
                 In essence it abstracts symantic level operations for the table in the context of the API 
             </summary>
         </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetPendingRequest(WebDataDB.WebDataEntities,System.String,System.Int32)">
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetPendingRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
             <summary>
                 Gets a DataRequestLog object(row) from the DataRequestLog table for a given BBL and type of request with Pending status 
             </summary>
             <param name="webDBEntities"></param>
             <param name="propertyBBL"></param>
             <param name="RequestTypeId"></param>
+            <param name="requestParameters"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)" -->
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String)">
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetFirst(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets a DataRequestLog object(row) from the DataRequestLog table for a given RequestId
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAll(WebDataDB.WebDataEntities,System.String)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given externalReferenceId
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="externalRefereceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsError(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsSuccess(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String)" -->
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String)">
             <summary>
                 Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
             </summary>
@@ -949,7 +1124,8 @@
             <param name="propertyBBL"></param>
             <param name="requestTypeId"></param>
             <param name="requestId"></param>
-            <param name="externalRequestId"></param>
+            <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
             <returns></returns>
         </member>
         <member name="T:PropertyWebAPI.DAL.Request">

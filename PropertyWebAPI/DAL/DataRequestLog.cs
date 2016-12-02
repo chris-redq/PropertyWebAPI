@@ -25,13 +25,67 @@ namespace PropertyWebAPI.DAL
         /// <param name="webDBEntities"></param>
         /// <param name="propertyBBL"></param>
         /// <param name="RequestTypeId"></param>
+        /// <param name="requestParameters"></param>
         /// <returns></returns>
-        public static WebDataDB.DataRequestLog GetPendingRequest(WebDataEntities webDBEntities, string propertyBBL, int RequestTypeId)
+        public static WebDataDB.DataRequestLog GetPendingRequest(WebDataEntities webDBEntities, string propertyBBL, int RequestTypeId, string requestParameters)
         {
             return webDBEntities.DataRequestLogs.FirstOrDefault(i => i.RequestStatusTypeId == (int)RequestStatus.Pending
                                                                      && i.RequestTypeId == RequestTypeId
-                                                                     && i.BBL == propertyBBL);
+                                                                     && i.BBL == propertyBBL
+                                                                     && i.RequestParameters == requestParameters);
 
+        }
+
+        /// <summary>
+        ///     Gets a DataRequestLog object(row) from the DataRequestLog table for a given RequestId
+        /// </summary>
+        /// <param name="webDBEntities"></param>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
+        public static WebDataDB.DataRequestLog GetFirst(WebDataEntities webDBEntities, long requestId)
+        {
+            return webDBEntities.DataRequestLogs.FirstOrDefault(i => i.RequestId == requestId);
+        }
+
+        /// <summary>
+        ///     Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given externalReferenceId
+        /// </summary>
+        /// <param name="webDBEntities"></param>
+        /// <param name="externalRefereceId"></param>
+        /// <returns></returns>
+        public static List<WebDataDB.DataRequestLog> GetAll(WebDataEntities webDBEntities, string externalRefereceId)
+        {
+            return webDBEntities.DataRequestLogs.Where(i => i.ExternalReferenceId == externalRefereceId).ToList();
+        }
+
+        /// <summary>
+        ///     Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+        /// </summary>
+        /// <param name="webDBEntities"></param>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
+        public static List<WebDataDB.DataRequestLog> SetAsError(WebDataEntities webDBEntities, long requestId)
+        {
+            List<WebDataDB.DataRequestLog> requestDataLogList = webDBEntities.DataRequestLogs.Where(i => i.RequestId == requestId).ToList();
+            requestDataLogList.ForEach(a => a.RequestStatusTypeId = (int)RequestStatus.Error);
+            webDBEntities.SaveChanges();
+
+            return requestDataLogList;
+        }
+
+        /// <summary>
+        ///     Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+        /// </summary>
+        /// <param name="webDBEntities"></param>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
+        public static List<WebDataDB.DataRequestLog> SetAsSuccess(WebDataEntities webDBEntities, long requestId)
+        {
+            List<WebDataDB.DataRequestLog> requestDataLogList = webDBEntities.DataRequestLogs.Where(i => i.RequestId == requestId).ToList();
+            requestDataLogList.ForEach(a => a.RequestStatusTypeId = (int)RequestStatus.Success);
+            webDBEntities.SaveChanges();
+
+            return requestDataLogList;
         }
 
         /// <summary>
@@ -41,17 +95,20 @@ namespace PropertyWebAPI.DAL
         /// <param name="webDBEntities"></param>
         /// <param name="propertyBBL"></param>
         /// <param name="requestTypeId"></param>
-        /// <param name="externalRequestId"></param>
+        /// <param name="externalReferenceId"></param>
         /// <returns></returns>
-        public static WebDataDB.DataRequestLog InsertForCacheAccess(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, string externalRequestId)
+        public static WebDataDB.DataRequestLog InsertForCacheAccess(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, 
+                                                                    string externalReferenceId, string requestParameters)
         {
             WebDataDB.DataRequestLog dataRequestLogObj = new WebDataDB.DataRequestLog();
             dataRequestLogObj.BBL = propertyBBL;
             dataRequestLogObj.RequestStatusTypeId = (int)RequestStatus.Success;
             dataRequestLogObj.RequestTypeId = requestTypeId;
             dataRequestLogObj.RequestDateTime = DateTime.UtcNow;
-            dataRequestLogObj.ExternalRequestId = externalRequestId;
+            dataRequestLogObj.ExternalReferenceId = externalReferenceId;
             dataRequestLogObj.ServedFromCache = true;
+            dataRequestLogObj.WebDataRequestMade = false;
+            dataRequestLogObj.RequestParameters = requestParameters;
 
             dataRequestLogObj = webDBEntities.DataRequestLogs.Add(dataRequestLogObj);
             webDBEntities.SaveChanges();
@@ -66,9 +123,11 @@ namespace PropertyWebAPI.DAL
         /// <param name="propertyBBL"></param>
         /// <param name="requestTypeId"></param>
         /// <param name="requestId"></param>
-        /// <param name="externalRequestId"></param>
+        /// <param name="externalReferenceId"></param>
+        /// <param name="requestParameters"></param>
         /// <returns></returns>
-        public static WebDataDB.DataRequestLog InsertForWebDataRequest(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, long requestId, string externalRequestId)
+        public static WebDataDB.DataRequestLog InsertForWebDataRequest(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, long requestId, 
+                                                                       string externalReferenceId, string requestParameters)
         {
             WebDataDB.DataRequestLog dataRequestLogObj = new WebDataDB.DataRequestLog();
 
@@ -76,10 +135,12 @@ namespace PropertyWebAPI.DAL
             dataRequestLogObj.RequestStatusTypeId = (int)RequestStatus.Pending;
             dataRequestLogObj.RequestTypeId = requestTypeId;
             dataRequestLogObj.RequestDateTime = DateTime.UtcNow;
-            dataRequestLogObj.ExternalRequestId = externalRequestId;
+            dataRequestLogObj.ExternalReferenceId = externalReferenceId;
             dataRequestLogObj.ServedFromCache = false;
-            dataRequestLogObj.RequestId = requestId; 
-
+            dataRequestLogObj.WebDataRequestMade = true;
+            dataRequestLogObj.RequestId = requestId;
+            dataRequestLogObj.RequestParameters = requestParameters;
+            
             dataRequestLogObj = webDBEntities.DataRequestLogs.Add(dataRequestLogObj);
             webDBEntities.SaveChanges();
 

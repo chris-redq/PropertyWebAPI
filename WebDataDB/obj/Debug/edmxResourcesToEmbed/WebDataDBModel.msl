@@ -4,11 +4,12 @@
     <EntitySetMapping Name="DataRequestLogs">
       <EntityTypeMapping TypeName="WebDataModel.DataRequestLog">
         <MappingFragment StoreEntitySet="DataRequestLog">
+          <ScalarProperty Name="ExternalReferenceId" ColumnName="ExternalReferenceId" />
+          <ScalarProperty Name="RequestParameters" ColumnName="RequestParameters" />
           <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
           <ScalarProperty Name="RequestId" ColumnName="RequestId" />
           <ScalarProperty Name="WebDataRequestMade" ColumnName="WebDataRequestMade" />
           <ScalarProperty Name="ServedFromCache" ColumnName="ServedFromCache" />
-          <ScalarProperty Name="ExternalRequestId" ColumnName="ExternalRequestId" />
           <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
           <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
           <ScalarProperty Name="BBL" ColumnName="BBL" />

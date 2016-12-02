@@ -9,11 +9,12 @@
     <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="RequestTypeId" Type="int" Nullable="false" />
     <Property Name="RequestDateTime" Type="datetime" Nullable="false" />
-    <Property Name="ExternalRequestId" Type="varchar" MaxLength="32" />
+    <Property Name="ExternalReferenceId" Type="varchar" MaxLength="32" />
     <Property Name="ServedFromCache" Type="bit" />
     <Property Name="WebDataRequestMade" Type="bit" />
     <Property Name="RequestId" Type="bigint" />
     <Property Name="RequestStatusTypeId" Type="int" />
+    <Property Name="RequestParameters" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="DOBViolation">
     <Key>
@@ -100,7 +101,7 @@
     <Key>
       <PropertyRef Name="RequestStatusTypeId" />
     </Key>
-    <Property Name="RequestStatusTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestStatusTypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="RequestStatusTypeName" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="RequestType">
