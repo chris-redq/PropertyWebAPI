@@ -16,11 +16,7 @@ namespace PropertyWebAPI.Controllers
     using System.Text.RegularExpressions;
     using ACRISDB;
 
-    public class DeedDetails
-    {
-        public LatestDeedDocument DeedDocument;
-        public List<tfnGetDocumentParties_Result> Owners;
-    }
+    
 
     /// <summary>  
     ///     This controller handles all ACRIS related requests for Mortgage and Deed related documents
@@ -115,28 +111,17 @@ namespace PropertyWebAPI.Controllers
         ///     Returns deed details and owners filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/latestdeed")]
-        [ResponseType(typeof(DeedDetails))]
+        [ResponseType(typeof(BAL.DeedDetails))]
         public IHttpActionResult GetLatestDeedDetails(string propertyBBLE)
         {
+            if (!Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
-            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
-            {
-                using (ACRISEntities acrisDBEntities = new ACRISEntities())
-                {
-                    LatestDeedDocument documentObj =  acrisDBEntities.LatestDeedDocuments.FirstOrDefault(i => i.BBLE == propertyBBLE);
+            BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBLE);
+            if (deedDetailsObj==null)
+                return NotFound();
 
-                    if (documentObj == null)
-                        return NotFound();
-
-                    DeedDetails deedDetailsObj = new DeedDetails();
-                    deedDetailsObj.DeedDocument = documentObj;
-                    deedDetailsObj.Owners = acrisDBEntities.tfnGetDocumentParties(documentObj.DeedUniqueKey, "BUYER").ToList();
-
-                    return Ok(deedDetailsObj);
-                }
-            }
-
-            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            return Ok(deedDetailsObj);
         }
 
         // ../api/MortgagesDeeds/3001670091/unsatisfiedmortgages

@@ -182,8 +182,8 @@ namespace PropertyWebAPI.BAL
         ///     This method updates the TaxBill table based on the information received from the Request Object
         /// </summary>
         /// <param name="requestObj"></param>
-        /// <returns></returns>
-        public static void UpdateData(Request requestObj)
+        /// <returns>True if successful else false</returns>
+        public static bool UpdateData(Request requestObj)
         {
             using (WebDataEntities webDBEntities = new WebDataEntities())
             {
@@ -199,30 +199,31 @@ namespace PropertyWebAPI.BAL
                             case (int)RequestStatus.Success:
                                 {
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
-                                    if (dataRequestLogObj == null)
-                                        return;
-                                    TaxBillParameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
-
-                                    //check if data available
-                                    WebDataDB.TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == taxBillParams.BBL);
-                                    if (taxBillObj != null)
+                                    if (dataRequestLogObj != null)
                                     {
-                                        taxBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
-                                        taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
+                                        TaxBillParameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+
+                                        //check if data available
+                                        WebDataDB.TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == taxBillParams.BBL);
+                                        if (taxBillObj != null)
+                                        {
+                                            taxBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
+                                            taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
+                                        }
+                                        else
+                                        {
+                                            taxBillObj = new WebDataDB.TaxBill();
+                                            taxBillObj.BBL = taxBillParams.BBL;
+                                            taxBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
+                                            taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
+
+                                            webDBEntities.TaxBills.Add(taxBillObj);
+                                        }
+
+                                        webDBEntities.SaveChanges();
+
+                                        DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
-                                    else
-                                    {
-                                        taxBillObj = new WebDataDB.TaxBill();
-                                        taxBillObj.BBL = taxBillParams.BBL;
-                                        taxBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
-                                        taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
-
-                                        webDBEntities.TaxBills.Add(taxBillObj);
-                                    }
-
-                                    webDBEntities.SaveChanges();
-
-                                    DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
                                     break;
                                 }
                             default:
@@ -230,11 +231,13 @@ namespace PropertyWebAPI.BAL
                         }
                        
                         webDBEntitiestransaction.Commit();
+                        return true;
                     }
                     catch(Exception e )
                     {
                         webDBEntitiestransaction.Rollback();
-                        //Log something 
+                        //Log something
+                        return false; 
                     }
                 }
             }

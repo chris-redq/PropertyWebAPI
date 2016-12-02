@@ -481,6 +481,59 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:PropertyWebAPI.BAL.DOBCivilPenaltiesDetail">
+            <summary>
+            Helper class used to capture DOB Civil Penalties detail and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.DOBCivilPenalties">
+            <summary>
+                This class deals with all the details associated with either returning waterbill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.DOBCivilPenalties.DOBCivilPenaltiesParams">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBCivilPenalties.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all paramters required for DOB Civil Penalties into a JSON object
+            </summary>
+            <param name="propertyBBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBCivilPenalties.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into dCivilPenaltiesParameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>dCivilPenaltiesParameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBCivilPenalties.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the tax bill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBCivilPenalties.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBCivilPenalties.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the dCivilPenalties table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns>True if successful else false</returns>
+        </member>
         <member name="T:PropertyWebAPI.BAL.TaxBillDetails">
             <summary>
             Helper class used to capture Tax bill details and used for serialization into JSON object 
@@ -532,7 +585,7 @@
                 This method updates the TaxBill table based on the information received from the Request Object
             </summary>
             <param name="requestObj"></param>
-            <returns></returns>
+            <returns>True if successful else false</returns>
         </member>
         <member name="T:PropertyWebAPI.BAL.WaterBillDetails">
             <summary>
@@ -585,7 +638,7 @@
                 This method updates the WaterBill table based on the information received from the Request Object
             </summary>
             <param name="requestObj"></param>
-            <returns></returns>
+            <returns>True if successful else false</returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.BillsController">
             <summary>  
@@ -1010,22 +1063,25 @@
             This controller handles all api requests associated with property violations
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetBills(System.String,System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetBills(System.String,System.String,System.String,System.String,System.String)">
             <summary>  
                 Use this method to get tax bill for a property
             </summary>  
-            <param name="propertyBBLE">
+            <param name="propertyBBL">
                 Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
             </param>  
-            <param name="externalRequestId">
+            <param name="externalReferenceId">
                 The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
             </param>
             <param name="ecb">
                 Set this optional parameter to N if you do not want the ECB Violation Amount. The default value for this parameter is Y
             </param>
-            /// <param name="dob">
+            <param name="dob">
                 Set this optional parameter to N if you do not want the DOB Civil Penalties. The default value for this parameter is Y
+            </param>
+            <param name="stopworkorder">
+                Set this optional parameter to N if you do not want to know if there is DOB Stop Work Order on this property. The default value for this parameter is Y
             </param>
             <returns>
                 Returns all the violation amounts and penalties requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
@@ -1183,6 +1239,21 @@
             </summary>
         </member>
         <member name="F:PropertyWebAPI.RequestTypes.TaxBill">
+            <summary>
+            Request for Tax bill
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.DOBCivilPenalties">
+            <summary>
+            Request for Tax bill
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.DOBECBViolations">
+            <summary>
+            Request for Tax bill
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.DOBStopWorkOrder">
             <summary>
             Request for Tax bill
             </summary>

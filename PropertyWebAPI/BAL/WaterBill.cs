@@ -182,8 +182,8 @@ namespace PropertyWebAPI.BAL
         ///     This method updates the WaterBill table based on the information received from the Request Object
         /// </summary>
         /// <param name="requestObj"></param>
-        /// <returns></returns>
-        public static void UpdateData(Request requestObj)
+        /// <returns>True if successful else false</returns>
+        public static bool UpdateData(Request requestObj)
         {
             using (WebDataEntities webDBEntities = new WebDataEntities())
             {
@@ -199,30 +199,31 @@ namespace PropertyWebAPI.BAL
                             case (int)RequestStatus.Success:
                                 {
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
-                                    if (dataRequestLogObj == null)
-                                        return;
-                                    WaterBillParameters waterBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
-
-                                    //check if data available
-                                    WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterBillParams.BBL);
-                                    if (waterBillObj != null)
+                                    if (dataRequestLogObj != null)
                                     {
-                                        waterBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
-                                        waterBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
+                                        WaterBillParameters waterBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+
+                                        //check if data available
+                                        WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterBillParams.BBL);
+                                        if (waterBillObj != null)
+                                        {
+                                            waterBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
+                                            waterBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
+                                        }
+                                        else
+                                        {
+                                            waterBillObj = new WebDataDB.WaterBill();
+                                            waterBillObj.BBL = waterBillParams.BBL;
+                                            waterBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
+                                            waterBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
+
+                                            webDBEntities.WaterBills.Add(waterBillObj);
+                                        }
+
+                                        webDBEntities.SaveChanges();
+
+                                        DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
-                                    else
-                                    {
-                                        waterBillObj = new WebDataDB.WaterBill();
-                                        waterBillObj.BBL = waterBillParams.BBL;
-                                        waterBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
-                                        waterBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
-
-                                        webDBEntities.WaterBills.Add(waterBillObj);
-                                    }
-
-                                    webDBEntities.SaveChanges();
-
-                                    DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     break;
                                 }
                             default:
@@ -230,11 +231,13 @@ namespace PropertyWebAPI.BAL
                         }
 
                         webDBEntitiestransaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
                         webDBEntitiestransaction.Rollback();
                         //Log something 
+                        return false;
                     }
                 }
             }

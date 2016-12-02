@@ -45,6 +45,11 @@ namespace PropertyWebAPI.Controllers
         public string zip;
     }
 
+    class PhysicalPropertyInformation : tfnGetGeneralPropertyInformation_Result
+    {
+
+    }
+
     /// <summary>  
     ///     Helper class to return app_id and app_key fro GeoClient Api
     /// </summary>  
@@ -53,7 +58,9 @@ namespace PropertyWebAPI.Controllers
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public GeneralAddress address;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public tfnGetGeneralPropertyInformation_Result  propertyInformation;
+        public List<BAL.DeedParty> owners;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public PhysicalPropertyInformation propertyInformation;
     }
 
     #endregion
@@ -399,7 +406,14 @@ namespace PropertyWebAPI.Controllers
                         address.zip= (string)jsonObj.SelectToken("address.zipCode");
                     }
                     propertyDetails.address = address;
-                    propertyDetails.propertyInformation = propertyInfo[0];
+                    propertyDetails.propertyInformation = (PhysicalPropertyInformation)propertyInfo[0];
+
+                    BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
+                    if (deedDetailsObj != null)
+                    {
+                        propertyDetails.owners = deedDetailsObj.owners;
+                    }
+
                     return Ok(propertyDetails);
                 }
                 return NotFound();
@@ -427,6 +441,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string streetNumber, string streetName, string borough)
         {
+            //BBL from address 
             JObject jsonObj = GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
 
             if (jsonObj == null)
@@ -437,8 +452,10 @@ namespace PropertyWebAPI.Controllers
 
             using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
             {
+                //Get General Propert Information from Assessemnt and other sources
                 List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation((string)jsonObj.SelectToken("address.bbl")).ToList();
 
+                //Create a clean address
                 GeneralAddress address = new GeneralAddress();
                 address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
                 if (propertyInfo[0].UnitNumber != null)
@@ -451,13 +468,17 @@ namespace PropertyWebAPI.Controllers
                 propertyDetails.address = address;
 
                 if (propertyInfo != null && propertyInfo.Count > 0)
-                   propertyDetails.propertyInformation = propertyInfo[0];
+                   propertyDetails.propertyInformation = (PhysicalPropertyInformation)propertyInfo[0];
+
+                BAL.DeedDetails deedDetailsObj =  BAL.ACRIS.GetLatestDeedDetails((string)jsonObj.SelectToken("address.bbl"));
+                if  (deedDetailsObj != null)
+                {
+                    propertyDetails.owners = deedDetailsObj.owners;
+                }
+
                 return Ok(propertyDetails);
             }
-
         }
         #endregion
-
     }
-
 }

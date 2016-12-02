@@ -12,7 +12,6 @@ namespace PropertyWebAPI.Controllers
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Text.RegularExpressions;
     using System.Web.Http;
     using System.Web.Http.Description;
     using Newtonsoft.Json;
@@ -42,7 +41,8 @@ namespace PropertyWebAPI.Controllers
         ///     Id of the request whose results need to be processed 
         /// </param>  
         [Route("api/webdata/djm/request/{requestId}/processresult")]
-        public void PostProcessRequestResult(long requestId)
+        [ResponseType(typeof(Boolean))]
+        public IHttpActionResult PostProcessRequestResult(long requestId)
         {
             using (WebDataEntities webDataE = new WebDataEntities())
             {
@@ -52,16 +52,21 @@ namespace PropertyWebAPI.Controllers
                     switch (requestObj.RequestTypeId)
                     {
                         case (int)RequestTypes.TaxBill:
-                            BAL.TaxBill.UpdateData(requestObj);
+                            if (!BAL.TaxBill.UpdateData(requestObj))
+                                return Common.HttpResponse.InternalError(Request, "Error in processing request");
                             break;
                         case (int)RequestTypes.WaterBill:
-                            BAL.WaterBill.UpdateData(requestObj);
+                            if (!BAL.WaterBill.UpdateData(requestObj))
+                                return Common.HttpResponse.InternalError(Request, "Error in processing request");
                             break;
                         default:
                             // log something
-                            break;
-                     }
+                            return Common.HttpResponse.InternalError(Request, "Error in processing request");
+                    }
+                    return Ok(true);
                 }
+
+                return NotFound();                
             }
         }
 

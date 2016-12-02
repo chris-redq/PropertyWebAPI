@@ -189,8 +189,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="BAL\ACRIS.cs" />
+    <Compile Include="BAL\DOBCivilPenalties.cs" />
     <Compile Include="BAL\TaxBill.cs" />
     <Compile Include="BAL\WaterBill.cs" />
+    <Compile Include="Common\HelperClasses.cs" />
     <Compile Include="Controllers\BillsController.cs" />
     <Compile Include="Controllers\CasesController.cs" />
     <Compile Include="Controllers\MortgagesDeedsController.cs" />

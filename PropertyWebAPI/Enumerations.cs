@@ -46,6 +46,21 @@ namespace PropertyWebAPI
         /// </summary>
         TaxBill = 2,
 
+        /// <summary>
+        /// Request for Tax bill
+        /// </summary>
+        DOBCivilPenalties = 3,
+
+        /// <summary>
+        /// Request for Tax bill
+        /// </summary>
+        DOBECBViolations = 4,
+
+        /// <summary>
+        /// Request for Tax bill
+        /// </summary>
+        DOBStopWorkOrder = 5,
+
     }
-    
+
 }
