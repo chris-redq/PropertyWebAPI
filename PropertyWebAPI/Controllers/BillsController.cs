@@ -36,7 +36,7 @@ namespace PropertyWebAPI.Controllers
     public class BillsController : ApiController
     {
 
-        // ../api/Bills/3001670091/?externalReferenceId=135&waterbill=Y&taxbill=Y
+        // ../api/Bills/3001670091/?externalReferenceId=135&&needTaxBill=Y
         /// <summary>  
         ///     Use this method to get tax bill for a property
         /// </summary>  
@@ -45,10 +45,10 @@ namespace PropertyWebAPI.Controllers
         ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
         /// </param>  
         /// <param name="externalReferenceId">
-        ///     The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
         /// </param>
         /// <param name="needTaxBill">
-        ///     Set this optional parameter to N if you do not want the taxbill. The default value for this parameter is Y
+        ///     Set this optional parameter to N if you do not want the tax bill. The default value for this parameter is Y
         /// </param>
         /// <returns>
         ///     Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored

@@ -228,7 +228,7 @@ namespace PropertyWebAPI.BAL
 
             using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
             {
-                //Get General Propert Information from Assessemnt and other sources
+                //Get General Property Information from Assessment and other sources
                 List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation((string)jsonObj.SelectToken("address.bbl")).ToList();
 
                 //Create a clean address

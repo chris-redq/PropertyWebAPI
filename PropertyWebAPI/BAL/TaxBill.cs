@@ -35,7 +35,7 @@ namespace PropertyWebAPI.BAL
     #endregion
 
     /// <summary>
-    ///     This class deals with all the details associated with either returning waterbill details or creating the 
+    ///     This class deals with all the details associated with either returning tax bill details or creating the 
     ///     request for getting is scrapped from the web 
     /// </summary>
     public static class TaxBill
@@ -49,7 +49,7 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This methods converts all paramters required for Tax Bills into a JSON object
+        ///     This methods converts all parameters required for Tax Bills into a JSON object
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <returns>JSON string</returns>
@@ -194,7 +194,7 @@ namespace PropertyWebAPI.BAL
             }
             catch(Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered prcessing resquest log for {0} with externalRefId {1}: {2}", dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, e.ToString()));
+                Common.Logs.log().Error(string.Format("Exception encountered precessing request log for {0} with externalRefId {1}: {2}", dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, e.ToString()));
                 return null;
             }
         }

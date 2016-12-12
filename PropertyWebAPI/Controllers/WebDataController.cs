@@ -100,7 +100,7 @@ namespace PropertyWebAPI.Controllers
                             result.waterBill = BAL.WaterBill.ReRun(requestLogObj);
                             return Ok(result);
                      default:
-                        return BadRequest("Bad Request - Incorrect Resquest Type");
+                        return BadRequest("Bad Request - Incorrect Request Type");
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace PropertyWebAPI.Controllers
         ///     Use this method to get tax bill for a property
         /// </summary>  
         /// <param name="externalReferenceId">
-        ///     The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
         /// </param>
         /// <returns>
         ///     Returns data associated with the requestId

@@ -20,7 +20,7 @@ namespace PropertyWebAPI.Controllers
     using AutoMapper;
 
     /// <summary>  
-    /// This controller handles all api requests associated with phyical data associated with a property
+    /// This controller handles all api requests associated with physical data associated with a property
     /// </summary>  
     [Authorize]
     public class PhysicalDataController : ApiController
@@ -33,10 +33,10 @@ namespace PropertyWebAPI.Controllers
         ///     Use this method to get Borough Block Lot Number associated with a property in NYC
         /// </summary>  
         /// <param name="streetNumber">
-        ///     Street NUmber of teh property without or without hyphens
+        ///     Street NUmber of the property without or without hyphens
         /// </param>  
         /// <param name="streetName">
-        ///     Name of teh street where property is located 
+        ///     Name of the street where property is located 
         /// </param>
         /// <param name="borough">
         ///     Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
@@ -62,10 +62,10 @@ namespace PropertyWebAPI.Controllers
         ///     Use this method to get Borough Block Lot NUmber associated with a property in NYC
         /// </summary>  
         /// <param name="streetNumber">
-        ///     Street NUmber of teh property without or without hyphens
+        ///     Street NUmber of the property without or without hyphens
         /// </param>  
         /// <param name="streetName">
-        ///     Name of teh street where property is located 
+        ///     Name of the street where property is located 
         /// </param>
         /// <param name="borough">
         ///     Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
@@ -254,10 +254,10 @@ namespace PropertyWebAPI.Controllers
         ///     Use this method to get property address and physical data associated with a property in NYC
         /// </summary>  
         /// <param name="streetNumber">
-        ///     Street NUmber of teh property without or without hyphens
+        ///     Street Number of the property without or without hyphens
         /// </param>  
         /// <param name="streetName">
-        ///     Name of teh street where property is located 
+        ///     Name of the street where property is located 
         /// </param>
         /// <param name="borough">
         ///     Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island

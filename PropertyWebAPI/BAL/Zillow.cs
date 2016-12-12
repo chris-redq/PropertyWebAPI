@@ -200,7 +200,7 @@ namespace PropertyWebAPI.BAL
                 return zPropertyDetails;
             }
             catch (Exception e)
-            {   Common.Logs.log().Error(string.Format("Exception encountered prcessing resquest log for {0} with externalRefId {1}: {2}", dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, e.ToString()));
+            {   Common.Logs.log().Error(string.Format("Exception encountered processing request log for {0} with externalRefId {1}: {2}", dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, e.ToString()));
                 return null;
             }
         }

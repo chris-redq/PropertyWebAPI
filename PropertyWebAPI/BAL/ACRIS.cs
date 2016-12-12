@@ -21,7 +21,7 @@ namespace PropertyWebAPI.BAL
 
     public class PropertyLotInformation : PropertyNotInAssessment
     {
-        //Blank classes to mask entityframework details
+        //Blank classes to mask entity framework details
     }
 
     public class DeedDetails

@@ -83,7 +83,7 @@ namespace PropertyWebAPI.Common
             int previousIndex = 0;
             int i = stackTrace.IndexOf("\r\n");
             // The method calling is 4th method on the stack. 
-            // Each method is on it's won line seperated from other using /r/n characters
+            // Each method is on it's won line separated from other using /r/n characters
             while (i>=0 && count<3)
             {
                 previousIndex = i;

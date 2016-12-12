@@ -15,7 +15,7 @@ namespace PropertyWebAPI.DAL
 
     /// <summary>
     ///     This class abstracts all detailed level operations associated with finding, inserting and updating records in the DataRequestLog table in WebData DB.
-    ///     In essence it abstracts symantic level operations for the table in the context of the API 
+    ///     In essence it abstracts semantic level operations for the table in the context of the API 
     /// </summary>
     public static class DataRequestLog
     {

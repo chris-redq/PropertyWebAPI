@@ -19,7 +19,7 @@ namespace PropertyWebAPI.Controllers
     [Authorize]
     public class ZillowController : ApiController
     {
-        // ../api/Bills/3001670091/?externalReferenceId=135&waterbill=Y&taxbill=Y
+        // ../api/Bills/3001670091/?externalReferenceId=135
         /// <summary>  
         ///     Use this method to get tax bill for a property
         /// </summary>  
@@ -28,7 +28,7 @@ namespace PropertyWebAPI.Controllers
         ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
         /// </param>  
         /// <param name="externalReferenceId">
-        ///     The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
         /// </param>
         /// <returns>
         ///     Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
