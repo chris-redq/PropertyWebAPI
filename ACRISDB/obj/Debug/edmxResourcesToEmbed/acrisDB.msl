@@ -215,5 +215,26 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="PropertyNotInAssessments">
+      <EntityTypeMapping TypeName="ACRISModel.PropertyNotInAssessment">
+        <MappingFragment StoreEntitySet="PropertyNotInAssessment">
+          <ScalarProperty Name="RowNumber" ColumnName="RowNumber" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+          <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+          <ScalarProperty Name="PropertyTypeCode" ColumnName="PropertyTypeCode" />
+          <ScalarProperty Name="SubterraneanRights" ColumnName="SubterraneanRights" />
+          <ScalarProperty Name="AirRights" ColumnName="AirRights" />
+          <ScalarProperty Name="PartialLot" ColumnName="PartialLot" />
+          <ScalarProperty Name="Easement" ColumnName="Easement" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="Borough" ColumnName="Borough" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

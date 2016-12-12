@@ -223,5 +223,26 @@
     <FunctionImport Name="tfnGetUnsatisfiedMortgages" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetUnsatisfiedMortgages_Result)">
       <Parameter Name="BBLE" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="PropertyNotInAssessments" EntityType="ACRISModel.PropertyNotInAssessment" />
   </EntityContainer>
+  <EntityType Name="PropertyNotInAssessment">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UniqueKey" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="Borough" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Block" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Lot" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="Easement" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PartialLot" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="AirRights" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SubterraneanRights" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyTypeCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="StreetNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="UnitNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
+    <Property Name="RowNumber" Type="Int64" />
+  </EntityType>
 </Schema>

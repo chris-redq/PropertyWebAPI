@@ -51,17 +51,18 @@ namespace PropertyWebAPI.Controllers
                 {
                     switch (requestObj.RequestTypeId)
                     {
-                        case (int)RequestTypes.TaxBill:
+                        case (int)RequestTypes.NYCTaxBill:
                             if (!BAL.TaxBill.UpdateData(requestObj))
                                 return Common.HttpResponse.InternalError(Request, "Error in processing request");
                             break;
-                        case (int)RequestTypes.WaterBill:
+                        case (int)RequestTypes.NYCWaterBill:
                             if (!BAL.WaterBill.UpdateData(requestObj))
                                 return Common.HttpResponse.InternalError(Request, "Error in processing request");
                             break;
                         default:
-                            // log something
-                            return Common.HttpResponse.InternalError(Request, "Error in processing request");
+                            String msg = String.Format("Invalid Request Type Id {0} for Request Id sent {1}", requestObj.RequestTypeId, requestObj.RequestId);
+                            Common.Logs.log().Warn(msg);
+                            return Common.HttpResponse.InternalError(Request, msg);
                     }
                     return Ok(true);
                 }
@@ -92,10 +93,10 @@ namespace PropertyWebAPI.Controllers
                 Results result = new Results();
                 switch (requestLogObj.RequestTypeId)
                 {
-                    case (int)RequestTypes.TaxBill:
+                    case (int)RequestTypes.NYCTaxBill:
                             result.taxBill = BAL.TaxBill.ReRun(requestLogObj);
                             return Ok(result);
-                    case (int)RequestTypes.WaterBill:
+                    case (int)RequestTypes.NYCWaterBill:
                             result.waterBill = BAL.WaterBill.ReRun(requestLogObj);
                             return Ok(result);
                      default:
@@ -128,10 +129,10 @@ namespace PropertyWebAPI.Controllers
                 foreach (var requestLogObj in requestLogList)
                 {   switch (requestLogObj.RequestTypeId)
                     {
-                        case (int)RequestTypes.TaxBill:
+                        case (int)RequestTypes.NYCTaxBill:
                             result.taxBill = BAL.TaxBill.ReRun(requestLogObj);
                             break;
-                        case (int)RequestTypes.WaterBill:
+                        case (int)RequestTypes.NYCWaterBill:
                             result.waterBill = BAL.WaterBill.ReRun(requestLogObj);
                             break;
                         default:

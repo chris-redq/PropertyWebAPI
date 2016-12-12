@@ -14,6 +14,7 @@ namespace PropertyWebAPI.BAL
     using System.IO;
     using System.Text;
     using System.Runtime.Serialization.Json;
+    
 
     #region Local Helper Classes
     /// <summary>
@@ -30,28 +31,29 @@ namespace PropertyWebAPI.BAL
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Decimal? billAmount;
     }
-
-    /// <summary>
-    /// Helper class used for serialization and deserialization of parameters necessary to get Water bill 
-    /// </summary>
-    public class WaterBillParameters
-    {
-        public string BBL;
-    }
+    
     #endregion
 
     /// <summary>
     ///     This class deals with all the details associated with either returning waterbill details or creating the 
-    ///     request for getting is scrapped from the web 
+    ///     request for getting data to be scrapped from the web 
     /// </summary>
     public static class WaterBill
     {
+        /// <summary>
+        /// Helper class used for serialization and deserialization of parameters necessary to get Water bill 
+        /// </summary>
+        class WaterBillParameters
+        {
+            public string BBL;
+        }
+
         /// <summary>
         ///     This methods converts all paramters required for Water Bill into a JSON object
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <returns>JSON string</returns>
-        public static string ParametersToJSON(string propertyBBL)
+        private static string ParametersToJSON(string propertyBBL)
         {
             WaterBillParameters waterParams = new WaterBillParameters();
             waterParams.BBL = propertyBBL;
@@ -63,7 +65,7 @@ namespace PropertyWebAPI.BAL
         /// </summary>
         /// <param name="jsonParameters"></param>
         /// <returns>waterBillParameters</returns>
-        public static WaterBillParameters JSONToParameters(string jsonParameters)
+        private static WaterBillParameters JSONToParameters(string jsonParameters)
         {
             WaterBillParameters waterParams = new WaterBillParameters();
             MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(jsonParameters));
@@ -104,21 +106,21 @@ namespace PropertyWebAPI.BAL
                             waterBill.billAmount = waterBillObj.BillAmount;
                             waterBill.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.WaterBill, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, externalReferenceId, jsonBillParams);
                         }
                         else
                         {
 
                             //check if pending request in queue
-                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.WaterBill, jsonBillParams);
+                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, jsonBillParams);
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
                                 string requestStr = propertyBBL; // we need a helper class to convert propertyBBL into a correct format so that the webscrapping service can read
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.WaterBill, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.NYCWaterBill, null);
 
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.WaterBill, requestObj.RequestId,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, requestObj.RequestId,
                                                                                                externalReferenceId, jsonBillParams);
 
                                 waterBill.status = RequestStatus.Pending.ToString();
@@ -129,7 +131,7 @@ namespace PropertyWebAPI.BAL
                                 waterBill.status = RequestStatus.Pending.ToString();
                                 //Send the RequestId for the pending request back
                                 waterBill.requestId = dataRequestLogObj.RequestId;
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.WaterBill,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill,
                                                                                                dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
                             }
                         }
@@ -139,7 +141,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         waterBill.status = RequestStatus.Error.ToString();
-                        //log externalReferenceId error from exception
+                        Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}: {2}", propertyBBL, externalReferenceId, e.ToString()));
                     }
                 }
             }
@@ -160,14 +162,14 @@ namespace PropertyWebAPI.BAL
             waterBill.status = ((RequestStatus)dataRequestLogObj.RequestStatusTypeId).ToString();
             waterBill.billAmount = null;
 
-            WaterBillParameters taxParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+            WaterBillParameters waterParams = JSONToParameters(dataRequestLogObj.RequestParameters);
 
             using (WebDataEntities webDBEntities = new WebDataEntities())
             {
                 if (dataRequestLogObj.RequestStatusTypeId == (int)RequestStatus.Success)
                 {
                     //check if data available
-                    WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == taxParams.BBL);
+                    WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterParams.BBL);
 
                     if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= 30)
                         waterBill.billAmount = waterBillObj.BillAmount;
@@ -227,6 +229,7 @@ namespace PropertyWebAPI.BAL
                                     break;
                                 }
                             default:
+                                Common.Logs.log().Warn(String.Format("Update called for a Request Id {0} with incorrect Status Id {2}", requestObj.RequestId, requestObj.RequestStatusTypeId));
                                 break;
                         }
 
@@ -236,7 +239,7 @@ namespace PropertyWebAPI.BAL
                     catch (Exception e)
                     {
                         webDBEntitiestransaction.Rollback();
-                        //Log something 
+                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}: {2}", requestObj.RequestId, e.ToString()));
                         return false;
                     }
                 }

@@ -103,6 +103,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebDataDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Zillow.cs">
+      <DependentUpon>WebDataDBModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="WebDataDBModel.edmx">

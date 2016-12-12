@@ -35,6 +35,7 @@ namespace ACRISDB
         public virtual DbSet<vwDocumentsByBBLE> vwDocumentsByBBLEs { get; set; }
         public virtual DbSet<vwMortgageDeedMaster> vwMortgageDeedMasters { get; set; }
         public virtual DbSet<vwSatisfactionAndAssignmentCrossReeferenceRecord> vwSatisfactionAndAssignmentCrossReeferenceRecords { get; set; }
+        public virtual DbSet<PropertyNotInAssessment> PropertyNotInAssessments { get; set; }
     
         [DbFunction("ACRISEntities", "tfnGetDocumentParties")]
         public virtual IQueryable<tfnGetDocumentParties_Result> tfnGetDocumentParties(string uniqueKey, string partyType)

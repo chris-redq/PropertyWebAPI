@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NYCDOF", "NYCDOF\NYCDOF.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDataDB", "WebDataDB\WebDataDB.csproj", "{3FAFA2A6-F72D-4679-9492-A38914AEAA35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPropertyDataServices", "UnitTestPropertyDataServices\UnitTestPropertyDataServices.csproj", "{2147434D-06D9-485A-9569-CD0E4D3FC27E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3FAFA2A6-F72D-4679-9492-A38914AEAA35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FAFA2A6-F72D-4679-9492-A38914AEAA35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FAFA2A6-F72D-4679-9492-A38914AEAA35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2147434D-06D9-485A-9569-CD0E4D3FC27E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2147434D-06D9-485A-9569-CD0E4D3FC27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2147434D-06D9-485A-9569-CD0E4D3FC27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2147434D-06D9-485A-9569-CD0E4D3FC27E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

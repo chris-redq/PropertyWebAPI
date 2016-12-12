@@ -47,10 +47,7 @@ namespace PropertyWebAPI.Controllers
         /// <param name="externalReferenceId">
         ///     The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
         /// </param>
-        /// <param name="needWaterBill">
-        ///     Set this optional parameter to N if you do not want the waterbill. The default value for this parameter is Y
-        /// </param>
-        /// /// <param name="needTaxBill">
+        /// <param name="needTaxBill">
         ///     Set this optional parameter to N if you do not want the taxbill. The default value for this parameter is Y
         /// </param>
         /// <returns>
@@ -58,15 +55,18 @@ namespace PropertyWebAPI.Controllers
         /// </returns>
         [Route("api/bills/{propertyBBL}")]
         [ResponseType(typeof(Bills))]
-        public IHttpActionResult GetBills(string propertyBBL, string externalReferenceId = null, string needWaterBill = "Y", string needTaxBill = "Y")
+        public IHttpActionResult GetBills(string propertyBBL, string externalReferenceId = null, string needTaxBill = "Y")
         {                                                            
             Bills billsObj = new Bills();
 
             if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}[A-Z]??$"))
+            {   if (needTaxBill == "Y")
+                    BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            }
 
-            if (needWaterBill == "Y")
-                billsObj.waterBill = BAL.WaterBill.Get(propertyBBL, externalReferenceId);
+            //if (needWaterBill == "Y")
+            //    billsObj.waterBill = BAL.WaterBill.Get(propertyBBL, externalReferenceId);
 
             if (needTaxBill == "Y")
                 billsObj.taxBill = BAL.TaxBill.Get(propertyBBL, externalReferenceId);

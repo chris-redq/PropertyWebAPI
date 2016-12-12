@@ -42,6 +42,26 @@
     <Property Name="LastUpdatedDate" Type="datetime" />
     <Property Name="DateProcessed" Type="datetime" />
   </EntityType>
+  <EntityType Name="PropertyNotInAssessment">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="Borough" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Block" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="Lot" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Easement" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="PartialLot" Type="varchar" MaxLength="1" />
+    <Property Name="AirRights" Type="varchar" MaxLength="1" />
+    <Property Name="SubterraneanRights" Type="varchar" MaxLength="1" />
+    <Property Name="PropertyTypeCode" Type="varchar" MaxLength="2" />
+    <Property Name="StreetNumber" Type="varchar" MaxLength="12" />
+    <Property Name="StreetName" Type="varchar" MaxLength="32" />
+    <Property Name="UnitNumber" Type="varchar" MaxLength="7" />
+    <Property Name="DateLastUpdated" Type="datetime" />
+    <Property Name="RowNumber" Type="bigint" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'AreaAbstractNew.Acris.vwDeedsByBBLE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vwDeedsByBBLE">
@@ -130,18 +150,6 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwDocumentsByBBLE' does not 
     <Property Name="ReelNumber" Type="varchar" MaxLength="5" />
     <Property Name="ReelPage" Type="varchar" MaxLength="5" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'AreaAbstractNew.Acris.vwMortgageDeedCrossReference' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="vwMortgageDeedCrossReference">
-          <Property Name="UniqueKey" Type="varchar(max)" />
-          <Property Name="CRFN" Type="varchar(max)" />
-          <Property Name="DocumentIdReference" Type="varchar(max)" />
-          <Property Name="ReelYear" Type="varchar" MaxLength="500" />
-          <Property Name="ReelBorough" Type="varchar" MaxLength="1" />
-          <Property Name="ReelNumber" Type="varchar" MaxLength="500" />
-          <Property Name="ReelPage" Type="varchar" MaxLength="500" />
-          <Property Name="DateLastUpdated" Type="int" />
-        </EntityType>-->
   <!--Errors Found During Generation:
 warning 6002: The table/view 'AreaAbstractNew.Acris.vwMortgageDeedMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vwMortgageDeedMaster">
@@ -253,6 +261,7 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwSatisfactionAndAssignmentC
   <EntityContainer Name="ACRISModelStoreContainer">
     <EntitySet Name="LatestContractOfSaleorMemorandumofContract" EntityType="Self.LatestContractOfSaleorMemorandumofContract" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LatestDeedDocument" EntityType="Self.LatestDeedDocument" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyNotInAssessment" EntityType="Self.PropertyNotInAssessment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vwDeedsByBBLE" EntityType="Self.vwDeedsByBBLE" store:Type="Views" store:Schema="Acris">
       <DefiningQuery>SELECT 
     [vwDeedsByBBLE].[BBLE] AS [BBLE], 

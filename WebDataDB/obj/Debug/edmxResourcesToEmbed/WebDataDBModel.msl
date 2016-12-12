@@ -123,5 +123,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Zillows">
+      <EntityTypeMapping TypeName="WebDataModel.Zillow">
+        <MappingFragment StoreEntitySet="Zillow">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="zEstimate" ColumnName="zEstimate" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

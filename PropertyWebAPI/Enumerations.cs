@@ -28,7 +28,7 @@ namespace PropertyWebAPI
         /// <summary>
         /// For Requests send for Processing
         /// </summary>
-        SendForProcessing = 4,
+        SendForProcessing = 4
     }
 
     /// <summary>
@@ -39,27 +39,27 @@ namespace PropertyWebAPI
         /// <summary>
         /// Request for Water bill
         /// </summary>
-        WaterBill = 1,
+        NYCWaterBill = 1,
 
         /// <summary>
         /// Request for Tax bill
         /// </summary>
-        TaxBill = 2,
+        NYCTaxBill = 2,
 
         /// <summary>
-        /// Request for Tax bill
+        /// Request for DOB total Penalties and Violations amount due
         /// </summary>
-        DOBCivilPenalties = 3,
+        NYCDOBPenaltiesAndViolations = 3,
 
         /// <summary>
-        /// Request for Tax bill
+        /// Request for name of the mortgage servicer
         /// </summary>
-        DOBECBViolations = 4,
+        NYCMortgageServicer = 4,
 
         /// <summary>
-        /// Request for Tax bill
+        /// Request for zEstimate value
         /// </summary>
-        DOBStopWorkOrder = 5,
+        Zillow = 5
 
     }
 

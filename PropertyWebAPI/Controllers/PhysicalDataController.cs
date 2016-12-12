@@ -17,53 +17,7 @@ namespace PropertyWebAPI.Controllers
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using NYCDOF;
-
-    #region Local Helper Classes
-    /// <summary>  
-    ///     Helper class to return app_id and app_key fro GeoClient Api
-    /// </summary>  
-    class AppTokens
-    {
-        public string appId;
-        public string appKey;
-    }
-
-    /// <summary>  
-    ///     Simple Address Class
-    /// </summary>  
-    class GeneralAddress
-    {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string addressLine1;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string addressLine2;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string city;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string state;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string zip;
-    }
-
-    class PhysicalPropertyInformation : tfnGetGeneralPropertyInformation_Result
-    {
-
-    }
-
-    /// <summary>  
-    ///     Helper class to return app_id and app_key fro GeoClient Api
-    /// </summary>  
-    class GeneralPropertyInformation
-    {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public GeneralAddress address;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public List<BAL.DeedParty> owners;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public PhysicalPropertyInformation propertyInformation;
-    }
-
-    #endregion
+    using AutoMapper;
 
     /// <summary>  
     /// This controller handles all api requests associated with phyical data associated with a property
@@ -71,104 +25,7 @@ namespace PropertyWebAPI.Controllers
     [Authorize]
     public class PhysicalDataController : ApiController
     {
-        #region Private Helper Methods
-
-        private AppTokens GetConfigurationTokens()
-        {
-            AppTokens appTokens= new AppTokens();
-
-            appTokens.appId = AppSettings.Get(AppSettings.GEO_CLIENT_APP_ID);
-            appTokens.appKey = AppSettings.Get(AppSettings.GEO_CLIENT_APP_KEY);
-
-            return appTokens;
-        }
-
-        /// <summary>  
-        ///     Method returns address corrections and details based on street number, street address and borough for NYC properties
-        /// </summary>  
-        private JObject GetAddressDetailsFromGeoClientAPI(string streetNumber, string streetName, string borough)
-        {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
-            AppTokens appTokens = GetConfigurationTokens();
-
-            HttpResponseMessage response = client.GetAsync("geoclient/v1/address.json?houseNumber=" + streetNumber + "&street=" + streetName + "&borough=" + borough 
-                                                            + "&app_id="+appTokens.appId+"&app_key="+appTokens.appKey).Result;
-            
-            return JObject.Parse(response.Content.ReadAsStringAsync().Result);
-        }
-
-        /// <summary>  
-        ///     Method returns details based on BBL in NYC
-        /// </summary>  
-        private JObject GetBBLDetailsFromGeoClientAPI(string propertyBBL)
-        {
-          
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
-            AppTokens appTokens = GetConfigurationTokens();
-
-            string borough = "";
-            switch(propertyBBL.Substring(0,1))
-            {
-                case "1":
-                    borough = "Manhattan";
-                    break;
-                case "2":
-                    borough = "Bronx";
-                    break;
-                case "3":
-                    borough = "Brooklyn";
-                    break;
-                case "4":
-                    borough = "Queens";
-                    break;
-                case "5":
-                    borough = "Staten Island";
-                    break;
-            }
-
-            HttpResponseMessage response = client.GetAsync("geoclient/v1/bbl.json?borough=" + borough + "&block=" + propertyBBL.Substring(1, 5) 
-                                                           + "&lot=" + propertyBBL.Substring(6, 4) + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
-
-            return JObject.Parse(response.Content.ReadAsStringAsync().Result);
-        }
-
-        
-        /// <summary>  
-        ///     Method returns building information based on the BIN in NYC
-        /// </summary>  
-        private JObject GetBuildingDetailsFromGeoClientAPI(string buildingIdentificationNumber)
-        {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
-            AppTokens appTokens = GetConfigurationTokens();
-
-            HttpResponseMessage response = client.GetAsync("geoclient/v1/bin.json?bin=" + buildingIdentificationNumber
-                                                            + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
-
-            return JObject.Parse(response.Content.ReadAsStringAsync().Result);
-        }
-
-        /// <summary>  
-        ///     Method returns true if any of the messages in JSON contain NOT FOUND
-        /// </summary>  
-        private Boolean CheckIfMessageContainsNotFound(JObject jsonObj, string baseObjectName)
-        {
-            string msg = (string)jsonObj.SelectToken(baseObjectName + ".message");
-            if (msg != null && msg.Contains("NOT FOUND"))
-                return true;
-            msg = (string)jsonObj.SelectToken(baseObjectName + ".message1");
-            if (msg != null && msg.Contains("NOT FOUND"))
-                return true;
-            msg = (string)jsonObj.SelectToken(baseObjectName + ".message2");
-            if (msg != null && msg.Contains("NOT FOUND"))
-                return true;
-            return false;
-        }
-
-        #endregion
-
+       
         #region GeoClient APIs
 
         // ../api/physicaldata/nyc/11655/Queens Blvd/Queens/BBL
@@ -191,7 +48,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(string))]
         public IHttpActionResult GetNYCBBL(string streetNumber, string streetName, string borough)
         {
-            JObject jsonObj = GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
+            JObject jsonObj = BAL.NYCPhysicalPropertyData.GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
 
             string bbl = (string)jsonObj.SelectToken("address.bbl");
 
@@ -281,12 +138,12 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(JObject))]
         public IHttpActionResult GetNYCAddressDetails(string streetNumber, string streetName, string borough)
         {
-            JObject jsonObj = GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
+            JObject jsonObj = BAL.NYCPhysicalPropertyData.GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
 
             if (jsonObj == null)
                 return NotFound();
 
-            if (CheckIfMessageContainsNotFound(jsonObj, "address"))
+            if (BAL.NYCPhysicalPropertyData.CheckIfMessageContainsNotFound(jsonObj, "address"))
                 return NotFound();
 
             return Ok(jsonObj);
@@ -319,12 +176,12 @@ namespace PropertyWebAPI.Controllers
             if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}$"))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
-            JObject jsonObj = GetBBLDetailsFromGeoClientAPI(propertyBBL);
+            JObject jsonObj = BAL.NYCPhysicalPropertyData.GetBBLDetailsFromGeoClientAPI(propertyBBL);
 
             if (jsonObj == null)
                 return NotFound();
 
-            if (CheckIfMessageContainsNotFound(jsonObj, "bbl"))
+            if (BAL.NYCPhysicalPropertyData.CheckIfMessageContainsNotFound(jsonObj, "bbl"))
                 return NotFound();
             return Ok(jsonObj);
         }
@@ -356,12 +213,12 @@ namespace PropertyWebAPI.Controllers
             if (!Regex.IsMatch(buildingIdentificationNumber, "^[1-5][0-9]{6}$"))
                 return this.BadRequest("Incorrect BIN - Building Identification Number");
 
-            JObject jsonObj = GetBuildingDetailsFromGeoClientAPI(buildingIdentificationNumber);
+            JObject jsonObj = BAL.NYCPhysicalPropertyData.GetBuildingDetailsFromGeoClientAPI(buildingIdentificationNumber);
 
             if (jsonObj == null)
                 return NotFound();
             
-            if (CheckIfMessageContainsNotFound(jsonObj, "bin"))
+            if (BAL.NYCPhysicalPropertyData.CheckIfMessageContainsNotFound(jsonObj, "bin"))
                 return NotFound();
             return Ok(jsonObj);
         }
@@ -379,46 +236,17 @@ namespace PropertyWebAPI.Controllers
         ///     Returns an object of contain cleaned property address and general information about the property
         /// </returns>
         [Route("api/physicaldata/nyc/{propertyBBL}/GeneralInformation")]
-        [ResponseType(typeof(GeneralPropertyInformation))]
+        [ResponseType(typeof(BAL.GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string propertyBBL)
         {
             if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}$"))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
-            using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
-            {
-                List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation(propertyBBL).ToList();
+            BAL.GeneralPropertyInformation propertyDetails = BAL.NYCPhysicalPropertyData.Get(propertyBBL);
 
-                if (propertyInfo != null && propertyInfo.Count > 0)
-                {
-                    GeneralAddress address = null;
-                    GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
-
-                    JObject jsonObj = GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
-                    if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address"))
-                    {
-                        address = new GeneralAddress();
-                        address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
-                        if (propertyInfo[0].UnitNumber!=null)
-                            address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
-                        address.city= StringUtilities.ToTitleCase((string)jsonObj.SelectToken("address.uspsPreferredCityName"));
-                        address.state = "NY";
-                        address.zip= (string)jsonObj.SelectToken("address.zipCode");
-                    }
-                    propertyDetails.address = address;
-                    propertyDetails.propertyInformation = (PhysicalPropertyInformation)propertyInfo[0];
-
-                    BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
-                    if (deedDetailsObj != null)
-                    {
-                        propertyDetails.owners = deedDetailsObj.owners;
-                    }
-
-                    return Ok(propertyDetails);
-                }
+            if (propertyDetails==null)
                 return NotFound();
-            }
-          
+            return Ok(propertyDetails);
         }
 
         // ../api/physicaldata/nyc/11655/Queens Blvd/Queens/GeneralInformation
@@ -438,46 +266,14 @@ namespace PropertyWebAPI.Controllers
         ///     Returns an object of contain cleaned property address and general information about the property
         /// </returns>
         [Route("api/physicaldata/nyc/{streetNumber}/{streetName}/{borough}/GeneralInformation")]
-        [ResponseType(typeof(GeneralPropertyInformation))]
+        [ResponseType(typeof(BAL.GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string streetNumber, string streetName, string borough)
         {
-            //BBL from address 
-            JObject jsonObj = GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
+            BAL.GeneralPropertyInformation propertyDetails = BAL.NYCPhysicalPropertyData.Get(streetNumber, streetName, borough);
 
-            if (jsonObj == null)
+            if (propertyDetails == null)
                 return NotFound();
-
-            if (CheckIfMessageContainsNotFound(jsonObj, "address"))
-                return NotFound();
-
-            using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
-            {
-                //Get General Propert Information from Assessemnt and other sources
-                List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation((string)jsonObj.SelectToken("address.bbl")).ToList();
-
-                //Create a clean address
-                GeneralAddress address = new GeneralAddress();
-                address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
-                if (propertyInfo[0].UnitNumber != null)
-                    address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
-                address.city = StringUtilities.ToTitleCase((string)jsonObj.SelectToken("address.uspsPreferredCityName"));
-                address.state = "NY";
-                address.zip = (string)jsonObj.SelectToken("address.zipCode");
-
-                GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
-                propertyDetails.address = address;
-
-                if (propertyInfo != null && propertyInfo.Count > 0)
-                   propertyDetails.propertyInformation = (PhysicalPropertyInformation)propertyInfo[0];
-
-                BAL.DeedDetails deedDetailsObj =  BAL.ACRIS.GetLatestDeedDetails((string)jsonObj.SelectToken("address.bbl"));
-                if  (deedDetailsObj != null)
-                {
-                    propertyDetails.owners = deedDetailsObj.owners;
-                }
-
-                return Ok(propertyDetails);
-            }
+            return Ok(propertyDetails);
         }
         #endregion
     }

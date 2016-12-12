@@ -171,3 +171,7 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCDOF.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCDOF.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\WebDataDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\WebDataDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\AutoMapper.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\AutoMapper.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\DexiRobotRequestResponseBuilder.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\DexiRobotRequestResponseBuilder.pdb

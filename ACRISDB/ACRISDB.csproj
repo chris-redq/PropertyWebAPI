@@ -73,6 +73,9 @@
       <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyNotInAssessment.cs">
+      <DependentUpon>acrisDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="tfnGetDocumentPartiesByKey_Result.cs">
       <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>

@@ -66,6 +66,14 @@
     <Property Name="BillAmount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Zillow">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="zEstimate" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="DexiRequest">
     <Key>
       <PropertyRef Name="RequestId" />
@@ -204,6 +212,7 @@
     <EntitySet Name="MortgageServicer" EntityType="Self.MortgageServicer" Schema="data" store:Type="Tables" />
     <EntitySet Name="TaxBill" EntityType="Self.TaxBill" Schema="data" store:Type="Tables" />
     <EntitySet Name="WaterBill" EntityType="Self.WaterBill" Schema="data" store:Type="Tables" />
+    <EntitySet Name="Zillow" EntityType="Self.Zillow" Schema="data" store:Type="Tables" />
     <EntitySet Name="DexiRequest" EntityType="Self.DexiRequest" Schema="jm" store:Type="Tables" />
     <EntitySet Name="DexiRequestType" EntityType="Self.DexiRequestType" Schema="jm" store:Type="Tables" />
     <EntitySet Name="Request" EntityType="Self.Request" Schema="jm" store:Type="Tables" />

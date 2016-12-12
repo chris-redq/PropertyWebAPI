@@ -117,6 +117,43 @@ namespace PropertyWebAPI.DAL
         }
 
         /// <summary>
+        ///     Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+        /// </summary>
+        /// </summary>
+        /// <param name="webDBEntities"></param>
+        /// <param name="propertyBBL"></param>
+        /// <param name="requestTypeId"></param>
+        /// <param name="externalReferenceId"></param>
+        /// <returns></returns>
+        public static WebDataDB.DataRequestLog InsertForFailure(string propertyBBL, int requestTypeId, string externalReferenceId, string requestParameters)
+        {
+            WebDataDB.DataRequestLog dataRequestLogObj = new WebDataDB.DataRequestLog();
+
+            using (WebDataEntities webDBEntities = new WebDataEntities())
+            {   try
+                {
+                    dataRequestLogObj.BBL = propertyBBL;
+                    dataRequestLogObj.RequestStatusTypeId = (int)RequestStatus.Error;
+                    dataRequestLogObj.RequestTypeId = requestTypeId;
+                    dataRequestLogObj.RequestDateTime = DateTime.UtcNow;
+                    dataRequestLogObj.ExternalReferenceId = externalReferenceId;
+                    dataRequestLogObj.ServedFromCache = false;
+                    dataRequestLogObj.WebDataRequestMade = false;
+                    dataRequestLogObj.RequestParameters = requestParameters;
+
+                    dataRequestLogObj = webDBEntities.DataRequestLogs.Add(dataRequestLogObj);
+                    webDBEntities.SaveChanges();
+                    return dataRequestLogObj;
+                }
+                catch(Exception e)
+                {   Common.Logs.log().Error(string.Format("Exception encountered request for BBL {0} for Request Type {1} with externalRefId {2}: {3}", propertyBBL, 
+                                                          ((RequestStatus)requestTypeId).ToString(), externalReferenceId, e.ToString()));
+                    return null;
+                }
+            }
+            
+        }
+        /// <summary>
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
         /// </summary>
         /// <param name="webDBEntities"></param>

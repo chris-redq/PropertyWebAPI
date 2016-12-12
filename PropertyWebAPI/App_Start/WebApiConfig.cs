@@ -11,6 +11,7 @@ namespace PropertyWebAPI
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
+    using log4net;
 
     public static class WebApiConfig
     {
@@ -22,7 +23,10 @@ namespace PropertyWebAPI
             config.MapHttpAttributeRoutes();
         
             // Configure APIKey Authentication Handler
-            GlobalConfiguration.Configuration.MessageHandlers.Add(new APIKeySecurityHandler());       
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new APIKeySecurityHandler());
+
+            Common.AppInitialization.Init();
+
         }
     }
 }

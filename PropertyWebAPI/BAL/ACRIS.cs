@@ -12,8 +12,14 @@ namespace PropertyWebAPI.BAL
     using System.Linq;
     using System.Web;
     using ACRISDB;
+    using AutoMapper;
 
     public class DeedParty:tfnGetDocumentParties_Result
+    {
+        //
+    }
+
+    public class PropertyLotInformation : PropertyNotInAssessment
     {
         //Blank classes to mask entityframework details
     }
@@ -38,9 +44,24 @@ namespace PropertyWebAPI.BAL
                 DeedDetails deedDetailsObj = new DeedDetails();
                 deedDetailsObj.deedDocument = documentObj;
                 foreach (tfnGetDocumentParties_Result a in acrisDBEntities.tfnGetDocumentParties(documentObj.DeedUniqueKey, "BUYER").ToList())
-                    deedDetailsObj.owners.Add((DeedParty)a);
+                {   if (deedDetailsObj.owners == null)
+                        deedDetailsObj.owners = new List<DeedParty>();
+                    deedDetailsObj.owners.Add(Mapper.Map<DeedParty>(a));
+                }
 
                 return deedDetailsObj;
+            }
+        }
+
+        public static PropertyLotInformation GetLotInformation(string propertyBBLE)
+        {
+            using (ACRISEntities acrisDBEntities = new ACRISEntities())
+            {
+                PropertyNotInAssessment propertyLotInformationObj = acrisDBEntities.PropertyNotInAssessments.FirstOrDefault(i => i.BBL == propertyBBLE);
+
+                if (propertyLotInformationObj == null)
+                    return null;
+                return Mapper.Map<PropertyLotInformation>(propertyLotInformationObj); 
             }
         }
     }

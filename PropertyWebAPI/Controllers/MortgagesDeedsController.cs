@@ -100,6 +100,35 @@ namespace PropertyWebAPI.Controllers
             return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
         }
 
+        // ../api/MortgagesDeeds/3001670091/mortgageservicer
+        /// <summary>  
+        ///     Use this method to retrieve the current mortgage servicer for the property
+        /// </summary>  
+        /// <param name="propertyBBL">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+        /// </param>  
+        /// <param name="externalReferenceId"></param>
+        /// <returns>
+        ///     Returns the name of the Mortgage Servicer
+        /// </returns>
+        [Route("api/mortgagesdeeds/{propertyBBLE}/mortgageservicer")]
+        [ResponseType(typeof(BAL.MortgageServicerDetails))]
+        public IHttpActionResult GetMortgageServicer(string propertyBBL, string externalReferenceId)
+        {
+
+            if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}[A-Z]??$"))
+            {
+                BAL.MortgageServicer.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            }
+
+            BAL.MortgageServicerDetails mortgageServicerObj = BAL.MortgageServicer.Get(propertyBBL, externalReferenceId);
+            if (mortgageServicerObj == null)
+                return NotFound();
+            return Ok(mortgageServicerObj);
+        }
+
         // ../api/MortgagesDeeds/3001670091/latestdeed
         /// <summary>  
         ///     Use this method to retrieve details about the latest deed for a property
