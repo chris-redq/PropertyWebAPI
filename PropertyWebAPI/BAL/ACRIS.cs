@@ -83,6 +83,5 @@ namespace PropertyWebAPI.BAL
                 return null;
             }
         }
-        }
     }
 }
