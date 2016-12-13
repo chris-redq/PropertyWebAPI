@@ -35,7 +35,7 @@ namespace PropertyWebAPI.BAL
     #endregion
 
     /// <summary>
-    ///     This class deals with all the details associated with either returning waterbill details or creating the 
+    ///     This class deals with all the details associated with either returning water bill details or creating the 
     ///     request for getting data to be scrapped from the web 
     /// </summary>
     public static class WaterBill
@@ -49,7 +49,7 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This methods converts all paramters required for Water Bill into a JSON object
+        ///     This methods converts all parameters required for Water Bill into a JSON object
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <returns>JSON string</returns>
@@ -75,7 +75,7 @@ namespace PropertyWebAPI.BAL
             return waterParams;
         }
         /// <summary>
-        ///     This method deals with all the details associated with either returning the waterbill details or creating the 
+        ///     This method deals with all the details associated with either returning the water bill details or creating the 
         ///     request for getting is scrapped from the web 
         /// </summary>
         /// <param name="propertyBBL"></param>
@@ -110,13 +110,12 @@ namespace PropertyWebAPI.BAL
                         }
                         else
                         {
-
                             //check if pending request in queue
                             DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, jsonBillParams);
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
-                                string requestStr = propertyBBL; // we need a helper class to convert propertyBBL into a correct format so that the webscrapping service can read
+                                string requestStr = propertyBBL; // we need a helper class to convert propertyBBL into a correct format so that the web scrapping service can read
 
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.NYCWaterBill, null);
 
@@ -141,7 +140,8 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         waterBill.status = RequestStatus.Error.ToString();
-                        Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}: {2}", propertyBBL, externalReferenceId, e.ToString()));
+                        Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}: {2}", 
+                                                propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
                     }
                 }
             }
@@ -239,7 +239,7 @@ namespace PropertyWebAPI.BAL
                     catch (Exception e)
                     {
                         webDBEntitiestransaction.Rollback();
-                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}: {2}", requestObj.RequestId, e.ToString()));
+                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
                         return false;
                     }
                 }

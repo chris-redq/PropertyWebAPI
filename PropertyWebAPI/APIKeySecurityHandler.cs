@@ -33,7 +33,7 @@ namespace PropertyWebAPI
                 }
                 catch (System.InvalidOperationException e)
                 {
-                    Common.Logs.log().Error(string.Format("apiKey token not found in HTTP Header\n{0}\n",e.ToString()));
+                    Common.Logs.log().Error(string.Format("apiKey token not found in HTTP Header{0}", Common.Utilities.FormatException(e)));
                 }
             }
 
@@ -58,7 +58,7 @@ namespace PropertyWebAPI
                 }
                 catch (Exception e)
                 {
-                    Common.Logs.log().Error(string.Format("Error in acquiring HttpContext.Current.User\n{0}\n", e.ToString()));
+                    Common.Logs.log().Error(string.Format("Error in acquiring HttpContext.Current.User{0}", Common.Utilities.FormatException(e)));
                 }
             }
 

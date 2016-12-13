@@ -159,7 +159,8 @@ namespace PropertyWebAPI.BAL
                         webDBEntitiestransaction.Rollback();
                         dPenaltiesAndViolations.status = RequestStatus.Error.ToString();
                         DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, parameters);
-                        Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}\n{2}\n", propertyBBL, externalReferenceId, e.ToString()));
+                        Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", 
+                                                propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
                     }
                 }
             }
@@ -205,7 +206,8 @@ namespace PropertyWebAPI.BAL
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered processing request log for {0} with externalRefId {1}\n{2}\n", dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, e.ToString()));
+                Common.Logs.log().Error(string.Format("Exception encountered processing request log for {0} with externalRefId {1}{2}", 
+                                                       dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, Common.Utilities.FormatException(e)));
                 return null;
             }
         }
@@ -270,7 +272,7 @@ namespace PropertyWebAPI.BAL
                                     break;
                                 }
                             default:
-                                Common.Logs.log().Warn(string.Format("Update called for a Request Object Id {0} with incorrect Status Id {2}",requestObj.RequestId,requestObj.RequestStatusTypeId));
+                                Common.Logs.log().Warn(string.Format("Update called for a Request Object Id {0} with incorrect Status Id {1}",requestObj.RequestId,requestObj.RequestStatusTypeId));
                                 break;
                         }
 
@@ -280,7 +282,7 @@ namespace PropertyWebAPI.BAL
                     catch (Exception e)
                     {
                         webDBEntitiestransaction.Rollback();
-                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}\n{2}\n", requestObj.RequestId, e.ToString()));
+                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
                         return false;
                     }
                 }

@@ -58,7 +58,7 @@ namespace PropertyWebAPI.BAL
             }
             catch(Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract\n{0}\n", e.ToString()));
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract{0}", Common.Utilities.FormatException(e)));
                 return null;
             }
         }
@@ -79,7 +79,7 @@ namespace PropertyWebAPI.BAL
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract\n{0}\n", e.ToString()));
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract{0}", Common.Utilities.FormatException(e)));
                 return null;
             }
         }

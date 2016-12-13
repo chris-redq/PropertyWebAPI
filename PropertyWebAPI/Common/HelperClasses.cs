@@ -96,4 +96,12 @@ namespace PropertyWebAPI.Common
         }
 
     }
+
+    public static class Utilities
+    {
+        public static string FormatException(Exception e)
+        {
+            return "\n\n" + e.ToString() + "\n";
+        }
+    }
 }
