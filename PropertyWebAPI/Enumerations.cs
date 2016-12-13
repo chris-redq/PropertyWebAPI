@@ -11,24 +11,24 @@ namespace PropertyWebAPI
     public enum RequestStatus
     {
         /// <summary>
-        /// For requesting waiting to be processed
+        /// For requests completed successfully
         /// </summary>
-        Pending = 1,
+        Success = 0,
 
         /// <summary>
         /// For request that end up in error
         /// </summary>
-        Error = 2,
+        Error = 1,
 
         /// <summary>
-        /// For requests completed successfully
+        /// For requesting waiting to be processed
         /// </summary>
-        Success = 3,
+        Pending = 2,
 
         /// <summary>
         /// For Requests send for Processing
         /// </summary>
-        SendForProcessing = 4
+        SendForProcessing = 3
     }
 
     /// <summary>
@@ -37,29 +37,29 @@ namespace PropertyWebAPI
     public enum RequestTypes
     {
         /// <summary>
-        /// Request for Water bill
-        /// </summary>
-        NYCWaterBill = 1,
-
-        /// <summary>
         /// Request for Tax bill
         /// </summary>
-        NYCTaxBill = 2,
+        NYCTaxBill = 1001,
 
         /// <summary>
         /// Request for DOB total Penalties and Violations amount due
         /// </summary>
-        NYCDOBPenaltiesAndViolations = 3,
+        NYCDOBPenaltiesAndViolations = 1002,
 
         /// <summary>
         /// Request for name of the mortgage servicer
         /// </summary>
-        NYCMortgageServicer = 4,
+        NYCMortgageServicer = 1003,
 
         /// <summary>
         /// Request for zEstimate value
         /// </summary>
-        Zillow = 5
+        Zillow = 1004,
+
+        /// <summary>
+        /// Request for Water bill
+        /// </summary>
+        NYCWaterBill = 1005
 
     }
 

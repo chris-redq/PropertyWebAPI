@@ -34,35 +34,55 @@ namespace PropertyWebAPI.BAL
     {
         public static DeedDetails GetLatestDeedDetails(string propertyBBLE)
         {
-            using (ACRISEntities acrisDBEntities = new ACRISEntities())
+            try
             {
-                LatestDeedDocument documentObj = acrisDBEntities.LatestDeedDocuments.FirstOrDefault(i => i.BBLE == propertyBBLE);
+                using (ACRISEntities acrisDBEntities = new ACRISEntities())
+                {
+                    LatestDeedDocument documentObj = acrisDBEntities.LatestDeedDocuments.FirstOrDefault(i => i.BBLE == propertyBBLE);
 
-                if (documentObj == null)
-                    return null;
+                    if (documentObj == null)
+                    {   Common.Logs.log().Error(string.Format("Error finding record for BBLE {0} in LatestDeedDocument", propertyBBLE));
+                        return null;
+                    }
+                    DeedDetails deedDetailsObj = new DeedDetails();
+                    deedDetailsObj.deedDocument = documentObj;
+                    foreach (tfnGetDocumentParties_Result a in acrisDBEntities.tfnGetDocumentParties(documentObj.DeedUniqueKey, "BUYER").ToList())
+                    {
+                        if (deedDetailsObj.owners == null)
+                            deedDetailsObj.owners = new List<DeedParty>();
+                        deedDetailsObj.owners.Add(Mapper.Map<DeedParty>(a));
+                    }
 
-                DeedDetails deedDetailsObj = new DeedDetails();
-                deedDetailsObj.deedDocument = documentObj;
-                foreach (tfnGetDocumentParties_Result a in acrisDBEntities.tfnGetDocumentParties(documentObj.DeedUniqueKey, "BUYER").ToList())
-                {   if (deedDetailsObj.owners == null)
-                        deedDetailsObj.owners = new List<DeedParty>();
-                    deedDetailsObj.owners.Add(Mapper.Map<DeedParty>(a));
+                    return deedDetailsObj;
                 }
-
-                return deedDetailsObj;
+            }
+            catch(Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract\n{0}\n", e.ToString()));
+                return null;
             }
         }
 
         public static PropertyLotInformation GetLotInformation(string propertyBBLE)
         {
-            using (ACRISEntities acrisDBEntities = new ACRISEntities())
-            {
-                PropertyNotInAssessment propertyLotInformationObj = acrisDBEntities.PropertyNotInAssessments.FirstOrDefault(i => i.BBL == propertyBBLE);
+            try
+            {   using (ACRISEntities acrisDBEntities = new ACRISEntities())
+                {
+                    PropertyNotInAssessment propertyLotInformationObj = acrisDBEntities.PropertyNotInAssessments.FirstOrDefault(i => i.BBL == propertyBBLE);
 
-                if (propertyLotInformationObj == null)
-                    return null;
-                return Mapper.Map<PropertyLotInformation>(propertyLotInformationObj); 
+                    if (propertyLotInformationObj == null)
+                    {   Common.Logs.log().Error(string.Format("Error finding record for BBLE {0} in ACRIS", propertyBBLE));
+                        return null;
+                    }
+                    return Mapper.Map<PropertyLotInformation>(propertyLotInformationObj);
+                }
             }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract\n{0}\n", e.ToString()));
+                return null;
+            }
+        }
         }
     }
 }

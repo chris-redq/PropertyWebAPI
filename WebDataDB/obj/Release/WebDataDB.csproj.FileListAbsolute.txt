@@ -1,0 +1,9 @@
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\WebDataDB.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\WebDataDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\WebDataDB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Release\WebDataDB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Release\WebDataDB.pdb

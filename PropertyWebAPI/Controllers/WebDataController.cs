@@ -60,7 +60,7 @@ namespace PropertyWebAPI.Controllers
                                 return Common.HttpResponse.InternalError(Request, "Error in processing request");
                             break;
                         default:
-                            String msg = String.Format("Invalid Request Type Id {0} for Request Id sent {1}", requestObj.RequestTypeId, requestObj.RequestId);
+                            String msg = String.Format("Cannot process request - Invalid Request Type: {0} for Request Id {1}", requestObj.RequestTypeId, requestObj.RequestId);
                             Common.Logs.log().Warn(msg);
                             return Common.HttpResponse.InternalError(Request, msg);
                     }

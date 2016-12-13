@@ -656,7 +656,7 @@
         </member>
         <member name="T:PropertyWebAPI.BAL.TaxBill">
             <summary>
-                This class deals with all the details associated with either returning waterbill details or creating the 
+                This class deals with all the details associated with either returning tax bill details or creating the 
                 request for getting is scrapped from the web 
             </summary>
         </member>
@@ -667,7 +667,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.TaxBill.ParametersToJSON(System.String)">
             <summary>
-                This methods converts all paramters required for Tax Bills into a JSON object
+                This methods converts all parameters required for Tax Bills into a JSON object
             </summary>
             <param name="propertyBBL"></param>
             <returns>JSON string</returns>
@@ -844,10 +844,10 @@
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
             </param>  
             <param name="externalReferenceId">
-                The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
             </param>
             <param name="needTaxBill">
-                Set this optional parameter to N if you do not want the taxbill. The default value for this parameter is Y
+                Set this optional parameter to N if you do not want the tax bill. The default value for this parameter is Y
             </param>
             <returns>
                 Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
@@ -1055,7 +1055,7 @@
         </member>
         <member name="T:PropertyWebAPI.Controllers.PhysicalDataController">
             <summary>  
-            This controller handles all api requests associated with phyical data associated with a property
+            This controller handles all api requests associated with physical data associated with a property
             </summary>  
         </member>
         <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCBBL(System.String,System.String,System.String)">
@@ -1063,10 +1063,10 @@
                 Use this method to get Borough Block Lot Number associated with a property in NYC
             </summary>  
             <param name="streetNumber">
-                Street NUmber of teh property without or without hyphens
+                Street NUmber of the property without or without hyphens
             </param>  
             <param name="streetName">
-                Name of teh street where property is located 
+                Name of the street where property is located 
             </param>
             <param name="borough">
                 Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
@@ -1080,10 +1080,10 @@
                 Use this method to get Borough Block Lot NUmber associated with a property in NYC
             </summary>  
             <param name="streetNumber">
-                Street NUmber of teh property without or without hyphens
+                Street NUmber of the property without or without hyphens
             </param>  
             <param name="streetName">
-                Name of teh street where property is located 
+                Name of the street where property is located 
             </param>
             <param name="borough">
                 Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
@@ -1211,10 +1211,10 @@
                 Use this method to get property address and physical data associated with a property in NYC
             </summary>  
             <param name="streetNumber">
-                Street NUmber of teh property without or without hyphens
+                Street Number of the property without or without hyphens
             </param>  
             <param name="streetName">
-                Name of teh street where property is located 
+                Name of the street where property is located 
             </param>
             <param name="borough">
                 Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
@@ -1276,7 +1276,7 @@
                 Use this method to get tax bill for a property
             </summary>  
             <param name="externalReferenceId">
-                The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
             </param>
             <returns>
                 Returns data associated with the requestId
@@ -1296,7 +1296,7 @@
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
             </param>  
             <param name="externalReferenceId">
-                The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
             </param>
             <returns>
                 Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
@@ -1305,7 +1305,7 @@
         <member name="T:PropertyWebAPI.DAL.DataRequestLog">
             <summary>
                 This class abstracts all detailed level operations associated with finding, inserting and updating records in the DataRequestLog table in WebData DB.
-                In essence it abstracts symantic level operations for the table in the context of the API 
+                In essence it abstracts semantic level operations for the table in the context of the API 
             </summary>
         </member>
         <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetPendingRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
@@ -1388,9 +1388,9 @@
             Types of Request Status 
             </summary>
         </member>
-        <member name="F:PropertyWebAPI.RequestStatus.Pending">
+        <member name="F:PropertyWebAPI.RequestStatus.Success">
             <summary>
-            For requesting waiting to be processed
+            For requests completed successfully
             </summary>
         </member>
         <member name="F:PropertyWebAPI.RequestStatus.Error">
@@ -1398,9 +1398,9 @@
             For request that end up in error
             </summary>
         </member>
-        <member name="F:PropertyWebAPI.RequestStatus.Success">
+        <member name="F:PropertyWebAPI.RequestStatus.Pending">
             <summary>
-            For requests completed successfully
+            For requesting waiting to be processed
             </summary>
         </member>
         <member name="F:PropertyWebAPI.RequestStatus.SendForProcessing">
@@ -1411,11 +1411,6 @@
         <member name="T:PropertyWebAPI.RequestTypes">
             <summary>
             Types of Requests
-            </summary>
-        </member>
-        <member name="F:PropertyWebAPI.RequestTypes.NYCWaterBill">
-            <summary>
-            Request for Water bill
             </summary>
         </member>
         <member name="F:PropertyWebAPI.RequestTypes.NYCTaxBill">
@@ -1436,6 +1431,11 @@
         <member name="F:PropertyWebAPI.RequestTypes.Zillow">
             <summary>
             Request for zEstimate value
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.NYCWaterBill">
+            <summary>
+            Request for Water bill
             </summary>
         </member>
     </members>

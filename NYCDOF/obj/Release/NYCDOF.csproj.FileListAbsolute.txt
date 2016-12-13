@@ -1,0 +1,9 @@
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\NYCDOF.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\NYCDOF.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\NYCDOF.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\obj\Release\NYCDOF.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\obj\Release\NYCDOF.pdb

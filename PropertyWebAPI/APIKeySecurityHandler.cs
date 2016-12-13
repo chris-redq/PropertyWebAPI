@@ -33,7 +33,7 @@ namespace PropertyWebAPI
                 }
                 catch (System.InvalidOperationException e)
                 {
-
+                    Common.Logs.log().Error(string.Format("apiKey token not found in HTTP Header\n{0}\n",e.ToString()));
                 }
             }
 
@@ -41,13 +41,24 @@ namespace PropertyWebAPI
             // username and set the principal in HtppContext
             if (apiKey != null)
             {
-                WebAPISecurityEntities securityDBEntities = new WebAPISecurityEntities();
-                var userObj = securityDBEntities.APIKeyUsers.Where(x => x.APIKey.ToString() == apiKey).FirstOrDefault();
-                if (userObj != null)
+                try
                 {
-                    var userName = userObj.UserName;
-                    var principal = new ClaimsPrincipal(new GenericIdentity(userName, "APIKey"));
-                    HttpContext.Current.User = principal;
+                    using (WebAPISecurityEntities securityDBEntities = new WebAPISecurityEntities())
+                    {
+                        var userObj = securityDBEntities.APIKeyUsers.Where(x => x.APIKey.ToString() == apiKey).FirstOrDefault();
+                        if (userObj != null)
+                        {
+                            var userName = userObj.UserName;
+                            var principal = new ClaimsPrincipal(new GenericIdentity(userName, "APIKey"));
+                            HttpContext.Current.User = principal;
+                        }
+                        else
+                            Common.Logs.log().Error(String.Format("apiKey {0} not found in DB", apiKey));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Common.Logs.log().Error(string.Format("Error in acquiring HttpContext.Current.User\n{0}\n", e.ToString()));
                 }
             }
 

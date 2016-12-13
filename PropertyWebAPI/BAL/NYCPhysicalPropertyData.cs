@@ -70,6 +70,7 @@ namespace PropertyWebAPI.BAL
         public List<BAL.DeedParty> owners;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public PhysicalPropertyInformation propertyInformation;
+        public string errors;
     }
     #endregion
 
@@ -103,10 +104,19 @@ namespace PropertyWebAPI.BAL
             client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
             AppTokens appTokens = GetConfigurationTokens();
 
-            HttpResponseMessage response = client.GetAsync("geoclient/v1/address.json?houseNumber=" + streetNumber + "&street=" + streetName + "&borough=" + borough
+            try
+            {
+
+                HttpResponseMessage response = client.GetAsync("geoclient/v1/address.json?houseNumber=" + streetNumber + "&street=" + streetName + "&borough=" + borough
                                                             + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
 
-            return JObject.Parse(response.Content.ReadAsStringAsync().Result);
+                return JObject.Parse(response.Content.ReadAsStringAsync().Result);
+            }
+            catch(Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Geoclient API call failed\n{0}\n", e.ToString()));
+                return null;
+            }
         }
 
         /// <summary>  
@@ -167,24 +177,31 @@ namespace PropertyWebAPI.BAL
         /// <returns></returns>
         public static GeneralPropertyInformation Get(string propertyBBL)
         {
-            using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
+            try
             {
-                List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation(propertyBBL).ToList();
-                if (propertyInfo == null || propertyInfo.Count <= 0)
+                using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
                 {
-                    BAL.PropertyLotInformation lotObj = BAL.ACRIS.GetLotInformation(propertyBBL);
-                    propertyInfo.Add(new tfnGetGeneralPropertyInformation_Result());
-                    propertyInfo[0].BBLE = propertyBBL;
-                    propertyInfo[0].Borough = Common.BBL.GetBoroughName(propertyBBL);
-                    propertyInfo[0].Block = Common.BBL.GetBlock(propertyBBL);
-                    propertyInfo[0].Lot = Common.BBL.GetLot(propertyBBL);
-                    propertyInfo[0].StreetName = lotObj.StreetName;
-                    propertyInfo[0].StreetNumber = lotObj.StreetNumber;
-                    propertyInfo[0].UnitNumber = lotObj.UnitNumber;
-                }
+                    List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation(propertyBBL).ToList();
+                    if (propertyInfo == null || propertyInfo.Count <= 0)
+                    {
+                        BAL.PropertyLotInformation lotObj = BAL.ACRIS.GetLotInformation(propertyBBL);
+                        if (lotObj != null)
+                        {
+                            propertyInfo.Add(new tfnGetGeneralPropertyInformation_Result());
+                            propertyInfo[0].BBLE = propertyBBL;
+                            propertyInfo[0].Borough = Common.BBL.GetBoroughName(propertyBBL);
+                            propertyInfo[0].Block = Common.BBL.GetBlock(propertyBBL);
+                            propertyInfo[0].Lot = Common.BBL.GetLot(propertyBBL);
 
-                if (propertyInfo != null && propertyInfo.Count > 0)
-                {
+                            propertyInfo[0].StreetName = lotObj.StreetName;
+                            propertyInfo[0].StreetNumber = lotObj.StreetNumber;
+                            propertyInfo[0].UnitNumber = lotObj.UnitNumber;
+                        }
+                    }
+
+                    if (propertyInfo == null || propertyInfo.Count <= 0)
+                        return null;
+                    
                     GeneralAddress address = null;
                     GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
 
@@ -204,13 +221,14 @@ namespace PropertyWebAPI.BAL
 
                     BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
                     if (deedDetailsObj != null)
-                    {
                         propertyDetails.owners = deedDetailsObj.owners;
-                    }
 
                     return propertyDetails;
                 }
-
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading data from NYCDOF.\n{0}\n", e.ToString()));
                 return null;
             }
         }
@@ -226,34 +244,50 @@ namespace PropertyWebAPI.BAL
             if (CheckIfMessageContainsNotFound(jsonObj, "address"))
                 return null;
 
-            using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
+            GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
+            try
             {
-                //Get General Property Information from Assessment and other sources
-                List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation((string)jsonObj.SelectToken("address.bbl")).ToList();
+                using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
+                {
+                    //Get General Property Information from Assessment and other sources
+                    List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation((string)jsonObj.SelectToken("address.bbl")).ToList();
 
-                //Create a clean address
-                GeneralAddress address = new GeneralAddress();
-                address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
-                if (propertyInfo[0].UnitNumber != null)
-                    address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
-                address.city = StringUtilities.ToTitleCase((string)jsonObj.SelectToken("address.uspsPreferredCityName"));
-                address.state = "NY";
-                address.zip = (string)jsonObj.SelectToken("address.zipCode");
+                    if (propertyInfo != null && propertyInfo.Count > 0)
+                    {
+                        propertyDetails.propertyInformation = Mapper.Map<PhysicalPropertyInformation>(propertyInfo[0]);
+                        //Create a clean address
+                        GeneralAddress address = new GeneralAddress();
+                        address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
+                        if (propertyInfo[0].UnitNumber != null)
+                            address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
+                        address.city = StringUtilities.ToTitleCase((string)jsonObj.SelectToken("address.uspsPreferredCityName"));
+                        address.state = "NY";
+                        address.zip = (string)jsonObj.SelectToken("address.zipCode");
 
-                GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
-                propertyDetails.address = address;
+                        propertyDetails.address = address;
+                    }
+                    else
+                        Common.Logs.log().Error(string.Format("Error finding record for BBLE {0} in Assessment", (string)jsonObj.SelectToken("address.bbl")));
+                }
+            }
+            catch(Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading data from NYCDOF.\n{0}\n", e.ToString()));
+                return null;
+            }
 
-                if (propertyInfo != null && propertyInfo.Count > 0)
-                    propertyDetails.propertyInformation = Mapper.Map<PhysicalPropertyInformation>(propertyInfo[0]);
-
+            if (Common.BBL.GetLot((string)jsonObj.SelectToken("address.bbl")) <= 6999)
+            {
                 BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails((string)jsonObj.SelectToken("address.bbl"));
                 if (deedDetailsObj != null)
                 {
                     propertyDetails.owners = deedDetailsObj.owners;
                 }
-
-                return propertyDetails;
             }
+            else
+                propertyDetails.errors = string.Format("Cannot get ownership information for Lot number {0}", Common.BBL.GetLot((string)jsonObj.SelectToken("address.bbl")));
+
+            return propertyDetails;
         }
     }
 }
