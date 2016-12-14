@@ -719,7 +719,7 @@
         </member>
         <member name="T:PropertyWebAPI.BAL.WaterBill">
             <summary>
-                This class deals with all the details associated with either returning waterbill details or creating the 
+                This class deals with all the details associated with either returning water bill details or creating the 
                 request for getting data to be scrapped from the web 
             </summary>
         </member>
@@ -730,7 +730,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.WaterBill.ParametersToJSON(System.String)">
             <summary>
-                This methods converts all paramters required for Water Bill into a JSON object
+                This methods converts all parameters required for Water Bill into a JSON object
             </summary>
             <param name="propertyBBL"></param>
             <returns>JSON string</returns>
@@ -744,7 +744,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.WaterBill.Get(System.String,System.String)">
             <summary>
-                This method deals with all the details associated with either returning the waterbill details or creating the 
+                This method deals with all the details associated with either returning the water bill details or creating the 
                 request for getting is scrapped from the web 
             </summary>
             <param name="propertyBBL"></param>

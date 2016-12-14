@@ -15,6 +15,8 @@ namespace PropertyWebAPI.BAL
     using System.Runtime.Serialization.Json;
     using Newtonsoft.Json;
     using WebDataDB;
+    using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
 
     #region Local Helper Classes
@@ -43,8 +45,9 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
+        [DataContract]
         class Parameters
-        {
+        {   [DataMember]
             public string BBL;
         }
 
@@ -223,21 +226,22 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        DexiRobotRequestResponseBuilder.Response.PropertyTaxesNYC resultObj = (DexiRobotRequestResponseBuilder.Response.ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData))[0];
+                                        List<DexiRobotRequestResponseBuilder.Response.PropertyTaxesNYC> resultList = DexiRobotRequestResponseBuilder.Response.ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData);
+                                        DexiRobotRequestResponseBuilder.Response.PropertyTaxesNYC resultObj = resultList[0];
 
                                         Parameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
                                         WebDataDB.TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == taxBillParams.BBL);
                                         if (taxBillObj != null)
                                         {   //Update data with new results
-                                            taxBillObj.BillAmount = decimal.Parse(resultObj.TotalDueAmountToPay);
+                                            taxBillObj.BillAmount = decimal.Parse(resultObj.TotalDueAmountToPay, System.Globalization.NumberStyles.Any);
                                             taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                         }
                                         else
                                         {   // add an entry into cache or DB
                                             taxBillObj = new WebDataDB.TaxBill();
                                             taxBillObj.BBL = taxBillParams.BBL;
-                                            taxBillObj.BillAmount  = decimal.Parse(resultObj.TotalDueAmountToPay);
+                                            taxBillObj.BillAmount = decimal.Parse(resultObj.TotalDueAmountToPay, System.Globalization.NumberStyles.Any);
                                             taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
 
                                             webDBEntities.TaxBills.Add(taxBillObj);
@@ -247,6 +251,9 @@ namespace PropertyWebAPI.BAL
 
                                         DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
+                                    else
+                                        throw (new Exception("Cannot locate Request Log Records"));
+
                                     break;
                                 }
                             default:
@@ -260,7 +267,7 @@ namespace PropertyWebAPI.BAL
                     catch(Exception e )
                     {
                         webDBEntitiestransaction.Rollback();
-                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{2}", requestObj.RequestId, Common.Utilities.FormatException(e)));
+                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
                         return false; 
                     }
                 }

@@ -239,7 +239,7 @@ namespace PropertyWebAPI.BAL
                                         decimal dobTotalViolationAmount = 0;
 
                                         foreach (DexiRobotRequestResponseBuilder.Response.ECBViolationAndDOBCivilPenalty row in 
-                                                 DexiRobotRequestResponseBuilder.Response.ResponseData.ParseECBViolationAndDOBCivilPenalty(requestObj.ResponseData))
+                                                 DexiRobotRequestResponseBuilder.Response.ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData))
                                         {
                                             dobTotalPenaltyAmount += decimal.Parse(row.DOBCivilPenaltyAmount);
                                             dobTotalViolationAmount += decimal.Parse(row.ECBPenaltyDue);
