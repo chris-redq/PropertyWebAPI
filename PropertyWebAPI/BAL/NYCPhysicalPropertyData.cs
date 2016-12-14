@@ -181,9 +181,11 @@ namespace PropertyWebAPI.BAL
             {
                 using (NYCDOFEntities dofDBEntities = new NYCDOFEntities())
                 {
+                    //Find BBL in Assessment Table
                     List<tfnGetGeneralPropertyInformation_Result> propertyInfo = dofDBEntities.tfnGetGeneralPropertyInformation(propertyBBL).ToList();
                     if (propertyInfo == null || propertyInfo.Count <= 0)
                     {
+                        //BBL not in Assessment Table check ACRIS
                         BAL.PropertyLotInformation lotObj = BAL.ACRIS.GetLotInformation(propertyBBL);
                         if (lotObj != null)
                         {
@@ -196,15 +198,16 @@ namespace PropertyWebAPI.BAL
                             propertyInfo[0].StreetName = lotObj.StreetName;
                             propertyInfo[0].StreetNumber = lotObj.StreetNumber;
                             propertyInfo[0].UnitNumber = lotObj.UnitNumber;
-                        }
+                       }
                     }
 
                     if (propertyInfo == null || propertyInfo.Count <= 0)
-                        return null;
+                        return null;    //BBL not found 
                     
                     GeneralAddress address = null;
                     GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
 
+                    //Clean address using GeoClinet API
                     JObject jsonObj = GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
                     if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address"))
                     {
@@ -215,6 +218,17 @@ namespace PropertyWebAPI.BAL
                         address.city = StringUtilities.ToTitleCase((string)jsonObj.SelectToken("address.uspsPreferredCityName"));
                         address.state = "NY";
                         address.zip = (string)jsonObj.SelectToken("address.zipCode");
+                    }
+                    else
+                    {   // Use the address from Assessment or ACRIS
+                        address = new GeneralAddress();
+                        address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
+                        if (propertyInfo[0].UnitNumber != null)
+                            address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
+                        address.city = StringUtilities.ToTitleCase(Common.BBL.GetBoroughName(propertyBBL));
+                        address.state = "NY";
+                        if (propertyInfo[0].ZipCode!=null)
+                            address.zip = propertyInfo[0].ZipCode;
                     }
                     propertyDetails.address = address;
                     propertyDetails.propertyInformation = Mapper.Map<PhysicalPropertyInformation>(propertyInfo[0]);

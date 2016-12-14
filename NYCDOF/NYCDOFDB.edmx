@@ -30,6 +30,7 @@
                 <Property Name="Lot" Type="int" />
                 <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
                 <Property Name="StreetName" Type="varchar" MaxLength="20" />
+                <Property Name="ZipCode" Type="varchar" MaxLength="10" />
                 <Property Name="NTA" Type="varchar" MaxLength="250" />
                 <Property Name="Zoning" Type="varchar" MaxLength="9" />
                 <Property Name="UnitNumber" Type="varchar" MaxLength="5" />
@@ -68,6 +69,7 @@
           <Property Name="Lot" Type="Int32" />
           <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NTA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
           <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
@@ -110,6 +112,7 @@
                 <ScalarProperty Name="Lot" ColumnName="Lot" />
                 <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
                 <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="NTA" ColumnName="NTA" />
                 <ScalarProperty Name="Zoning" ColumnName="Zoning" />
                 <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />

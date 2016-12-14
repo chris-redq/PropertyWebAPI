@@ -233,14 +233,14 @@ namespace PropertyWebAPI.BAL
                                         WebDataDB.TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == taxBillParams.BBL);
                                         if (taxBillObj != null)
                                         {   //Update data with new results
-                                            taxBillObj.BillAmount = decimal.Parse(resultObj.TotalDueAmountToPay, System.Globalization.NumberStyles.Any);
+                                            taxBillObj.BillAmount = resultObj.TotalDueAmountToPay;
                                             taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                         }
                                         else
                                         {   // add an entry into cache or DB
                                             taxBillObj = new WebDataDB.TaxBill();
                                             taxBillObj.BBL = taxBillParams.BBL;
-                                            taxBillObj.BillAmount = decimal.Parse(resultObj.TotalDueAmountToPay, System.Globalization.NumberStyles.Any);
+                                            taxBillObj.BillAmount = resultObj.TotalDueAmountToPay;
                                             taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
 
                                             webDBEntities.TaxBills.Add(taxBillObj);

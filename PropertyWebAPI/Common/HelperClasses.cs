@@ -101,7 +101,7 @@ namespace PropertyWebAPI.Common
     {
         public static string FormatException(Exception e)
         {
-            return "\n\n" + e.ToString() + "\n";
+            return "\r\n\r\n" + e.ToString() + "\r\n";
         }
     }
 }

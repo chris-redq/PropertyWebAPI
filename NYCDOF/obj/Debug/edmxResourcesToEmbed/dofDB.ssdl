@@ -1,5 +1,497 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="NYCDOFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="NYCDOFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TaxAssessmentAndValuationFinal">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="AssessmentYear" />
+    </Key>
+    <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="Boro" Type="float" />
+    <Property Name="Block" Type="float" />
+    <Property Name="Lot" Type="float" />
+    <Property Name="Easement" Type="nvarchar" MaxLength="1" />
+    <Property Name="SECVOL" Type="float" />
+    <Property Name="District" Type="nvarchar" MaxLength="2" />
+    <Property Name="AssessmentYear" Type="float" Nullable="false" />
+    <Property Name="CurrentTotalMarketValueLand" Type="float" />
+    <Property Name="CurrentTotalMarketValue" Type="float" />
+    <Property Name="NewTotalMarketValueLand" Type="float" />
+    <Property Name="NewTotalMarketValue" Type="float" />
+    <Property Name="DateOfLatestOnlineChange" Type="date" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="float" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="float" />
+    <Property Name="CurrentActualAssessedLandValue" Type="float" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="float" />
+    <Property Name="CurrentActualExemptLandValue" Type="float" />
+    <Property Name="CurrentActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChange" Type="date" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="float" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="float" />
+    <Property Name="TentativeActualAssessedLandValue" Type="float" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="float" />
+    <Property Name="TentativeActualExemptLandValue" Type="float" />
+    <Property Name="TentativeActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="date" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="float" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="float" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="float" />
+    <Property Name="FinalActualAssessedLandValue" Type="float" />
+    <Property Name="FinalActualAssessedTotalValue" Type="float" />
+    <Property Name="FinalActualExemptLandValue" Type="float" />
+    <Property Name="FinalActualExemptTotalValue" Type="float" />
+    <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OldTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="CBNPeriodTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="ExemptClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OwnerName" Type="nvarchar" MaxLength="21" />
+    <Property Name="StreetNumberLow" Type="varchar" MaxLength="12" />
+    <Property Name="StreetNumberHigh" Type="varchar" MaxLength="12" />
+    <Property Name="IsStreetNumberRange" Type="varchar" MaxLength="1" />
+    <Property Name="StreetName" Type="nvarchar" MaxLength="20" />
+    <Property Name="Zip" Type="float" />
+    <Property Name="TotalUnits" Type="float" />
+    <Property Name="ResidentialUnits" Type="float" />
+    <Property Name="LotFrontage" Type="float" />
+    <Property Name="LotDepth" Type="float" />
+    <Property Name="LotArea" Type="float" />
+    <Property Name="IsIrregularLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingFrontage" Type="nvarchar" MaxLength="7" />
+    <Property Name="BuildingDepth" Type="nvarchar" MaxLength="7" />
+    <Property Name="IsBuildingIrregularShaped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ExtensionType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Stories" Type="nvarchar" MaxLength="6" />
+    <Property Name="NumberOfBuildingsOnLot" Type="float" />
+    <Property Name="CornerLotInformation" Type="nvarchar" MaxLength="2" />
+    <Property Name="LandArea" Type="float" />
+    <Property Name="BuildingGrossArea" Type="float" />
+    <Property Name="ZoningCode" Type="nvarchar" MaxLength="9" />
+    <Property Name="YearBuilt" Type="float" />
+    <Property Name="IsYearBuiltEstimated" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="EndYearBuilt" Type="float" />
+    <Property Name="YearFirstAlteration" Type="float" />
+    <Property Name="YearFirstAlterationEnd" Type="float" />
+    <Property Name="YearSecondAlteration" Type="float" />
+    <Property Name="YearSecondAlterationEnd" Type="float" />
+    <Property Name="CommunityPlanningBoroughCode" Type="float" />
+    <Property Name="CommunityPlanningBroadNumber" Type="float" />
+    <Property Name="AssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="RecordType" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="NewLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="LotWillBeDropped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingInProgress" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="nvarchar" MaxLength="1" />
+    <Property Name="CondoIdentificationNumber" Type="float" />
+    <Property Name="IsCondoCommercialOrResidential" Type="varchar" MaxLength="33" Nullable="false" />
+    <Property Name="Suffix1SequenceNumber" Type="nvarchar" MaxLength="1" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="nvarchar" MaxLength="5" />
+    <Property Name="ApportionmentBoro" Type="float" />
+    <Property Name="ApportionmentBlock" Type="float" />
+    <Property Name="ApportionmentLot" Type="float" />
+    <Property Name="ApportionmentEasement" Type="nvarchar" MaxLength="1" />
+    <Property Name="ApportionmentDate" Type="date" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="float" />
+    <Property Name="ProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="TypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="SecondProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="OldProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="OldTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="nvarchar" MaxLength="10" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="nvarchar" MaxLength="2" />
+    <Property Name="COOPidentificationNumber" Type="float" />
+    <Property Name="ExemptionIndicatorFlags" Type="nvarchar" MaxLength="4" />
+    <Property Name="ExemptionsCount" Type="float" />
+    <Property Name="ExemptPropertyRestoredDate" Type="date" />
+    <Property Name="DateOfLastDescriptiveChange" Type="date" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="date" />
+  </EntityType>
+  <EntityType Name="TaxAssessmentAndValuationTentative">
+    <Key>
+      <PropertyRef Name="BBLE" />
+    </Key>
+    <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="Boro" Type="float" />
+    <Property Name="Block" Type="float" />
+    <Property Name="Lot" Type="float" />
+    <Property Name="Easement" Type="nvarchar" MaxLength="1" />
+    <Property Name="SECVOL" Type="float" />
+    <Property Name="District" Type="nvarchar" MaxLength="2" />
+    <Property Name="AssessmentYear" Type="float" />
+    <Property Name="CurrentTotalMarketValueLand" Type="float" />
+    <Property Name="CurrentTotalMarketValue" Type="float" />
+    <Property Name="NewTotalMarketValueLand" Type="float" />
+    <Property Name="NewTotalMarketValue" Type="float" />
+    <Property Name="DateOfLatestOnlineChange" Type="date" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="float" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="float" />
+    <Property Name="CurrentActualAssessedLandValue" Type="float" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="float" />
+    <Property Name="CurrentActualExemptLandValue" Type="float" />
+    <Property Name="CurrentActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChange" Type="date" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="float" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="float" />
+    <Property Name="TentativeActualAssessedLandValue" Type="float" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="float" />
+    <Property Name="TentativeActualExemptLandValue" Type="float" />
+    <Property Name="TentativeActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="date" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="float" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="float" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="float" />
+    <Property Name="FinalActualAssessedLandValue" Type="float" />
+    <Property Name="FinalActualAssessedTotalValue" Type="float" />
+    <Property Name="FinalActualExemptLandValue" Type="float" />
+    <Property Name="FinalActualExemptTotalValue" Type="float" />
+    <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OldTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="CBNPeriodTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="ExemptClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OwnerName" Type="nvarchar" MaxLength="21" />
+    <Property Name="StreetNumberLow" Type="varchar" MaxLength="12" />
+    <Property Name="StreetNumberHigh" Type="varchar" MaxLength="12" />
+    <Property Name="IsStreetNumberRange" Type="varchar" MaxLength="1" />
+    <Property Name="StreetName" Type="nvarchar" MaxLength="20" />
+    <Property Name="Zip" Type="float" />
+    <Property Name="TotalUnits" Type="float" />
+    <Property Name="ResidentialUnits" Type="float" />
+    <Property Name="LotFrontage" Type="float" />
+    <Property Name="LotDepth" Type="float" />
+    <Property Name="LotArea" Type="float" />
+    <Property Name="IsIrregularLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingFrontage" Type="nvarchar" MaxLength="7" />
+    <Property Name="BuildingDepth" Type="nvarchar" MaxLength="7" />
+    <Property Name="IsBuildingIrregularShaped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ExtensionType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Stories" Type="nvarchar" MaxLength="6" />
+    <Property Name="NumberOfBuildingsOnLot" Type="float" />
+    <Property Name="CornerLotInformation" Type="nvarchar" MaxLength="2" />
+    <Property Name="LandArea" Type="float" />
+    <Property Name="BuildingGrossArea" Type="float" />
+    <Property Name="ZoningCode" Type="nvarchar" MaxLength="9" />
+    <Property Name="YearBuilt" Type="float" />
+    <Property Name="IsYearBuiltEstimated" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="EndYearBuilt" Type="float" />
+    <Property Name="YearFirstAlteration" Type="float" />
+    <Property Name="YearFirstAlterationEnd" Type="float" />
+    <Property Name="YearSecondAlteration" Type="float" />
+    <Property Name="YearSecondAlterationEnd" Type="float" />
+    <Property Name="CommunityPlanningBoroughCode" Type="float" />
+    <Property Name="CommunityPlanningBroadNumber" Type="float" />
+    <Property Name="AssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="RecordType" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="NewLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="LotWillBeDropped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingInProgress" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="nvarchar" MaxLength="1" />
+    <Property Name="CondoIdentificationNumber" Type="float" />
+    <Property Name="IsCondoCommercialOrResidential" Type="varchar" MaxLength="33" Nullable="false" />
+    <Property Name="Suffix1SequenceNumber" Type="nvarchar" MaxLength="1" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="nvarchar" MaxLength="5" />
+    <Property Name="ApportionmentBoro" Type="float" />
+    <Property Name="ApportionmentBlock" Type="float" />
+    <Property Name="ApportionmentLot" Type="float" />
+    <Property Name="ApportionmentEasement" Type="nvarchar" MaxLength="1" />
+    <Property Name="ApportionmentDate" Type="date" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="float" />
+    <Property Name="ProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="TypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="SecondProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="OldProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="OldTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="nvarchar" MaxLength="10" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="nvarchar" MaxLength="2" />
+    <Property Name="COOPidentificationNumber" Type="float" />
+    <Property Name="ExemptionIndicatorFlags" Type="nvarchar" MaxLength="4" />
+    <Property Name="ExemptionsCount" Type="float" />
+    <Property Name="ExemptPropertyRestoredDate" Type="date" />
+    <Property Name="DateOfLastDescriptiveChange" Type="date" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="date" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOF.dof.vwFinalTaxAssessmentAndValuation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwFinalTaxAssessmentAndValuation">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="AssessmentYear" />
+      <PropertyRef Name="IsIrregularLot" />
+      <PropertyRef Name="IsBuildingIrregularShaped" />
+      <PropertyRef Name="ExtensionType" />
+      <PropertyRef Name="IsYearBuiltEstimated" />
+      <PropertyRef Name="AssessedValueLimited" />
+      <PropertyRef Name="PriorYearAssessedValueLimited" />
+      <PropertyRef Name="RecordType" />
+      <PropertyRef Name="NewLot" />
+      <PropertyRef Name="LotWillBeDropped" />
+      <PropertyRef Name="BuildingInProgress" />
+      <PropertyRef Name="IsCondoCommercialOrResidential" />
+    </Key>
+    <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="Boro" Type="float" />
+    <Property Name="Block" Type="float" />
+    <Property Name="Lot" Type="float" />
+    <Property Name="Easement" Type="nvarchar" MaxLength="1" />
+    <Property Name="SECVOL" Type="float" />
+    <Property Name="District" Type="nvarchar" MaxLength="2" />
+    <Property Name="AssessmentYear" Type="float" Nullable="false" />
+    <Property Name="CurrentTotalMarketValueLand" Type="float" />
+    <Property Name="CurrentTotalMarketValue" Type="float" />
+    <Property Name="NewTotalMarketValueLand" Type="float" />
+    <Property Name="NewTotalMarketValue" Type="float" />
+    <Property Name="DateOfLatestOnlineChange" Type="date" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="float" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="float" />
+    <Property Name="CurrentActualAssessedLandValue" Type="float" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="float" />
+    <Property Name="CurrentActualExemptLandValue" Type="float" />
+    <Property Name="CurrentActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChange" Type="date" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="float" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="float" />
+    <Property Name="TentativeActualAssessedLandValue" Type="float" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="float" />
+    <Property Name="TentativeActualExemptLandValue" Type="float" />
+    <Property Name="TentativeActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="date" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="float" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="float" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="float" />
+    <Property Name="FinalActualAssessedLandValue" Type="float" />
+    <Property Name="FinalActualAssessedTotalValue" Type="float" />
+    <Property Name="FinalActualExemptLandValue" Type="float" />
+    <Property Name="FinalActualExemptTotalValue" Type="float" />
+    <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OldTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="CBNPeriodTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="ExemptClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OwnerName" Type="nvarchar" MaxLength="21" />
+    <Property Name="StreetNumberLow" Type="varchar" MaxLength="12" />
+    <Property Name="StreetNumberHigh" Type="varchar" MaxLength="12" />
+    <Property Name="IsStreetNumberRange" Type="varchar" MaxLength="1" />
+    <Property Name="StreetName" Type="nvarchar" MaxLength="20" />
+    <Property Name="Zip" Type="float" />
+    <Property Name="TotalUnits" Type="float" />
+    <Property Name="ResidentialUnits" Type="float" />
+    <Property Name="LotFrontage" Type="float" />
+    <Property Name="LotDepth" Type="float" />
+    <Property Name="LotArea" Type="float" />
+    <Property Name="IsIrregularLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingFrontage" Type="nvarchar" MaxLength="7" />
+    <Property Name="BuildingDepth" Type="nvarchar" MaxLength="7" />
+    <Property Name="IsBuildingIrregularShaped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ExtensionType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Stories" Type="nvarchar" MaxLength="6" />
+    <Property Name="NumberOfBuildingsOnLot" Type="float" />
+    <Property Name="CornerLotInformation" Type="nvarchar" MaxLength="2" />
+    <Property Name="LandArea" Type="float" />
+    <Property Name="BuildingGrossArea" Type="float" />
+    <Property Name="ZoningCode" Type="nvarchar" MaxLength="9" />
+    <Property Name="YearBuilt" Type="float" />
+    <Property Name="IsYearBuiltEstimated" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="EndYearBuilt" Type="float" />
+    <Property Name="YearFirstAlteration" Type="float" />
+    <Property Name="YearFirstAlterationEnd" Type="float" />
+    <Property Name="YearSecondAlteration" Type="float" />
+    <Property Name="YearSecondAlterationEnd" Type="float" />
+    <Property Name="CommunityPlanningBoroughCode" Type="float" />
+    <Property Name="CommunityPlanningBroadNumber" Type="float" />
+    <Property Name="AssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="RecordType" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="NewLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="LotWillBeDropped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingInProgress" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="nvarchar" MaxLength="1" />
+    <Property Name="CondoIdentificationNumber" Type="float" />
+    <Property Name="IsCondoCommercialOrResidential" Type="varchar" MaxLength="33" Nullable="false" />
+    <Property Name="Suffix1SequenceNumber" Type="nvarchar" MaxLength="1" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="nvarchar" MaxLength="5" />
+    <Property Name="ApportionmentBoro" Type="float" />
+    <Property Name="ApportionmentBlock" Type="float" />
+    <Property Name="ApportionmentLot" Type="float" />
+    <Property Name="ApportionmentEasement" Type="nvarchar" MaxLength="1" />
+    <Property Name="ApportionmentDate" Type="date" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="float" />
+    <Property Name="ProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="TypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="SecondProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="OldProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="OldTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="nvarchar" MaxLength="10" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="nvarchar" MaxLength="2" />
+    <Property Name="COOPidentificationNumber" Type="float" />
+    <Property Name="ExemptionIndicatorFlags" Type="nvarchar" MaxLength="4" />
+    <Property Name="ExemptionsCount" Type="float" />
+    <Property Name="ExemptPropertyRestoredDate" Type="date" />
+    <Property Name="DateOfLastDescriptiveChange" Type="date" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="date" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOF.dof.vwTaxValuationMergedTentative' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwTaxValuationMergedTentative">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="IsIrregularLot" />
+      <PropertyRef Name="IsBuildingIrregularShaped" />
+      <PropertyRef Name="ExtensionType" />
+      <PropertyRef Name="IsYearBuiltEstimated" />
+      <PropertyRef Name="AssessedValueLimited" />
+      <PropertyRef Name="PriorYearAssessedValueLimited" />
+      <PropertyRef Name="RecordType" />
+      <PropertyRef Name="NewLot" />
+      <PropertyRef Name="LotWillBeDropped" />
+      <PropertyRef Name="BuildingInProgress" />
+      <PropertyRef Name="IsCondoCommercialOrResidential" />
+    </Key>
+    <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="Boro" Type="float" />
+    <Property Name="Block" Type="float" />
+    <Property Name="Lot" Type="float" />
+    <Property Name="Easement" Type="nvarchar" MaxLength="1" />
+    <Property Name="SECVOL" Type="float" />
+    <Property Name="District" Type="nvarchar" MaxLength="2" />
+    <Property Name="AssessmentYear" Type="float" />
+    <Property Name="CurrentTotalMarketValueLand" Type="float" />
+    <Property Name="CurrentTotalMarketValue" Type="float" />
+    <Property Name="NewTotalMarketValueLand" Type="float" />
+    <Property Name="NewTotalMarketValue" Type="float" />
+    <Property Name="DateOfLatestOnlineChange" Type="date" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="float" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="float" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="float" />
+    <Property Name="CurrentActualAssessedLandValue" Type="float" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="float" />
+    <Property Name="CurrentActualExemptLandValue" Type="float" />
+    <Property Name="CurrentActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChange" Type="date" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="float" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="float" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="float" />
+    <Property Name="TentativeActualAssessedLandValue" Type="float" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="float" />
+    <Property Name="TentativeActualExemptLandValue" Type="float" />
+    <Property Name="TentativeActualExemptTotalValue" Type="float" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="date" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="float" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="float" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="float" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="float" />
+    <Property Name="FinalActualAssessedLandValue" Type="float" />
+    <Property Name="FinalActualAssessedTotalValue" Type="float" />
+    <Property Name="FinalActualExemptLandValue" Type="float" />
+    <Property Name="FinalActualExemptTotalValue" Type="float" />
+    <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OldTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="CBNPeriodTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="ExemptClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OwnerName" Type="nvarchar" MaxLength="21" />
+    <Property Name="StreetNumberLow" Type="varchar" MaxLength="12" />
+    <Property Name="StreetNumberHigh" Type="varchar" MaxLength="12" />
+    <Property Name="IsStreetNumberRange" Type="varchar" MaxLength="1" />
+    <Property Name="StreetName" Type="nvarchar" MaxLength="20" />
+    <Property Name="Zip" Type="float" />
+    <Property Name="TotalUnits" Type="float" />
+    <Property Name="ResidentialUnits" Type="float" />
+    <Property Name="LotFrontage" Type="float" />
+    <Property Name="LotDepth" Type="float" />
+    <Property Name="LotArea" Type="float" />
+    <Property Name="IsIrregularLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingFrontage" Type="nvarchar" MaxLength="7" />
+    <Property Name="BuildingDepth" Type="nvarchar" MaxLength="7" />
+    <Property Name="IsBuildingIrregularShaped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ExtensionType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Stories" Type="nvarchar" MaxLength="6" />
+    <Property Name="NumberOfBuildingsOnLot" Type="float" />
+    <Property Name="CornerLotInformation" Type="nvarchar" MaxLength="2" />
+    <Property Name="LandArea" Type="float" />
+    <Property Name="BuildingGrossArea" Type="float" />
+    <Property Name="ZoningCode" Type="nvarchar" MaxLength="9" />
+    <Property Name="YearBuilt" Type="float" />
+    <Property Name="IsYearBuiltEstimated" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="EndYearBuilt" Type="float" />
+    <Property Name="YearFirstAlteration" Type="float" />
+    <Property Name="YearFirstAlterationEnd" Type="float" />
+    <Property Name="YearSecondAlteration" Type="float" />
+    <Property Name="YearSecondAlterationEnd" Type="float" />
+    <Property Name="CommunityPlanningBoroughCode" Type="float" />
+    <Property Name="CommunityPlanningBroadNumber" Type="float" />
+    <Property Name="AssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="RecordType" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="NewLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="LotWillBeDropped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingInProgress" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="nvarchar" MaxLength="1" />
+    <Property Name="CondoIdentificationNumber" Type="float" />
+    <Property Name="IsCondoCommercialOrResidential" Type="varchar" MaxLength="33" Nullable="false" />
+    <Property Name="Suffix1SequenceNumber" Type="nvarchar" MaxLength="1" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="nvarchar" MaxLength="5" />
+    <Property Name="ApportionmentBoro" Type="float" />
+    <Property Name="ApportionmentBlock" Type="float" />
+    <Property Name="ApportionmentLot" Type="float" />
+    <Property Name="ApportionmentEasement" Type="nvarchar" MaxLength="1" />
+    <Property Name="ApportionmentDate" Type="date" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="float" />
+    <Property Name="ProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="TypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="SecondProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="OldProtestFormType" Type="nvarchar" MaxLength="3" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="float" />
+    <Property Name="OldTypeOfApplicantApplying" Type="nvarchar" MaxLength="1" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="nvarchar" MaxLength="10" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="nvarchar" MaxLength="2" />
+    <Property Name="COOPidentificationNumber" Type="float" />
+    <Property Name="ExemptionIndicatorFlags" Type="nvarchar" MaxLength="4" />
+    <Property Name="ExemptionsCount" Type="float" />
+    <Property Name="ExemptPropertyRestoredDate" Type="date" />
+    <Property Name="DateOfLastDescriptiveChange" Type="date" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="date" />
+  </EntityType>
   <Function Name="tfnGetGeneralPropertyInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dof">
     <Parameter Name="BBLE" Type="varchar" Mode="In" />
     <ReturnType>
@@ -25,6 +517,7 @@
           <Property Name="Lot" Type="int" />
           <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
           <Property Name="StreetName" Type="varchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="10" />
           <Property Name="NTA" Type="varchar" MaxLength="250" />
           <Property Name="Zoning" Type="varchar" MaxLength="9" />
           <Property Name="UnitNumber" Type="varchar" MaxLength="5" />
@@ -36,5 +529,238 @@
       </CollectionType>
     </ReturnType>
   </Function>
-  <EntityContainer Name="NYCDOFModelStoreContainer" />
+  <EntityContainer Name="NYCDOFModelStoreContainer">
+    <EntitySet Name="TaxAssessmentAndValuationFinal" EntityType="Self.TaxAssessmentAndValuationFinal" Schema="dof" store:Type="Tables" />
+    <EntitySet Name="TaxAssessmentAndValuationTentative" EntityType="Self.TaxAssessmentAndValuationTentative" Schema="dof" store:Type="Tables" />
+    <EntitySet Name="vwFinalTaxAssessmentAndValuation" EntityType="Self.vwFinalTaxAssessmentAndValuation" store:Type="Views" store:Schema="dof">
+      <DefiningQuery>SELECT 
+    [vwFinalTaxAssessmentAndValuation].[BBLE] AS [BBLE], 
+    [vwFinalTaxAssessmentAndValuation].[Boro] AS [Boro], 
+    [vwFinalTaxAssessmentAndValuation].[Block] AS [Block], 
+    [vwFinalTaxAssessmentAndValuation].[Lot] AS [Lot], 
+    [vwFinalTaxAssessmentAndValuation].[Easement] AS [Easement], 
+    [vwFinalTaxAssessmentAndValuation].[SECVOL] AS [SECVOL], 
+    [vwFinalTaxAssessmentAndValuation].[District] AS [District], 
+    [vwFinalTaxAssessmentAndValuation].[AssessmentYear] AS [AssessmentYear], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentTotalMarketValueLand] AS [CurrentTotalMarketValueLand], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentTotalMarketValue] AS [CurrentTotalMarketValue], 
+    [vwFinalTaxAssessmentAndValuation].[NewTotalMarketValueLand] AS [NewTotalMarketValueLand], 
+    [vwFinalTaxAssessmentAndValuation].[NewTotalMarketValue] AS [NewTotalMarketValue], 
+    [vwFinalTaxAssessmentAndValuation].[DateOfLatestOnlineChange] AS [DateOfLatestOnlineChange], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentTransactionalAssessedLandValue] AS [CurrentTransactionalAssessedLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentTransactionalAssessedTotalValue] AS [CurrentTransactionalAssessedTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentTransitionalExemptLandValue] AS [CurrentTransitionalExemptLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentTransitionalExemptTotalValue] AS [CurrentTransitionalExemptTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentActualAssessedLandValue] AS [CurrentActualAssessedLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentActualAssessedTotalValue] AS [CurrentActualAssessedTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentActualExemptLandValue] AS [CurrentActualExemptLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[CurrentActualExemptTotalValue] AS [CurrentActualExemptTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[DateOfTheLastMoneyChange] AS [DateOfTheLastMoneyChange], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeTransitionalAssessedLandValue] AS [TentativeTransitionalAssessedLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeTransitionalAssessedTotalValue] AS [TentativeTransitionalAssessedTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeTransitionalExemptLandValue] AS [TentativeTransitionalExemptLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeTransitionalExemptTotalValue] AS [TentativeTransitionalExemptTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeActualAssessedLandValue] AS [TentativeActualAssessedLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeActualAssessedTotalValue] AS [TentativeActualAssessedTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeActualExemptLandValue] AS [TentativeActualExemptLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[TentativeActualExemptTotalValue] AS [TentativeActualExemptTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[DateOfTheLastMoneyChangeDuringTheFinal] AS [DateOfTheLastMoneyChangeDuringTheFinal], 
+    [vwFinalTaxAssessmentAndValuation].[FinalTransitionalAssessedLandValue] AS [FinalTransitionalAssessedLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[FinalTransitionalAssessedTotalValue] AS [FinalTransitionalAssessedTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[FinalTransitionalExemptLandValue] AS [FinalTransitionalExemptLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[FinalTransitionalExemptTotalValue] AS [FinalTransitionalExemptTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[FinalActualAssessedLandValue] AS [FinalActualAssessedLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[FinalActualAssessedTotalValue] AS [FinalActualAssessedTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[FinalActualExemptLandValue] AS [FinalActualExemptLandValue], 
+    [vwFinalTaxAssessmentAndValuation].[FinalActualExemptTotalValue] AS [FinalActualExemptTotalValue], 
+    [vwFinalTaxAssessmentAndValuation].[TaxClass] AS [TaxClass], 
+    [vwFinalTaxAssessmentAndValuation].[OldTaxClass] AS [OldTaxClass], 
+    [vwFinalTaxAssessmentAndValuation].[CBNPeriodTaxClass] AS [CBNPeriodTaxClass], 
+    [vwFinalTaxAssessmentAndValuation].[BuildingClass] AS [BuildingClass], 
+    [vwFinalTaxAssessmentAndValuation].[ExemptClass] AS [ExemptClass], 
+    [vwFinalTaxAssessmentAndValuation].[OwnerName] AS [OwnerName], 
+    [vwFinalTaxAssessmentAndValuation].[StreetNumberLow] AS [StreetNumberLow], 
+    [vwFinalTaxAssessmentAndValuation].[StreetNumberHigh] AS [StreetNumberHigh], 
+    [vwFinalTaxAssessmentAndValuation].[IsStreetNumberRange] AS [IsStreetNumberRange], 
+    [vwFinalTaxAssessmentAndValuation].[StreetName] AS [StreetName], 
+    [vwFinalTaxAssessmentAndValuation].[Zip] AS [Zip], 
+    [vwFinalTaxAssessmentAndValuation].[TotalUnits] AS [TotalUnits], 
+    [vwFinalTaxAssessmentAndValuation].[ResidentialUnits] AS [ResidentialUnits], 
+    [vwFinalTaxAssessmentAndValuation].[LotFrontage] AS [LotFrontage], 
+    [vwFinalTaxAssessmentAndValuation].[LotDepth] AS [LotDepth], 
+    [vwFinalTaxAssessmentAndValuation].[LotArea] AS [LotArea], 
+    [vwFinalTaxAssessmentAndValuation].[IsIrregularLot] AS [IsIrregularLot], 
+    [vwFinalTaxAssessmentAndValuation].[BuildingFrontage] AS [BuildingFrontage], 
+    [vwFinalTaxAssessmentAndValuation].[BuildingDepth] AS [BuildingDepth], 
+    [vwFinalTaxAssessmentAndValuation].[IsBuildingIrregularShaped] AS [IsBuildingIrregularShaped], 
+    [vwFinalTaxAssessmentAndValuation].[ExtensionType] AS [ExtensionType], 
+    [vwFinalTaxAssessmentAndValuation].[Stories] AS [Stories], 
+    [vwFinalTaxAssessmentAndValuation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
+    [vwFinalTaxAssessmentAndValuation].[CornerLotInformation] AS [CornerLotInformation], 
+    [vwFinalTaxAssessmentAndValuation].[LandArea] AS [LandArea], 
+    [vwFinalTaxAssessmentAndValuation].[BuildingGrossArea] AS [BuildingGrossArea], 
+    [vwFinalTaxAssessmentAndValuation].[ZoningCode] AS [ZoningCode], 
+    [vwFinalTaxAssessmentAndValuation].[YearBuilt] AS [YearBuilt], 
+    [vwFinalTaxAssessmentAndValuation].[IsYearBuiltEstimated] AS [IsYearBuiltEstimated], 
+    [vwFinalTaxAssessmentAndValuation].[EndYearBuilt] AS [EndYearBuilt], 
+    [vwFinalTaxAssessmentAndValuation].[YearFirstAlteration] AS [YearFirstAlteration], 
+    [vwFinalTaxAssessmentAndValuation].[YearFirstAlterationEnd] AS [YearFirstAlterationEnd], 
+    [vwFinalTaxAssessmentAndValuation].[YearSecondAlteration] AS [YearSecondAlteration], 
+    [vwFinalTaxAssessmentAndValuation].[YearSecondAlterationEnd] AS [YearSecondAlterationEnd], 
+    [vwFinalTaxAssessmentAndValuation].[CommunityPlanningBoroughCode] AS [CommunityPlanningBoroughCode], 
+    [vwFinalTaxAssessmentAndValuation].[CommunityPlanningBroadNumber] AS [CommunityPlanningBroadNumber], 
+    [vwFinalTaxAssessmentAndValuation].[AssessedValueLimited] AS [AssessedValueLimited], 
+    [vwFinalTaxAssessmentAndValuation].[PriorYearAssessedValueLimited] AS [PriorYearAssessedValueLimited], 
+    [vwFinalTaxAssessmentAndValuation].[RecordType] AS [RecordType], 
+    [vwFinalTaxAssessmentAndValuation].[NewLot] AS [NewLot], 
+    [vwFinalTaxAssessmentAndValuation].[LotWillBeDropped] AS [LotWillBeDropped], 
+    [vwFinalTaxAssessmentAndValuation].[BuildingInProgress] AS [BuildingInProgress], 
+    [vwFinalTaxAssessmentAndValuation].[ParcelValuesAreReflectedInAnotherLot] AS [ParcelValuesAreReflectedInAnotherLot], 
+    [vwFinalTaxAssessmentAndValuation].[CondoIdentificationNumber] AS [CondoIdentificationNumber], 
+    [vwFinalTaxAssessmentAndValuation].[IsCondoCommercialOrResidential] AS [IsCondoCommercialOrResidential], 
+    [vwFinalTaxAssessmentAndValuation].[Suffix1SequenceNumber] AS [Suffix1SequenceNumber], 
+    [vwFinalTaxAssessmentAndValuation].[LandPercentOfCommonInterestInTheEntireCondo] AS [LandPercentOfCommonInterestInTheEntireCondo], 
+    [vwFinalTaxAssessmentAndValuation].[BuildingPercentOfCommonInterestInTheEntireCondo] AS [BuildingPercentOfCommonInterestInTheEntireCondo], 
+    [vwFinalTaxAssessmentAndValuation].[ApartmentNumberForCondominiumProperties] AS [ApartmentNumberForCondominiumProperties], 
+    [vwFinalTaxAssessmentAndValuation].[ApportionmentBoro] AS [ApportionmentBoro], 
+    [vwFinalTaxAssessmentAndValuation].[ApportionmentBlock] AS [ApportionmentBlock], 
+    [vwFinalTaxAssessmentAndValuation].[ApportionmentLot] AS [ApportionmentLot], 
+    [vwFinalTaxAssessmentAndValuation].[ApportionmentEasement] AS [ApportionmentEasement], 
+    [vwFinalTaxAssessmentAndValuation].[ApportionmentDate] AS [ApportionmentDate], 
+    [vwFinalTaxAssessmentAndValuation].[TimeStampOfTheMostRecentApportionment] AS [TimeStampOfTheMostRecentApportionment], 
+    [vwFinalTaxAssessmentAndValuation].[ProtestFormType] AS [ProtestFormType], 
+    [vwFinalTaxAssessmentAndValuation].[ProtestAttorneyIdentificationNumber] AS [ProtestAttorneyIdentificationNumber], 
+    [vwFinalTaxAssessmentAndValuation].[TypeOfApplicantApplying] AS [TypeOfApplicantApplying], 
+    [vwFinalTaxAssessmentAndValuation].[SecondProtestFormType] AS [SecondProtestFormType], 
+    [vwFinalTaxAssessmentAndValuation].[SecondProtestAttorneyIdentificationNumber] AS [SecondProtestAttorneyIdentificationNumber], 
+    [vwFinalTaxAssessmentAndValuation].[SecondTypeOfApplicantApplying] AS [SecondTypeOfApplicantApplying], 
+    [vwFinalTaxAssessmentAndValuation].[OldProtestFormType] AS [OldProtestFormType], 
+    [vwFinalTaxAssessmentAndValuation].[OldProtestAttorneyIdentificationNumber] AS [OldProtestAttorneyIdentificationNumber], 
+    [vwFinalTaxAssessmentAndValuation].[OldTypeOfApplicantApplying] AS [OldTypeOfApplicantApplying], 
+    [vwFinalTaxAssessmentAndValuation].[RealEstateOfUtilityCorporationID] AS [RealEstateOfUtilityCorporationID], 
+    [vwFinalTaxAssessmentAndValuation].[StatusOfTheAddressDataVerificationFromGeosupport] AS [StatusOfTheAddressDataVerificationFromGeosupport], 
+    [vwFinalTaxAssessmentAndValuation].[COOPidentificationNumber] AS [COOPidentificationNumber], 
+    [vwFinalTaxAssessmentAndValuation].[ExemptionIndicatorFlags] AS [ExemptionIndicatorFlags], 
+    [vwFinalTaxAssessmentAndValuation].[ExemptionsCount] AS [ExemptionsCount], 
+    [vwFinalTaxAssessmentAndValuation].[ExemptPropertyRestoredDate] AS [ExemptPropertyRestoredDate], 
+    [vwFinalTaxAssessmentAndValuation].[DateOfLastDescriptiveChange] AS [DateOfLastDescriptiveChange], 
+    [vwFinalTaxAssessmentAndValuation].[DateOfTheLastChangeToTheBBL] AS [DateOfTheLastChangeToTheBBL]
+    FROM [dof].[vwFinalTaxAssessmentAndValuation] AS [vwFinalTaxAssessmentAndValuation]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwTaxValuationMergedTentative" EntityType="Self.vwTaxValuationMergedTentative" store:Type="Views" store:Schema="dof">
+      <DefiningQuery>SELECT 
+    [vwTaxValuationMergedTentative].[BBLE] AS [BBLE], 
+    [vwTaxValuationMergedTentative].[Boro] AS [Boro], 
+    [vwTaxValuationMergedTentative].[Block] AS [Block], 
+    [vwTaxValuationMergedTentative].[Lot] AS [Lot], 
+    [vwTaxValuationMergedTentative].[Easement] AS [Easement], 
+    [vwTaxValuationMergedTentative].[SECVOL] AS [SECVOL], 
+    [vwTaxValuationMergedTentative].[District] AS [District], 
+    [vwTaxValuationMergedTentative].[AssessmentYear] AS [AssessmentYear], 
+    [vwTaxValuationMergedTentative].[CurrentTotalMarketValueLand] AS [CurrentTotalMarketValueLand], 
+    [vwTaxValuationMergedTentative].[CurrentTotalMarketValue] AS [CurrentTotalMarketValue], 
+    [vwTaxValuationMergedTentative].[NewTotalMarketValueLand] AS [NewTotalMarketValueLand], 
+    [vwTaxValuationMergedTentative].[NewTotalMarketValue] AS [NewTotalMarketValue], 
+    [vwTaxValuationMergedTentative].[DateOfLatestOnlineChange] AS [DateOfLatestOnlineChange], 
+    [vwTaxValuationMergedTentative].[CurrentTransactionalAssessedLandValue] AS [CurrentTransactionalAssessedLandValue], 
+    [vwTaxValuationMergedTentative].[CurrentTransactionalAssessedTotalValue] AS [CurrentTransactionalAssessedTotalValue], 
+    [vwTaxValuationMergedTentative].[CurrentTransitionalExemptLandValue] AS [CurrentTransitionalExemptLandValue], 
+    [vwTaxValuationMergedTentative].[CurrentTransitionalExemptTotalValue] AS [CurrentTransitionalExemptTotalValue], 
+    [vwTaxValuationMergedTentative].[CurrentActualAssessedLandValue] AS [CurrentActualAssessedLandValue], 
+    [vwTaxValuationMergedTentative].[CurrentActualAssessedTotalValue] AS [CurrentActualAssessedTotalValue], 
+    [vwTaxValuationMergedTentative].[CurrentActualExemptLandValue] AS [CurrentActualExemptLandValue], 
+    [vwTaxValuationMergedTentative].[CurrentActualExemptTotalValue] AS [CurrentActualExemptTotalValue], 
+    [vwTaxValuationMergedTentative].[DateOfTheLastMoneyChange] AS [DateOfTheLastMoneyChange], 
+    [vwTaxValuationMergedTentative].[TentativeTransitionalAssessedLandValue] AS [TentativeTransitionalAssessedLandValue], 
+    [vwTaxValuationMergedTentative].[TentativeTransitionalAssessedTotalValue] AS [TentativeTransitionalAssessedTotalValue], 
+    [vwTaxValuationMergedTentative].[TentativeTransitionalExemptLandValue] AS [TentativeTransitionalExemptLandValue], 
+    [vwTaxValuationMergedTentative].[TentativeTransitionalExemptTotalValue] AS [TentativeTransitionalExemptTotalValue], 
+    [vwTaxValuationMergedTentative].[TentativeActualAssessedLandValue] AS [TentativeActualAssessedLandValue], 
+    [vwTaxValuationMergedTentative].[TentativeActualAssessedTotalValue] AS [TentativeActualAssessedTotalValue], 
+    [vwTaxValuationMergedTentative].[TentativeActualExemptLandValue] AS [TentativeActualExemptLandValue], 
+    [vwTaxValuationMergedTentative].[TentativeActualExemptTotalValue] AS [TentativeActualExemptTotalValue], 
+    [vwTaxValuationMergedTentative].[DateOfTheLastMoneyChangeDuringTheFinal] AS [DateOfTheLastMoneyChangeDuringTheFinal], 
+    [vwTaxValuationMergedTentative].[FinalTransitionalAssessedLandValue] AS [FinalTransitionalAssessedLandValue], 
+    [vwTaxValuationMergedTentative].[FinalTransitionalAssessedTotalValue] AS [FinalTransitionalAssessedTotalValue], 
+    [vwTaxValuationMergedTentative].[FinalTransitionalExemptLandValue] AS [FinalTransitionalExemptLandValue], 
+    [vwTaxValuationMergedTentative].[FinalTransitionalExemptTotalValue] AS [FinalTransitionalExemptTotalValue], 
+    [vwTaxValuationMergedTentative].[FinalActualAssessedLandValue] AS [FinalActualAssessedLandValue], 
+    [vwTaxValuationMergedTentative].[FinalActualAssessedTotalValue] AS [FinalActualAssessedTotalValue], 
+    [vwTaxValuationMergedTentative].[FinalActualExemptLandValue] AS [FinalActualExemptLandValue], 
+    [vwTaxValuationMergedTentative].[FinalActualExemptTotalValue] AS [FinalActualExemptTotalValue], 
+    [vwTaxValuationMergedTentative].[TaxClass] AS [TaxClass], 
+    [vwTaxValuationMergedTentative].[OldTaxClass] AS [OldTaxClass], 
+    [vwTaxValuationMergedTentative].[CBNPeriodTaxClass] AS [CBNPeriodTaxClass], 
+    [vwTaxValuationMergedTentative].[BuildingClass] AS [BuildingClass], 
+    [vwTaxValuationMergedTentative].[ExemptClass] AS [ExemptClass], 
+    [vwTaxValuationMergedTentative].[OwnerName] AS [OwnerName], 
+    [vwTaxValuationMergedTentative].[StreetNumberLow] AS [StreetNumberLow], 
+    [vwTaxValuationMergedTentative].[StreetNumberHigh] AS [StreetNumberHigh], 
+    [vwTaxValuationMergedTentative].[IsStreetNumberRange] AS [IsStreetNumberRange], 
+    [vwTaxValuationMergedTentative].[StreetName] AS [StreetName], 
+    [vwTaxValuationMergedTentative].[Zip] AS [Zip], 
+    [vwTaxValuationMergedTentative].[TotalUnits] AS [TotalUnits], 
+    [vwTaxValuationMergedTentative].[ResidentialUnits] AS [ResidentialUnits], 
+    [vwTaxValuationMergedTentative].[LotFrontage] AS [LotFrontage], 
+    [vwTaxValuationMergedTentative].[LotDepth] AS [LotDepth], 
+    [vwTaxValuationMergedTentative].[LotArea] AS [LotArea], 
+    [vwTaxValuationMergedTentative].[IsIrregularLot] AS [IsIrregularLot], 
+    [vwTaxValuationMergedTentative].[BuildingFrontage] AS [BuildingFrontage], 
+    [vwTaxValuationMergedTentative].[BuildingDepth] AS [BuildingDepth], 
+    [vwTaxValuationMergedTentative].[IsBuildingIrregularShaped] AS [IsBuildingIrregularShaped], 
+    [vwTaxValuationMergedTentative].[ExtensionType] AS [ExtensionType], 
+    [vwTaxValuationMergedTentative].[Stories] AS [Stories], 
+    [vwTaxValuationMergedTentative].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
+    [vwTaxValuationMergedTentative].[CornerLotInformation] AS [CornerLotInformation], 
+    [vwTaxValuationMergedTentative].[LandArea] AS [LandArea], 
+    [vwTaxValuationMergedTentative].[BuildingGrossArea] AS [BuildingGrossArea], 
+    [vwTaxValuationMergedTentative].[ZoningCode] AS [ZoningCode], 
+    [vwTaxValuationMergedTentative].[YearBuilt] AS [YearBuilt], 
+    [vwTaxValuationMergedTentative].[IsYearBuiltEstimated] AS [IsYearBuiltEstimated], 
+    [vwTaxValuationMergedTentative].[EndYearBuilt] AS [EndYearBuilt], 
+    [vwTaxValuationMergedTentative].[YearFirstAlteration] AS [YearFirstAlteration], 
+    [vwTaxValuationMergedTentative].[YearFirstAlterationEnd] AS [YearFirstAlterationEnd], 
+    [vwTaxValuationMergedTentative].[YearSecondAlteration] AS [YearSecondAlteration], 
+    [vwTaxValuationMergedTentative].[YearSecondAlterationEnd] AS [YearSecondAlterationEnd], 
+    [vwTaxValuationMergedTentative].[CommunityPlanningBoroughCode] AS [CommunityPlanningBoroughCode], 
+    [vwTaxValuationMergedTentative].[CommunityPlanningBroadNumber] AS [CommunityPlanningBroadNumber], 
+    [vwTaxValuationMergedTentative].[AssessedValueLimited] AS [AssessedValueLimited], 
+    [vwTaxValuationMergedTentative].[PriorYearAssessedValueLimited] AS [PriorYearAssessedValueLimited], 
+    [vwTaxValuationMergedTentative].[RecordType] AS [RecordType], 
+    [vwTaxValuationMergedTentative].[NewLot] AS [NewLot], 
+    [vwTaxValuationMergedTentative].[LotWillBeDropped] AS [LotWillBeDropped], 
+    [vwTaxValuationMergedTentative].[BuildingInProgress] AS [BuildingInProgress], 
+    [vwTaxValuationMergedTentative].[ParcelValuesAreReflectedInAnotherLot] AS [ParcelValuesAreReflectedInAnotherLot], 
+    [vwTaxValuationMergedTentative].[CondoIdentificationNumber] AS [CondoIdentificationNumber], 
+    [vwTaxValuationMergedTentative].[IsCondoCommercialOrResidential] AS [IsCondoCommercialOrResidential], 
+    [vwTaxValuationMergedTentative].[Suffix1SequenceNumber] AS [Suffix1SequenceNumber], 
+    [vwTaxValuationMergedTentative].[LandPercentOfCommonInterestInTheEntireCondo] AS [LandPercentOfCommonInterestInTheEntireCondo], 
+    [vwTaxValuationMergedTentative].[BuildingPercentOfCommonInterestInTheEntireCondo] AS [BuildingPercentOfCommonInterestInTheEntireCondo], 
+    [vwTaxValuationMergedTentative].[ApartmentNumberForCondominiumProperties] AS [ApartmentNumberForCondominiumProperties], 
+    [vwTaxValuationMergedTentative].[ApportionmentBoro] AS [ApportionmentBoro], 
+    [vwTaxValuationMergedTentative].[ApportionmentBlock] AS [ApportionmentBlock], 
+    [vwTaxValuationMergedTentative].[ApportionmentLot] AS [ApportionmentLot], 
+    [vwTaxValuationMergedTentative].[ApportionmentEasement] AS [ApportionmentEasement], 
+    [vwTaxValuationMergedTentative].[ApportionmentDate] AS [ApportionmentDate], 
+    [vwTaxValuationMergedTentative].[TimeStampOfTheMostRecentApportionment] AS [TimeStampOfTheMostRecentApportionment], 
+    [vwTaxValuationMergedTentative].[ProtestFormType] AS [ProtestFormType], 
+    [vwTaxValuationMergedTentative].[ProtestAttorneyIdentificationNumber] AS [ProtestAttorneyIdentificationNumber], 
+    [vwTaxValuationMergedTentative].[TypeOfApplicantApplying] AS [TypeOfApplicantApplying], 
+    [vwTaxValuationMergedTentative].[SecondProtestFormType] AS [SecondProtestFormType], 
+    [vwTaxValuationMergedTentative].[SecondProtestAttorneyIdentificationNumber] AS [SecondProtestAttorneyIdentificationNumber], 
+    [vwTaxValuationMergedTentative].[SecondTypeOfApplicantApplying] AS [SecondTypeOfApplicantApplying], 
+    [vwTaxValuationMergedTentative].[OldProtestFormType] AS [OldProtestFormType], 
+    [vwTaxValuationMergedTentative].[OldProtestAttorneyIdentificationNumber] AS [OldProtestAttorneyIdentificationNumber], 
+    [vwTaxValuationMergedTentative].[OldTypeOfApplicantApplying] AS [OldTypeOfApplicantApplying], 
+    [vwTaxValuationMergedTentative].[RealEstateOfUtilityCorporationID] AS [RealEstateOfUtilityCorporationID], 
+    [vwTaxValuationMergedTentative].[StatusOfTheAddressDataVerificationFromGeosupport] AS [StatusOfTheAddressDataVerificationFromGeosupport], 
+    [vwTaxValuationMergedTentative].[COOPidentificationNumber] AS [COOPidentificationNumber], 
+    [vwTaxValuationMergedTentative].[ExemptionIndicatorFlags] AS [ExemptionIndicatorFlags], 
+    [vwTaxValuationMergedTentative].[ExemptionsCount] AS [ExemptionsCount], 
+    [vwTaxValuationMergedTentative].[ExemptPropertyRestoredDate] AS [ExemptPropertyRestoredDate], 
+    [vwTaxValuationMergedTentative].[DateOfLastDescriptiveChange] AS [DateOfLastDescriptiveChange], 
+    [vwTaxValuationMergedTentative].[DateOfTheLastChangeToTheBBL] AS [DateOfTheLastChangeToTheBBL]
+    FROM [dof].[vwTaxValuationMergedTentative] AS [vwTaxValuationMergedTentative]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
 </Schema>

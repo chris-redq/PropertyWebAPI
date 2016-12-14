@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NYCDOFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <Function Name="tfnGetGeneralPropertyInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dof">
+    <Parameter Name="BBLE" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="TaxClass" Type="varchar" MaxLength="2" />
+          <Property Name="LotFrontage" Type="float" />
+          <Property Name="LotDepth" Type="float" />
+          <Property Name="LotArea" Type="int" />
+          <Property Name="BuildingClassCode" Type="varchar" MaxLength="2" />
+          <Property Name="BuildingClass" Type="varchar" MaxLength="255" />
+          <Property Name="BuildingFrontage" Type="float" />
+          <Property Name="BuildingDepth" Type="float" />
+          <Property Name="Stories" Type="float" />
+          <Property Name="NumberOfBuildingsOnLot" Type="float" />
+          <Property Name="BuildingGrossArea" Type="int" />
+          <Property Name="BuiltFAR" Type="float" />
+          <Property Name="MaxResidentialFAR" Type="float" />
+          <Property Name="YearBuilt" Type="int" />
+          <Property Name="Borough" Type="varchar" MaxLength="15" />
+          <Property Name="Block" Type="int" />
+          <Property Name="Lot" Type="int" />
+          <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
+          <Property Name="StreetName" Type="varchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="10" />
+          <Property Name="NTA" Type="varchar" MaxLength="250" />
+          <Property Name="Zoning" Type="varchar" MaxLength="9" />
+          <Property Name="UnitNumber" Type="varchar" MaxLength="5" />
+          <Property Name="East" Type="int" />
+          <Property Name="North" Type="int" />
+          <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <EntityContainer Name="NYCDOFModelStoreContainer" />
+</Schema>

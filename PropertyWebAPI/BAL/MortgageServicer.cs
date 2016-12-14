@@ -41,6 +41,8 @@ namespace PropertyWebAPI.BAL
     /// </summary>
     public static class MortgageServicer
     {
+        private const int RequestTypeId = (int)RequestTypes.NYCMortgageServicer;
+
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
@@ -123,19 +125,19 @@ namespace PropertyWebAPI.BAL
                             mServicerDetails.servicerName = mortgageServicerObj.Name;
                             mServicerDetails.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.NYCMortgageServicer, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jsonBillParams);
                         }
                         else
                         {   //check if pending request in queue
-                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCMortgageServicer, jsonBillParams);
+                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, RequestTypeId, jsonBillParams);
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
                                 string requestStr = DexiRobotRequestResponseBuilder.Request.RequestData.ServicerWebsite(propertyBBL);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.Zillow, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
 
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCMortgageServicer, requestObj.RequestId,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
                                                                                                externalReferenceId, jsonBillParams);
 
                                 mServicerDetails.status = RequestStatus.Pending.ToString();
@@ -146,7 +148,7 @@ namespace PropertyWebAPI.BAL
                                 mServicerDetails.status = RequestStatus.Pending.ToString();
                                 //Send the RequestId for the pending request back
                                 mServicerDetails.requestId = dataRequestLogObj.RequestId;
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCMortgageServicer,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
                                                                                                dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
                             }
                         }

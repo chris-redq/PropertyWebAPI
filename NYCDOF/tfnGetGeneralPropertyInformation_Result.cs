@@ -33,6 +33,7 @@ namespace NYCDOF
         public Nullable<int> Lot { get; set; }
         public string StreetNumber { get; set; }
         public string StreetName { get; set; }
+        public string ZipCode { get; set; }
         public string NTA { get; set; }
         public string Zoning { get; set; }
         public string UnitNumber { get; set; }

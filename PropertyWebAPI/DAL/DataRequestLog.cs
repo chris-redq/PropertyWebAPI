@@ -91,7 +91,6 @@ namespace PropertyWebAPI.DAL
         /// <summary>
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
         /// </summary>
-        /// </summary>
         /// <param name="webDBEntities"></param>
         /// <param name="propertyBBL"></param>
         /// <param name="requestTypeId"></param>
@@ -118,7 +117,6 @@ namespace PropertyWebAPI.DAL
 
         /// <summary>
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
-        /// </summary>
         /// </summary>
         /// <param name="webDBEntities"></param>
         /// <param name="propertyBBL"></param>

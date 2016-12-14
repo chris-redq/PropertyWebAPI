@@ -42,6 +42,7 @@ namespace PropertyWebAPI.BAL
     /// </summary>
     public static class Zillow
     {
+        private const int RequestTypeId = (int)RequestTypes.Zillow;
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
@@ -93,7 +94,7 @@ namespace PropertyWebAPI.BAL
         /// <returns></returns>
         public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, "Error Code: "+((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: "+((HttpStatusCode)httpErrorCode).ToString());
         }
 
         /// <summary>
@@ -131,19 +132,19 @@ namespace PropertyWebAPI.BAL
                             zPropertyDetails.zEstimate = zillowObj.zEstimate;
                             zPropertyDetails.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jsonBillParams);
                         }
                         else
                         {   //check if pending request in queue
-                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.Zillow, jsonBillParams);
+                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, RequestTypeId, jsonBillParams);
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
                                 string requestStr = DexiRobotRequestResponseBuilder.Request.RequestData.ZillowZEstimate(address);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.Zillow, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
 
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.Zillow, requestObj.RequestId,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
                                                                                                externalReferenceId, jsonBillParams);
 
                                 zPropertyDetails.status = RequestStatus.Pending.ToString();
@@ -154,7 +155,7 @@ namespace PropertyWebAPI.BAL
                                 zPropertyDetails.status = RequestStatus.Pending.ToString();
                                 //Send the RequestId for the pending request back
                                 zPropertyDetails.requestId = dataRequestLogObj.RequestId;
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.Zillow,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
                                                                                                dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
                             }
                         }
@@ -164,7 +165,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         zPropertyDetails.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
                     }
                 }
@@ -240,14 +241,14 @@ namespace PropertyWebAPI.BAL
                                         WebDataDB.Zillow zillowObj = webDBEntities.Zillows.FirstOrDefault(i => i.BBL == parameters.BBL);
                                         if (zillowObj != null)
                                         {   //Update data with new results
-                                            zillowObj.zEstimate = decimal.Parse(resultObj.Zestimate, System.Globalization.NumberStyles.Any);
+                                            zillowObj.zEstimate = resultObj.Zestimate;
                                             zillowObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                         }
                                         else
                                         {   // add an entry into cache or DB
                                             zillowObj = new WebDataDB.Zillow();
                                             zillowObj.BBL = parameters.BBL;
-                                            zillowObj.zEstimate = decimal.Parse(resultObj.Zestimate, System.Globalization.NumberStyles.Any);
+                                            zillowObj.zEstimate = resultObj.Zestimate;
                                             zillowObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
 
                                             webDBEntities.Zillows.Add(zillowObj);

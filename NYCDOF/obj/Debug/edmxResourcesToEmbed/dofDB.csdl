@@ -33,5 +33,497 @@
     <FunctionImport Name="tfnGetGeneralPropertyInformation" IsComposable="true" ReturnType="Collection(NYCDOFModel.tfnGetGeneralPropertyInformation_Result)">
       <Parameter Name="BBLE" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="TaxAssessmentAndValuationFinals" EntityType="NYCDOFModel.TaxAssessmentAndValuationFinal" />
+    <EntitySet Name="TaxAssessmentAndValuationTentatives" EntityType="NYCDOFModel.TaxAssessmentAndValuationTentative" />
+    <EntitySet Name="vwFinalTaxAssessmentAndValuations" EntityType="NYCDOFModel.vwFinalTaxAssessmentAndValuation" />
+    <EntitySet Name="vwTaxValuationMergedTentatives" EntityType="NYCDOFModel.vwTaxValuationMergedTentative" />
   </EntityContainer>
+  <EntityType Name="TaxAssessmentAndValuationFinal">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="AssessmentYear" />
+    </Key>
+    <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Boro" Type="Double" />
+    <Property Name="Block" Type="Double" />
+    <Property Name="Lot" Type="Double" />
+    <Property Name="Easement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SECVOL" Type="Double" />
+    <Property Name="District" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="AssessmentYear" Type="Double" Nullable="false" />
+    <Property Name="CurrentTotalMarketValueLand" Type="Double" />
+    <Property Name="CurrentTotalMarketValue" Type="Double" />
+    <Property Name="NewTotalMarketValueLand" Type="Double" />
+    <Property Name="NewTotalMarketValue" Type="Double" />
+    <Property Name="DateOfLatestOnlineChange" Type="DateTime" Precision="0" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="Double" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="CurrentActualAssessedLandValue" Type="Double" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentActualExemptLandValue" Type="Double" />
+    <Property Name="CurrentActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChange" Type="DateTime" Precision="0" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="TentativeActualAssessedLandValue" Type="Double" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeActualExemptLandValue" Type="Double" />
+    <Property Name="TentativeActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="DateTime" Precision="0" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="FinalActualAssessedLandValue" Type="Double" />
+    <Property Name="FinalActualAssessedTotalValue" Type="Double" />
+    <Property Name="FinalActualExemptLandValue" Type="Double" />
+    <Property Name="FinalActualExemptTotalValue" Type="Double" />
+    <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OldTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="CBNPeriodTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OwnerName" Type="String" MaxLength="21" FixedLength="false" Unicode="true" />
+    <Property Name="StreetNumberLow" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="StreetNumberHigh" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="IsStreetNumberRange" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="Double" />
+    <Property Name="TotalUnits" Type="Double" />
+    <Property Name="ResidentialUnits" Type="Double" />
+    <Property Name="LotFrontage" Type="Double" />
+    <Property Name="LotDepth" Type="Double" />
+    <Property Name="LotArea" Type="Double" />
+    <Property Name="IsIrregularLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingFrontage" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingDepth" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="IsBuildingIrregularShaped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ExtensionType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Stories" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+    <Property Name="CornerLotInformation" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="LandArea" Type="Double" />
+    <Property Name="BuildingGrossArea" Type="Double" />
+    <Property Name="ZoningCode" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+    <Property Name="YearBuilt" Type="Double" />
+    <Property Name="IsYearBuiltEstimated" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="EndYearBuilt" Type="Double" />
+    <Property Name="YearFirstAlteration" Type="Double" />
+    <Property Name="YearFirstAlterationEnd" Type="Double" />
+    <Property Name="YearSecondAlteration" Type="Double" />
+    <Property Name="YearSecondAlterationEnd" Type="Double" />
+    <Property Name="CommunityPlanningBoroughCode" Type="Double" />
+    <Property Name="CommunityPlanningBroadNumber" Type="Double" />
+    <Property Name="AssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="RecordType" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="NewLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LotWillBeDropped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingInProgress" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="CondoIdentificationNumber" Type="Double" />
+    <Property Name="IsCondoCommercialOrResidential" Type="String" Nullable="false" MaxLength="33" FixedLength="false" Unicode="false" />
+    <Property Name="Suffix1SequenceNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentBoro" Type="Double" />
+    <Property Name="ApportionmentBlock" Type="Double" />
+    <Property Name="ApportionmentLot" Type="Double" />
+    <Property Name="ApportionmentEasement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentDate" Type="DateTime" Precision="0" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="Double" />
+    <Property Name="ProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="TypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="OldTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="COOPidentificationNumber" Type="Double" />
+    <Property Name="ExemptionIndicatorFlags" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptionsCount" Type="Double" />
+    <Property Name="ExemptPropertyRestoredDate" Type="DateTime" Precision="0" />
+    <Property Name="DateOfLastDescriptiveChange" Type="DateTime" Precision="0" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="TaxAssessmentAndValuationTentative">
+    <Key>
+      <PropertyRef Name="BBLE" />
+    </Key>
+    <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Boro" Type="Double" />
+    <Property Name="Block" Type="Double" />
+    <Property Name="Lot" Type="Double" />
+    <Property Name="Easement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SECVOL" Type="Double" />
+    <Property Name="District" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="AssessmentYear" Type="Double" />
+    <Property Name="CurrentTotalMarketValueLand" Type="Double" />
+    <Property Name="CurrentTotalMarketValue" Type="Double" />
+    <Property Name="NewTotalMarketValueLand" Type="Double" />
+    <Property Name="NewTotalMarketValue" Type="Double" />
+    <Property Name="DateOfLatestOnlineChange" Type="DateTime" Precision="0" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="Double" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="CurrentActualAssessedLandValue" Type="Double" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentActualExemptLandValue" Type="Double" />
+    <Property Name="CurrentActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChange" Type="DateTime" Precision="0" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="TentativeActualAssessedLandValue" Type="Double" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeActualExemptLandValue" Type="Double" />
+    <Property Name="TentativeActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="DateTime" Precision="0" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="FinalActualAssessedLandValue" Type="Double" />
+    <Property Name="FinalActualAssessedTotalValue" Type="Double" />
+    <Property Name="FinalActualExemptLandValue" Type="Double" />
+    <Property Name="FinalActualExemptTotalValue" Type="Double" />
+    <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OldTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="CBNPeriodTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OwnerName" Type="String" MaxLength="21" FixedLength="false" Unicode="true" />
+    <Property Name="StreetNumberLow" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="StreetNumberHigh" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="IsStreetNumberRange" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="Double" />
+    <Property Name="TotalUnits" Type="Double" />
+    <Property Name="ResidentialUnits" Type="Double" />
+    <Property Name="LotFrontage" Type="Double" />
+    <Property Name="LotDepth" Type="Double" />
+    <Property Name="LotArea" Type="Double" />
+    <Property Name="IsIrregularLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingFrontage" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingDepth" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="IsBuildingIrregularShaped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ExtensionType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Stories" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+    <Property Name="CornerLotInformation" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="LandArea" Type="Double" />
+    <Property Name="BuildingGrossArea" Type="Double" />
+    <Property Name="ZoningCode" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+    <Property Name="YearBuilt" Type="Double" />
+    <Property Name="IsYearBuiltEstimated" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="EndYearBuilt" Type="Double" />
+    <Property Name="YearFirstAlteration" Type="Double" />
+    <Property Name="YearFirstAlterationEnd" Type="Double" />
+    <Property Name="YearSecondAlteration" Type="Double" />
+    <Property Name="YearSecondAlterationEnd" Type="Double" />
+    <Property Name="CommunityPlanningBoroughCode" Type="Double" />
+    <Property Name="CommunityPlanningBroadNumber" Type="Double" />
+    <Property Name="AssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="RecordType" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="NewLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LotWillBeDropped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingInProgress" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="CondoIdentificationNumber" Type="Double" />
+    <Property Name="IsCondoCommercialOrResidential" Type="String" Nullable="false" MaxLength="33" FixedLength="false" Unicode="false" />
+    <Property Name="Suffix1SequenceNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentBoro" Type="Double" />
+    <Property Name="ApportionmentBlock" Type="Double" />
+    <Property Name="ApportionmentLot" Type="Double" />
+    <Property Name="ApportionmentEasement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentDate" Type="DateTime" Precision="0" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="Double" />
+    <Property Name="ProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="TypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="OldTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="COOPidentificationNumber" Type="Double" />
+    <Property Name="ExemptionIndicatorFlags" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptionsCount" Type="Double" />
+    <Property Name="ExemptPropertyRestoredDate" Type="DateTime" Precision="0" />
+    <Property Name="DateOfLastDescriptiveChange" Type="DateTime" Precision="0" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="vwFinalTaxAssessmentAndValuation">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="AssessmentYear" />
+      <PropertyRef Name="IsIrregularLot" />
+      <PropertyRef Name="IsBuildingIrregularShaped" />
+      <PropertyRef Name="ExtensionType" />
+      <PropertyRef Name="IsYearBuiltEstimated" />
+      <PropertyRef Name="AssessedValueLimited" />
+      <PropertyRef Name="PriorYearAssessedValueLimited" />
+      <PropertyRef Name="RecordType" />
+      <PropertyRef Name="NewLot" />
+      <PropertyRef Name="LotWillBeDropped" />
+      <PropertyRef Name="BuildingInProgress" />
+      <PropertyRef Name="IsCondoCommercialOrResidential" />
+    </Key>
+    <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Boro" Type="Double" />
+    <Property Name="Block" Type="Double" />
+    <Property Name="Lot" Type="Double" />
+    <Property Name="Easement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SECVOL" Type="Double" />
+    <Property Name="District" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="AssessmentYear" Type="Double" Nullable="false" />
+    <Property Name="CurrentTotalMarketValueLand" Type="Double" />
+    <Property Name="CurrentTotalMarketValue" Type="Double" />
+    <Property Name="NewTotalMarketValueLand" Type="Double" />
+    <Property Name="NewTotalMarketValue" Type="Double" />
+    <Property Name="DateOfLatestOnlineChange" Type="DateTime" Precision="0" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="Double" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="CurrentActualAssessedLandValue" Type="Double" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentActualExemptLandValue" Type="Double" />
+    <Property Name="CurrentActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChange" Type="DateTime" Precision="0" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="TentativeActualAssessedLandValue" Type="Double" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeActualExemptLandValue" Type="Double" />
+    <Property Name="TentativeActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="DateTime" Precision="0" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="FinalActualAssessedLandValue" Type="Double" />
+    <Property Name="FinalActualAssessedTotalValue" Type="Double" />
+    <Property Name="FinalActualExemptLandValue" Type="Double" />
+    <Property Name="FinalActualExemptTotalValue" Type="Double" />
+    <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OldTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="CBNPeriodTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OwnerName" Type="String" MaxLength="21" FixedLength="false" Unicode="true" />
+    <Property Name="StreetNumberLow" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="StreetNumberHigh" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="IsStreetNumberRange" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="Double" />
+    <Property Name="TotalUnits" Type="Double" />
+    <Property Name="ResidentialUnits" Type="Double" />
+    <Property Name="LotFrontage" Type="Double" />
+    <Property Name="LotDepth" Type="Double" />
+    <Property Name="LotArea" Type="Double" />
+    <Property Name="IsIrregularLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingFrontage" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingDepth" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="IsBuildingIrregularShaped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ExtensionType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Stories" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+    <Property Name="CornerLotInformation" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="LandArea" Type="Double" />
+    <Property Name="BuildingGrossArea" Type="Double" />
+    <Property Name="ZoningCode" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+    <Property Name="YearBuilt" Type="Double" />
+    <Property Name="IsYearBuiltEstimated" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="EndYearBuilt" Type="Double" />
+    <Property Name="YearFirstAlteration" Type="Double" />
+    <Property Name="YearFirstAlterationEnd" Type="Double" />
+    <Property Name="YearSecondAlteration" Type="Double" />
+    <Property Name="YearSecondAlterationEnd" Type="Double" />
+    <Property Name="CommunityPlanningBoroughCode" Type="Double" />
+    <Property Name="CommunityPlanningBroadNumber" Type="Double" />
+    <Property Name="AssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="RecordType" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="NewLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LotWillBeDropped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingInProgress" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="CondoIdentificationNumber" Type="Double" />
+    <Property Name="IsCondoCommercialOrResidential" Type="String" Nullable="false" MaxLength="33" FixedLength="false" Unicode="false" />
+    <Property Name="Suffix1SequenceNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentBoro" Type="Double" />
+    <Property Name="ApportionmentBlock" Type="Double" />
+    <Property Name="ApportionmentLot" Type="Double" />
+    <Property Name="ApportionmentEasement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentDate" Type="DateTime" Precision="0" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="Double" />
+    <Property Name="ProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="TypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="OldTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="COOPidentificationNumber" Type="Double" />
+    <Property Name="ExemptionIndicatorFlags" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptionsCount" Type="Double" />
+    <Property Name="ExemptPropertyRestoredDate" Type="DateTime" Precision="0" />
+    <Property Name="DateOfLastDescriptiveChange" Type="DateTime" Precision="0" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="vwTaxValuationMergedTentative">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="IsIrregularLot" />
+      <PropertyRef Name="IsBuildingIrregularShaped" />
+      <PropertyRef Name="ExtensionType" />
+      <PropertyRef Name="IsYearBuiltEstimated" />
+      <PropertyRef Name="AssessedValueLimited" />
+      <PropertyRef Name="PriorYearAssessedValueLimited" />
+      <PropertyRef Name="RecordType" />
+      <PropertyRef Name="NewLot" />
+      <PropertyRef Name="LotWillBeDropped" />
+      <PropertyRef Name="BuildingInProgress" />
+      <PropertyRef Name="IsCondoCommercialOrResidential" />
+    </Key>
+    <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Boro" Type="Double" />
+    <Property Name="Block" Type="Double" />
+    <Property Name="Lot" Type="Double" />
+    <Property Name="Easement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SECVOL" Type="Double" />
+    <Property Name="District" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="AssessmentYear" Type="Double" />
+    <Property Name="CurrentTotalMarketValueLand" Type="Double" />
+    <Property Name="CurrentTotalMarketValue" Type="Double" />
+    <Property Name="NewTotalMarketValueLand" Type="Double" />
+    <Property Name="NewTotalMarketValue" Type="Double" />
+    <Property Name="DateOfLatestOnlineChange" Type="DateTime" Precision="0" />
+    <Property Name="CurrentTransactionalAssessedLandValue" Type="Double" />
+    <Property Name="CurrentTransactionalAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptLandValue" Type="Double" />
+    <Property Name="CurrentTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="CurrentActualAssessedLandValue" Type="Double" />
+    <Property Name="CurrentActualAssessedTotalValue" Type="Double" />
+    <Property Name="CurrentActualExemptLandValue" Type="Double" />
+    <Property Name="CurrentActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChange" Type="DateTime" Precision="0" />
+    <Property Name="TentativeTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptLandValue" Type="Double" />
+    <Property Name="TentativeTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="TentativeActualAssessedLandValue" Type="Double" />
+    <Property Name="TentativeActualAssessedTotalValue" Type="Double" />
+    <Property Name="TentativeActualExemptLandValue" Type="Double" />
+    <Property Name="TentativeActualExemptTotalValue" Type="Double" />
+    <Property Name="DateOfTheLastMoneyChangeDuringTheFinal" Type="DateTime" Precision="0" />
+    <Property Name="FinalTransitionalAssessedLandValue" Type="Double" />
+    <Property Name="FinalTransitionalAssessedTotalValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptLandValue" Type="Double" />
+    <Property Name="FinalTransitionalExemptTotalValue" Type="Double" />
+    <Property Name="FinalActualAssessedLandValue" Type="Double" />
+    <Property Name="FinalActualAssessedTotalValue" Type="Double" />
+    <Property Name="FinalActualExemptLandValue" Type="Double" />
+    <Property Name="FinalActualExemptTotalValue" Type="Double" />
+    <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OldTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="CBNPeriodTaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="OwnerName" Type="String" MaxLength="21" FixedLength="false" Unicode="true" />
+    <Property Name="StreetNumberLow" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="StreetNumberHigh" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="IsStreetNumberRange" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="Double" />
+    <Property Name="TotalUnits" Type="Double" />
+    <Property Name="ResidentialUnits" Type="Double" />
+    <Property Name="LotFrontage" Type="Double" />
+    <Property Name="LotDepth" Type="Double" />
+    <Property Name="LotArea" Type="Double" />
+    <Property Name="IsIrregularLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingFrontage" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingDepth" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="IsBuildingIrregularShaped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ExtensionType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Stories" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+    <Property Name="CornerLotInformation" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="LandArea" Type="Double" />
+    <Property Name="BuildingGrossArea" Type="Double" />
+    <Property Name="ZoningCode" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+    <Property Name="YearBuilt" Type="Double" />
+    <Property Name="IsYearBuiltEstimated" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="EndYearBuilt" Type="Double" />
+    <Property Name="YearFirstAlteration" Type="Double" />
+    <Property Name="YearFirstAlterationEnd" Type="Double" />
+    <Property Name="YearSecondAlteration" Type="Double" />
+    <Property Name="YearSecondAlterationEnd" Type="Double" />
+    <Property Name="CommunityPlanningBoroughCode" Type="Double" />
+    <Property Name="CommunityPlanningBroadNumber" Type="Double" />
+    <Property Name="AssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="PriorYearAssessedValueLimited" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="RecordType" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="NewLot" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="LotWillBeDropped" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingInProgress" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="CondoIdentificationNumber" Type="Double" />
+    <Property Name="IsCondoCommercialOrResidential" Type="String" Nullable="false" MaxLength="33" FixedLength="false" Unicode="false" />
+    <Property Name="Suffix1SequenceNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentBoro" Type="Double" />
+    <Property Name="ApportionmentBlock" Type="Double" />
+    <Property Name="ApportionmentLot" Type="Double" />
+    <Property Name="ApportionmentEasement" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="ApportionmentDate" Type="DateTime" Precision="0" />
+    <Property Name="TimeStampOfTheMostRecentApportionment" Type="Double" />
+    <Property Name="ProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="ProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="TypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="SecondProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="SecondTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestFormType" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="OldProtestAttorneyIdentificationNumber" Type="Double" />
+    <Property Name="OldTypeOfApplicantApplying" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="RealEstateOfUtilityCorporationID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="StatusOfTheAddressDataVerificationFromGeosupport" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="COOPidentificationNumber" Type="Double" />
+    <Property Name="ExemptionIndicatorFlags" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="ExemptionsCount" Type="Double" />
+    <Property Name="ExemptPropertyRestoredDate" Type="DateTime" Precision="0" />
+    <Property Name="DateOfLastDescriptiveChange" Type="DateTime" Precision="0" />
+    <Property Name="DateOfTheLastChangeToTheBBL" Type="DateTime" Precision="0" />
+  </EntityType>
 </Schema>

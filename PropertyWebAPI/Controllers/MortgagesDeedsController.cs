@@ -112,11 +112,10 @@ namespace PropertyWebAPI.Controllers
         /// <returns>
         ///     Returns the name of the Mortgage Servicer
         /// </returns>
-        [Route("api/mortgagesdeeds/{propertyBBLE}/mortgageservicer")]
+        [Route("api/mortgagesdeeds/{propertyBBL}/mortgageservicer")]
         [ResponseType(typeof(BAL.MortgageServicerDetails))]
-        public IHttpActionResult GetMortgageServicer(string propertyBBL, string externalReferenceId)
+        public IHttpActionResult GetMortgageServicer(string propertyBBL, string externalReferenceId="")
         {
-
             if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}[A-Z]??$"))
             {
                 BAL.MortgageServicer.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);

@@ -1228,7 +1228,7 @@
             This controller handles all api requests associated with property violations
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetBills(System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetViolations(System.String,System.String,System.String)">
             <summary>  
                 Use this method to get all violations associated with a property
             </summary>  
@@ -1237,9 +1237,9 @@
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
             </param>  
             <param name="externalReferenceId">
-                The user of the API can provide their own reference number for a request. This refeernce number is sent back along with results to the caller when their request is furnished later asynchronously.
+                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
             </param>
-            <param name="dobPenaltiesAndViolations">
+            <param name="dobPenaltiesAndViolationsSummary">
                 Set this optional parameter to N if you do not want the DOB Civil Penalties. The default value for this parameter is Y
             </param>
             <returns>
@@ -1350,8 +1350,26 @@
             <param name="requestId"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String)" -->
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
         <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String)">
             <summary>
                 Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB

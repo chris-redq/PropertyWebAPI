@@ -33,7 +33,7 @@ namespace PropertyWebAPI.Controllers
         /// <returns>
         ///     Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
         /// </returns>
-        [Route("api/bills/{propertyBBL}")]
+        [Route("api/zillow/{propertyBBL}")]
         [ResponseType(typeof(BAL.ZillowPropertyDetails))]
         public IHttpActionResult Get(string propertyBBL, string externalReferenceId = null)
         {
