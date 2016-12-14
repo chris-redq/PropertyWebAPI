@@ -42,7 +42,7 @@ namespace PropertyWebAPI.Controllers
                 BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             }
-            BAL.GeneralPropertyInformation propInfo = BAL.NYCPhysicalPropertyData.Get(propertyBBL);
+            BAL.GeneralPropertyInformation propInfo = BAL.NYCPhysicalPropertyData.Get(propertyBBL,true);
             if (propInfo == null)
             {   BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.NotFound);
                 return NotFound();

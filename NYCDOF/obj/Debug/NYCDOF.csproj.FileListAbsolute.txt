@@ -7,3 +7,4 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Debug\EntityFramework.x
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\obj\Debug\NYCDOF.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\obj\Debug\NYCDOF.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\obj\Debug\NYCDOF.csprojResolveAssemblyReference.cache

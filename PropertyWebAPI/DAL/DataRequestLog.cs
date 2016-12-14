@@ -95,6 +95,7 @@ namespace PropertyWebAPI.DAL
         /// <param name="propertyBBL"></param>
         /// <param name="requestTypeId"></param>
         /// <param name="externalReferenceId"></param>
+        /// <param name="requestParameters"></param>
         /// <returns></returns>
         public static WebDataDB.DataRequestLog InsertForCacheAccess(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, 
                                                                     string externalReferenceId, string requestParameters)
@@ -118,10 +119,10 @@ namespace PropertyWebAPI.DAL
         /// <summary>
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
         /// </summary>
-        /// <param name="webDBEntities"></param>
         /// <param name="propertyBBL"></param>
         /// <param name="requestTypeId"></param>
         /// <param name="externalReferenceId"></param>
+        /// <param name="requestParameters"></param>
         /// <returns></returns>
         public static WebDataDB.DataRequestLog InsertForFailure(string propertyBBL, int requestTypeId, string externalReferenceId, string requestParameters)
         {

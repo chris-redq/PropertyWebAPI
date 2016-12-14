@@ -232,17 +232,22 @@ namespace PropertyWebAPI.Controllers
         /// <param name="propertyBBL">
         ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
         /// </param>   
+        /// <param name="addresscleanup">
+        ///     Set to N if no address cleanup is required, default value is Y
+        /// </param>
         /// <returns>
         ///     Returns an object of contain cleaned property address and general information about the property
         /// </returns>
         [Route("api/physicaldata/nyc/{propertyBBL}/GeneralInformation")]
         [ResponseType(typeof(BAL.GeneralPropertyInformation))]
-        public IHttpActionResult GetNYCPropertyDetails(string propertyBBL)
+        public IHttpActionResult GetNYCPropertyDetails(string propertyBBL, string addresscleanup="Y")
         {
             if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}$"))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+            if (addresscleanup == null)
+                addresscleanup = "Y";
 
-            BAL.GeneralPropertyInformation propertyDetails = BAL.NYCPhysicalPropertyData.Get(propertyBBL);
+            BAL.GeneralPropertyInformation propertyDetails = BAL.NYCPhysicalPropertyData.Get(propertyBBL,addresscleanup.ToUpper()=="Y"?true:false);
 
             if (propertyDetails==null)
                 return NotFound();

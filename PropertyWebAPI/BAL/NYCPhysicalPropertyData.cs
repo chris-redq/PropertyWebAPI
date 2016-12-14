@@ -174,8 +174,9 @@ namespace PropertyWebAPI.BAL
         ///     Returns Physical Data about a property identified by BBL
         /// </summary>
         /// <param name="propertyBBL"></param>
+        /// <param name="addresscleanup"></param>
         /// <returns></returns>
-        public static GeneralPropertyInformation Get(string propertyBBL)
+        public static GeneralPropertyInformation Get(string propertyBBL, bool addresscleanup)
         {
             try
             {
@@ -208,7 +209,10 @@ namespace PropertyWebAPI.BAL
                     GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
 
                     //Clean address using GeoClinet API
-                    JObject jsonObj = GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
+                    JObject jsonObj = null;
+                    if (addresscleanup)
+                        jsonObj=GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
+
                     if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address"))
                     {
                         address = new GeneralAddress();

@@ -642,11 +642,12 @@
                 Method returns true if any of the messages in JSON contain NOT FOUND
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.BAL.NYCPhysicalPropertyData.Get(System.String)">
+        <member name="M:PropertyWebAPI.BAL.NYCPhysicalPropertyData.Get(System.String,System.Boolean)">
             <summary>
                 Returns Physical Data about a property identified by BBL
             </summary>
             <param name="propertyBBL"></param>
+            <param name="addresscleanup"></param>
             <returns></returns>
         </member>
         <member name="T:PropertyWebAPI.BAL.TaxBillDetails">
@@ -1195,13 +1196,16 @@
                         "sanbornVolumeNumber":"13","taxMapNumberSectionAndVolume":"21201","workAreaFormatIndicatorIn":"C"}}
             </returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCPropertyDetails(System.String)">
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCPropertyDetails(System.String,System.String)">
             <summary>  
                 Use this method to get property address and physical data associated with a property in NYC
             </summary>  
             <param name="propertyBBL">
                 Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
             </param>   
+            <param name="addresscleanup">
+                Set to N if no address cleanup is required, default value is Y
+            </param>
             <returns>
                 Returns an object of contain cleaned property address and general information about the property
             </returns>
@@ -1358,16 +1362,17 @@
             <param name="propertyBBL"></param>
             <param name="requestTypeId"></param>
             <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
             <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String)">
             <summary>
                 Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
             </summary>
-            <param name="webDBEntities"></param>
             <param name="propertyBBL"></param>
             <param name="requestTypeId"></param>
             <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
             <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String)">
