@@ -15,7 +15,9 @@ namespace PropertyWebAPI.BAL
     using System.Text;
     using System.Runtime.Serialization.Json;
     using System.Net;
-    
+    using System.Runtime.Serialization;
+    using System.Collections.Generic;
+
     #region Local Helper Classes
     /// <summary>
     /// Helper class used to capture Tax bill details and used for serialization into JSON object 
@@ -35,23 +37,25 @@ namespace PropertyWebAPI.BAL
     #endregion
 
     /// <summary>
-    ///     This class deals with all the details associated with either returning waterbill details or creating the 
-    ///     request for getting is scrapped from the web 
+    ///     This class deals with all the details associated with either returning Zillow details or creating the 
+    ///     request to get data scrapped from the web 
     /// </summary>
     public static class Zillow
     {
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
+        [DataContract]
         private class Parameters
-        {
+        {   [DataMember]
             public string BBL;
+            [DataMember]
             public string address;
         }
 
 
         /// <summary>
-        ///     This methods converts all paramters required for Tax Bills into a JSON object
+        ///     This methods converts all parameters required for Tax Bills into a JSON object
         /// </summary>
         /// <param name="BBL"></param>
         /// <param name="address"></param>
@@ -236,14 +240,14 @@ namespace PropertyWebAPI.BAL
                                         WebDataDB.Zillow zillowObj = webDBEntities.Zillows.FirstOrDefault(i => i.BBL == parameters.BBL);
                                         if (zillowObj != null)
                                         {   //Update data with new results
-                                            zillowObj.zEstimate = decimal.Parse(resultObj.Zestimate);
+                                            zillowObj.zEstimate = decimal.Parse(resultObj.Zestimate, System.Globalization.NumberStyles.Any);
                                             zillowObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                         }
                                         else
                                         {   // add an entry into cache or DB
                                             zillowObj = new WebDataDB.Zillow();
                                             zillowObj.BBL = parameters.BBL;
-                                            zillowObj.zEstimate = decimal.Parse(resultObj.Zestimate);
+                                            zillowObj.zEstimate = decimal.Parse(resultObj.Zestimate, System.Globalization.NumberStyles.Any);
                                             zillowObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
 
                                             webDBEntities.Zillows.Add(zillowObj);
@@ -253,6 +257,8 @@ namespace PropertyWebAPI.BAL
 
                                         DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
+                                    else
+                                        throw (new Exception("Cannot locate Request Log Record(s)"));
                                     break;
                                 }
                             default:

@@ -226,8 +226,7 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        List<DexiRobotRequestResponseBuilder.Response.PropertyTaxesNYC> resultList = DexiRobotRequestResponseBuilder.Response.ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData);
-                                        DexiRobotRequestResponseBuilder.Response.PropertyTaxesNYC resultObj = resultList[0];
+                                        DexiRobotRequestResponseBuilder.Response.PropertyTaxesNYC resultObj = DexiRobotRequestResponseBuilder.Response.ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData)[0];
 
                                         Parameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
@@ -252,7 +251,7 @@ namespace PropertyWebAPI.BAL
                                         DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
                                     else
-                                        throw (new Exception("Cannot locate Request Log Records"));
+                                        throw (new Exception("Cannot locate Request Log Record(s)"));
 
                                     break;
                                 }

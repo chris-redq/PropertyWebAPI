@@ -16,6 +16,7 @@ namespace PropertyWebAPI.BAL
     using System.Text;
     using System.Runtime.Serialization.Json;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
     #region Local Helper Classes
     /// <summary>
@@ -38,21 +39,22 @@ namespace PropertyWebAPI.BAL
     #endregion
 
     /// <summary>
-    ///     This class deals with all the details associated with either returning waterbill details or creating the 
-    ///     request for getting is scrapped from the web 
+    ///     This class deals with all the details associated with either returning DOB Violations and Penalties details or creating the 
+    ///     request to get data scrapped from the web 
     /// </summary>
     public static class DOBPenaltiesAndViolationsSummary
     {
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
+        [DataContract]
         class DOBPenaltiesAndViolationsParams
-        {
+        {   [DataMember]
             public string BBL;
         }
 
         /// <summary>
-        ///     This methods converts all paramters required for DOB Civil Penalties into a JSON object
+        ///     This methods converts all parameters required for DOB Civil Penalties into a JSON object
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <returns>JSON string</returns>
@@ -237,12 +239,12 @@ namespace PropertyWebAPI.BAL
                                     {
                                         decimal dobTotalPenaltyAmount = 0;
                                         decimal dobTotalViolationAmount = 0;
-
+                                        
                                         foreach (DexiRobotRequestResponseBuilder.Response.ECBViolationAndDOBCivilPenalty row in 
                                                  DexiRobotRequestResponseBuilder.Response.ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData))
                                         {
-                                            dobTotalPenaltyAmount += decimal.Parse(row.DOBCivilPenaltyAmount);
-                                            dobTotalViolationAmount += decimal.Parse(row.ECBPenaltyDue);
+                                            dobTotalPenaltyAmount += decimal.Parse(row.DOBCivilPenaltyAmount, System.Globalization.NumberStyles.Any);
+                                            dobTotalViolationAmount += decimal.Parse(row.ECBPenaltyDue, System.Globalization.NumberStyles.Any);
                                         }
 
                                         DOBPenaltiesAndViolationsParams dCivilPenaltiesParams = JSONToParameters(dataRequestLogObj.RequestParameters);
@@ -269,6 +271,8 @@ namespace PropertyWebAPI.BAL
 
                                         DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
+                                    else
+                                        throw (new Exception("Cannot locate Request Log Record(s)"));
                                     break;
                                 }
                             default:

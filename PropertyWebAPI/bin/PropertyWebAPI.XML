@@ -488,8 +488,8 @@
         </member>
         <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary">
             <summary>
-                This class deals with all the details associated with either returning waterbill details or creating the 
-                request for getting is scrapped from the web 
+                This class deals with all the details associated with either returning DOB Violations and Penalties details or creating the 
+                request to get data scrapped from the web 
             </summary>
         </member>
         <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.DOBPenaltiesAndViolationsParams">
@@ -499,7 +499,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.ParametersToJSON(System.String)">
             <summary>
-                This methods converts all paramters required for DOB Civil Penalties into a JSON object
+                This methods converts all parameters required for DOB Civil Penalties into a JSON object
             </summary>
             <param name="propertyBBL"></param>
             <returns>JSON string</returns>
@@ -551,8 +551,8 @@
         </member>
         <member name="T:PropertyWebAPI.BAL.MortgageServicer">
             <summary>
-                This class deals with all the details associated with either returning waterbill details or creating the 
-                request for getting is scrapped from the web 
+                This class deals with all the details associated with either returning Mortgage Servicer details or creating the 
+                request to get data scrapped from the web 
             </summary>
         </member>
         <member name="T:PropertyWebAPI.BAL.MortgageServicer.Parameters">
@@ -562,7 +562,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.ParametersToJSON(System.String)">
             <summary>
-                This methods converts all paramters required for Tax Bills into a JSON object
+                This methods converts all parameters required for Tax Bills into a JSON object
             </summary>
             <param name="BBL"></param>
             <returns>JSON string</returns>
@@ -772,8 +772,8 @@
         </member>
         <member name="T:PropertyWebAPI.BAL.Zillow">
             <summary>
-                This class deals with all the details associated with either returning waterbill details or creating the 
-                request for getting is scrapped from the web 
+                This class deals with all the details associated with either returning Zillow details or creating the 
+                request to get data scrapped from the web 
             </summary>
         </member>
         <member name="T:PropertyWebAPI.BAL.Zillow.Parameters">
@@ -783,7 +783,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.ParametersToJSON(System.String,System.String)">
             <summary>
-                This methods converts all paramters required for Tax Bills into a JSON object
+                This methods converts all parameters required for Tax Bills into a JSON object
             </summary>
             <param name="BBL"></param>
             <param name="address"></param>

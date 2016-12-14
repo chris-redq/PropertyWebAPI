@@ -15,6 +15,7 @@ namespace PropertyWebAPI.BAL
     using System.Text;
     using System.Runtime.Serialization.Json;
     using System.Net;
+    using System.Runtime.Serialization;
 
     #region Local Helper Classes
     /// <summary>
@@ -35,21 +36,22 @@ namespace PropertyWebAPI.BAL
     #endregion
 
     /// <summary>
-    ///     This class deals with all the details associated with either returning waterbill details or creating the 
-    ///     request for getting is scrapped from the web 
+    ///     This class deals with all the details associated with either returning Mortgage Servicer details or creating the 
+    ///     request to get data scrapped from the web 
     /// </summary>
     public static class MortgageServicer
     {
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
+        [DataContract]
         private class Parameters
-        {
+        {   [DataMember]
             public string BBL;
         }
 
         /// <summary>
-        ///     This methods converts all paramters required for Tax Bills into a JSON object
+        ///     This methods converts all parameters required for Tax Bills into a JSON object
         /// </summary>
         /// <param name="BBL"></param>
         /// <returns>JSON string</returns>
@@ -249,6 +251,8 @@ namespace PropertyWebAPI.BAL
 
                                         DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
+                                    else
+                                        throw (new Exception("Cannot locate Request Log Record(s)"));
                                     break;
                                 }
                             default:
