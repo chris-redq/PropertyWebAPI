@@ -24,6 +24,13 @@ namespace PropertyWebAPI.Controllers
         public BAL.WaterBillDetails waterBill;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public BAL.TaxBillDetails taxBill;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public BAL.MortgageServicerDetails mortgageServicer;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public BAL.DOBPenaltiesAndViolationsSummaryData dobPenaltiesAndViolationsSummary;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public BAL.ZillowPropertyDetails zillowPorperty;
+
     }
     #endregion
 
@@ -106,12 +113,21 @@ namespace PropertyWebAPI.Controllers
                 switch (requestLogObj.RequestTypeId)
                 {
                     case (int)RequestTypes.NYCTaxBill:
-                            result.taxBill = BAL.TaxBill.ReRun(requestLogObj);
-                            return Ok(result);
+                        result.taxBill = BAL.TaxBill.ReRun(requestLogObj);
+                        return Ok(result);
                     case (int)RequestTypes.NYCWaterBill:
-                            result.waterBill = BAL.WaterBill.ReRun(requestLogObj);
-                            return Ok(result);
-                     default:
+                        result.waterBill = BAL.WaterBill.ReRun(requestLogObj);
+                        return Ok(result);
+                    case (int)RequestTypes.NYCMortgageServicer:
+                        result.mortgageServicer = BAL.MortgageServicer.ReRun(requestLogObj);
+                        return Ok(result);
+                    case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
+                        result.dobPenaltiesAndViolationsSummary = BAL.DOBPenaltiesAndViolationsSummary.ReRun(requestLogObj);
+                        return Ok(result);
+                    case (int)RequestTypes.Zillow:
+                        result.zillowPorperty = BAL.Zillow.ReRun(requestLogObj);
+                        return Ok(result);
+                    default:
                         return BadRequest("Bad Request - Incorrect Request Type");
                 }
             }
@@ -147,6 +163,15 @@ namespace PropertyWebAPI.Controllers
                         case (int)RequestTypes.NYCWaterBill:
                             result.waterBill = BAL.WaterBill.ReRun(requestLogObj);
                             break;
+                        case (int)RequestTypes.NYCMortgageServicer:
+                            result.mortgageServicer = BAL.MortgageServicer.ReRun(requestLogObj);
+                            break;
+                        case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
+                            result.dobPenaltiesAndViolationsSummary = BAL.DOBPenaltiesAndViolationsSummary.ReRun(requestLogObj);
+                            break;
+                        case (int)RequestTypes.Zillow:
+                            result.zillowPorperty = BAL.Zillow.ReRun(requestLogObj);
+                            break;
                         default:
                             break;
                     }
@@ -154,5 +179,70 @@ namespace PropertyWebAPI.Controllers
                 return Ok(result);
             }
         }
+
+        // ../api/webdata/request/checkprocessed
+        /// <summary>  
+        ///     Use this method after the service comes up to process any requests that may be processed by DJM but not data services. This would 
+        ///     happen in situations when the data services are down and the DJM is processing requests 
+        /// </summary>  
+        /// <returns>
+        ///     void
+        /// </returns>
+        [Route("api/webdata/request/checkprocessed")]
+        [HttpPost]
+        public void CheckIfRequestsProcessed()
+        {
+            using (WebDataEntities webDataE = new WebDataEntities())
+            {
+                List<DataRequestLog> requestLogList = DAL.DataRequestLog.GetAllUnprocessed(webDataE);
+                if (requestLogList == null)
+                    return;
+
+                Results result = new Results();
+                foreach (var requestLogObj in requestLogList)
+                {
+                    Request requestObj = webDataE.Requests.Find(requestLogObj.RequestId);
+                    if (requestObj != null)
+                    {
+                        switch (requestObj.RequestTypeId)
+                        {
+                            case (int)RequestTypes.NYCTaxBill:
+                                if (BAL.TaxBill.UpdateData(requestObj))
+                                {
+
+                                }
+                                break;
+                            case (int)RequestTypes.NYCWaterBill:
+                                if (BAL.WaterBill.UpdateData(requestObj))
+                                {
+
+                                }
+                                break;
+                            case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
+                                if (BAL.DOBPenaltiesAndViolationsSummary.UpdateData(requestObj))
+                                {
+
+                                }
+                                break;
+                            case (int)RequestTypes.NYCMortgageServicer:
+                                if (BAL.MortgageServicer.UpdateData(requestObj))
+                                {
+                                }
+                                break;
+                            case (int)RequestTypes.Zillow:
+                                if (BAL.Zillow.UpdateData(requestObj))
+                                {
+
+                                }
+                                break;
+                            default:
+                                Common.Logs.log().Warn(string.Format("Cannot process request - Invalid Request Type: {0} for Request Id {1}", requestObj.RequestTypeId, requestObj.RequestId));
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -59,6 +59,22 @@ namespace PropertyWebAPI.DAL
         }
 
         /// <summary>
+        ///     Gets all DataRequestLog objects(rows) from the DataRequestLog table that have a pending status but have a 
+        ///     corresponding Request Object that is in error or completed successfully. This may happen when DJM is in session processing requests
+        ///     and Data Services is down
+        /// </summary>
+        /// <param name="webDBEntities"></param>
+        /// <returns></returns>
+        public static List<WebDataDB.DataRequestLog> GetAllUnprocessed(WebDataEntities webDBEntities)
+        {
+            return (from drl in webDBEntities.DataRequestLogs
+                   join r in webDBEntities.Requests
+                   on drl.RequestId equals r.RequestId
+                   where drl.RequestStatusTypeId==(int)RequestStatus.Pending && (r.RequestStatusTypeId==(int)RequestStatus.Error || r.RequestStatusTypeId == (int)RequestStatus.Success)
+                   select drl).ToList();
+        }
+
+        /// <summary>
         ///     Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
         /// </summary>
         /// <param name="webDBEntities"></param>

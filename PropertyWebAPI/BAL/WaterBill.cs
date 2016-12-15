@@ -14,7 +14,8 @@ namespace PropertyWebAPI.BAL
     using System.IO;
     using System.Text;
     using System.Runtime.Serialization.Json;
-    
+    using System.Runtime.Serialization;
+
 
     #region Local Helper Classes
     /// <summary>
@@ -43,8 +44,9 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Water bill 
         /// </summary>
+        [DataContract]
         class WaterBillParameters
-        {
+        {   [DataMember]
             public string BBL;
         }
 

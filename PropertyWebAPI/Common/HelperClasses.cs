@@ -7,6 +7,7 @@ using ACRISDB;
 using NYCDOF;
 using log4net;
 using AutoMapper;
+using System.Text.RegularExpressions;
 
 namespace PropertyWebAPI.Common
 {
@@ -58,6 +59,32 @@ namespace PropertyWebAPI.Common
         public static int GetLot(string BBL)
         {
             return int.Parse(BBL.Substring(6, 4)); 
+        }
+
+        public static bool IsValid(string BBL)
+        {
+            return Regex.IsMatch(BBL, "^[1-5][0-9]{9}[A-Z]??$");
+        }
+
+        public static bool IsRegularTaxLot(string BBL)
+        {
+            if (GetLot(BBL) < 1000)
+                return true;
+            return false;
+        }
+
+        public static bool IsCondoTaxLot(string BBL)
+        {
+            if (GetLot(BBL) >= 1001 && GetLot(BBL)<=6999)
+                return true;
+            return false;
+        }
+
+        public static bool IsSpecialCondoBuildingTaxLot(string BBL)
+        {
+            if (GetLot(BBL) >= 7501 && GetLot(BBL) <= 7599)
+                return true;
+            return false;
         }
     }
 

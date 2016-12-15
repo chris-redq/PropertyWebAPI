@@ -1227,6 +1227,18 @@
                 Returns an object of contain cleaned property address and general information about the property
             </returns>
         </member>
+        <member name="T:PropertyWebAPI.Controllers.Violations">
+            <summary>
+                This class is designed to capture all violations associated with a property. Currently, it only captures
+                DOB Civil Penalties and DOB ECB Violations Summary (total amounts)
+            </summary>
+            
+        </member>
+        <member name="F:PropertyWebAPI.Controllers.Violations.dobPenaltiesAndViolations">
+            <summary>
+                Captures sum of all DOB Civil Penalties and sum of all ECB Violations
+            </summary>
+        </member>
         <member name="T:PropertyWebAPI.Controllers.ViolationsController">
             <summary>  
             This controller handles all api requests associated with property violations
@@ -1237,11 +1249,12 @@
                 Use this method to get all violations associated with a property
             </summary>  
             <param name="propertyBBL">
-                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
-                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
             </param>  
             <param name="externalReferenceId">
-                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+                This is an optional parameter. The user of the API can provide their own reference number for a request. This reference number is sent 
+                back along with results to the caller when their request is furnished asynchronously.
             </param>
             <param name="dobPenaltiesAndViolationsSummary">
                 Set this optional parameter to N if you do not want the DOB Civil Penalties. The default value for this parameter is Y
@@ -1286,24 +1299,34 @@
                 Returns data associated with the requestId
             </returns>
         </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.CheckIfRequestsProcessed">
+            <summary>  
+                Use this method after the service comes up to process any requests that may be processed by DJM but not data services. This would 
+                happen in situations when the data services are down and the DJM is processing requests 
+            </summary>  
+            <returns>
+                void
+            </returns>
+        </member>
         <member name="T:PropertyWebAPI.Controllers.ZillowController">
             <summary>  
-            This controller handles all api requests associated with property bills
+                This controller handles all api requests associated with Zillow website
             </summary>  
         </member>
         <member name="M:PropertyWebAPI.Controllers.ZillowController.Get(System.String,System.String)">
             <summary>  
-                Use this method to get tax bill for a property
+                Use this method to get property information from Zillow
             </summary>  
             <param name="propertyBBL">
-                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
-                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+                Borough Block and Lot. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number.
             </param>  
             <param name="externalReferenceId">
-                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+                This is a optional parameter. The user of the API can provide their own reference number for a request. This reference number is sent 
+                back along with results to the caller when their request is furnished asynchronously.
             </param>
             <returns>
-                Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
+                Returns zEstimate of the property
             </returns>
         </member>
         <member name="T:PropertyWebAPI.DAL.DataRequestLog">
@@ -1336,6 +1359,15 @@
             </summary>
             <param name="webDBEntities"></param>
             <param name="externalRefereceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAllUnprocessed(WebDataDB.WebDataEntities)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table that have a pending status but have a 
+                corresponding Request Object that is in error or completed successfully. This may happen when DJM is in session processing requests
+                and Data Services is down
+            </summary>
+            <param name="webDBEntities"></param>
             <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsError(WebDataDB.WebDataEntities,System.Int64)">
