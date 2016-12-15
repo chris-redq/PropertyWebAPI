@@ -59,7 +59,7 @@ namespace PropertyWebAPI.Controllers
         {                                                            
             Bills billsObj = new Bills();
 
-            if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}[A-Z]??$"))
+            if (!Common.BBL.IsValid(propertyBBL))
             {   if (needTaxBill == "Y")
                     BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");

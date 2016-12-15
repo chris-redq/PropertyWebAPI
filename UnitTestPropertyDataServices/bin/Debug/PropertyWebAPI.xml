@@ -544,6 +544,11 @@
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>
         </member>
+        <member name="T:PropertyWebAPI.BAL.eCourts">
+            <summary>
+                All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
+            </summary>
+        </member>
         <member name="T:PropertyWebAPI.BAL.MortgageServicerDetails">
             <summary>
             Helper class used to capture Tax bill details and used for serialization into JSON object 
@@ -859,6 +864,16 @@
             This controller handles all api requests associated with eCourts CCIS Case related data
             </summary>  
         </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.TemplateCaseIndexNumberQueriesList``1(System.String,System.String,System.Func{System.String,System.String,System.Collections.Generic.List{``0}})">
+            <summary>  
+                Use this method when calling parameters are CountyId and CaseIndexNumber and return type is a List
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.TemplateCaseIndexNumberQueries``1(System.String,System.String,System.Func{System.String,System.String,``0})">
+            <summary>  
+                Use this method when calling parameters are CountyId and CaseIndexNumber and return type is an object
+            </summary>
+        </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.Get(System.String,System.String)">
             <summary>  
             Use this api to get a detailed information on a case
@@ -873,7 +888,7 @@
         </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.GetMotions(System.String,System.String)">
             <summary>  
-            Use this api to get a list of Motions (both Defendent and Plaintiff) for a case
+            Use this api to get a list of Motions (both Defendant and Plaintiff) for a case
             </summary>  
             <param name="countyId">
                 CCIS County Id associated with the case. 
@@ -897,7 +912,7 @@
         </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.GetAttorneys(System.String,System.String)">
             <summary>  
-            Use this api to get a list of attorneys (both Defendent and Plaintiff) for a case
+            Use this api to get a list of attorneys (both Defendant and Plaintiff) for a case
             </summary>  
             <param name="countyId">
                 CCIS County Id associated with the case. 
@@ -909,13 +924,13 @@
         </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.GetCaseHistory(System.String,System.String)">
             <summary>  
-            Use this api to get a case's history in a chronoligical manner. This api returns events after April 18, 2016
+            Use this api to get a case's history in a chronological manner. This api returns events after April 18, 2016
             </summary>  
             <param name="countyId">
                 CCIS County Id associated with the case. 
             </param>  
             <param name="caseIndexNumber">
-               Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+               Case Index Number in YYYY9999999 format where YYYY represents the year
             </param> 
             <returns>
                 Returns a list of changes that happened on case. For example Appearances, Motions, Attorneys, Case Details
@@ -940,7 +955,7 @@
                 Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
             </param> 
             <param name="effectiveDate">
-                AreaAbstractEntities Paramter incase LPs are requested on or after the supplied effectiveDate
+                Optional parameter in case LPs are requested on or after the supplied effectiveDate
             </param> 
             <returns>
                 Returns a list of LPs and their respective cases in eCourts for the given property identified by BBL - Borough Block Lot Number.
@@ -957,7 +972,7 @@
                 End date of the date range in yyyyMMdd format eg: 20161030
             </param> 
             <returns>
-                Returns a list of new forclosure cases registered within the date range
+                Returns a list of new foreclosure cases registered within the date range
             </returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.GetCasesColumnValueChanges(System.String,System.String,System.String)">
