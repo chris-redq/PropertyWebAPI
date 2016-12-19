@@ -175,3 +175,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\AutoMapper.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\AutoMapper.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\DexiRobotRequestResponseBuilder.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\DexiRobotRequestResponseBuilder.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\Swashbuckle.Core.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\WebActivatorEx.dll

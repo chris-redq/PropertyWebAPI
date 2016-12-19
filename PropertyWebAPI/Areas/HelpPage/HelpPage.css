@@ -1,3 +1,38 @@
+.help-page-header h1,
+.help-page-header .h1,
+.help-page-header h2,
+.help-page-header .h2,
+#logo.help-page-header { 
+    font-family: "Segoe UI Light", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.help-page-header h1,
+.help-page-header .h1 {
+    font-size: 36px;
+    line-height: normal;
+    vertical-align: top;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.help-page-header h2,
+.help-page-header .h2 {
+    font-size: 24px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.help-page-header span {
+    font-size: 35px;
+    font-weight:bold; 
+    vertical-align: top;
+}
+
+.help-page-header img {
+    height: 52px; 
+    width: 52px; 
+}
+
 .help-page h1,
 .help-page .h1,
 .help-page h2,
@@ -5,7 +40,6 @@
 .help-page h3,
 .help-page .h3,
 #body.help-page,
-#footer.help-page,
 .help-page-table th,
 .help-page-table pre,
 .help-page-table p {
@@ -111,6 +145,7 @@
 .help-page .h1 {
     font-size: 36px;
     line-height: normal;
+    vertical-align: top;
 }
 
 .help-page h2,
@@ -133,3 +168,4 @@
     color: #0000EE;
     text-decoration: none;
 }
+

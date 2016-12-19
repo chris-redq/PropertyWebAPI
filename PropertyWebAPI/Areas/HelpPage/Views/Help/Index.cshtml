@@ -6,7 +6,7 @@
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "Property Record Data Services API Help Page";
+    ViewBag.Title = "Property Record Data Services";
 
     // Group APIs by controller
     //ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
@@ -14,11 +14,16 @@
 }
 
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
-<header class="help-page">
+<div id="logo" class="help-page-header">
+    <img src="~/Areas/HelpPage/Images/Redq-Logo.png" alt="RedQ"/>
+    <span>  RedQ</span>
+</div>
+<header class="help-page-header">
     <div class="content-wrapper">
         <div class="float-left">
-            <h1>RedQ</h1>
             <h1>@ViewBag.Title</h1>
+            <h2>API Help Page</h2>
+            <hr />
         </div>
     </div>
 </header>
@@ -38,8 +43,10 @@
         }
     </section>
 </div>
-<div id="footer" class="help-page">
-    <div>
-        <p>Copyright (c) Redq Technologies, Inc. All rights reserved.</p>
-    </div>
+<div id="body" class="help-page">
+    <section class="featured">
+        <div class="content-wrapper">
+            <p align="center">Copyright (c) Redq Technologies, Inc. All rights reserved.</p>
+        </div>
+    </section>
 </div>

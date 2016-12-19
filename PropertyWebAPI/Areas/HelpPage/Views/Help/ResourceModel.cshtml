@@ -3,6 +3,19 @@
 @model ModelDescription
 
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+<div id="logo" class="help-page-header">
+    <img src="~/Areas/HelpPage/Images/Redq-Logo.png" alt="RedQ" />
+    <span>  RedQ</span>
+</div>
+<header class="help-page-header">
+    <div class="content-wrapper">
+        <div class="float-left">
+            <h1>Property Record Data Services</h1>
+            <h2>Resource Model</h2>
+            <hr />
+        </div>
+    </div>
+</header>
 <div id="body" class="help-page">
     <section class="featured">
         <div class="content-wrapper">
@@ -15,5 +28,12 @@
     <p>@Model.Documentation</p>
     <section class="content-wrapper main-content clear-fix">
         @Html.DisplayFor(m => Model)
+    </section>
+</div>
+<div id="body" class="help-page">
+    <section class="featured">
+        <div class="content-wrapper">
+            <p align="center">Copyright (c) Redq Technologies, Inc. All rights reserved.</p>
+        </div>
     </section>
 </div>

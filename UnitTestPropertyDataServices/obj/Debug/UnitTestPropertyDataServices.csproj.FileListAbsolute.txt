@@ -57,3 +57,6 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\D
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\AutoMapper.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\DexiRobotRequestResponseBuilder.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\DexiRobotRequestResponseBuilder.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\UnitTestPropertyDataServices.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\WebActivatorEx.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\Swashbuckle.Core.dll
