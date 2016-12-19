@@ -129,7 +129,7 @@ namespace PropertyWebAPI.BAL
             client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
             AppTokens appTokens = GetConfigurationTokens();
 
-            string borough = Common.BBL.GetBoroughName(propertyBBL);
+            string borough = BAL.BBL.GetBoroughName(propertyBBL);
 
             HttpResponseMessage response = client.GetAsync("geoclient/v1/bbl.json?borough=" + borough + "&block=" + propertyBBL.Substring(1, 5)
                                                            + "&lot=" + propertyBBL.Substring(6, 4) + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
@@ -192,9 +192,9 @@ namespace PropertyWebAPI.BAL
                         {
                             propertyInfo.Add(new tfnGetGeneralPropertyInformation_Result());
                             propertyInfo[0].BBLE = propertyBBL;
-                            propertyInfo[0].Borough = Common.BBL.GetBoroughName(propertyBBL);
-                            propertyInfo[0].Block = Common.BBL.GetBlock(propertyBBL);
-                            propertyInfo[0].Lot = Common.BBL.GetLot(propertyBBL);
+                            propertyInfo[0].Borough = BAL.BBL.GetBoroughName(propertyBBL);
+                            propertyInfo[0].Block = BAL.BBL.GetBlock(propertyBBL);
+                            propertyInfo[0].Lot = BAL.BBL.GetLot(propertyBBL);
 
                             propertyInfo[0].StreetName = lotObj.StreetName;
                             propertyInfo[0].StreetNumber = lotObj.StreetNumber;
@@ -229,7 +229,7 @@ namespace PropertyWebAPI.BAL
                         address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
                         if (propertyInfo[0].UnitNumber != null)
                             address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
-                        address.city = StringUtilities.ToTitleCase(Common.BBL.GetBoroughName(propertyBBL));
+                        address.city = StringUtilities.ToTitleCase(BAL.BBL.GetBoroughName(propertyBBL));
                         address.state = "NY";
                         if (propertyInfo[0].ZipCode!=null)
                             address.zip = propertyInfo[0].ZipCode;
@@ -294,7 +294,7 @@ namespace PropertyWebAPI.BAL
                 return null;
             }
 
-            if (Common.BBL.GetLot((string)jsonObj.SelectToken("address.bbl")) <= 6999)
+            if (BAL.BBL.GetLot((string)jsonObj.SelectToken("address.bbl")) <= 6999)
             {
                 BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails((string)jsonObj.SelectToken("address.bbl"));
                 if (deedDetailsObj != null)
@@ -303,7 +303,7 @@ namespace PropertyWebAPI.BAL
                 }
             }
             else
-                propertyDetails.errors = string.Format("Cannot get ownership information for Lot number {0}", Common.BBL.GetLot((string)jsonObj.SelectToken("address.bbl")));
+                propertyDetails.errors = string.Format("Cannot get ownership information for Lot number {0}", BAL.BBL.GetLot((string)jsonObj.SelectToken("address.bbl")));
 
             return propertyDetails;
         }

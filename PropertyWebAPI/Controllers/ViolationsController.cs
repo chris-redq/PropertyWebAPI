@@ -57,7 +57,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(Violations))]
         public IHttpActionResult GetViolations(string propertyBBL, string externalReferenceId = null, string dobPenaltiesAndViolationsSummary = "Y")
         {
-            if (Common.BBL.IsValid(propertyBBL))
+            if (BAL.BBL.IsValid(propertyBBL))
             {
                 BAL.DOBPenaltiesAndViolationsSummary.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");

@@ -173,7 +173,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(List<tfnGetMortgageForeclosureCasesForaProperty_Result>))]
         public IHttpActionResult GetMortgageForeclosureCasesForaProperty(string propertyBBL)
         {
-            if (!Common.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValid(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
             try
@@ -210,7 +210,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(List<tfnGetMortgageForeclosureLPsForaProperty_Result>))]
         public IHttpActionResult GetMortgageForeclosureLPsForaProperty(string propertyBBL, string effectiveDate="")
         {
-            if (!Common.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValid(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
             DateTime? sDateTime = null;

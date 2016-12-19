@@ -59,7 +59,7 @@ namespace PropertyWebAPI.Controllers
         {                                                            
             Bills billsObj = new Bills();
 
-            if (!Common.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValid(propertyBBL))
             {   if (needTaxBill == "Y")
                     BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");

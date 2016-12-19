@@ -90,7 +90,7 @@ namespace PropertyWebAPI.BAL
         /// <returns></returns>
         public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.NYCDOBPenaltiesAndViolations, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
 
         /// <summary>

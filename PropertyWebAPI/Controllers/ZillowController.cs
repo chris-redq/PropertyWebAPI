@@ -38,7 +38,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.ZillowPropertyDetails))]
         public IHttpActionResult Get(string propertyBBL, string externalReferenceId = null)
         {
-            if (Common.BBL.IsValid(propertyBBL))
+            if (BAL.BBL.IsValid(propertyBBL))
             {
                 BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");

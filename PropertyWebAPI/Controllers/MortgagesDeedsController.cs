@@ -15,7 +15,6 @@ namespace PropertyWebAPI.Controllers
     using System.Web.Http.Description;
     using System.Text.RegularExpressions;
     using ACRISDB;
-
     
 
     /// <summary>  
@@ -33,33 +32,32 @@ namespace PropertyWebAPI.Controllers
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
         ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
         /// <returns>
-        ///     Returns a list of all Mortagage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+        ///     Returns a list of all Mortgage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/documents")]
         [ResponseType(typeof(vwDocumentsByBBLE))]
         public IHttpActionResult Get(string propertyBBLE)
         {
-            
-            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            if (!BAL.BBL.IsValid(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+
+            try
             {
                 using (ACRISEntities acrisDBEntities = new ACRISEntities())
                 {
                     List<vwDocumentsByBBLE> documentsObj = acrisDBEntities.vwDocumentsByBBLEs
-                                                                          .Where(i => i.BBLE == propertyBBLE)
-                                                                          .OrderByDescending(m => m.DateRecorded).ToList();
-                    if (documentsObj != null)
-                    {
-                        if (documentsObj.Count > 0)
-                        {
-                            return Ok(documentsObj);
-                        }
-
+                                                                            .Where(i => i.BBLE == propertyBBLE)
+                                                                            .OrderByDescending(m => m.DateRecorded).ToList();
+                    if (documentsObj == null || documentsObj.Count <= 0)
                         return NotFound();
-                    }
+                    return Ok(documentsObj);
                 }
             }
-
-            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Error reading database");
+            }
         }
 
         // ../api/MortgagesDeeds/3001670091/deeds
@@ -77,27 +75,26 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(vwDocumentsByBBLE))]
         public IHttpActionResult GetAllDeeds(string propertyBBLE)
         {
+            if (!BAL.BBL.IsValid(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
-            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            try
             {
                 using (ACRISEntities acrisDBEntities = new ACRISEntities())
                 {
                     List<vwDocumentsByBBLE> documentsObj = acrisDBEntities.vwDocumentsByBBLEs
-                                                                          .Where(i => i.BBLE == propertyBBLE && (i.DocumentType=="DEED" || i.DocumentType=="DEEDO"))
-                                                                          .OrderByDescending(m => m.DocumentDate).ToList<vwDocumentsByBBLE>();
-                    if (documentsObj != null)
-                    {
-                        if (documentsObj.Count > 0)
-                        {
-                            return Ok(documentsObj);
-                        }
-
+                                                                            .Where(i => i.BBLE == propertyBBLE && (i.DocumentType == "DEED" || i.DocumentType == "DEEDO"))
+                                                                            .OrderByDescending(m => m.DocumentDate).ToList<vwDocumentsByBBLE>();
+                    if (documentsObj == null || documentsObj.Count <= 0)
                         return NotFound();
-                    }
+                    return Ok(documentsObj);
                 }
             }
-
-            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB {0}", Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Error reading database");
+            }
         }
 
         // ../api/MortgagesDeeds/3001670091/mortgageservicer
@@ -116,11 +113,8 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.MortgageServicerDetails))]
         public IHttpActionResult GetMortgageServicer(string propertyBBL, string externalReferenceId="")
         {
-            if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}[A-Z]??$"))
-            {
-                BAL.MortgageServicer.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+            if (!BAL.BBL.IsValid(propertyBBL))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
-            }
 
             BAL.MortgageServicerDetails mortgageServicerObj = BAL.MortgageServicer.Get(propertyBBL, externalReferenceId);
             if (mortgageServicerObj == null)
@@ -142,9 +136,9 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.DeedDetails))]
         public IHttpActionResult GetLatestDeedDetails(string propertyBBLE)
         {
-            if (!Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            if (!BAL.BBL.IsValid(propertyBBLE))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
-
+            
             BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBLE);
             if (deedDetailsObj==null)
                 return NotFound();
@@ -154,7 +148,7 @@ namespace PropertyWebAPI.Controllers
 
         // ../api/MortgagesDeeds/3001670091/unsatisfiedmortgages
         /// <summary>  
-        ///     Use this method to retrieve all unsatsified mortgages for a property
+        ///     Use this method to retrieve all unsatisfied mortgages for a property
         /// </summary>  
         /// <param name="propertyBBLE">
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
@@ -166,26 +160,26 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(tfnGetUnsatisfiedMortgages_Result))]
         public IHttpActionResult GetUnsatisfiedMortgages(string propertyBBLE)
         {
+            if (!BAL.BBL.IsValid(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
-            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            try
             {
                 using (ACRISEntities acrisDBEntities = new ACRISEntities())
                 {
                     List<tfnGetUnsatisfiedMortgages_Result> mortgagesList = acrisDBEntities.tfnGetUnsatisfiedMortgages(propertyBBLE).ToList();
 
-                    if (mortgagesList != null)
-                    {
-                        if (mortgagesList.Count > 0)
-                        {
-                            return Ok(mortgagesList);
-                        }
-
+                    if (mortgagesList == null || mortgagesList.Count <= 0)
                         return NotFound();
-                    }
+
+                    return Ok(mortgagesList);
                 }
             }
-
-            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            catch(Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB {0}", Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Error reading database");
+            }
         }
 
         // ../api/MortgagesDeeds/3001670091/contractsofsale
@@ -197,35 +191,33 @@ namespace PropertyWebAPI.Controllers
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
         ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
         /// <returns>
-        ///     Returns a list of all all Contract of Sales as well as Memorandum of Contracts filed with the ACRIS system for a given property identified by a 
+        ///     Returns a list of all Contract of Sales as well as Memorandum of Contracts filed with the ACRIS system for a given property identified by a 
         ///     BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/contractsofsale")]
         [ResponseType(typeof(vwDocumentsByBBLE))]
         public IHttpActionResult GetAllContractsOfSaleAndMemorandumsOfContract(string propertyBBLE)
         {
+            if (!BAL.BBL.IsValid(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
-            if (Regex.IsMatch(propertyBBLE, "^[1-5][0-9]{9}[A-Z]??$"))
+            try
             {
                 using (ACRISEntities acrisDBEntities = new ACRISEntities())
                 {
                     List<vwDocumentsByBBLE> documentsObj = acrisDBEntities.vwDocumentsByBBLEs
                                                                           .Where(i => i.BBLE == propertyBBLE && (i.DocumentType == "CNTR" || i.DocumentType == "MCON"))
                                                                           .OrderByDescending(m => m.DocumentDate).ToList<vwDocumentsByBBLE>();
-                    if (documentsObj != null)
-                    {
-                        if (documentsObj.Count > 0)
-                        {
-                            return Ok(documentsObj);
-                        }
-
+                    if (documentsObj == null || documentsObj.Count <= 0)
                         return NotFound();
-                    }
+                    return Ok(documentsObj);
                 }
             }
-
-            return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB {0}", Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Error reading database");
+            }
         }
     }
 }
-

@@ -1006,7 +1006,7 @@
                 Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
             <returns>
-                Returns a list of all Mortagage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+                Returns a list of all Mortgage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
             </returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetAllDeeds(System.String)">
@@ -1047,7 +1047,7 @@
         </member>
         <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetUnsatisfiedMortgages(System.String)">
             <summary>  
-                Use this method to retrieve all unsatsified mortgages for a property
+                Use this method to retrieve all unsatisfied mortgages for a property
             </summary>  
             <param name="propertyBBLE">
                 Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
@@ -1065,7 +1065,7 @@
                 Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
                 followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
             <returns>
-                Returns a list of all all Contract of Sales as well as Memorandum of Contracts filed with the ACRIS system for a given property identified by a 
+                Returns a list of all Contract of Sales as well as Memorandum of Contracts filed with the ACRIS system for a given property identified by a 
                 BBLE - Borough Block Lot and Easement Number.
             </returns>
         </member>
