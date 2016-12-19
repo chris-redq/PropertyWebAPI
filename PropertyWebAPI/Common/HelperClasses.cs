@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http.Results;
 using ACRISDB;
 using NYCDOF;
+using eCourtsDB;
 using log4net;
 using AutoMapper;
 using System.Text.RegularExpressions;
@@ -27,6 +28,15 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetDocumentParties_Result, BAL.DeedParty>();
                 cfg.CreateMap<PropertyNotInAssessment, BAL.PropertyLotInformation>();
                 cfg.CreateMap<tfnGetGeneralPropertyInformation_Result, BAL.PhysicalPropertyInformation>();
+                cfg.CreateMap<vwMotionExpanded, BAL.MotionDetails>();
+                cfg.CreateMap<vwCaseExpanded, BAL.CaseDetails>();
+                cfg.CreateMap<vwAppearanceExpanded, BAL.AppearanceDetails>();
+                cfg.CreateMap<vwAttorneyExpanded, BAL.AttorneyDetails>();
+                cfg.CreateMap<tfnGetCaseUpdates_Result, BAL.CaseUpdate>();
+                cfg.CreateMap<tfnGetMortgageForeclosureLPsForaProperty_Result, BAL.LPCaseDetails>();
+                cfg.CreateMap<tfnGetMortgageForeclosureCasesForaProperty_Result, BAL.CaseBasicInformation>();
+                cfg.CreateMap<tfnGetNewMortgageForeclosureCases_Result, BAL.CaseBasicInformationWithBBL>();
+                cfg.CreateMap<tfnGetCaseColumnChanges_Result, BAL.CaseDataChange>();
             });
         }
     }
