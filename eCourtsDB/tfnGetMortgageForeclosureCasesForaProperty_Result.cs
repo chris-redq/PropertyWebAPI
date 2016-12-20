@@ -17,6 +17,7 @@ namespace eCourtsDB
         public string CaseIndexNumber { get; set; }
         public string County { get; set; }
         public string FormattedCaseIndexNumber { get; set; }
+        public string JDLSCaseIndexNumber { get; set; }
         public string CaseStatus { get; set; }
         public Nullable<System.DateTime> CaseDispositionDate { get; set; }
         public string CaseType { get; set; }

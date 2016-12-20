@@ -5,22 +5,34 @@ namespace PropertyWebAPI.BAL
 
     public static class BBL
     {
-        public static string GetBoroughName(string BBL)
+        public static string TranslateBorough(string borough)
         {
-            switch (BBL.Substring(0, 1))
+            switch (borough)
             {
                 case "1":
+                case "Manhattan":
                     return "Manhattan";
                 case "2":
+                case "Bronx":
                     return "Bronx";
                 case "3":
+                case "Brooklyn":
                     return "Brooklyn";
                 case "4":
+                case "Queens":
                     return "Queens";
                 case "5":
+                case "Staten Island":
                     return "Staten Island";
+                default:
+                    return null;
             }
-            return "";
+                
+        }
+
+        public static string GetBoroughName(string BBL)
+        {
+            return TranslateBorough(BBL.Substring(0, 1));
         }
 
         public static int GetBlock(string BBL)

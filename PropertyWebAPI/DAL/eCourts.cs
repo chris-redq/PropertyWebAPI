@@ -5,7 +5,7 @@
 // <author>Raj Sethi</author>
 //-----------------------------------------------------------------------
 
-namespace PropertyWebAPI.BAL
+namespace PropertyWebAPI.DAL
 {
     using System;
     using System.Collections.Generic;

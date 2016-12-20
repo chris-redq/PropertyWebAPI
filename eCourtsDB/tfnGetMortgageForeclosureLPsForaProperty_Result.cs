@@ -17,10 +17,13 @@ namespace eCourtsDB
         public string CountyId { get; set; }
         public string KeyValue { get; set; }
         public string Seq { get; set; }
+        public string LisPendensType { get; set; }
         public string JDLSCaseIndexNumber { get; set; }
         public string Debtor { get; set; }
         public string Creditor { get; set; }
+        public Nullable<System.DateTime> DataEntryDateTime { get; set; }
         public Nullable<System.DateTime> EffectiveDateTime { get; set; }
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
         public Nullable<System.DateTime> SatisfactionDate { get; set; }
         public string SatisfactionType { get; set; }
         public string Remarks { get; set; }

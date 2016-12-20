@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="CasesController.cs" company="Redq Technologies, Inc.">
+// <copyright file="PhysicalDataController.cs" company="Redq Technologies, Inc.">
 //     Copyright (c) Redq Technologies, Inc. All rights reserved.
 // </copyright>
 // <author>Raj Sethi</author>
@@ -48,6 +48,10 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(string))]
         public IHttpActionResult GetNYCBBL(string streetNumber, string streetName, string borough)
         {
+            borough = BAL.BBL.TranslateBorough(borough);
+            if (borough == null)
+                return this.BadRequest("Incorrect Borough Name or Identifier");
+
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
 
             string bbl = (string)jsonObj.SelectToken("address.bbl");
@@ -138,6 +142,10 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(JObject))]
         public IHttpActionResult GetNYCAddressDetails(string streetNumber, string streetName, string borough)
         {
+            borough = BAL.BBL.TranslateBorough(borough);
+            if (borough == null)
+                return this.BadRequest("Incorrect Borough Name or Identifier");
+
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
 
             if (jsonObj == null)
@@ -173,7 +181,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(JObject))]
         public IHttpActionResult GetNYCBBLDetails(string propertyBBL)
         {
-            if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}$"))
+            if (!BAL.BBL.IsValid(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetBBLDetailsFromGeoClientAPI(propertyBBL);
@@ -242,12 +250,13 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string propertyBBL, string addresscleanup="Y")
         {
-            if (!Regex.IsMatch(propertyBBL, "^[1-5][0-9]{9}$"))
+            if (!BAL.BBL.IsValid(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
             if (addresscleanup == null)
                 addresscleanup = "Y";
 
-            BAL.GeneralPropertyInformation propertyDetails = BAL.NYCPhysicalPropertyData.Get(propertyBBL,addresscleanup.ToUpper()=="Y"?true:false);
+            var propertyDetails = BAL.NYCPhysicalPropertyData.Get(propertyBBL,addresscleanup.ToUpper()=="Y"?true:false);
 
             if (propertyDetails==null)
                 return NotFound();
@@ -274,7 +283,11 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string streetNumber, string streetName, string borough)
         {
-            BAL.GeneralPropertyInformation propertyDetails = BAL.NYCPhysicalPropertyData.Get(streetNumber, streetName, borough);
+            borough = BAL.BBL.TranslateBorough(borough);
+            if (borough == null)
+                return this.BadRequest("Incorrect Borough Name or Identifier");
+
+            var propertyDetails = BAL.NYCPhysicalPropertyData.Get(streetNumber, streetName, borough);
 
             if (propertyDetails == null)
                 return NotFound();

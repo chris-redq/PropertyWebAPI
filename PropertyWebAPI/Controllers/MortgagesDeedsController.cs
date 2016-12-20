@@ -15,7 +15,8 @@ namespace PropertyWebAPI.Controllers
     using System.Web.Http.Description;
     using System.Text.RegularExpressions;
     using ACRISDB;
-    
+    using AutoMapper;
+
 
     /// <summary>  
     ///     This controller handles all ACRIS related requests for Mortgage and Deed related documents
@@ -56,7 +57,7 @@ namespace PropertyWebAPI.Controllers
             catch (Exception e)
             {
                 Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
-                return Common.HttpResponse.InternalError(Request, "Error reading database");
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
 
@@ -92,8 +93,8 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB {0}", Common.Utilities.FormatException(e)));
-                return Common.HttpResponse.InternalError(Request, "Error reading database");
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
 
@@ -157,7 +158,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns unsatisfied mortgages in the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/unsatisfiedMortgages")]
-        [ResponseType(typeof(tfnGetUnsatisfiedMortgages_Result))]
+        [ResponseType(typeof(List<BAL.DeedDocument>))]
         public IHttpActionResult GetUnsatisfiedMortgages(string propertyBBLE)
         {
             if (!BAL.BBL.IsValid(propertyBBLE))
@@ -172,13 +173,13 @@ namespace PropertyWebAPI.Controllers
                     if (mortgagesList == null || mortgagesList.Count <= 0)
                         return NotFound();
 
-                    return Ok(mortgagesList);
+                    return Ok(Mapper.Map<List<tfnGetUnsatisfiedMortgages_Result>,List<BAL.DeedDocument>>(mortgagesList));
                 }
             }
             catch(Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB {0}", Common.Utilities.FormatException(e)));
-                return Common.HttpResponse.InternalError(Request, "Error reading database");
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
 
@@ -215,8 +216,8 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB {0}", Common.Utilities.FormatException(e)));
-                return Common.HttpResponse.InternalError(Request, "Error reading database");
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
     }

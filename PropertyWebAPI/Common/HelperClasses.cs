@@ -28,15 +28,16 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetDocumentParties_Result, BAL.DeedParty>();
                 cfg.CreateMap<PropertyNotInAssessment, BAL.PropertyLotInformation>();
                 cfg.CreateMap<tfnGetGeneralPropertyInformation_Result, BAL.PhysicalPropertyInformation>();
-                cfg.CreateMap<vwMotionExpanded, BAL.MotionDetails>();
-                cfg.CreateMap<vwCaseExpanded, BAL.CaseDetails>();
-                cfg.CreateMap<vwAppearanceExpanded, BAL.AppearanceDetails>();
-                cfg.CreateMap<vwAttorneyExpanded, BAL.AttorneyDetails>();
-                cfg.CreateMap<tfnGetCaseUpdates_Result, BAL.CaseUpdate>();
-                cfg.CreateMap<tfnGetMortgageForeclosureLPsForaProperty_Result, BAL.LPCaseDetails>();
-                cfg.CreateMap<tfnGetMortgageForeclosureCasesForaProperty_Result, BAL.CaseBasicInformation>();
-                cfg.CreateMap<tfnGetNewMortgageForeclosureCases_Result, BAL.CaseBasicInformationWithBBL>();
-                cfg.CreateMap<tfnGetCaseColumnChanges_Result, BAL.CaseDataChange>();
+                cfg.CreateMap<vwMotionExpanded, DAL.MotionDetails>();
+                cfg.CreateMap<vwCaseExpanded, DAL.CaseDetails>();
+                cfg.CreateMap<vwAppearanceExpanded, DAL.AppearanceDetails>();
+                cfg.CreateMap<vwAttorneyExpanded, DAL.AttorneyDetails>();
+                cfg.CreateMap<tfnGetCaseUpdates_Result, DAL.CaseUpdate>();
+                cfg.CreateMap<tfnGetMortgageForeclosureLPsForaProperty_Result, DAL.LPCaseDetails>();
+                cfg.CreateMap<tfnGetMortgageForeclosureCasesForaProperty_Result, DAL.CaseBasicInformation>();
+                cfg.CreateMap<tfnGetNewMortgageForeclosureCases_Result, DAL.CaseBasicInformationWithBBL>();
+                cfg.CreateMap<tfnGetCaseColumnChanges_Result, DAL.CaseDataChange>();
+                cfg.CreateMap<tfnGetUnsatisfiedMortgages_Result, BAL.DeedDocument>();
             });
         }
     }

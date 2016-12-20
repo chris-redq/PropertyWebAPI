@@ -17,6 +17,8 @@ namespace PropertyWebAPI.BAL
     using System.Runtime.Serialization.Json;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using DexiRobotRequestResponseBuilder.Response;
+    using DexiRobotRequestResponseBuilder.Request;
 
     #region Local Helper Classes
     /// <summary>
@@ -44,6 +46,8 @@ namespace PropertyWebAPI.BAL
     /// </summary>
     public static class DOBPenaltiesAndViolationsSummary
     {
+        private const int RequestTypeId = (int)RequestTypes.NYCDOBPenaltiesAndViolations;
+
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
@@ -90,7 +94,7 @@ namespace PropertyWebAPI.BAL
         /// <returns></returns>
         public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.NYCDOBPenaltiesAndViolations, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
 
         /// <summary>
@@ -127,19 +131,19 @@ namespace PropertyWebAPI.BAL
                             dPenaltiesAndViolations.violationAmount = dobViolationObj.ECBViolationAmount;
                             dPenaltiesAndViolations.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.NYCDOBPenaltiesAndViolations , externalReferenceId, parameters);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId , externalReferenceId, parameters);
                         }
                         else
                         {   //check if pending request in queue
-                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCDOBPenaltiesAndViolations, parameters);
+                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, RequestTypeId, parameters);
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
-                                string requestStr = DexiRobotRequestResponseBuilder.Request.RequestData.ECBviolationAndDOBCivilPenalties(propertyBBL);
+                                string requestStr = RequestData.ECBviolationAndDOBCivilPenalties(propertyBBL);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.NYCDOBPenaltiesAndViolations, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
 
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCDOBPenaltiesAndViolations, requestObj.RequestId,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
                                                                                                externalReferenceId, parameters);
 
                                 dPenaltiesAndViolations.status = RequestStatus.Pending.ToString();
@@ -150,7 +154,7 @@ namespace PropertyWebAPI.BAL
                                 dPenaltiesAndViolations.status = RequestStatus.Pending.ToString();
                                 //Send the RequestId for the pending request back
                                 dPenaltiesAndViolations.requestId = dataRequestLogObj.RequestId;
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCDOBPenaltiesAndViolations,
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
                                                                                                dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, parameters);
                             }
                         }
@@ -160,7 +164,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         dPenaltiesAndViolations.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", 
                                                 propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
                     }
@@ -240,8 +244,7 @@ namespace PropertyWebAPI.BAL
                                         decimal dobTotalPenaltyAmount = 0;
                                         decimal dobTotalViolationAmount = 0;
                                         
-                                        foreach (DexiRobotRequestResponseBuilder.Response.ECBViolationAndDOBCivilPenalty row in 
-                                                 DexiRobotRequestResponseBuilder.Response.ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData))
+                                        foreach (var row in ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData))
                                         {
                                             dobTotalPenaltyAmount += row.DOBCivilPenaltyAmount;
                                             dobTotalViolationAmount += row.ECBPenaltyDue;

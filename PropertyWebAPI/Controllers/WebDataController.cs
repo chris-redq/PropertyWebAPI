@@ -60,23 +60,23 @@ namespace PropertyWebAPI.Controllers
                     {
                         case (int)RequestTypes.NYCTaxBill:
                             if (!BAL.TaxBill.UpdateData(requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Error in processing request");
+                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.NYCWaterBill:
                             if (!BAL.WaterBill.UpdateData(requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Error in processing request");
+                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
                             if (!BAL.DOBPenaltiesAndViolationsSummary.UpdateData(requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Error in processing request");
+                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.NYCMortgageServicer:
                             if (!BAL.MortgageServicer.UpdateData(requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Error in processing request");
+                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.Zillow:
                             if (!BAL.Zillow.UpdateData(requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Error in processing request");
+                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         default:
                             String msg = String.Format("Cannot process request - Invalid Request Type: {0} for Request Id {1}", requestObj.RequestTypeId, requestObj.RequestId);

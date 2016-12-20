@@ -16,6 +16,8 @@ namespace PropertyWebAPI.BAL
     using System.Runtime.Serialization.Json;
     using System.Net;
     using System.Runtime.Serialization;
+    using DexiRobotRequestResponseBuilder.Response;
+    using DexiRobotRequestResponseBuilder.Request;
 
     #region Local Helper Classes
     /// <summary>
@@ -89,7 +91,7 @@ namespace PropertyWebAPI.BAL
         /// <returns></returns>
         public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
 
         /// <summary>
@@ -133,7 +135,7 @@ namespace PropertyWebAPI.BAL
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
-                                string requestStr = DexiRobotRequestResponseBuilder.Request.RequestData.ServicerWebsite(propertyBBL);
+                                string requestStr = RequestData.ServicerWebsite(propertyBBL);
 
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
 
@@ -158,7 +160,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         mServicerDetails.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.Zillow, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", 
                                                 propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
                     }
@@ -229,7 +231,7 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        DexiRobotRequestResponseBuilder.Response.Servicer resultObj = (DexiRobotRequestResponseBuilder.Response.ResponseData.ParseServicer(requestObj.ResponseData))[0];
+                                        var resultObj = (ResponseData.ParseServicer(requestObj.ResponseData))[0];
 
                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB

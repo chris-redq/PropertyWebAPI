@@ -19,6 +19,11 @@ namespace PropertyWebAPI.BAL
         //
     }
 
+    public class DeedDocument : tfnGetUnsatisfiedMortgages_Result
+    {
+        //Blank classes to mask entity framework details
+    }
+
     public class PropertyLotInformation : PropertyNotInAssessment
     {
         //Blank classes to mask entity framework details
@@ -29,6 +34,8 @@ namespace PropertyWebAPI.BAL
         public LatestDeedDocument deedDocument;
         public List<DeedParty> owners;
     }
+
+    
 
     public class ACRIS
     {

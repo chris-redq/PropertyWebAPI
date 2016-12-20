@@ -17,6 +17,9 @@ namespace PropertyWebAPI.BAL
     using WebDataDB;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using DexiRobotRequestResponseBuilder.Request;
+    using DexiRobotRequestResponseBuilder.Response;
+
 
 
     #region Local Helper Classes
@@ -42,6 +45,8 @@ namespace PropertyWebAPI.BAL
     /// </summary>
     public static class TaxBill
     {
+        private const int RequestTypeId = (int)RequestTypes.NYCTaxBill;
+
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
@@ -88,7 +93,7 @@ namespace PropertyWebAPI.BAL
         /// <returns></returns>
         public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.NYCTaxBill, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
         /// <summary>
         ///     This method deals with all the details associated with either returning the tax bill details or creating the 
@@ -122,19 +127,19 @@ namespace PropertyWebAPI.BAL
                             taxBill.billAmount = taxBillObj.BillAmount;
                             taxBill.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.NYCTaxBill, externalReferenceId, parameters);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, parameters);
                         }
                         else
                         {   //check if pending request in queue
-                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCTaxBill, parameters);
+                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, RequestTypeId, parameters);
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
-                                string requestStr = DexiRobotRequestResponseBuilder.Request.RequestData.PropertyTaxesNYC(propertyBBL);
+                                string requestStr = RequestData.PropertyTaxesNYC(propertyBBL);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.NYCTaxBill, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
 
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCTaxBill, requestObj.RequestId, 
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId, 
                                                                                                externalReferenceId, parameters);
 
                                 taxBill.status = RequestStatus.Pending.ToString();
@@ -145,7 +150,7 @@ namespace PropertyWebAPI.BAL
                                 taxBill.status = RequestStatus.Pending.ToString();
                                 //Send the RequestId for the pending request back
                                 taxBill.requestId = dataRequestLogObj.RequestId;
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCTaxBill, 
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, 
                                                                                                dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, parameters);
                             }
                         }
@@ -155,7 +160,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         taxBill.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, (int)RequestTypes.NYCTaxBill, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
                     }
                 }
@@ -226,7 +231,7 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        DexiRobotRequestResponseBuilder.Response.PropertyTaxesNYC resultObj = DexiRobotRequestResponseBuilder.Response.ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData)[0];
+                                        var resultObj = ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData)[0];
 
                                         Parameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB

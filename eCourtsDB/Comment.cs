@@ -10,15 +10,13 @@
 namespace eCourtsDB
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class tfnGetCasesForaProperty_Result
+    public partial class Comment
     {
         public string CountyId { get; set; }
         public string CaseIndexNumber { get; set; }
-        public string County { get; set; }
-        public string FormattedCaseIndexNumber { get; set; }
-        public string CaseStatus { get; set; }
-        public Nullable<System.DateTime> CaseDispositionDate { get; set; }
-        public string CaseType { get; set; }
+        public string Seq { get; set; }
+        public string Comment1 { get; set; }
     }
 }

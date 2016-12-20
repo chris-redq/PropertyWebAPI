@@ -544,11 +544,6 @@
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>
         </member>
-        <member name="T:PropertyWebAPI.BAL.eCourts">
-            <summary>
-                All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
-            </summary>
-        </member>
         <member name="T:PropertyWebAPI.BAL.MortgageServicerDetails">
             <summary>
             Helper class used to capture Tax bill details and used for serialization into JSON object 
@@ -835,6 +830,120 @@
             </summary>
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.eCourts">
+            <summary>
+                All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.DataRequestLog">
+            <summary>
+                This class abstracts all detailed level operations associated with finding, inserting and updating records in the DataRequestLog table in WebData DB.
+                In essence it abstracts semantic level operations for the table in the context of the API 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetPendingRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
+            <summary>
+                Gets a DataRequestLog object(row) from the DataRequestLog table for a given BBL and type of request with Pending status 
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="RequestTypeId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetFirst(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets a DataRequestLog object(row) from the DataRequestLog table for a given RequestId
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAll(WebDataDB.WebDataEntities,System.String)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given externalReferenceId
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="externalRefereceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAllUnprocessed(WebDataDB.WebDataEntities)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table that have a pending status but have a 
+                corresponding Request Object that is in error or completed successfully. This may happen when DJM is in session processing requests
+                and Data Services is down
+            </summary>
+            <param name="webDBEntities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsError(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsSuccess(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="requestId"></param>
+            <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.Request">
+            <summary>
+                This class abstracts all detailed level operations associated with finding, inserting and reading records in the Request table in WebData DB.
+                In essence it abstracts symantic level operations for the table in the context of the API 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
+            <summary>
+                Inserts a Request object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestStr">
+                Depending on the Request Type a helper class will be provided to convert business level variables into a string (in a specific format)
+                such that it is readable by the web scarpping service. 
+            </param>
+            <param name="requestTypeId"></param>
+            <param name="jobId"></param>
+            <returns></returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.BillsController">
             <summary>  
@@ -1343,115 +1452,6 @@
             <returns>
                 Returns zEstimate of the property
             </returns>
-        </member>
-        <member name="T:PropertyWebAPI.DAL.DataRequestLog">
-            <summary>
-                This class abstracts all detailed level operations associated with finding, inserting and updating records in the DataRequestLog table in WebData DB.
-                In essence it abstracts semantic level operations for the table in the context of the API 
-            </summary>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetPendingRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
-            <summary>
-                Gets a DataRequestLog object(row) from the DataRequestLog table for a given BBL and type of request with Pending status 
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="propertyBBL"></param>
-            <param name="RequestTypeId"></param>
-            <param name="requestParameters"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetFirst(WebDataDB.WebDataEntities,System.Int64)">
-            <summary>
-                Gets a DataRequestLog object(row) from the DataRequestLog table for a given RequestId
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="requestId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAll(WebDataDB.WebDataEntities,System.String)">
-            <summary>
-                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given externalReferenceId
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="externalRefereceId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAllUnprocessed(WebDataDB.WebDataEntities)">
-            <summary>
-                Gets all DataRequestLog objects(rows) from the DataRequestLog table that have a pending status but have a 
-                corresponding Request Object that is in error or completed successfully. This may happen when DJM is in session processing requests
-                and Data Services is down
-            </summary>
-            <param name="webDBEntities"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsError(WebDataDB.WebDataEntities,System.Int64)">
-            <summary>
-                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="requestId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsSuccess(WebDataDB.WebDataEntities,System.Int64)">
-            <summary>
-                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="requestId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String)">
-            <summary>
-                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="propertyBBL"></param>
-            <param name="requestTypeId"></param>
-            <param name="externalReferenceId"></param>
-            <param name="requestParameters"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String)">
-            <summary>
-                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
-            </summary>
-            <param name="propertyBBL"></param>
-            <param name="requestTypeId"></param>
-            <param name="externalReferenceId"></param>
-            <param name="requestParameters"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String)">
-            <summary>
-                Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="propertyBBL"></param>
-            <param name="requestTypeId"></param>
-            <param name="requestId"></param>
-            <param name="externalReferenceId"></param>
-            <param name="requestParameters"></param>
-            <returns></returns>
-        </member>
-        <member name="T:PropertyWebAPI.DAL.Request">
-            <summary>
-                This class abstracts all detailed level operations associated with finding, inserting and reading records in the Request table in WebData DB.
-                In essence it abstracts symantic level operations for the table in the context of the API 
-            </summary>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
-            <summary>
-                Inserts a Request object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="requestStr">
-                Depending on the Request Type a helper class will be provided to convert business level variables into a string (in a specific format)
-                such that it is readable by the web scarpping service. 
-            </param>
-            <param name="requestTypeId"></param>
-            <param name="jobId"></param>
-            <returns></returns>
         </member>
         <member name="T:PropertyWebAPI.RequestStatus">
             <summary>

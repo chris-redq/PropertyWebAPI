@@ -5,6 +5,7 @@
 // <author>Raj Sethi</author>
 //-----------------------------------------------------------------------
 
+#pragma warning disable 1591
 namespace PropertyWebAPI
 {
     using System;
@@ -66,3 +67,4 @@ namespace PropertyWebAPI
         }
     }
 }
+#pragma warning restore 1591

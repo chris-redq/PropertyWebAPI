@@ -27,41 +27,28 @@ namespace eCourtsDB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Case> Cases { get; set; }
         public virtual DbSet<Appearance> Appearances { get; set; }
-        public virtual DbSet<Motion> Motions { get; set; }
-        public virtual DbSet<vwAppearanceExpanded> vwAppearanceExpandeds { get; set; }
-        public virtual DbSet<vwCaseExpanded> vwCaseExpandeds { get; set; }
-        public virtual DbSet<vwMotionExpanded> vwMotionExpandeds { get; set; }
         public virtual DbSet<Attorney> Attorneys { get; set; }
+        public virtual DbSet<Case> Cases { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Motion> Motions { get; set; }
         public virtual DbSet<Title> Titles { get; set; }
         public virtual DbSet<GeneralData> GeneralDatas { get; set; }
-        public virtual DbSet<vwAttorneyExpanded> vwAttorneyExpandeds { get; set; }
-        public virtual DbSet<vwGeneralDataExpanded> vwGeneralDataExpandeds { get; set; }
         public virtual DbSet<RemarkData> RemarkDatas { get; set; }
+        public virtual DbSet<vwAppearanceExpanded> vwAppearanceExpandeds { get; set; }
+        public virtual DbSet<vwAttorneyExpanded> vwAttorneyExpandeds { get; set; }
+        public virtual DbSet<vwCaseExpanded> vwCaseExpandeds { get; set; }
+        public virtual DbSet<vwMotionExpanded> vwMotionExpandeds { get; set; }
+        public virtual DbSet<vwGeneralDataExpanded> vwGeneralDataExpandeds { get; set; }
     
-        [DbFunction("NYCOURTSEntities", "tfnGetCaseUpdates")]
-        public virtual IQueryable<tfnGetCaseUpdates_Result> tfnGetCaseUpdates(string countyId, string caseIndexNumber)
-        {
-            var countyIdParameter = countyId != null ?
-                new ObjectParameter("CountyId", countyId) :
-                new ObjectParameter("CountyId", typeof(string));
-    
-            var caseIndexNumberParameter = caseIndexNumber != null ?
-                new ObjectParameter("CaseIndexNumber", caseIndexNumber) :
-                new ObjectParameter("CaseIndexNumber", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCaseUpdates_Result>("[NYCOURTSEntities].[tfnGetCaseUpdates](@CountyId, @CaseIndexNumber)", countyIdParameter, caseIndexNumberParameter);
-        }
-    
-        [DbFunction("NYCOURTSEntities", "tfnGetCasesForaProperty")]
-        public virtual IQueryable<tfnGetCasesForaProperty_Result> tfnGetCasesForaProperty(string bBL)
+        [DbFunction("NYCOURTSEntities", "tfnGetAllCasesForaProperty")]
+        public virtual IQueryable<tfnGetAllCasesForaProperty_Result> tfnGetAllCasesForaProperty(string bBL)
         {
             var bBLParameter = bBL != null ?
                 new ObjectParameter("BBL", bBL) :
                 new ObjectParameter("BBL", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCasesForaProperty_Result>("[NYCOURTSEntities].[tfnGetCasesForaProperty](@BBL)", bBLParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetAllCasesForaProperty_Result>("[NYCOURTSEntities].[tfnGetAllCasesForaProperty](@BBL)", bBLParameter);
         }
     
         [DbFunction("NYCOURTSEntities", "tfnGetCaseColumnChanges")]
@@ -86,14 +73,18 @@ namespace eCourtsDB
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCaseColumnChanges_Result>("[NYCOURTSEntities].[tfnGetCaseColumnChanges](@Tablename, @ColumnName, @StartDateTime, @EndDateTime)", tablenameParameter, columnNameParameter, startDateTimeParameter, endDateTimeParameter);
         }
     
-        [DbFunction("NYCOURTSEntities", "tfnGetAllCasesForaProperty")]
-        public virtual IQueryable<tfnGetAllCasesForaProperty_Result> tfnGetAllCasesForaProperty(string bBL)
+        [DbFunction("NYCOURTSEntities", "tfnGetCaseUpdates")]
+        public virtual IQueryable<tfnGetCaseUpdates_Result> tfnGetCaseUpdates(string countyId, string caseIndexNumber)
         {
-            var bBLParameter = bBL != null ?
-                new ObjectParameter("BBL", bBL) :
-                new ObjectParameter("BBL", typeof(string));
+            var countyIdParameter = countyId != null ?
+                new ObjectParameter("CountyId", countyId) :
+                new ObjectParameter("CountyId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetAllCasesForaProperty_Result>("[NYCOURTSEntities].[tfnGetAllCasesForaProperty](@BBL)", bBLParameter);
+            var caseIndexNumberParameter = caseIndexNumber != null ?
+                new ObjectParameter("CaseIndexNumber", caseIndexNumber) :
+                new ObjectParameter("CaseIndexNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCaseUpdates_Result>("[NYCOURTSEntities].[tfnGetCaseUpdates](@CountyId, @CaseIndexNumber)", countyIdParameter, caseIndexNumberParameter);
         }
     
         [DbFunction("NYCOURTSEntities", "tfnGetMortgageForeclosureCasesForaProperty")]

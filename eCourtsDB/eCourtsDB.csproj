@@ -60,6 +60,9 @@
     <Compile Include="Case.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Comment.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="eCourtsEDM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,9 +92,6 @@
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetCaseColumnChanges_Result.cs">
-      <DependentUpon>eCourtsEDM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tfnGetCasesForaProperty_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetCaseUpdates_Result.cs">
@@ -126,32 +126,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="eCourtsEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>eCourtsEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="eCourtsEDM.edmx.diagram">
       <DependentUpon>eCourtsEDM.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="eCourtsEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>eCourtsEDM.Context.cs</LastGenOutput>
       <DependentUpon>eCourtsEDM.edmx</DependentUpon>
+      <LastGenOutput>eCourtsEDM.Context.cs</LastGenOutput>
     </Content>
     <Content Include="eCourtsEDM.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>eCourtsEDM.edmx</DependentUpon>
       <LastGenOutput>eCourtsEDM.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

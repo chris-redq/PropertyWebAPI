@@ -29,10 +29,10 @@ namespace PropertyWebAPI.Controllers
         /// </summary>
         private IHttpActionResult TemplateCaseIndexNumberQueriesList<T>(string countyId, string caseIndexNumber, Func<string, string, List<T>> asFunc)
         {
-            if (BAL.eCourts.IsValidCountyId(countyId))
+            if (DAL.eCourts.IsValidCountyId(countyId))
                 return BadRequest("Incorrect CountyId (only 2 digits long)");
 
-            if (BAL.eCourts.IsValidCaseIndexNumber(caseIndexNumber))
+            if (DAL.eCourts.IsValidCaseIndexNumber(caseIndexNumber))
                 return BadRequest("Incorrect Case Index Number (only 11 digits long YYYY9999999)");
 
             try
@@ -54,10 +54,10 @@ namespace PropertyWebAPI.Controllers
         /// </summary>
         private IHttpActionResult TemplateCaseIndexNumberQueries<T>(string countyId, string caseIndexNumber, Func<string, string, T> asFunc)
         {
-            if (BAL.eCourts.IsValidCountyId(countyId))
+            if (DAL.eCourts.IsValidCountyId(countyId))
                 return BadRequest("Incorrect CountyId (only 2 digits long)");
 
-            if (BAL.eCourts.IsValidCaseIndexNumber(caseIndexNumber))
+            if (DAL.eCourts.IsValidCaseIndexNumber(caseIndexNumber))
                 return BadRequest("Incorrect Case Index Number (only 11 digits long YYYY9999999)");
 
             try
@@ -85,10 +85,10 @@ namespace PropertyWebAPI.Controllers
         /// </param> 
         /// <returns>Returns detailed information on a case</returns>
         [Route("api/cases/{countyId}/{caseIndexNumber}")]
-        [ResponseType(typeof(BAL.CaseDetails))]
+        [ResponseType(typeof(DAL.CaseDetails))]
         public IHttpActionResult Get(string countyId, string caseIndexNumber)
         {
-            return TemplateCaseIndexNumberQueries<vwCaseExpanded>(countyId, caseIndexNumber, BAL.eCourts.GetCaseDetails);
+            return TemplateCaseIndexNumberQueries<vwCaseExpanded>(countyId, caseIndexNumber, DAL.eCourts.GetCaseDetails);
         }
 
         /// <summary>  
@@ -102,10 +102,10 @@ namespace PropertyWebAPI.Controllers
         /// </param> 
         /// <returns>Returns a list of Motions for a case</returns>
         [Route("api/cases/{countyId}/{caseIndexNumber}/motions")]
-        [ResponseType(typeof(List<BAL.MotionDetails>))]
+        [ResponseType(typeof(List<DAL.MotionDetails>))]
         public IHttpActionResult GetMotions(string countyId, string caseIndexNumber)
         {
-            return TemplateCaseIndexNumberQueriesList<BAL.MotionDetails>(countyId, caseIndexNumber, BAL.eCourts.GetAllMotionsForACase);
+            return TemplateCaseIndexNumberQueriesList<DAL.MotionDetails>(countyId, caseIndexNumber, DAL.eCourts.GetAllMotionsForACase);
         }
       
         /// <summary>  
@@ -119,10 +119,10 @@ namespace PropertyWebAPI.Controllers
         /// </param> 
         /// <returns>Returns a list of Appearances for a case</returns>
         [Route("api/cases/{countyId}/{caseIndexNumber}/appearances")]
-        [ResponseType(typeof(List<BAL.AppearanceDetails>))]
+        [ResponseType(typeof(List<DAL.AppearanceDetails>))]
         public IHttpActionResult GetApperances(string countyId, string caseIndexNumber)
         {
-            return TemplateCaseIndexNumberQueriesList<BAL.AppearanceDetails>(countyId, caseIndexNumber, BAL.eCourts.GetAllAppearancesForACase);
+            return TemplateCaseIndexNumberQueriesList<DAL.AppearanceDetails>(countyId, caseIndexNumber, DAL.eCourts.GetAllAppearancesForACase);
         }
 
         /// <summary>  
@@ -136,10 +136,10 @@ namespace PropertyWebAPI.Controllers
         /// </param> 
         /// <returns>Returns a list of Attorneys for a case</returns>
         [Route("api/cases/{countyId}/{caseIndexNumber}/attorneys")]
-        [ResponseType(typeof(List<BAL.AttorneyDetails>))]
+        [ResponseType(typeof(List<DAL.AttorneyDetails>))]
         public IHttpActionResult GetAttorneys(string countyId, string caseIndexNumber)
         {
-            return TemplateCaseIndexNumberQueriesList<BAL.AttorneyDetails>(countyId, caseIndexNumber, BAL.eCourts.GetAllAttorneysForACase);
+            return TemplateCaseIndexNumberQueriesList<DAL.AttorneyDetails>(countyId, caseIndexNumber, DAL.eCourts.GetAllAttorneysForACase);
         }
 
         /// <summary>  
@@ -155,10 +155,10 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of changes that happened on case. For example Appearances, Motions, Attorneys, Case Details
         /// </returns>
         [Route("api/cases/{countyId}/{caseIndexNumber}/history")]
-        [ResponseType(typeof(List<BAL.CaseUpdate>))]
+        [ResponseType(typeof(List<DAL.CaseUpdate>))]
         public IHttpActionResult GetCaseHistory(string countyId, string caseIndexNumber)
         {
-            return TemplateCaseIndexNumberQueriesList<BAL.CaseUpdate>(countyId, caseIndexNumber, BAL.eCourts.GetRecordedCaseHistory);
+            return TemplateCaseIndexNumberQueriesList<DAL.CaseUpdate>(countyId, caseIndexNumber, DAL.eCourts.GetRecordedCaseHistory);
         }
 
         /// <summary>  
@@ -171,7 +171,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of cases and their status in eCourts for the given property identified by BBL - Borough Block Lot Number.
         /// </returns>
         [Route("api/cases/mortgageforeclosures/{propertyBBL}")]
-        [ResponseType(typeof(List<BAL.CaseBasicInformation>))]
+        [ResponseType(typeof(List<DAL.CaseBasicInformation>))]
         public IHttpActionResult GetMortgageForeclosureCasesForaProperty(string propertyBBL)
         {
             if (!BAL.BBL.IsValid(propertyBBL))
@@ -184,7 +184,7 @@ namespace PropertyWebAPI.Controllers
                     List<tfnGetMortgageForeclosureCasesForaProperty_Result> casesList = nycourtsE.tfnGetMortgageForeclosureCasesForaProperty(propertyBBL).ToList();
                     if (casesList == null || casesList.Count==0)
                         return NotFound();
-                    return Ok(Mapper.Map<List<tfnGetMortgageForeclosureCasesForaProperty_Result>, List<BAL.CaseBasicInformation>>(casesList));
+                    return Ok(Mapper.Map<List<tfnGetMortgageForeclosureCasesForaProperty_Result>, List<DAL.CaseBasicInformation>>(casesList));
                 }
             }
             catch(Exception e)
@@ -208,7 +208,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of LPs and their respective cases in eCourts for the given property identified by BBL - Borough Block Lot Number.
         /// </returns>
         [Route("api/cases/mortgageforeclosurelps/{propertyBBL}")]
-        [ResponseType(typeof(List<BAL.LPCaseDetails>))]
+        [ResponseType(typeof(List<DAL.LPCaseDetails>))]
         public IHttpActionResult GetMortgageForeclosureLPsForaProperty(string propertyBBL, string effectiveDate="")
         {
             if (!BAL.BBL.IsValid(propertyBBL))
@@ -234,7 +234,7 @@ namespace PropertyWebAPI.Controllers
                     if (lpsList == null || lpsList.Count == 0)
                         return NotFound();
 
-                    return Ok(Mapper.Map<List<tfnGetMortgageForeclosureLPsForaProperty_Result>, List<BAL.LPCaseDetails>>(lpsList));
+                    return Ok(Mapper.Map<List<tfnGetMortgageForeclosureLPsForaProperty_Result>, List<DAL.LPCaseDetails>>(lpsList));
                 }
             }
             catch (Exception e)
@@ -257,7 +257,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of new foreclosure cases registered within the date range
         /// </returns>
         [Route("api/cases/newmortgageforeclosures/{startDate}/{endDate}")]
-        [ResponseType(typeof(List<BAL.CaseBasicInformationWithBBL>))]
+        [ResponseType(typeof(List<DAL.CaseBasicInformationWithBBL>))]
         public IHttpActionResult GetNewMortgageForeclosureCases(string startDate, string endDate)
         {
             DateTime sDateTime, eDateTime;
@@ -275,7 +275,7 @@ namespace PropertyWebAPI.Controllers
                     List<tfnGetNewMortgageForeclosureCases_Result> casesList = nycourtsE.tfnGetNewMortgageForeclosureCases(sDateTime, eDateTime).ToList();
                     if (casesList == null || casesList.Count==0)
                         return NotFound();
-                    return Ok(Mapper.Map<List<tfnGetNewMortgageForeclosureCases_Result>, List<BAL.CaseBasicInformationWithBBL>>(casesList));
+                    return Ok(Mapper.Map<List<tfnGetNewMortgageForeclosureCases_Result>, List<DAL.CaseBasicInformationWithBBL>>(casesList));
                     
                 }
             }
@@ -304,7 +304,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of rows (cases) with old column value and new value
         /// </returns>
         [Route("api/cases/columnvaluechanges/{columnName}/{startDate}/{endDate}")]
-        [ResponseType(typeof(List<BAL.CaseDataChange>))]
+        [ResponseType(typeof(List<DAL.CaseDataChange>))]
         public IHttpActionResult GetCasesColumnValueChanges(string columnName, string startDate, string endDate)
         {
             DateTime sDateTime, eDateTime;
@@ -322,7 +322,7 @@ namespace PropertyWebAPI.Controllers
                     List<tfnGetCaseColumnChanges_Result> caseColumnChangesList = nycourtsE.tfnGetCaseColumnChanges("ccis.case", columnName, sDateTime, eDateTime).ToList();
                     if (caseColumnChangesList == null || caseColumnChangesList.Count==0)
                         return NotFound();
-                    return Ok(Mapper.Map<List<tfnGetCaseColumnChanges_Result>, List<BAL.CaseDataChange>>(caseColumnChangesList));
+                    return Ok(Mapper.Map<List<tfnGetCaseColumnChanges_Result>, List<DAL.CaseDataChange>>(caseColumnChangesList));
                 }
             }
             catch (Exception e)

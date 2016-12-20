@@ -137,6 +137,17 @@
     <Property Name="DateForeclosureSettelementConfScheduled" Type="date" />
     <Property Name="DateForeclosureSettelementConfHeld" Type="date" />
   </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="CountyId" />
+      <PropertyRef Name="CaseIndexNumber" />
+      <PropertyRef Name="Seq" />
+    </Key>
+    <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="Seq" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="Comment" Type="varchar" MaxLength="291" />
+  </EntityType>
   <EntityType Name="Motion">
     <Key>
       <PropertyRef Name="CountyId" />
@@ -734,10 +745,13 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="KeyValue" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="Seq" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="LisPendensType" Type="varchar" MaxLength="25" />
           <Property Name="JDLSCaseIndexNumber" Type="varchar" MaxLength="10" />
           <Property Name="Debtor" Type="varchar(max)" />
           <Property Name="Creditor" Type="varchar(max)" />
+          <Property Name="DataEntryDateTime" Type="datetime" />
           <Property Name="EffectiveDateTime" Type="datetime" />
+          <Property Name="ExpirationDate" Type="date" />
           <Property Name="SatisfactionDate" Type="date" />
           <Property Name="SatisfactionType" Type="varchar" MaxLength="50" />
           <Property Name="Remarks" Type="varchar(max)" />
@@ -757,6 +771,7 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
     <EntitySet Name="Appearance" EntityType="Self.Appearance" Schema="ccis" store:Type="Tables" />
     <EntitySet Name="Attorney" EntityType="Self.Attorney" Schema="ccis" store:Type="Tables" />
     <EntitySet Name="Case" EntityType="Self.Case" Schema="ccis" store:Type="Tables" />
+    <EntitySet Name="Comment" EntityType="Self.Comment" Schema="ccis" store:Type="Tables" />
     <EntitySet Name="Motion" EntityType="Self.Motion" Schema="ccis" store:Type="Tables" />
     <EntitySet Name="Title" EntityType="Self.Title" Schema="ccis" store:Type="Tables" />
     <EntitySet Name="GeneralData" EntityType="Self.GeneralData" Schema="jdls" store:Type="Tables" />

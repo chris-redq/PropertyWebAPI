@@ -17,6 +17,8 @@ namespace PropertyWebAPI.BAL
     using System.Net;
     using System.Runtime.Serialization;
     using System.Collections.Generic;
+    using DexiRobotRequestResponseBuilder.Response;
+    using DexiRobotRequestResponseBuilder.Request;
 
     #region Local Helper Classes
     /// <summary>
@@ -140,7 +142,7 @@ namespace PropertyWebAPI.BAL
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
-                                string requestStr = DexiRobotRequestResponseBuilder.Request.RequestData.ZillowZEstimate(address);
+                                string requestStr = RequestData.ZillowZEstimate(address);
 
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
 
@@ -234,7 +236,7 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        DexiRobotRequestResponseBuilder.Response.ZillowZEstimate resultObj = (DexiRobotRequestResponseBuilder.Response.ResponseData.ParseZillowZEstimate(requestObj.ResponseData))[0];
+                                        var resultObj = (ResponseData.ParseZillowZEstimate(requestObj.ResponseData))[0];
 
                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB

@@ -212,7 +212,7 @@
     <Compile Include="BAL\ACRIS.cs" />
     <Compile Include="BAL\BBL.cs" />
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
-    <Compile Include="BAL\eCourts.cs" />
+    <Compile Include="DAL\eCourts.cs" />
     <Compile Include="BAL\MortgageServicer.cs" />
     <Compile Include="BAL\NYCPhysicalPropertyData.cs" />
     <Compile Include="BAL\TaxBill.cs" />
