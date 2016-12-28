@@ -24,16 +24,16 @@ namespace PropertyWebAPI.BAL
     /// <summary>
     /// Helper class used to capture DOB Civil Penalties detail and used for serialization into JSON object 
     /// </summary>
-    public class DOBPenaltiesAndViolationsSummaryData
+    public class DOBPenaltiesAndViolationsSummaryData: NYCBaseResult
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long? requestId;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public String externalReferenceId;
-        public string status;
-        public string BBL;
+        /// <summary>
+        /// Sum total of all Civil Penalties due
+        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public decimal? civilPenaltyAmount;
+        /// <summary>
+        /// Sum total of all ECB Violations due
+        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public decimal? violationAmount;
     }
@@ -49,39 +49,57 @@ namespace PropertyWebAPI.BAL
         private const int RequestTypeId = (int)RequestTypes.NYCDOBPenaltiesAndViolations;
 
         /// <summary>
-        /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+        /// Helper class used for serialization and deserialization of parameters necessary to get DOB Penalties and ECB Violations data 
         /// </summary>
         [DataContract]
-        class DOBPenaltiesAndViolationsParams
+        class Parameters
         {   [DataMember]
             public string BBL;
         }
 
         /// <summary>
-        ///     This methods converts all parameters required for DOB Civil Penalties into a JSON object
+        ///     This methods converts all parameters required for DOB Civil Penalties and ECB Violations into a JSON object
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <returns>JSON string</returns>
         private static string ParametersToJSON(string propertyBBL)
         {
-            DOBPenaltiesAndViolationsParams dParams = new DOBPenaltiesAndViolationsParams();
+            var dParams = new Parameters();
             dParams.BBL = propertyBBL;
             return JsonConvert.SerializeObject(dParams);
         }
 
         /// <summary>
-        ///     This method converts a JSON back into dCivilPenaltiesParameters Object
+        ///     This method converts a JSON back into Parameters Object
         /// </summary>
         /// <param name="jsonParameters"></param>
-        /// <returns>dCivilPenaltiesParameters</returns>
-        private static DOBPenaltiesAndViolationsParams JSONToParameters(string jsonParameters)
+        /// <returns>Parameters</returns>
+        private static Parameters JSONToParameters(string jsonParameters)
         {
-            DOBPenaltiesAndViolationsParams dParams = new DOBPenaltiesAndViolationsParams();
-            MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(jsonParameters));
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(dParams.GetType());
-            dParams = (DOBPenaltiesAndViolationsParams)serializer.ReadObject(ms);
-            ms.Close();
-            return dParams;
+            return JsonConvert.DeserializeObject<Parameters>(jsonParameters);
+        }
+
+        /// <summary>
+        ///     This method calls back portal for every log record in the list
+        /// </summary>
+        /// <param name="penaltyAmount"></param>
+        /// <param name="violationAmount"></param>
+        /// <param name="logs">List or Request Log Records</param>
+        private static void MakePortalCallBacks(List<DataRequestLog> logs, decimal? penaltyAmount, decimal? violationAmount)
+        {
+            var resultObj = new BAL.Results();
+            resultObj.dobPenaltiesAndViolationsSummary = new DOBPenaltiesAndViolationsSummaryData();
+            resultObj.dobPenaltiesAndViolationsSummary.civilPenaltyAmount = penaltyAmount;
+            resultObj.dobPenaltiesAndViolationsSummary.violationAmount = violationAmount;
+
+            foreach (var rec in logs)
+            {
+                resultObj.dobPenaltiesAndViolationsSummary.BBL = rec.BBL;
+                resultObj.dobPenaltiesAndViolationsSummary.requestId = rec.RequestId;
+                resultObj.dobPenaltiesAndViolationsSummary.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
+                resultObj.dobPenaltiesAndViolationsSummary.externalReferenceId = rec.ExternalReferenceId;
+                Portal.PostCallBack(resultObj);
+            }
         }
 
         /// <summary>
@@ -98,8 +116,8 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This method deals with all the details associated with either returning the tax bill details or creating the 
-        ///     request for getting is scrapped from the web 
+        ///     This method deals with all the details associated with either returning the DOB Penalties and Violations details or creating the 
+        ///     request for getting it scrapped from the web 
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <param name="externalReferenceId"></param>
@@ -190,14 +208,14 @@ namespace PropertyWebAPI.BAL
 
             try
             {
-                DOBPenaltiesAndViolationsParams taxParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+                Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
 
                 using (WebDataEntities webDBEntities = new WebDataEntities())
                 {
                     if (dataRequestLogObj.RequestStatusTypeId == (int)RequestStatus.Success)
                     {
                         //check if data available
-                        WebDataDB.DOBViolation dCivilPenaltiesObj = webDBEntities.DOBViolations.FirstOrDefault(i => i.BBL == taxParams.BBL);
+                        WebDataDB.DOBViolation dCivilPenaltiesObj = webDBEntities.DOBViolations.FirstOrDefault(i => i.BBL == parameters.BBL);
 
                         if (dCivilPenaltiesObj != null && DateTime.UtcNow.Subtract(dCivilPenaltiesObj.LastUpdated).Days <= 30)
                         {
@@ -231,10 +249,13 @@ namespace PropertyWebAPI.BAL
                 {
                     try
                     {
+                        List<DataRequestLog> logs = null;
+                        decimal? penaltyAmount = null, violationAmount = null;
+
                         switch (requestObj.RequestStatusTypeId)
                         {
                             case (int)RequestStatus.Error:
-                                DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
+                                logs=DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
                                 break;
                             case (int)RequestStatus.Success:
                                 {
@@ -250,9 +271,12 @@ namespace PropertyWebAPI.BAL
                                             dobTotalViolationAmount += row.ECBPenaltyDue;
                                         }
 
-                                        DOBPenaltiesAndViolationsParams dCivilPenaltiesParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+                                        penaltyAmount = dobTotalPenaltyAmount;
+                                        violationAmount = dobTotalViolationAmount;
+
+                                        Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if data available
-                                        WebDataDB.DOBViolation dobPenaltiesAndViolationsObj = webDBEntities.DOBViolations.FirstOrDefault(i => i.BBL == dCivilPenaltiesParams.BBL);
+                                        WebDataDB.DOBViolation dobPenaltiesAndViolationsObj = webDBEntities.DOBViolations.FirstOrDefault(i => i.BBL == parameters.BBL);
                                         if (dobPenaltiesAndViolationsObj != null)
                                         {   
                                             dobPenaltiesAndViolationsObj.DOBCivilPenalties = dobTotalPenaltyAmount;
@@ -262,7 +286,7 @@ namespace PropertyWebAPI.BAL
                                         else
                                         {
                                             dobPenaltiesAndViolationsObj = new WebDataDB.DOBViolation();
-                                            dobPenaltiesAndViolationsObj.BBL = dCivilPenaltiesParams.BBL;
+                                            dobPenaltiesAndViolationsObj.BBL = parameters.BBL;
                                             dobPenaltiesAndViolationsObj.DOBCivilPenalties = dobTotalPenaltyAmount; 
                                             dobPenaltiesAndViolationsObj.ECBViolationAmount = dobTotalViolationAmount;
                                             dobPenaltiesAndViolationsObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
@@ -272,7 +296,7 @@ namespace PropertyWebAPI.BAL
 
                                         webDBEntities.SaveChanges();
 
-                                        DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
+                                        logs=DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
                                     else
                                         throw (new Exception("Cannot locate Request Log Record(s)"));
@@ -284,6 +308,8 @@ namespace PropertyWebAPI.BAL
                         }
 
                         webDBEntitiestransaction.Commit();
+                        if (logs != null)
+                            MakePortalCallBacks(logs, penaltyAmount, violationAmount);
                         return true;
                     }
                     catch (Exception e)

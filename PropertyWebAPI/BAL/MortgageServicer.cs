@@ -11,26 +11,21 @@ namespace PropertyWebAPI.BAL
     using System.Linq;
     using Newtonsoft.Json;
     using WebDataDB;
-    using System.IO;
-    using System.Text;
-    using System.Runtime.Serialization.Json;
     using System.Net;
     using System.Runtime.Serialization;
     using DexiRobotRequestResponseBuilder.Response;
     using DexiRobotRequestResponseBuilder.Request;
+    using System.Collections.Generic;
 
     #region Local Helper Classes
     /// <summary>
-    /// Helper class used to capture Tax bill details and used for serialization into JSON object 
+    /// Helper class used to capture Mortgage Servicer details and used for serialization into JSON object 
     /// </summary>
-    public class MortgageServicerDetails
+    public class MortgageServicerDetails: NYCBaseResult
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long?  requestId;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string externalReferenceId;
-        public string status;
-        public string BBL;
+        /// <summary>
+        /// Name of the Mortgage Servicer
+        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string servicerName;
     }
@@ -46,7 +41,7 @@ namespace PropertyWebAPI.BAL
         private const int RequestTypeId = (int)RequestTypes.NYCMortgageServicer;
 
         /// <summary>
-        /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+        /// Helper class used for serialization and deserialization of parameters necessary to get Mortgage Servicer data
         /// </summary>
         [DataContract]
         private class Parameters
@@ -55,7 +50,7 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This methods converts all parameters required for Tax Bills into a JSON object
+        ///     This methods converts all parameters required for Mortgage Servicer into a JSON object
         /// </summary>
         /// <param name="BBL"></param>
         /// <returns>JSON string</returns>
@@ -67,18 +62,13 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This method converts a JSON back into TaxBillParameters Object
+        ///     This method converts a JSON back into Mortgage Servicer Parameters Object
         /// </summary>
         /// <param name="jsonParameters"></param>
-        /// <returns>TaxBillParameters</returns>
+        /// <returns>Parameters</returns>
         private static Parameters JSONToParameters(string jsonParameters)
         {
-            Parameters parameters = new Parameters();
-            MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(jsonParameters));
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(parameters.GetType());
-            parameters = (Parameters)serializer.ReadObject(ms);
-            ms.Close();
-            return parameters;
+            return JsonConvert.DeserializeObject<Parameters>(jsonParameters);
         }
 
         /// <summary>
@@ -94,9 +84,30 @@ namespace PropertyWebAPI.BAL
             DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
 
+
         /// <summary>
-        ///     This method deals with all the details associated with either returning the tax bill details or creating the 
-        ///     request for getting is scrapped from the web 
+        ///     This method calls back portal for every log record in the list
+        /// </summary>
+        /// <param name="servicerName"></param>
+        /// <param name="logs">List or Request Log Records</param>
+        private static void MakePortalCallBacks(List<DataRequestLog> logs, string servicerName)
+        {
+            var resultObj = new BAL.Results();
+            resultObj.mortgageServicer = new MortgageServicerDetails();
+            resultObj.mortgageServicer.servicerName = servicerName;
+
+            foreach (var rec in logs)
+            {
+                resultObj.mortgageServicer.BBL = rec.BBL;
+                resultObj.mortgageServicer.requestId = rec.RequestId;
+                resultObj.mortgageServicer.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
+                resultObj.mortgageServicer.externalReferenceId = rec.ExternalReferenceId;
+                Portal.PostCallBack(resultObj);
+            }
+        }
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
+        ///     request for getting it scrapped from the web 
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <param name="externalReferenceId"></param>
@@ -209,7 +220,7 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This method updates the TaxBill table based on the information received from the Request Object
+        ///     This method updates the Mortgage Servicer table based on the information received from the Request Object
         /// </summary>
         /// <param name="requestObj"></param>
         /// <returns>True if successful else false</returns>
@@ -221,10 +232,13 @@ namespace PropertyWebAPI.BAL
                 {
                     try
                     {
+                        List<DataRequestLog> logs = null;
+                        string servicerName = (string) null;
+
                         switch (requestObj.RequestStatusTypeId)
                         {
                             case (int)RequestStatus.Error:
-                                DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
+                                logs=DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
                                 break;
                             case (int)RequestStatus.Success:
                                 {
@@ -232,6 +246,7 @@ namespace PropertyWebAPI.BAL
                                     if (dataRequestLogObj != null)
                                     {
                                         var resultObj = (ResponseData.ParseServicer(requestObj.ResponseData))[0];
+                                        servicerName = resultObj.ServicerName;
 
                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
@@ -253,7 +268,7 @@ namespace PropertyWebAPI.BAL
 
                                         webDBEntities.SaveChanges();
 
-                                        DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
+                                        logs=DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
                                     else
                                         throw (new Exception("Cannot locate Request Log Record(s)"));
@@ -265,6 +280,8 @@ namespace PropertyWebAPI.BAL
                         }
 
                         webDBEntitiestransaction.Commit();
+                        if (logs != null)
+                            MakePortalCallBacks(logs, servicerName);
                         return true;
                     }
                     catch (Exception e)

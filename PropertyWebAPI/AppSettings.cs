@@ -17,8 +17,10 @@ namespace PropertyWebAPI
     {
         public const int GEO_CLIENT_APP_ID = 1;
         public const int GEO_CLIENT_APP_KEY = 2;
-        
-       
+        public const int PORTAL_API_KEY = 3;
+        public const int PORTAL_BASE_URL = 4;
+        public const int PORTAL_CALLBACK_API = 5;
+
         public static string Get(int tokenId)
         {
             switch(tokenId)
@@ -27,6 +29,12 @@ namespace PropertyWebAPI
                     return ConfigurationManager.AppSettings["geoClientAppId"];
                 case GEO_CLIENT_APP_KEY:
                     return ConfigurationManager.AppSettings["geoClientAppKey"];
+                case PORTAL_API_KEY:
+                    return ConfigurationManager.AppSettings["portalAPIKey"];
+                case PORTAL_BASE_URL:
+                    return ConfigurationManager.AppSettings["portalBaseURL"];
+                case PORTAL_CALLBACK_API:
+                    return ConfigurationManager.AppSettings["portalCallBackAPI"];
                 default:
                     return null;
             }

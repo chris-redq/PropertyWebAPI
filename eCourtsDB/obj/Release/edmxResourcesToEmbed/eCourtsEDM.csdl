@@ -1,5 +1,126 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="NYCOURTSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <ComplexType Name="tfnGetAllCasesForaProperty_Result">
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="County" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FormattedCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CaseStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CaseDispositionDate" Type="DateTime" />
+    <Property Name="CaseType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </ComplexType>
+  <ComplexType Name="tfnGetCaseColumnChanges_Result">
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="ColumnName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NewValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="OldValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="TransactionDateTime" Type="DateTime" />
+    <Property Name="DateTimeProcessed" Type="DateTime" />
+  </ComplexType>
+  <ComplexType Name="tfnGetCaseUpdates_Result">
+    <Property Name="Entity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EntityReference" Type="String" MaxLength="22" FixedLength="false" Unicode="false" />
+    <Property Name="Operation" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="ColumnName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="NewValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="OldValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="TransactionDateTime" Type="DateTime" />
+    <Property Name="DateTimeProcessed" Type="DateTime" />
+  </ComplexType>
+  <ComplexType Name="tfnGetMortgageForeclosureCasesForaProperty_Result">
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="County" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FormattedCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="JDLSCaseIndexNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CaseStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CaseDispositionDate" Type="DateTime" />
+    <Property Name="CaseType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </ComplexType>
+  <ComplexType Name="tfnGetNewMortgageForeclosureCases_Result">
+    <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="County" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="FormattedCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CaseStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CaseDispositionDate" Type="DateTime" />
+    <Property Name="CaseType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </ComplexType>
+  <ComplexType Name="tfnGetMortgageForeclosureLPsForaProperty_Result">
+    <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="KeyValue" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Seq" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LisPendensType" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="JDLSCaseIndexNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Debtor" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Creditor" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DataEntryDateTime" Type="DateTime" />
+    <Property Name="EffectiveDateTime" Type="DateTime" />
+    <Property Name="ExpirationDate" Type="DateTime" />
+    <Property Name="SatisfactionDate" Type="DateTime" />
+    <Property Name="SatisfactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CountyName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CCISCaseIndexNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CaseFound" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NameMatch" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CaseDispositionDate" Type="DateTime" />
+    <Property Name="CaseType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </ComplexType>
+  <EntityType Name="Appearance">
+    <Key>
+      <PropertyRef Name="AppearanceId" />
+    </Key>
+    <Property Name="AppearanceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MotionSeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AppearanceDate" Type="DateTime" Precision="0" />
+    <Property Name="Series" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="CourtPartsId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="TimeStamp" Type="DateTime" Precision="3" />
+    <Property Name="AssignedJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CalendarMarkId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="AppearanceType" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="AppearanceTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Comments1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Comments2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ConferenceGroup" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Conferencebuilding" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ConferenceNotePrintDate" Type="DateTime" Precision="0" />
+    <Property Name="MotionPositionNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Attorney">
+    <Key>
+      <PropertyRef Name="CountyId" />
+      <PropertyRef Name="CaseIndexNumber" />
+      <PropertyRef Name="SeqNumber" />
+    </Key>
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AttorneyOfRecordId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="NameAttorneyOfRecord" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="NotifyAttorneyOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="TrialCounselId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="TrialCounselName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="NotifyTrialCounsel" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PartyIndicator" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ClientName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="NumOfAttorneysRetained" Type="Int32" />
+    <Property Name="DateFirstRetainerStatementFiled" Type="DateTime" Precision="0" />
+    <Property Name="DateCurrentRetainerStatementFiled" Type="DateTime" Precision="0" />
+    <Property Name="DateAttorneyTerminated" Type="DateTime" Precision="0" />
+    <Property Name="DateAttorneyClosingStatementFiled" Type="DateTime" Precision="0" />
+    <Property Name="AttorneyRegistrationNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="ProseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="Case">
     <Key>
       <PropertyRef Name="CountyId" />
@@ -88,70 +209,16 @@
     <Property Name="DateForeclosureSettelementConfScheduled" Type="DateTime" Precision="0" />
     <Property Name="DateForeclosureSettelementConfHeld" Type="DateTime" Precision="0" />
   </EntityType>
-  <EntityContainer Name="NYCOURTSEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Cases" EntityType="Self.Case" />
-    <EntitySet Name="Appearances" EntityType="NYCOURTSModel.Appearance" />
-    <EntitySet Name="Motions" EntityType="NYCOURTSModel.Motion" />
-    <EntitySet Name="vwAppearanceExpandeds" EntityType="NYCOURTSModel.vwAppearanceExpanded" />
-    <EntitySet Name="vwCaseExpandeds" EntityType="NYCOURTSModel.vwCaseExpanded" />
-    <EntitySet Name="vwMotionExpandeds" EntityType="NYCOURTSModel.vwMotionExpanded" />
-    <EntitySet Name="Attorneys" EntityType="NYCOURTSModel.Attorney" />
-    <EntitySet Name="Titles" EntityType="NYCOURTSModel.Title" />
-    <EntitySet Name="GeneralDatas" EntityType="NYCOURTSModel.GeneralData" />
-    <EntitySet Name="vwAttorneyExpandeds" EntityType="NYCOURTSModel.vwAttorneyExpanded" />
-    <EntitySet Name="vwGeneralDataExpandeds" EntityType="NYCOURTSModel.vwGeneralDataExpanded" />
-    <FunctionImport Name="tfnGetCaseUpdates" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseUpdates_Result)">
-      <Parameter Name="CountyId" Mode="In" Type="String" />
-      <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
-    </FunctionImport>
-    <EntitySet Name="RemarkDatas" EntityType="NYCOURTSModel.RemarkData" />
-    <FunctionImport Name="tfnGetCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCasesForaProperty_Result)">
-      <Parameter Name="BBL" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="tfnGetCaseColumnChanges" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseColumnChanges_Result)">
-      <Parameter Name="Tablename" Mode="In" Type="String" />
-      <Parameter Name="ColumnName" Mode="In" Type="String" />
-      <Parameter Name="StartDateTime" Mode="In" Type="DateTime" />
-      <Parameter Name="EndDateTime" Mode="In" Type="DateTime" />
-    </FunctionImport>
-    <FunctionImport Name="tfnGetAllCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetAllCasesForaProperty_Result)">
-      <Parameter Name="BBL" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="tfnGetMortgageForeclosureCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureCasesForaProperty_Result)">
-      <Parameter Name="BBL" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="tfnGetNewMortgageForeclosureCases" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result)">
-      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
-    </FunctionImport>
-    <FunctionImport Name="tfnGetMortgageForeclosureLPsForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureLPsForaProperty_Result)">
-      <Parameter Name="BBL" Mode="In" Type="String" />
-      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-    </FunctionImport>
-  </EntityContainer>
-  <EntityType Name="Appearance">
+  <EntityType Name="Comment">
     <Key>
-      <PropertyRef Name="AppearanceId" />
+      <PropertyRef Name="CountyId" />
+      <PropertyRef Name="CaseIndexNumber" />
+      <PropertyRef Name="Seq" />
     </Key>
-    <Property Name="AppearanceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="MotionSeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="AppearanceDate" Type="DateTime" Precision="0" />
-    <Property Name="Series" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="CourtPartsId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="TimeStamp" Type="DateTime" Precision="3" />
-    <Property Name="AssignedJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="CalendarMarkId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="AppearanceType" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="AppearanceTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Comments1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Comments2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="ConferenceGroup" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="Conferencebuilding" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="ConferenceNotePrintDate" Type="DateTime" Precision="0" />
-    <Property Name="MotionPositionNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Seq" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comment1" Type="String" MaxLength="291" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Motion">
     <Key>
@@ -159,9 +226,9 @@
       <PropertyRef Name="CaseIndexNumber" />
       <PropertyRef Name="SeqNumber" />
     </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DataEntryDate" Type="DateTime" Precision="0" />
     <Property Name="OriginalDate" Type="DateTime" Precision="0" />
     <Property Name="OriginalDateTimeStamp" Type="DateTime" Precision="3" />
@@ -171,12 +238,12 @@
     <Property Name="AdjournmetCounter" Type="Int32" />
     <Property Name="ProceedingTypeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="ReliefSoughtId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="PartyApplyingForMotion" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
-    <Property Name="PartyOpposedToMotion" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+    <Property Name="PartyApplyingForMotion" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyOpposedToMotion" Type="String" MaxLength="23" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DatePapersFiledForApplyingParty" Type="DateTime" Precision="0" />
     <Property Name="DatePapersFiledForOpposingParty" Type="DateTime" Precision="0" />
     <Property Name="DateDecisionOnMotionRendered" Type="DateTime" Precision="0" />
-    <Property Name="DecisionRendered" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="DecisionRendered" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DateOrderSigned" Type="DateTime" Precision="0" />
     <Property Name="EffectOrDecisionId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="AssignedJudgeId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
@@ -202,6 +269,122 @@
     <Property Name="MultipeReliefFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="Answer2214Flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="Title">
+    <Key>
+      <PropertyRef Name="CountyId" />
+      <PropertyRef Name="CaseIndexNumber" />
+      <PropertyRef Name="SeqNumber" />
+    </Key>
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PlaintiffDetailedName" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+    <Property Name="Plaintiff" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+    <Property Name="DefendantDetailedName" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+    <Property Name="Defendant" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="GeneralData">
+    <Key>
+      <PropertyRef Name="CountyId" />
+      <PropertyRef Name="KeyValue" />
+      <PropertyRef Name="Seq" />
+    </Key>
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="KeyValue" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Seq" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EnteredCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DataEntryDateTime" Type="DateTime" Precision="3" />
+    <Property Name="BookTypeId" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="NumOfDebtorsOnDocument" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DataEntryOperatorId" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="EffectiveDateTime" Type="DateTime" Precision="3" />
+    <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+    <Property Name="SourceDocumentTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="SourceCourtTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="SourceCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="CCISCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SourceDocumentIndexNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CCISCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="SystemGeneratedFilingFee" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfAccident" Type="DateTime" Precision="0" />
+    <Property Name="DebtorCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DebtorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorOccupation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyBlock" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="PropertyLot" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CompressedNameCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="CompressedNameEntityType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CompressedName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreditorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AttorneyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyFirmName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ThirdPartyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="MoneyAmount" Type="Double" />
+    <Property Name="InterimDispositionId0" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId3" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId4" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId5" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId6" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId7" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId8" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="InterimDispositionId9" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SatisfactionDate" Type="DateTime" Precision="0" />
+    <Property Name="SatisfactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SheriffExecutionRequired" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SatifactionDataEntryOperator" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="RemarkData">
+    <Key>
+      <PropertyRef Name="RemarkId" />
+    </Key>
+    <Property Name="RemarkId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="KeyValue" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Seq" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="LineNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="Remark" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="vwAppearanceExpanded">
     <Key>
       <PropertyRef Name="CountyId" />
@@ -209,10 +392,10 @@
       <PropertyRef Name="MotionSeqNumber" />
       <PropertyRef Name="SeqNumber" />
     </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="MotionSeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MotionSeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="AppearanceDate" Type="DateTime" Precision="0" />
     <Property Name="Series" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
     <Property Name="CourtPartsId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
@@ -231,13 +414,41 @@
     <Property Name="ConferenceNotePrintDate" Type="DateTime" Precision="0" />
     <Property Name="MotionPositionNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="vwAttorneyExpanded">
+    <Key>
+      <PropertyRef Name="CountyId" />
+      <PropertyRef Name="CaseIndexNumber" />
+      <PropertyRef Name="SeqNumber" />
+      <PropertyRef Name="PartyIndicator" />
+    </Key>
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AttorneyOfRecordId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyOfRecordFirmName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="NameAttorneyOfRecord" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="NotifyAttorneyOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="TrialCounselId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="TrialCounselFirmName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="TrialCounselName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="NotifyTrialCounsel" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="PartyIndicator" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ClientName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="NumOfAttorneysRetained" Type="Int32" />
+    <Property Name="DateFirstRetainerStatementFiled" Type="DateTime" Precision="0" />
+    <Property Name="DateCurrentRetainerStatementFiled" Type="DateTime" Precision="0" />
+    <Property Name="DateAttorneyTerminated" Type="DateTime" Precision="0" />
+    <Property Name="DateAttorneyClosingStatementFiled" Type="DateTime" Precision="0" />
+    <Property Name="AttorneyRegistrationNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="ProseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="vwCaseExpanded">
     <Key>
       <PropertyRef Name="CountyId" />
       <PropertyRef Name="CaseIndexNumber" />
     </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CaseIndexNumberExternal" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
     <Property Name="CourtType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -336,9 +547,9 @@
       <PropertyRef Name="PartyOpposedToMotion" />
       <PropertyRef Name="DecisionRendered" />
     </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CaseIndexNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SeqNumber" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DataEntryDate" Type="DateTime" Precision="0" />
     <Property Name="OriginalDate" Type="DateTime" Precision="0" />
     <Property Name="OriginalDateTimeStamp" Type="DateTime" Precision="3" />
@@ -352,12 +563,12 @@
     <Property Name="ProceedingType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="ReliefSoughtId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="ReliefSought" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="PartyApplyingForMotion" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
-    <Property Name="PartyOpposedToMotion" Type="String" Nullable="false" MaxLength="23" FixedLength="false" Unicode="false" />
+    <Property Name="PartyApplyingForMotion" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartyOpposedToMotion" Type="String" MaxLength="23" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DatePapersFiledForApplyingParty" Type="DateTime" Precision="0" />
     <Property Name="DatePapersFiledForOpposingParty" Type="DateTime" Precision="0" />
     <Property Name="DateDecisionOnMotionRendered" Type="DateTime" Precision="0" />
-    <Property Name="DecisionRendered" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="DecisionRendered" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DateOrderSigned" Type="DateTime" Precision="0" />
     <Property Name="EffectOrDecisionId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="EffectOrDecision" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -387,163 +598,6 @@
     <Property Name="MultipeReliefFlag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="Answer2214Flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="Attorney">
-    <Key>
-      <PropertyRef Name="CountyId" />
-      <PropertyRef Name="CaseIndexNumber" />
-      <PropertyRef Name="SeqNumber" />
-    </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyOfRecordId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="NameAttorneyOfRecord" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="NotifyAttorneyOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="TrialCounselId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="TrialCounselName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="NotifyTrialCounsel" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="PartyIndicator" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-    <Property Name="ClientName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="NumOfAttorneysRetained" Type="Int32" />
-    <Property Name="DateFirstRetainerStatementFiled" Type="DateTime" Precision="0" />
-    <Property Name="DateCurrentRetainerStatementFiled" Type="DateTime" Precision="0" />
-    <Property Name="DateAttorneyTerminated" Type="DateTime" Precision="0" />
-    <Property Name="DateAttorneyClosingStatementFiled" Type="DateTime" Precision="0" />
-    <Property Name="AttorneyRegistrationNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-    <Property Name="ProseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="Title">
-    <Key>
-      <PropertyRef Name="CountyId" />
-      <PropertyRef Name="CaseIndexNumber" />
-      <PropertyRef Name="SeqNumber" />
-    </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="PlaintiffDetailedName" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
-    <Property Name="Plaintiff" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
-    <Property Name="DefendantDetailedName" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
-    <Property Name="Defendant" Type="String" MaxLength="370" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="GeneralData">
-    <Key>
-      <PropertyRef Name="CountyId" />
-      <PropertyRef Name="KeyValue" />
-      <PropertyRef Name="Seq" />
-    </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="Seq" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="EnteredCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="DataEntryDateTime" Type="DateTime" Precision="3" />
-    <Property Name="BookTypeId" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="NumOfDebtorsOnDocument" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="DataEntryOperatorId" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-    <Property Name="EffectiveDateTime" Type="DateTime" Precision="3" />
-    <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
-    <Property Name="SourceDocumentTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="SourceCourtTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="SourceCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CCISCountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="SourceDocumentIndexNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="CCISCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-    <Property Name="DocumentNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="SystemGeneratedFilingFee" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="DateOfAccident" Type="DateTime" Precision="0" />
-    <Property Name="DebtorCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="DebtorOccupation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="PropertyCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="PropertyBlock" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="PropertyLot" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="CompressedNameCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CompressedNameEntityType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="CompressedName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyFirmName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyCompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyStreetNumber" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyStreetName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="MoneyAmount" Type="Double" />
-    <Property Name="InterimDispositionId0" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId3" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId4" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId5" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId6" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId7" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId8" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="InterimDispositionId9" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="SatisfactionDate" Type="DateTime" Precision="0" />
-    <Property Name="SatisfactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="SheriffExecutionRequired" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="SatifactionDataEntryOperator" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="vwAttorneyExpanded">
-    <Key>
-      <PropertyRef Name="CountyId" />
-      <PropertyRef Name="CaseIndexNumber" />
-      <PropertyRef Name="SeqNumber" />
-      <PropertyRef Name="PartyIndicator" />
-    </Key>
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CaseIndexNumber" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="SeqNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyOfRecordId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyOfRecordFirmName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="NameAttorneyOfRecord" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="NotifyAttorneyOfRecord" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="TrialCounselId" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="TrialCounselFirmName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="TrialCounselName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="NotifyTrialCounsel" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="PartyIndicator" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-    <Property Name="ClientName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="NumOfAttorneysRetained" Type="Int32" />
-    <Property Name="DateFirstRetainerStatementFiled" Type="DateTime" Precision="0" />
-    <Property Name="DateCurrentRetainerStatementFiled" Type="DateTime" Precision="0" />
-    <Property Name="DateAttorneyTerminated" Type="DateTime" Precision="0" />
-    <Property Name="DateAttorneyClosingStatementFiled" Type="DateTime" Precision="0" />
-    <Property Name="AttorneyRegistrationNumber" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-    <Property Name="ProseIndicator" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="vwGeneralDataExpanded">
     <Key>
       <PropertyRef Name="CountyId" />
@@ -556,9 +610,9 @@
       <PropertyRef Name="ThirdPartyType" />
     </Key>
     <Property Name="County" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="Seq" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="CountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="KeyValue" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Seq" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="EnteredCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="EnteredCounty" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <Property Name="DataEntryDateTime" Type="DateTime" Precision="3" />
@@ -573,13 +627,13 @@
     <Property Name="SourceCourtTypeId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="SourceCourt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <Property Name="SourceCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="CCISCountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="CCISCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="SourceDocumentIndexNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="CCISCaseIndexNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="DocumentNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
     <Property Name="SystemGeneratedFilingFee" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="DateOfAccident" Type="DateTime" Precision="0" />
-    <Property Name="DebtorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DebtorType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DebtorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="DebtorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
     <Property Name="DebtorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
@@ -598,7 +652,7 @@
     <Property Name="CompressedNameCountyId" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="CompressedNameEntityType" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="CompressedName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="CreditorType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CreditorType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CreditorLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="CreditorFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
     <Property Name="CreditorMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
@@ -608,7 +662,7 @@
     <Property Name="CreditorCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="CreditorZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="CreditorZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="AttorneyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="AttorneyType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="AttorneyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="AttorneyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
     <Property Name="AttorneyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
@@ -618,7 +672,7 @@
     <Property Name="AttorneyCityState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="AttorneyZip" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="AttorneyZipExtended" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="ThirdPartyType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ThirdPartyType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ThirdPartyLastName" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="ThirdPartyFirstName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
     <Property Name="ThirdPartyMiddleName" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
@@ -655,93 +709,43 @@
     <Property Name="SatifactionDataEntryOperator" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
     <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
-  <ComplexType Name="tfnGetCaseUpdates_Result">
-    <Property Type="String" Name="Entity" Nullable="false" MaxLength="10" />
-    <Property Type="String" Name="EntityReference" Nullable="true" MaxLength="22" />
-    <Property Type="String" Name="Operation" Nullable="true" MaxLength="6" />
-    <Property Type="String" Name="ColumnName" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="NewValue" Nullable="true" MaxLength="500" />
-    <Property Type="String" Name="OldValue" Nullable="true" MaxLength="500" />
-    <Property Type="DateTime" Name="TransactionDateTime" Nullable="true" Precision="23" />
-    <Property Type="DateTime" Name="DateTimeProcessed" Nullable="true" Precision="23" />
-  </ComplexType>
-  <EntityType Name="RemarkData">
-    <Key>
-      <PropertyRef Name="RemarkId" />
-    </Key>
-    <Property Name="RemarkId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CountyId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="Seq" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="Date" Type="DateTime" Precision="0" />
-    <Property Name="LineNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="Remark" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <ComplexType Name="tfnGetCasesForaProperty_Result">
-    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
-    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
-    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
-    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
-    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
-    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
-  </ComplexType>
-  <ComplexType Name="tfnGetCaseColumnChanges_Result">
-    <Property Type="String" Name="CountyId" Nullable="true" MaxLength="2" />
-    <Property Type="String" Name="CaseIndexNumber" Nullable="true" MaxLength="11" />
-    <Property Type="String" Name="ColumnName" Nullable="false" MaxLength="100" />
-    <Property Type="String" Name="NewValue" Nullable="true" MaxLength="500" />
-    <Property Type="String" Name="OldValue" Nullable="true" MaxLength="500" />
-    <Property Type="DateTime" Name="TransactionDateTime" Nullable="true" Precision="23" />
-    <Property Type="DateTime" Name="DateTimeProcessed" Nullable="true" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="tfnGetAllCasesForaProperty_Result">
-    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
-    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
-    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
-    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
-    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
-    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
-  </ComplexType>
-  <ComplexType Name="tfnGetMortgageForeclosureCasesForaProperty_Result">
-    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
-    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
-    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
-    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
-    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
-    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
-  </ComplexType>
-  <ComplexType Name="tfnGetNewMortgageForeclosureCases_Result">
-    <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
-    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
-    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
-    <Property Type="String" Name="County" Nullable="true" MaxLength="25" />
-    <Property Type="String" Name="FormattedCaseIndexNumber" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
-    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
-    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
-  </ComplexType>
-  <ComplexType Name="tfnGetMortgageForeclosureLPsForaProperty_Result">
-    <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
-    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
-    <Property Type="String" Name="KeyValue" Nullable="false" MaxLength="9" />
-    <Property Type="String" Name="Seq" Nullable="false" MaxLength="2" />
-    <Property Type="String" Name="JDLSCaseIndexNumber" Nullable="true" MaxLength="10" />
-    <Property Type="String" Name="Debtor" Nullable="true" />
-    <Property Type="String" Name="Creditor" Nullable="true" />
-    <Property Type="DateTime" Name="EffectiveDateTime" Nullable="true" Precision="23" />
-    <Property Type="DateTime" Name="SatisfactionDate" Nullable="true" Precision="10" />
-    <Property Type="String" Name="SatisfactionType" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Remarks" Nullable="true" />
-    <Property Type="String" Name="CountyName" Nullable="true" MaxLength="25" />
-    <Property Type="String" Name="CCISCaseIndexNumber" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="CaseFound" Nullable="false" MaxLength="1" />
-    <Property Type="String" Name="NameMatch" Nullable="false" MaxLength="1" />
-    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
-    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
-    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
-    <Property Type="String" Name="Comment" Nullable="true" />
-  </ComplexType>
+  <EntityContainer Name="NYCOURTSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Appearances" EntityType="Self.Appearance" />
+    <EntitySet Name="Attorneys" EntityType="Self.Attorney" />
+    <EntitySet Name="Cases" EntityType="Self.Case" />
+    <EntitySet Name="Comments" EntityType="Self.Comment" />
+    <EntitySet Name="Motions" EntityType="Self.Motion" />
+    <EntitySet Name="Titles" EntityType="Self.Title" />
+    <EntitySet Name="GeneralDatas" EntityType="Self.GeneralData" />
+    <EntitySet Name="RemarkDatas" EntityType="Self.RemarkData" />
+    <EntitySet Name="vwAppearanceExpandeds" EntityType="Self.vwAppearanceExpanded" />
+    <EntitySet Name="vwAttorneyExpandeds" EntityType="Self.vwAttorneyExpanded" />
+    <EntitySet Name="vwCaseExpandeds" EntityType="Self.vwCaseExpanded" />
+    <EntitySet Name="vwMotionExpandeds" EntityType="Self.vwMotionExpanded" />
+    <EntitySet Name="vwGeneralDataExpandeds" EntityType="Self.vwGeneralDataExpanded" />
+    <FunctionImport Name="tfnGetAllCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetAllCasesForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetCaseColumnChanges" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseColumnChanges_Result)">
+      <Parameter Name="Tablename" Mode="In" Type="String" />
+      <Parameter Name="ColumnName" Mode="In" Type="String" />
+      <Parameter Name="StartDateTime" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDateTime" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetCaseUpdates" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseUpdates_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetMortgageForeclosureCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureCasesForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetNewMortgageForeclosureCases" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result)">
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetMortgageForeclosureLPsForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureLPsForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+  </EntityContainer>
 </Schema>

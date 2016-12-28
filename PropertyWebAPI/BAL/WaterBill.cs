@@ -15,20 +15,18 @@ namespace PropertyWebAPI.BAL
     using System.Text;
     using System.Runtime.Serialization.Json;
     using System.Runtime.Serialization;
+    
 
 
     #region Local Helper Classes
     /// <summary>
     /// Helper class used to capture Water bill details and used for serialization into JSON object 
     /// </summary>
-    public class WaterBillDetails
+    public class WaterBillDetails: NYCBaseResult
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long? requestId;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string externalReferenceId;
-        public string status;
-        public string BBL;
+        /// <summary>
+        /// Amount owed in water bill
+        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Decimal? billAmount;
     }
@@ -45,7 +43,7 @@ namespace PropertyWebAPI.BAL
         /// Helper class used for serialization and deserialization of parameters necessary to get Water bill 
         /// </summary>
         [DataContract]
-        class WaterBillParameters
+        private class Parameters
         {   [DataMember]
             public string BBL;
         }
@@ -57,7 +55,7 @@ namespace PropertyWebAPI.BAL
         /// <returns>JSON string</returns>
         private static string ParametersToJSON(string propertyBBL)
         {
-            WaterBillParameters waterParams = new WaterBillParameters();
+            Parameters waterParams = new Parameters();
             waterParams.BBL = propertyBBL;
             return JsonConvert.SerializeObject(waterParams);
         }
@@ -67,14 +65,9 @@ namespace PropertyWebAPI.BAL
         /// </summary>
         /// <param name="jsonParameters"></param>
         /// <returns>waterBillParameters</returns>
-        private static WaterBillParameters JSONToParameters(string jsonParameters)
+        private static Parameters JSONToParameters(string jsonParameters)
         {
-            WaterBillParameters waterParams = new WaterBillParameters();
-            MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(jsonParameters));
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(waterParams.GetType());
-            waterParams = (WaterBillParameters)serializer.ReadObject(ms);
-            ms.Close();
-            return waterParams;
+            return JsonConvert.DeserializeObject<Parameters>(jsonParameters);
         }
         /// <summary>
         ///     This method deals with all the details associated with either returning the water bill details or creating the 
@@ -164,7 +157,7 @@ namespace PropertyWebAPI.BAL
             waterBill.status = ((RequestStatus)dataRequestLogObj.RequestStatusTypeId).ToString();
             waterBill.billAmount = null;
 
-            WaterBillParameters waterParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+            Parameters waterParams = JSONToParameters(dataRequestLogObj.RequestParameters);
 
             using (WebDataEntities webDBEntities = new WebDataEntities())
             {
@@ -205,7 +198,7 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        WaterBillParameters waterBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+                                        Parameters waterBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
 
                                         //check if data available
                                         WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterBillParams.BBL);

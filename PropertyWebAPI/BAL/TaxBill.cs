@@ -26,14 +26,11 @@ namespace PropertyWebAPI.BAL
     /// <summary>
     /// Helper class used to capture Tax bill details and used for serialization into JSON object 
     /// </summary>
-    public class TaxBillDetails
-    {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long? requestId;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string externalReferenceId;
-        public string status;
-        public string BBL;
+    public class TaxBillDetails: NYCBaseResult
+    {   
+        /// <summary>
+        /// Amount owed in taxes
+        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Decimal? billAmount;
     }
@@ -51,7 +48,7 @@ namespace PropertyWebAPI.BAL
         /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
         /// </summary>
         [DataContract]
-        class Parameters
+        private class Parameters
         {   [DataMember]
             public string BBL;
         }
@@ -69,18 +66,34 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This method converts a JSON back into TaxBillParameters Object
+        ///     This method converts a JSON back into Parameters Object
         /// </summary>
         /// <param name="jsonParameters"></param>
-        /// <returns>TaxBillParameters</returns>
+        /// <returns>Parameters</returns>
         private static Parameters JSONToParameters(string jsonParameters)
         {
-            Parameters taxParams = new Parameters();
-            MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(jsonParameters));
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(taxParams.GetType());
-            taxParams = (Parameters)serializer.ReadObject(ms);
-            ms.Close();
-            return taxParams;
+            return JsonConvert.DeserializeObject<Parameters>(jsonParameters);
+        }
+
+        /// <summary>
+        ///     This method calls back portal for every log record in the list
+        /// </summary>
+        /// <param name="billAmount">Bill Amount</param>
+        /// <param name="logs">List or Request Log Records</param>
+        private static void MakePortalCallBacks(List<DataRequestLog> logs, Decimal? billAmount)
+        {
+            var resultObj = new BAL.Results();
+            resultObj.taxBill = new TaxBillDetails();
+            resultObj.taxBill.billAmount = billAmount;
+
+            foreach (var rec in logs)
+            {
+                resultObj.taxBill.BBL = rec.BBL;
+                resultObj.taxBill.requestId = rec.RequestId;
+                resultObj.taxBill.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
+                resultObj.taxBill.externalReferenceId = rec.ExternalReferenceId;
+                Portal.PostCallBack(resultObj);
+            }
         }
 
         /// <summary>
@@ -97,7 +110,7 @@ namespace PropertyWebAPI.BAL
         }
         /// <summary>
         ///     This method deals with all the details associated with either returning the tax bill details or creating the 
-        ///     request for getting is scrapped from the web 
+        ///     request for getting it scrapped from the web 
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <param name="externalReferenceId"></param>
@@ -179,7 +192,7 @@ namespace PropertyWebAPI.BAL
             taxBill.BBL = dataRequestLogObj.BBL;
             taxBill.requestId = dataRequestLogObj.RequestId;
             taxBill.externalReferenceId = dataRequestLogObj.ExternalReferenceId;
-            taxBill.status = ((RequestStatus)dataRequestLogObj.RequestStatusTypeId).ToString(); ;
+            taxBill.status = ((RequestStatus)dataRequestLogObj.RequestStatusTypeId).ToString(); 
             taxBill.billAmount = null;
 
             try
@@ -208,6 +221,7 @@ namespace PropertyWebAPI.BAL
             }
         }
 
+      
         /// <summary>
         ///     This method updates the TaxBill table based on the information received from the Request Object
         /// </summary>
@@ -221,10 +235,13 @@ namespace PropertyWebAPI.BAL
                 {
                     try
                     {
+                        List<DataRequestLog> logs=null;
+                        Decimal? billAmount = null;
+
                         switch (requestObj.RequestStatusTypeId)
                         {
                             case (int)RequestStatus.Error:
-                                DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
+                                logs = DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
                                 break;
                             case (int)RequestStatus.Success:
                                 {
@@ -232,6 +249,7 @@ namespace PropertyWebAPI.BAL
                                     if (dataRequestLogObj != null)
                                     {
                                         var resultObj = ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData)[0];
+                                        billAmount = resultObj.TotalDueAmountToPay;
 
                                         Parameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
@@ -252,8 +270,7 @@ namespace PropertyWebAPI.BAL
                                         }
 
                                         webDBEntities.SaveChanges();
-
-                                        DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
+                                        logs = DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
                                     else
                                         throw (new Exception("Cannot locate Request Log Record(s)"));
@@ -264,8 +281,9 @@ namespace PropertyWebAPI.BAL
                                 Common.Logs.log().Warn(String.Format("Update called for a Request Object Id {0} with incorrect Status Id {2}", requestObj.RequestId, requestObj.RequestStatusTypeId));
                                 break;
                         }
-                       
                         webDBEntitiestransaction.Commit();
+                        if (logs != null)
+                            MakePortalCallBacks(logs,billAmount);
                         return true;
                     }
                     catch(Exception e )

@@ -171,6 +171,7 @@
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <EmbeddedResource Include="CustomContent\index.html" />
+    <Content Include="Areas\HelpPage\Images\Redq-Logo.png" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.19-build00125.js" />
     <Content Include="scripts\ai.0.22.19-build00125.min.js" />
@@ -210,8 +211,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="BAL\ACRIS.cs" />
+    <Compile Include="BAL\BaseResult.cs" />
     <Compile Include="BAL\BBL.cs" />
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
+    <Compile Include="BAL\Portal.cs" />
+    <Compile Include="BAL\Results.cs" />
     <Compile Include="DAL\eCourts.cs" />
     <Compile Include="BAL\MortgageServicer.cs" />
     <Compile Include="BAL\NYCPhysicalPropertyData.cs" />

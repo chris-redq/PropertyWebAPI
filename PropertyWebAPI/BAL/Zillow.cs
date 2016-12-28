@@ -24,14 +24,11 @@ namespace PropertyWebAPI.BAL
     /// <summary>
     /// Helper class used to capture Tax bill details and used for serialization into JSON object 
     /// </summary>
-    public class ZillowPropertyDetails
+    public class ZillowPropertyDetails: NYCBaseResult
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public long? requestId;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string externalReferenceId;
-        public string status;
-        public string BBL;
+        /// <summary>
+        /// zEstimate of the property
+        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public decimal? zEstimate;
     }
@@ -39,14 +36,14 @@ namespace PropertyWebAPI.BAL
     #endregion
 
     /// <summary>
-    ///     This class deals with all the details associated with either returning Zillow details or creating the 
-    ///     request to get data scrapped from the web 
+    /// This class deals with all the details associated with either returning Zillow details or creating the 
+    /// request to get data scrapped from the web 
     /// </summary>
     public static class Zillow
     {
         private const int RequestTypeId = (int)RequestTypes.Zillow;
         /// <summary>
-        /// Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+        /// Helper class used for serialization and deserialization of parameters necessary to get Zillow information 
         /// </summary>
         [DataContract]
         private class Parameters
@@ -72,18 +69,13 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This method converts a JSON back into TaxBillParameters Object
+        ///     This method converts a JSON back into Parameters Object
         /// </summary>
         /// <param name="jsonParameters"></param>
-        /// <returns>TaxBillParameters</returns>
+        /// <returns>Parameters</returns>
         private static Parameters JSONToParameters(string jsonParameters)
         {
-            Parameters parameters = new Parameters();
-            MemoryStream ms = new MemoryStream(Encoding.Unicode.GetBytes(jsonParameters));
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(parameters.GetType());
-            parameters = (Parameters)serializer.ReadObject(ms);
-            ms.Close();
-            return parameters;
+            return JsonConvert.DeserializeObject<Parameters>(jsonParameters);
         }
 
         /// <summary>
@@ -100,8 +92,29 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This method deals with all the details associated with either returning the tax bill details or creating the 
-        ///     request for getting is scrapped from the web 
+        ///     This method calls back portal for every log record in the list
+        /// </summary>
+        /// <param name="zEstimate"></param>
+        /// <param name="logs">List or Request Log Records</param>
+        private static void MakePortalCallBacks(List<DataRequestLog> logs, Decimal? zEstimate)
+        {
+            var resultObj = new BAL.Results();
+            resultObj.zillowPorperty = new ZillowPropertyDetails();
+            resultObj.zillowPorperty.zEstimate = zEstimate;
+
+            foreach (var rec in logs)
+            {
+                resultObj.zillowPorperty.BBL = rec.BBL;
+                resultObj.zillowPorperty.requestId = rec.RequestId;
+                resultObj.zillowPorperty.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
+                resultObj.zillowPorperty.externalReferenceId = rec.ExternalReferenceId;
+                Portal.PostCallBack(resultObj);
+            }
+        }
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the Zillow details or creating the 
+        ///     request for getting it scrapped from the web 
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <param name="address"></param>
@@ -214,7 +227,7 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
-        ///     This method updates the TaxBill table based on the information received from the Request Object
+        ///     This method updates the Zillow table based on the information received from the Request Object
         /// </summary>
         /// <param name="requestObj"></param>
         /// <returns>True if successful else false</returns>
@@ -226,10 +239,13 @@ namespace PropertyWebAPI.BAL
                 {
                     try
                     {
+                        List<DataRequestLog> logs=null;
+                        decimal? zEstimate = null;
+
                         switch (requestObj.RequestStatusTypeId)
                         {
                             case (int)RequestStatus.Error:
-                                DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
+                                logs=DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
                                 break;
                             case (int)RequestStatus.Success:
                                 {
@@ -237,6 +253,7 @@ namespace PropertyWebAPI.BAL
                                     if (dataRequestLogObj != null)
                                     {
                                         var resultObj = (ResponseData.ParseZillowZEstimate(requestObj.ResponseData))[0];
+                                        zEstimate = resultObj.Zestimate;
 
                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
@@ -258,7 +275,7 @@ namespace PropertyWebAPI.BAL
 
                                         webDBEntities.SaveChanges();
 
-                                        DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
+                                        logs=DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
                                     else
                                         throw (new Exception("Cannot locate Request Log Record(s)"));
@@ -270,6 +287,8 @@ namespace PropertyWebAPI.BAL
                         }
 
                         webDBEntitiestransaction.Commit();
+                        if (logs != null)
+                            MakePortalCallBacks(logs, zEstimate);
                         return true;
                     }
                     catch (Exception e)

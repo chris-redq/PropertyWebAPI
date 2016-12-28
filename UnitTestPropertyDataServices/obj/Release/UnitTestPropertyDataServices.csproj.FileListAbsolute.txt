@@ -57,3 +57,6 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\R
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\obj\Release\UnitTestPropertyDataServices.csprojResolveAssemblyReference.cache
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\obj\Release\UnitTestPropertyDataServices.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\obj\Release\UnitTestPropertyDataServices.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\UnitTestPropertyDataServices.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\WebActivatorEx.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\Swashbuckle.Core.dll

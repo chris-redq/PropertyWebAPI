@@ -17,23 +17,7 @@ namespace PropertyWebAPI.Controllers
     using Newtonsoft.Json;
     using WebDataDB;
 
-    #region Local Helper Classes
-    public class Results
-    {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public BAL.WaterBillDetails waterBill;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public BAL.TaxBillDetails taxBill;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public BAL.MortgageServicerDetails mortgageServicer;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public BAL.DOBPenaltiesAndViolationsSummaryData dobPenaltiesAndViolationsSummary;
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public BAL.ZillowPropertyDetails zillowPorperty;
-
-    }
-    #endregion
-
+  
     /// <summary>
     ///     This controller handles callbacks from Web Scrapping Job Managers when requests are processed. It also provides
     ///     current state of the request
@@ -101,7 +85,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns data associated with the requestId
         /// </returns>
         [Route("api/webdata/request/{requestId}")]
-        [ResponseType(typeof(Results))]
+        [ResponseType(typeof(BAL.Results))]
         public IHttpActionResult GetRequest(long requestId)
         {
             using (WebDataEntities webDataE = new WebDataEntities())
@@ -109,7 +93,7 @@ namespace PropertyWebAPI.Controllers
                 WebDataDB.DataRequestLog requestLogObj = DAL.DataRequestLog.GetFirst(webDataE, requestId);
                 if (requestLogObj == null)
                     return NotFound();
-                Results result = new Results();
+                var result = new BAL.Results();
                 switch (requestLogObj.RequestTypeId)
                 {
                     case (int)RequestTypes.NYCTaxBill:
@@ -144,7 +128,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns data associated with the requestId
         /// </returns>
         [Route("api/webdata/request/externalreference/{externalReferenceId}")]
-        [ResponseType(typeof(Results))]
+        [ResponseType(typeof(BAL.Results))]
         public IHttpActionResult GetRequestByExternalReferenceId(string externalReferenceId)
         {
             using (WebDataEntities webDataE = new WebDataEntities())
@@ -153,7 +137,7 @@ namespace PropertyWebAPI.Controllers
                 if (requestLogList == null)
                     return NotFound();
 
-                Results result = new Results();
+                var result = new BAL.Results();
                 foreach (var requestLogObj in requestLogList)
                 {   switch (requestLogObj.RequestTypeId)
                     {
@@ -198,7 +182,7 @@ namespace PropertyWebAPI.Controllers
                 if (requestLogList == null)
                     return;
 
-                Results result = new Results();
+                var result = new BAL.Results();
                 foreach (var requestLogObj in requestLogList)
                 {
                     Request requestObj = webDataE.Requests.Find(requestLogObj.RequestId);
