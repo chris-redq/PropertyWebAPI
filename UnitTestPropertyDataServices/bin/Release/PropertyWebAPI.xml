@@ -481,9 +481,54 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:PropertyWebAPI.BAL.BaseResult">
+            <summary>
+            Use the class to extend any result that needs to be send asynchronously
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.BaseResult.requestId">
+            <summary>
+            This is the unique ID assigned by the system for any unique request made by the API caller. If the user makes multiple requests 
+            (in a short period or while there is a pending request) for the same data, the system only generates one ID and sends the 
+            same ID back for the new request.
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.BaseResult.externalReferenceId">
+            <summary>
+            This is the api callers reference number. This reference number can span across multiple calls and can be used to query the data services for status or results
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.BaseResult.status">
+            <summary>
+            There are three possible values for Status - Success, Pending and Error. 
+            Success means the request was successfully process and the data available in the result returned
+            Pending means the request it yet to be processed
+            Error means the request resulted in an error and the no data is available.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.NYCBaseResult">
+            <summary>
+            Use the class to extend any result that needs to be send asynchronously for NYC Properties 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.NYCBaseResult.BBL">
+            <summary>
+            Borough Block and Lot (BBL) of the property
+            </summary>
+        </member>
         <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummaryData">
             <summary>
             Helper class used to capture DOB Civil Penalties detail and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummaryData.civilPenaltyAmount">
+            <summary>
+            Sum total of all Civil Penalties due
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummaryData.violationAmount">
+            <summary>
+            Sum total of all ECB Violations due
             </summary>
         </member>
         <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary">
@@ -492,24 +537,32 @@
                 request to get data scrapped from the web 
             </summary>
         </member>
-        <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.DOBPenaltiesAndViolationsParams">
+        <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.Parameters">
             <summary>
-            Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+            Helper class used for serialization and deserialization of parameters necessary to get DOB Penalties and ECB Violations data 
             </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.ParametersToJSON(System.String)">
             <summary>
-                This methods converts all parameters required for DOB Civil Penalties into a JSON object
+                This methods converts all parameters required for DOB Civil Penalties and ECB Violations into a JSON object
             </summary>
             <param name="propertyBBL"></param>
             <returns>JSON string</returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.JSONToParameters(System.String)">
             <summary>
-                This method converts a JSON back into dCivilPenaltiesParameters Object
+                This method converts a JSON back into Parameters Object
             </summary>
             <param name="jsonParameters"></param>
-            <returns>dCivilPenaltiesParameters</returns>
+            <returns>Parameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.Nullable{System.Decimal},System.Nullable{System.Decimal})">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="penaltyAmount"></param>
+            <param name="violationAmount"></param>
+            <param name="logs">List or Request Log Records</param>
         </member>
         <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.LogFailure(System.String,System.String,System.Int32)">
             <summary>
@@ -523,8 +576,8 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.Get(System.String,System.String)">
             <summary>
-                This method deals with all the details associated with either returning the tax bill details or creating the 
-                request for getting is scrapped from the web 
+                This method deals with all the details associated with either returning the DOB Penalties and Violations details or creating the 
+                request for getting it scrapped from the web 
             </summary>
             <param name="propertyBBL"></param>
             <param name="externalReferenceId"></param>
@@ -544,9 +597,29 @@
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>
         </member>
+        <member name="T:PropertyWebAPI.BAL.Portal.ApiDetails">
+            <summary>  
+                Helper class for relevant api information to connect and  
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Portal.PostCallBack(PropertyWebAPI.BAL.Results)">
+            <summary>  
+                Method returns address corrections and details based on street number, street address and borough for NYC properties
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Portal.PostCallBack(System.String,System.String,System.String,PropertyWebAPI.BAL.Results)">
+            <summary>  
+                Method returns address corrections and details based on street number, street address and borough for NYC properties
+            </summary>  
+        </member>
         <member name="T:PropertyWebAPI.BAL.MortgageServicerDetails">
             <summary>
-            Helper class used to capture Tax bill details and used for serialization into JSON object 
+            Helper class used to capture Mortgage Servicer details and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.MortgageServicerDetails.servicerName">
+            <summary>
+            Name of the Mortgage Servicer
             </summary>
         </member>
         <member name="T:PropertyWebAPI.BAL.MortgageServicer">
@@ -557,22 +630,22 @@
         </member>
         <member name="T:PropertyWebAPI.BAL.MortgageServicer.Parameters">
             <summary>
-            Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+            Helper class used for serialization and deserialization of parameters necessary to get Mortgage Servicer data
             </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.ParametersToJSON(System.String)">
             <summary>
-                This methods converts all parameters required for Tax Bills into a JSON object
+                This methods converts all parameters required for Mortgage Servicer into a JSON object
             </summary>
             <param name="BBL"></param>
             <returns>JSON string</returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.JSONToParameters(System.String)">
             <summary>
-                This method converts a JSON back into TaxBillParameters Object
+                This method converts a JSON back into Mortgage Servicer Parameters Object
             </summary>
             <param name="jsonParameters"></param>
-            <returns>TaxBillParameters</returns>
+            <returns>Parameters</returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.LogFailure(System.String,System.String,System.Int32)">
             <summary>
@@ -584,10 +657,17 @@
             <param name="httpErrorCode"></param>
             <returns></returns>
         </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.String)">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="servicerName"></param>
+            <param name="logs">List or Request Log Records</param>
+        </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.Get(System.String,System.String)">
             <summary>
-                This method deals with all the details associated with either returning the tax bill details or creating the 
-                request for getting is scrapped from the web 
+                This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
+                request for getting it scrapped from the web 
             </summary>
             <param name="propertyBBL"></param>
             <param name="externalReferenceId"></param>
@@ -602,7 +682,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.UpdateData(WebDataDB.Request)">
             <summary>
-                This method updates the TaxBill table based on the information received from the Request Object
+                This method updates the Mortgage Servicer table based on the information received from the Request Object
             </summary>
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>
@@ -655,6 +735,11 @@
             Helper class used to capture Tax bill details and used for serialization into JSON object 
             </summary>
         </member>
+        <member name="F:PropertyWebAPI.BAL.TaxBillDetails.billAmount">
+            <summary>
+            Amount owed in taxes
+            </summary>
+        </member>
         <member name="T:PropertyWebAPI.BAL.TaxBill">
             <summary>
                 This class deals with all the details associated with either returning tax bill details or creating the 
@@ -675,10 +760,17 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.TaxBill.JSONToParameters(System.String)">
             <summary>
-                This method converts a JSON back into TaxBillParameters Object
+                This method converts a JSON back into Parameters Object
             </summary>
             <param name="jsonParameters"></param>
-            <returns>TaxBillParameters</returns>
+            <returns>Parameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.Nullable{System.Decimal})">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="billAmount">Bill Amount</param>
+            <param name="logs">List or Request Log Records</param>
         </member>
         <member name="M:PropertyWebAPI.BAL.TaxBill.LogFailure(System.String,System.String,System.Int32)">
             <summary>
@@ -693,7 +785,7 @@
         <member name="M:PropertyWebAPI.BAL.TaxBill.Get(System.String,System.String)">
             <summary>
                 This method deals with all the details associated with either returning the tax bill details or creating the 
-                request for getting is scrapped from the web 
+                request for getting it scrapped from the web 
             </summary>
             <param name="propertyBBL"></param>
             <param name="externalReferenceId"></param>
@@ -718,13 +810,18 @@
             Helper class used to capture Water bill details and used for serialization into JSON object 
             </summary>
         </member>
+        <member name="F:PropertyWebAPI.BAL.WaterBillDetails.billAmount">
+            <summary>
+            Amount owed in water bill
+            </summary>
+        </member>
         <member name="T:PropertyWebAPI.BAL.WaterBill">
             <summary>
                 This class deals with all the details associated with either returning water bill details or creating the 
                 request for getting data to be scrapped from the web 
             </summary>
         </member>
-        <member name="T:PropertyWebAPI.BAL.WaterBill.WaterBillParameters">
+        <member name="T:PropertyWebAPI.BAL.WaterBill.Parameters">
             <summary>
             Helper class used for serialization and deserialization of parameters necessary to get Water bill 
             </summary>
@@ -771,15 +868,20 @@
             Helper class used to capture Tax bill details and used for serialization into JSON object 
             </summary>
         </member>
+        <member name="F:PropertyWebAPI.BAL.ZillowPropertyDetails.zEstimate">
+            <summary>
+            zEstimate of the property
+            </summary>
+        </member>
         <member name="T:PropertyWebAPI.BAL.Zillow">
             <summary>
-                This class deals with all the details associated with either returning Zillow details or creating the 
-                request to get data scrapped from the web 
+            This class deals with all the details associated with either returning Zillow details or creating the 
+            request to get data scrapped from the web 
             </summary>
         </member>
         <member name="T:PropertyWebAPI.BAL.Zillow.Parameters">
             <summary>
-            Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+            Helper class used for serialization and deserialization of parameters necessary to get Zillow information 
             </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.ParametersToJSON(System.String,System.String)">
@@ -792,10 +894,10 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.JSONToParameters(System.String)">
             <summary>
-                This method converts a JSON back into TaxBillParameters Object
+                This method converts a JSON back into Parameters Object
             </summary>
             <param name="jsonParameters"></param>
-            <returns>TaxBillParameters</returns>
+            <returns>Parameters</returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.LogFailure(System.String,System.String,System.Int32)">
             <summary>
@@ -807,10 +909,17 @@
             <param name="httpErrorCode"></param>
             <returns></returns>
         </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.Nullable{System.Decimal})">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="zEstimate"></param>
+            <param name="logs">List or Request Log Records</param>
+        </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.Get(System.String,System.String,System.String)">
             <summary>
-                This method deals with all the details associated with either returning the tax bill details or creating the 
-                request for getting is scrapped from the web 
+                This method deals with all the details associated with either returning the Zillow details or creating the 
+                request for getting it scrapped from the web 
             </summary>
             <param name="propertyBBL"></param>
             <param name="address"></param>
@@ -826,7 +935,7 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.UpdateData(WebDataDB.Request)">
             <summary>
-                This method updates the TaxBill table based on the information received from the Request Object
+                This method updates the Zillow table based on the information received from the Request Object
             </summary>
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>

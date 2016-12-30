@@ -15,7 +15,7 @@ namespace WebDataDB
     public partial class Zillow
     {
         public string BBL { get; set; }
-        public decimal zEstimate { get; set; }
+        public Nullable<decimal> zEstimate { get; set; }
         public System.DateTime LastUpdated { get; set; }
     }
 }

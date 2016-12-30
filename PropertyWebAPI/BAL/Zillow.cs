@@ -252,22 +252,29 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        var resultObj = (ResponseData.ParseZillowZEstimate(requestObj.ResponseData))[0];
-                                        zEstimate = resultObj.Zestimate;
+                                        DexiRobotRequestResponseBuilder.Response.ZillowZEstimate resultObj = null;
+                                        try
+                                        {   resultObj = (ResponseData.ParseZillowZEstimate(requestObj.ResponseData))[0];
+                                            zEstimate = resultObj.Zestimate;
+                                        }
+                                        catch(Exception e)
+                                        {
+                                            Common.Logs.log().Error(string.Format("Cannot parse the response data {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
+                                        }
 
                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
                                         WebDataDB.Zillow zillowObj = webDBEntities.Zillows.FirstOrDefault(i => i.BBL == parameters.BBL);
                                         if (zillowObj != null)
                                         {   //Update data with new results
-                                            zillowObj.zEstimate = resultObj.Zestimate;
+                                            zillowObj.zEstimate = zEstimate;
                                             zillowObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                         }
                                         else
                                         {   // add an entry into cache or DB
                                             zillowObj = new WebDataDB.Zillow();
                                             zillowObj.BBL = parameters.BBL;
-                                            zillowObj.zEstimate = resultObj.Zestimate;
+                                            zillowObj.zEstimate = zEstimate;
                                             zillowObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
 
                                             webDBEntities.Zillows.Add(zillowObj);
@@ -275,7 +282,7 @@ namespace PropertyWebAPI.BAL
 
                                         webDBEntities.SaveChanges();
 
-                                        logs=DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
+                                        logs = DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId); 
                                     }
                                     else
                                         throw (new Exception("Cannot locate Request Log Record(s)"));
