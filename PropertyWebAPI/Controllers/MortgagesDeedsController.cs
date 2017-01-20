@@ -39,7 +39,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(vwDocumentsByBBLE))]
         public IHttpActionResult Get(string propertyBBLE)
         {
-            if (!BAL.BBL.IsValid(propertyBBLE))
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
             try
@@ -76,7 +76,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(vwDocumentsByBBLE))]
         public IHttpActionResult GetAllDeeds(string propertyBBLE)
         {
-            if (!BAL.BBL.IsValid(propertyBBLE))
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
             try
@@ -114,7 +114,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.MortgageServicerDetails))]
         public IHttpActionResult GetMortgageServicer(string propertyBBL, string externalReferenceId="")
         {
-            if (!BAL.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
             BAL.MortgageServicerDetails mortgageServicerObj = BAL.MortgageServicer.Get(propertyBBL, externalReferenceId);
@@ -137,7 +137,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.DeedDetails))]
         public IHttpActionResult GetLatestDeedDetails(string propertyBBLE)
         {
-            if (!BAL.BBL.IsValid(propertyBBLE))
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             
             BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBLE);
@@ -161,7 +161,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(List<BAL.DeedDocument>))]
         public IHttpActionResult GetUnsatisfiedMortgages(string propertyBBLE)
         {
-            if (!BAL.BBL.IsValid(propertyBBLE))
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
             try
@@ -199,7 +199,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(vwDocumentsByBBLE))]
         public IHttpActionResult GetAllContractsOfSaleAndMemorandumsOfContract(string propertyBBLE)
         {
-            if (!BAL.BBL.IsValid(propertyBBLE))
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
             try

@@ -181,7 +181,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(JObject))]
         public IHttpActionResult GetNYCBBLDetails(string propertyBBL)
         {
-            if (!BAL.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetBBLDetailsFromGeoClientAPI(propertyBBL);
@@ -250,7 +250,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.GeneralPropertyInformation))]
         public IHttpActionResult GetNYCPropertyDetails(string propertyBBL, string addresscleanup="Y")
         {
-            if (!BAL.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
             if (addresscleanup == null)

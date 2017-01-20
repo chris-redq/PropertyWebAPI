@@ -60,3 +60,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\D
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\UnitTestPropertyDataServices.dll.config
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\WebActivatorEx.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\Swashbuckle.Core.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\GPADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\GPADB.pdb

@@ -177,3 +177,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\DexiRobotReques
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\DexiRobotRequestResponseBuilder.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\Swashbuckle.Core.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\WebActivatorEx.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\GPADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\GPADB.pdb

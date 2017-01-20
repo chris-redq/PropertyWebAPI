@@ -45,9 +45,14 @@ namespace PropertyWebAPI.BAL
             return int.Parse(BBL.Substring(6, 4));
         }
 
-        public static bool IsValid(string BBL)
+        public static bool IsValidFormat(string BBL)
         {
             return Regex.IsMatch(BBL, "^[1-5][0-9]{9}[A-Z]??$");
+        }
+
+        public static bool IsValid(string BBL)
+        {
+            return (NYCPhysicalPropertyData.Get(BBL, false) != null);
         }
 
         public static bool IsRegularTaxLot(string BBL)

@@ -38,18 +38,18 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(BAL.ZillowPropertyDetails))]
         public IHttpActionResult Get(string propertyBBL, string externalReferenceId = null)
         {
-            if (!BAL.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
             {
                 BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             }
 
             //Get Property address using BBL
-            BAL.GeneralPropertyInformation propInfo = BAL.NYCPhysicalPropertyData.Get(propertyBBL,true);
+            var propInfo = BAL.NYCPhysicalPropertyData.Get(propertyBBL,true);
             if (propInfo == null)
             {
-                BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.NotFound);
-                return NotFound();
+                BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number, not found");
             }
 
             BAL.ZillowPropertyDetails propertyObj = BAL.Zillow.Get(propertyBBL, propInfo.address.ToString(), externalReferenceId);

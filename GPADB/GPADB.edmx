@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GPADBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwGeneralLeadInfomation">
+          <Key>
+            <PropertyRef Name="BBLE" />
+            <PropertyRef Name="TaxLienList" />
+            <PropertyRef Name="PoolA" />
+          </Key>
+          <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+          <Property Name="LotFrontage" Type="float" />
+          <Property Name="LotDepth" Type="float" />
+          <Property Name="LotArea" Type="float" />
+          <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+          <Property Name="BuildingClassDescription" Type="varchar" MaxLength="255" />
+          <Property Name="BuildingForntage" Type="float" />
+          <Property Name="BuildingDepth" Type="float" />
+          <Property Name="Stories" Type="float" />
+          <Property Name="NumberOfBuildingsOnLot" Type="float" />
+          <Property Name="BuildingGrossArea" Type="float" />
+          <Property Name="BuiltFAR" Type="float" />
+          <Property Name="MaxResidentialFAR" Type="float" />
+          <Property Name="YearBuilt" Type="float" />
+          <Property Name="Borough" Type="float" />
+          <Property Name="BoroughName" Type="varchar" MaxLength="13" />
+          <Property Name="Block" Type="float" />
+          <Property Name="Lot" Type="float" />
+          <Property Name="StreetNumber" Type="varchar" MaxLength="12" />
+          <Property Name="StreetName" Type="nvarchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="30" />
+          <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+          <Property Name="NTACode" Type="varchar" MaxLength="4" />
+          <Property Name="Zoning" Type="nvarchar" MaxLength="9" />
+          <Property Name="UnitNumber" Type="nvarchar" MaxLength="5" />
+          <Property Name="East" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="North" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="ResidentialUnits" Type="float" />
+          <Property Name="TaxLienList" Type="int" Nullable="false" />
+          <Property Name="PoolA" Type="int" Nullable="false" />
+          <Property Name="TaxLienLPs" Type="int" />
+          <Property Name="TaxLienActiveCases" Type="int" />
+          <Property Name="COSPresent" Type="int" />
+          <Property Name="FullAddress" Type="varchar" MaxLength="200" />
+          <Property Name="Vacant" Type="varchar" MaxLength="50" />
+          <Property Name="MailingAddressActive" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="ZipCodes" Type="nvarchar" Mode="In" />
+          <Parameter Name="BuildingClassCodes" Type="nvarchar" Mode="In" />
+          <Parameter Name="Borough" Type="nvarchar" Mode="In" />
+          <Parameter Name="Vacant" Type="nvarchar" Mode="In" />
+          <Parameter Name="MailingAddressActive" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="tfnGetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
+                <Property Name="TaxClass" Type="varchar" MaxLength="2" />
+                <Property Name="LotFrontage" Type="float" />
+                <Property Name="LotDepth" Type="float" />
+                <Property Name="LotArea" Type="int" />
+                <Property Name="BuildingClassCode" Type="varchar" MaxLength="2" />
+                <Property Name="BuildingClass" Type="varchar" MaxLength="255" />
+                <Property Name="BuildingFrontage" Type="float" />
+                <Property Name="BuildingDepth" Type="float" />
+                <Property Name="Stories" Type="float" />
+                <Property Name="NumberOfBuildingsOnLot" Type="float" />
+                <Property Name="BuildingGrossArea" Type="int" />
+                <Property Name="BuiltFAR" Type="float" />
+                <Property Name="MaxResidentialFAR" Type="float" />
+                <Property Name="YearBuilt" Type="int" />
+                <Property Name="Borough" Type="varchar" MaxLength="1" />
+                <Property Name="BoroughName" Type="varchar" MaxLength="15" />
+                <Property Name="Block" Type="int" />
+                <Property Name="Lot" Type="int" />
+                <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
+                <Property Name="StreetName" Type="varchar" MaxLength="20" />
+                <Property Name="ZipCode" Type="varchar" MaxLength="10" />
+                <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+                <Property Name="NTA" Type="varchar" MaxLength="4" />
+                <Property Name="Zoning" Type="varchar" MaxLength="9" />
+                <Property Name="UnitNumber" Type="varchar" MaxLength="5" />
+                <Property Name="East" Type="int" />
+                <Property Name="North" Type="int" />
+                <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+                <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+                <Property Name="ResidentialUnits" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="GPADBModelStoreContainer">
+          <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
+            <DefiningQuery>SELECT 
+    [vwGeneralLeadInfomation].[BBLE] AS [BBLE], 
+    [vwGeneralLeadInfomation].[TaxClass] AS [TaxClass], 
+    [vwGeneralLeadInfomation].[LotFrontage] AS [LotFrontage], 
+    [vwGeneralLeadInfomation].[LotDepth] AS [LotDepth], 
+    [vwGeneralLeadInfomation].[LotArea] AS [LotArea], 
+    [vwGeneralLeadInfomation].[BuildingClass] AS [BuildingClass], 
+    [vwGeneralLeadInfomation].[BuildingClassDescription] AS [BuildingClassDescription], 
+    [vwGeneralLeadInfomation].[BuildingForntage] AS [BuildingForntage], 
+    [vwGeneralLeadInfomation].[BuildingDepth] AS [BuildingDepth], 
+    [vwGeneralLeadInfomation].[Stories] AS [Stories], 
+    [vwGeneralLeadInfomation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
+    [vwGeneralLeadInfomation].[BuildingGrossArea] AS [BuildingGrossArea], 
+    [vwGeneralLeadInfomation].[BuiltFAR] AS [BuiltFAR], 
+    [vwGeneralLeadInfomation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
+    [vwGeneralLeadInfomation].[YearBuilt] AS [YearBuilt], 
+    [vwGeneralLeadInfomation].[Borough] AS [Borough], 
+    [vwGeneralLeadInfomation].[BoroughName] AS [BoroughName], 
+    [vwGeneralLeadInfomation].[Block] AS [Block], 
+    [vwGeneralLeadInfomation].[Lot] AS [Lot], 
+    [vwGeneralLeadInfomation].[StreetNumber] AS [StreetNumber], 
+    [vwGeneralLeadInfomation].[StreetName] AS [StreetName], 
+    [vwGeneralLeadInfomation].[ZipCode] AS [ZipCode], 
+    [vwGeneralLeadInfomation].[NeighborhoodName] AS [NeighborhoodName], 
+    [vwGeneralLeadInfomation].[NTACode] AS [NTACode], 
+    [vwGeneralLeadInfomation].[Zoning] AS [Zoning], 
+    [vwGeneralLeadInfomation].[UnitNumber] AS [UnitNumber], 
+    [vwGeneralLeadInfomation].[East] AS [East], 
+    [vwGeneralLeadInfomation].[North] AS [North], 
+    [vwGeneralLeadInfomation].[Longitude] AS [Longitude], 
+    [vwGeneralLeadInfomation].[Latitude] AS [Latitude], 
+    [vwGeneralLeadInfomation].[ResidentialUnits] AS [ResidentialUnits], 
+    [vwGeneralLeadInfomation].[TaxLienList] AS [TaxLienList], 
+    [vwGeneralLeadInfomation].[PoolA] AS [PoolA], 
+    [vwGeneralLeadInfomation].[TaxLienLPs] AS [TaxLienLPs], 
+    [vwGeneralLeadInfomation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
+    [vwGeneralLeadInfomation].[COSPresent] AS [COSPresent], 
+    [vwGeneralLeadInfomation].[FullAddress] AS [FullAddress], 
+    [vwGeneralLeadInfomation].[Vacant] AS [Vacant], 
+    [vwGeneralLeadInfomation].[MailingAddressActive] AS [MailingAddressActive]
+    FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GPADBEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="vwGeneralLeadInfomations" EntityType="GPADBModel.vwGeneralLeadInfomation" />
+          <FunctionImport Name="tfnGetPropertyLeads" IsComposable="true" ReturnType="Collection(GPADBModel.tfnGetPropertyLeads_Result)">
+            <Parameter Name="ZipCodes" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInfomations" ReturnType="Collection(GPADBModel.vwGeneralLeadInfomation)">
+            <Parameter Name="ZipCodes" Mode="In" Type="String" />
+            <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
+            <Parameter Name="Borough" Mode="In" Type="String" />
+            <Parameter Name="Vacant" Mode="In" Type="String" />
+            <Parameter Name="MailingAddressActive" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="vwGeneralLeadInfomation">
+          <Key>
+            <PropertyRef Name="BBLE" />
+            <PropertyRef Name="TaxLienList" />
+            <PropertyRef Name="PoolA" />
+          </Key>
+          <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="LotFrontage" Type="Double" />
+          <Property Name="LotDepth" Type="Double" />
+          <Property Name="LotArea" Type="Double" />
+          <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingClassDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingForntage" Type="Double" />
+          <Property Name="BuildingDepth" Type="Double" />
+          <Property Name="Stories" Type="Double" />
+          <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+          <Property Name="BuildingGrossArea" Type="Double" />
+          <Property Name="BuiltFAR" Type="Double" />
+          <Property Name="MaxResidentialFAR" Type="Double" />
+          <Property Name="YearBuilt" Type="Double" />
+          <Property Name="Borough" Type="Double" />
+          <Property Name="BoroughName" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="Block" Type="Double" />
+          <Property Name="Lot" Type="Double" />
+          <Property Name="StreetNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="ResidentialUnits" Type="Double" />
+          <Property Name="TaxLienList" Type="Int32" Nullable="false" />
+          <Property Name="PoolA" Type="Int32" Nullable="false" />
+          <Property Name="TaxLienLPs" Type="Int32" />
+          <Property Name="TaxLienActiveCases" Type="Int32" />
+          <Property Name="COSPresent" Type="Int32" />
+          <Property Name="FullAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Vacant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddressActive" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="tfnGetPropertyLeads_Result">
+          <Property Type="String" Name="BBLE" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="TaxClass" Nullable="true" MaxLength="2" />
+          <Property Type="Double" Name="LotFrontage" Nullable="true" />
+          <Property Type="Double" Name="LotDepth" Nullable="true" />
+          <Property Type="Int32" Name="LotArea" Nullable="true" />
+          <Property Type="String" Name="BuildingClassCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="BuildingClass" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="BuildingFrontage" Nullable="true" />
+          <Property Type="Double" Name="BuildingDepth" Nullable="true" />
+          <Property Type="Double" Name="Stories" Nullable="true" />
+          <Property Type="Double" Name="NumberOfBuildingsOnLot" Nullable="true" />
+          <Property Type="Int32" Name="BuildingGrossArea" Nullable="true" />
+          <Property Type="Double" Name="BuiltFAR" Nullable="true" />
+          <Property Type="Double" Name="MaxResidentialFAR" Nullable="true" />
+          <Property Type="Int32" Name="YearBuilt" Nullable="true" />
+          <Property Type="String" Name="Borough" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="BoroughName" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="Block" Nullable="true" />
+          <Property Type="Int32" Name="Lot" Nullable="true" />
+          <Property Type="String" Name="StreetNumber" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="StreetName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="NeighborhoodName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="NTA" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Zoning" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="UnitNumber" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="East" Nullable="true" />
+          <Property Type="Int32" Name="North" Nullable="true" />
+          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="28" Scale="4" />
+          <Property Type="Decimal" Name="Latitude" Nullable="true" Precision="28" Scale="4" />
+          <Property Type="Double" Name="ResidentialUnits" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities" >
+          <EntitySetMapping Name="vwGeneralLeadInfomations">
+            <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInfomation">
+              <MappingFragment StoreEntitySet="vwGeneralLeadInfomation">
+                <ScalarProperty Name="MailingAddressActive" ColumnName="MailingAddressActive" />
+                <ScalarProperty Name="Vacant" ColumnName="Vacant" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="COSPresent" ColumnName="COSPresent" />
+                <ScalarProperty Name="TaxLienActiveCases" ColumnName="TaxLienActiveCases" />
+                <ScalarProperty Name="TaxLienLPs" ColumnName="TaxLienLPs" />
+                <ScalarProperty Name="PoolA" ColumnName="PoolA" />
+                <ScalarProperty Name="TaxLienList" ColumnName="TaxLienList" />
+                <ScalarProperty Name="ResidentialUnits" ColumnName="ResidentialUnits" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="North" ColumnName="North" />
+                <ScalarProperty Name="East" ColumnName="East" />
+                <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+                <ScalarProperty Name="Zoning" ColumnName="Zoning" />
+                <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+                <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="Lot" ColumnName="Lot" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="BoroughName" ColumnName="BoroughName" />
+                <ScalarProperty Name="Borough" ColumnName="Borough" />
+                <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+                <ScalarProperty Name="MaxResidentialFAR" ColumnName="MaxResidentialFAR" />
+                <ScalarProperty Name="BuiltFAR" ColumnName="BuiltFAR" />
+                <ScalarProperty Name="BuildingGrossArea" ColumnName="BuildingGrossArea" />
+                <ScalarProperty Name="NumberOfBuildingsOnLot" ColumnName="NumberOfBuildingsOnLot" />
+                <ScalarProperty Name="Stories" ColumnName="Stories" />
+                <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+                <ScalarProperty Name="BuildingForntage" ColumnName="BuildingForntage" />
+                <ScalarProperty Name="BuildingClassDescription" ColumnName="BuildingClassDescription" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+                <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+                <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+                <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
+                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetPropertyLeads" FunctionName="GPADBModel.Store.tfnGetPropertyLeads">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GPADBModel.tfnGetPropertyLeads_Result">
+                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+                <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
+                <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+                <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+                <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+                <ScalarProperty Name="BuildingClassCode" ColumnName="BuildingClassCode" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+                <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+                <ScalarProperty Name="Stories" ColumnName="Stories" />
+                <ScalarProperty Name="NumberOfBuildingsOnLot" ColumnName="NumberOfBuildingsOnLot" />
+                <ScalarProperty Name="BuildingGrossArea" ColumnName="BuildingGrossArea" />
+                <ScalarProperty Name="BuiltFAR" ColumnName="BuiltFAR" />
+                <ScalarProperty Name="MaxResidentialFAR" ColumnName="MaxResidentialFAR" />
+                <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+                <ScalarProperty Name="Borough" ColumnName="Borough" />
+                <ScalarProperty Name="BoroughName" ColumnName="BoroughName" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="Lot" ColumnName="Lot" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+                <ScalarProperty Name="NTA" ColumnName="NTA" />
+                <ScalarProperty Name="Zoning" ColumnName="Zoning" />
+                <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+                <ScalarProperty Name="East" ColumnName="East" />
+                <ScalarProperty Name="North" ColumnName="North" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="ResidentialUnits" ColumnName="ResidentialUnits" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

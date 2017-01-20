@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities">
+    <EntitySetMapping Name="vwGeneralLeadInfomations">
+      <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInfomation">
+        <MappingFragment StoreEntitySet="vwGeneralLeadInfomation">
+          <ScalarProperty Name="MailingAddressActive" ColumnName="MailingAddressActive" />
+          <ScalarProperty Name="Vacant" ColumnName="Vacant" />
+          <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+          <ScalarProperty Name="COSPresent" ColumnName="COSPresent" />
+          <ScalarProperty Name="TaxLienActiveCases" ColumnName="TaxLienActiveCases" />
+          <ScalarProperty Name="TaxLienLPs" ColumnName="TaxLienLPs" />
+          <ScalarProperty Name="PoolA" ColumnName="PoolA" />
+          <ScalarProperty Name="TaxLienList" ColumnName="TaxLienList" />
+          <ScalarProperty Name="ResidentialUnits" ColumnName="ResidentialUnits" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="North" ColumnName="North" />
+          <ScalarProperty Name="East" ColumnName="East" />
+          <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+          <ScalarProperty Name="Zoning" ColumnName="Zoning" />
+          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+          <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="BoroughName" ColumnName="BoroughName" />
+          <ScalarProperty Name="Borough" ColumnName="Borough" />
+          <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+          <ScalarProperty Name="MaxResidentialFAR" ColumnName="MaxResidentialFAR" />
+          <ScalarProperty Name="BuiltFAR" ColumnName="BuiltFAR" />
+          <ScalarProperty Name="BuildingGrossArea" ColumnName="BuildingGrossArea" />
+          <ScalarProperty Name="NumberOfBuildingsOnLot" ColumnName="NumberOfBuildingsOnLot" />
+          <ScalarProperty Name="Stories" ColumnName="Stories" />
+          <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+          <ScalarProperty Name="BuildingForntage" ColumnName="BuildingForntage" />
+          <ScalarProperty Name="BuildingClassDescription" ColumnName="BuildingClassDescription" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+          <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+          <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+          <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetPropertyLeads" FunctionName="GPADBModel.Store.tfnGetPropertyLeads">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GPADBModel.tfnGetPropertyLeads_Result">
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
+          <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+          <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+          <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+          <ScalarProperty Name="BuildingClassCode" ColumnName="BuildingClassCode" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+          <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+          <ScalarProperty Name="Stories" ColumnName="Stories" />
+          <ScalarProperty Name="NumberOfBuildingsOnLot" ColumnName="NumberOfBuildingsOnLot" />
+          <ScalarProperty Name="BuildingGrossArea" ColumnName="BuildingGrossArea" />
+          <ScalarProperty Name="BuiltFAR" ColumnName="BuiltFAR" />
+          <ScalarProperty Name="MaxResidentialFAR" ColumnName="MaxResidentialFAR" />
+          <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+          <ScalarProperty Name="Borough" ColumnName="Borough" />
+          <ScalarProperty Name="BoroughName" ColumnName="BoroughName" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+          <ScalarProperty Name="NTA" ColumnName="NTA" />
+          <ScalarProperty Name="Zoning" ColumnName="Zoning" />
+          <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+          <ScalarProperty Name="East" ColumnName="East" />
+          <ScalarProperty Name="North" ColumnName="North" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="ResidentialUnits" ColumnName="ResidentialUnits" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+  </EntityContainerMapping>
+</Mapping>

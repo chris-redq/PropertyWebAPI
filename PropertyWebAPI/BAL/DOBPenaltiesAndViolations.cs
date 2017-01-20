@@ -267,8 +267,8 @@ namespace PropertyWebAPI.BAL
                                         
                                         foreach (var row in ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData))
                                         {
-                                            dobTotalPenaltyAmount += row.DOBCivilPenaltyAmount;
-                                            dobTotalViolationAmount += row.ECBPenaltyDue;
+                                            dobTotalPenaltyAmount += row.DOBCivilPenaltyAmount.GetValueOrDefault();
+                                            dobTotalViolationAmount += row.ECBPenaltyDue.GetValueOrDefault();
                                         }
 
                                         penaltyAmount = dobTotalPenaltyAmount;

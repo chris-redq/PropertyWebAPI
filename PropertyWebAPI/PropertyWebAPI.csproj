@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
     <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
+    <DocumentationFile>bin\PropertyWebAPI.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
@@ -216,6 +217,7 @@
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
     <Compile Include="BAL\Portal.cs" />
     <Compile Include="BAL\Results.cs" />
+    <Compile Include="Controllers\LeadsController.cs" />
     <Compile Include="DAL\eCourts.cs" />
     <Compile Include="BAL\MortgageServicer.cs" />
     <Compile Include="BAL\NYCPhysicalPropertyData.cs" />
@@ -285,6 +287,10 @@
     <ProjectReference Include="..\eCourtsDB\eCourtsDB.csproj">
       <Project>{d93d40b6-428c-4628-9b06-e1fd2976465c}</Project>
       <Name>eCourtsDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GPADB\GPADB.csproj">
+      <Project>{6b287c2a-85ff-4970-8c6f-32a9aaef8aae}</Project>
+      <Name>GPADB</Name>
     </ProjectReference>
     <ProjectReference Include="..\NYCDOF\NYCDOF.csproj">
       <Project>{be01f187-9ac1-440c-8096-9ea1109c6822}</Project>

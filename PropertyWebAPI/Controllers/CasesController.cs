@@ -174,7 +174,7 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(List<DAL.CaseBasicInformation>))]
         public IHttpActionResult GetMortgageForeclosureCasesForaProperty(string propertyBBL)
         {
-            if (!BAL.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
             try
@@ -211,8 +211,8 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(List<DAL.LPCaseDetails>))]
         public IHttpActionResult GetMortgageForeclosureLPsForaProperty(string propertyBBL, string effectiveDate="")
         {
-            if (!BAL.BBL.IsValid(propertyBBL))
-                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
+                return BadRequest("Incorrect BBL - Borough Block Lot number");
 
             DateTime? sDateTime = null;
             DateTime actualDateTime = DateTime.MinValue;

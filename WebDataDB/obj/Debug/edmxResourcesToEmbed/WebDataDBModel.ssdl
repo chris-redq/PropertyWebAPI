@@ -71,7 +71,7 @@
       <PropertyRef Name="BBL" />
     </Key>
     <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
-    <Property Name="zEstimate" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="zEstimate" Type="numeric" Precision="18" Scale="2" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="DexiRequest">

@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDataDB", "WebDataDB\WebD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPropertyDataServices", "UnitTestPropertyDataServices\UnitTestPropertyDataServices.csproj", "{2147434D-06D9-485A-9569-CD0E4D3FC27E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPADB", "GPADB\GPADB.csproj", "{6B287C2A-85FF-4970-8C6F-32A9AAEF8AAE}"
+EndProject
 Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
@@ -60,6 +62,10 @@ Global
 		{2147434D-06D9-485A-9569-CD0E4D3FC27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2147434D-06D9-485A-9569-CD0E4D3FC27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2147434D-06D9-485A-9569-CD0E4D3FC27E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B287C2A-85FF-4970-8C6F-32A9AAEF8AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B287C2A-85FF-4970-8C6F-32A9AAEF8AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B287C2A-85FF-4970-8C6F-32A9AAEF8AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B287C2A-85FF-4970-8C6F-32A9AAEF8AAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

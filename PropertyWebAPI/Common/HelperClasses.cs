@@ -6,6 +6,7 @@ using System.Web.Http.Results;
 using ACRISDB;
 using NYCDOF;
 using eCourtsDB;
+using GPADB;
 using log4net;
 using AutoMapper;
 using System.Text.RegularExpressions;
@@ -38,6 +39,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetNewMortgageForeclosureCases_Result, DAL.CaseBasicInformationWithBBL>();
                 cfg.CreateMap<tfnGetCaseColumnChanges_Result, DAL.CaseDataChange>();
                 cfg.CreateMap<tfnGetUnsatisfiedMortgages_Result, BAL.DeedDocument>();
+                cfg.CreateMap<vwGeneralLeadInfomation, Controllers.LeadSummaryData>();
             });
         }
     }

@@ -37,7 +37,7 @@ namespace PropertyWebAPI.Controllers
     {
         // ../api/violations/3001670091/?externalRequestId=135&dobPenaltiesAndViolationsSummary=Y
         /// <summary>  
-        ///     Use this method to get all violations associated with a property
+        ///     Use this method to get a total of all violations/civil penalty amounts etc. associated with a property
         /// </summary>  
         /// <param name="propertyBBL">
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
@@ -51,18 +51,24 @@ namespace PropertyWebAPI.Controllers
         ///     Set this optional parameter to N if you do not want the DOB Civil Penalties. The default value for this parameter is Y
         /// </param>
         /// <returns>
-        ///     Returns all the violation amounts and penalties requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
+        ///     Returns totals for all violation/Penalties amounts associated with a property
         /// </returns>
         [Route("api/violations/{propertyBBL}")]
         [ResponseType(typeof(Violations))]
         public IHttpActionResult GetViolations(string propertyBBL, string externalReferenceId = null, string dobPenaltiesAndViolationsSummary = "Y")
         {
-            if (!BAL.BBL.IsValid(propertyBBL))
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
             {
                 BAL.DOBPenaltiesAndViolationsSummary.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             }
-            
+
+            if (!BAL.BBL.IsValid(propertyBBL))
+            {
+                BAL.DOBPenaltiesAndViolationsSummary.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
+            }
+
             Violations violationsObj = new Violations();
 
             if (dobPenaltiesAndViolationsSummary == "Y")

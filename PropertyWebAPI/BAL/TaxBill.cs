@@ -249,21 +249,21 @@ namespace PropertyWebAPI.BAL
                                     if (dataRequestLogObj != null)
                                     {
                                         var resultObj = ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData)[0];
-                                        billAmount = resultObj.TotalDueAmountToPay;
+                                        billAmount = resultObj.TotalDueAmountToPay.GetValueOrDefault();
 
                                         Parameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
                                         WebDataDB.TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == taxBillParams.BBL);
                                         if (taxBillObj != null)
                                         {   //Update data with new results
-                                            taxBillObj.BillAmount = resultObj.TotalDueAmountToPay;
+                                            taxBillObj.BillAmount = resultObj.TotalDueAmountToPay.GetValueOrDefault();
                                             taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                         }
                                         else
                                         {   // add an entry into cache or DB
                                             taxBillObj = new WebDataDB.TaxBill();
                                             taxBillObj.BBL = taxBillParams.BBL;
-                                            taxBillObj.BillAmount = resultObj.TotalDueAmountToPay;
+                                            taxBillObj.BillAmount = resultObj.TotalDueAmountToPay.GetValueOrDefault();
                                             taxBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
 
                                             webDBEntities.TaxBills.Add(taxBillObj);
