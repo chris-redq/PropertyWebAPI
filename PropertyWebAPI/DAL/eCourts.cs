@@ -59,7 +59,10 @@ namespace PropertyWebAPI.DAL
 
     }
 
+    public class CaseDocumentDetails: tfnGetDocumentExtractForCase_Result
+    {
 
+    }
 
     /// <summary>
     ///     All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
@@ -104,13 +107,23 @@ namespace PropertyWebAPI.DAL
                                 .OrderBy(m => m.AppearanceDate).ToList());
             }
         }
-
+        
         public static List<AttorneyDetails> GetAllAttorneysForACase(string countyId, string caseIndexNumber)
         {
             using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
             {
                 return Mapper.Map<List<vwAttorneyExpanded>, List<AttorneyDetails>>(nycourtsE.vwAttorneyExpandeds.Where(i => i.CountyId == countyId && i.CaseIndexNumber == caseIndexNumber)
                                                     .OrderByDescending(m => m.SeqNumber).ToList());
+            }
+        }
+
+        public static List<CaseDocumentDetails> GetAllMinutesForACase(string countyId, string caseIndexNumber)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnGetDocumentExtractForCase_Result>, List<CaseDocumentDetails>>(nycourtsE.tfnGetDocumentExtractForCase(countyId, caseIndexNumber)
+                                                                                                                 .OrderByDescending(m => m.DateCreated)
+                                                                                                                 .ToList());
             }
         }
 

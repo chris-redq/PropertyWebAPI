@@ -747,5 +747,21 @@
       <Parameter Name="BBL" Mode="In" Type="String" />
       <Parameter Name="StartDate" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="tfnGetDocumentExtractForCase" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetDocumentExtractForCase_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="tfnGetDocumentExtractForCase_Result">
+    <Property Type="Int32" Name="DocumentId" Nullable="false" />
+    <Property Type="String" Name="CountyId" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="CaseIndexNumberExternal" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="DocumentNumber" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="DocumentType" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="DocumentDescription" Nullable="true" />
+    <Property Type="DateTime" Name="DateCreated" Nullable="true" Precision="10" />
+    <Property Type="String" Name="DocumentStatus" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CaseCaption" Nullable="true" />
+  </ComplexType>
 </Schema>

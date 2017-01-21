@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NYCOURTSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NYCOURTSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Appearance">
           <Key>
             <PropertyRef Name="AppearanceId" />
@@ -772,6 +772,26 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="tfnGetDocumentExtractForCase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="nyscef">
+          <Parameter Name="CountyId" Type="varchar" Mode="In" />
+          <Parameter Name="CaseIndexNumber" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="DocumentId" Type="int" Nullable="false" />
+                <Property Name="CountyId" Type="varchar" MaxLength="2" />
+                <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+                <Property Name="CaseIndexNumberExternal" Type="varchar" MaxLength="15" />
+                <Property Name="DocumentNumber" Type="varchar" MaxLength="10" />
+                <Property Name="DocumentType" Type="varchar" MaxLength="250" />
+                <Property Name="DocumentDescription" Type="varchar(max)" />
+                <Property Name="DateCreated" Type="date" />
+                <Property Name="DocumentStatus" Type="varchar" MaxLength="50" />
+                <Property Name="CaseCaption" Type="varchar(max)" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="NYCOURTSModelStoreContainer">
           <EntitySet Name="Appearance" EntityType="Self.Appearance" Schema="ccis" store:Type="Tables" />
           <EntitySet Name="Attorney" EntityType="Self.Attorney" Schema="ccis" store:Type="Tables" />
@@ -1082,8 +1102,7 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
     FROM [jdls].[vwGeneralDataExpanded] AS [vwGeneralDataExpanded]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NYCOURTSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1811,7 +1830,7 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <EntitySet Name="vwMotionExpandeds" EntityType="Self.vwMotionExpanded" />
           <EntitySet Name="vwGeneralDataExpandeds" EntityType="Self.vwGeneralDataExpanded" />
           <FunctionImport Name="tfnGetAllCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetAllCasesForaProperty_Result)">
-            <Parameter Name="BBL" Mode="In" Type="String" />
+          <Parameter Name="BBL" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="tfnGetCaseColumnChanges" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCaseColumnChanges_Result)">
             <Parameter Name="Tablename" Mode="In" Type="String" />
@@ -1824,7 +1843,7 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
             <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="tfnGetMortgageForeclosureCasesForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetMortgageForeclosureCasesForaProperty_Result)">
-            <Parameter Name="BBL" Mode="In" Type="String" />
+          <Parameter Name="BBL" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="tfnGetNewMortgageForeclosureCases" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetNewMortgageForeclosureCases_Result)">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
@@ -1834,7 +1853,23 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
             <Parameter Name="BBL" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="tfnGetDocumentExtractForCase" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetDocumentExtractForCase_Result)">
+            <Parameter Name="CountyId" Mode="In" Type="String" />
+            <Parameter Name="CaseIndexNumber" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="tfnGetDocumentExtractForCase_Result">
+          <Property Type="Int32" Name="DocumentId" Nullable="false" />
+          <Property Type="String" Name="CountyId" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="CaseIndexNumberExternal" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="DocumentNumber" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="DocumentType" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="DocumentDescription" Nullable="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="true" Precision="10" />
+          <Property Type="String" Name="DocumentStatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CaseCaption" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2554,6 +2589,22 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
                 <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
                 <ScalarProperty Name="CaseType" ColumnName="CaseType" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetDocumentExtractForCase" FunctionName="NYCOURTSModel.Store.tfnGetDocumentExtractForCase">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetDocumentExtractForCase_Result">
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CaseIndexNumberExternal" ColumnName="CaseIndexNumberExternal" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="DocumentDescription" ColumnName="DocumentDescription" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DocumentStatus" ColumnName="DocumentStatus" />
+                <ScalarProperty Name="CaseCaption" ColumnName="CaseCaption" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

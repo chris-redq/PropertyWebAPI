@@ -44,9 +44,13 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Property Name="TaxLienLPs" Type="int" />
     <Property Name="TaxLienActiveCases" Type="int" />
     <Property Name="COSPresent" Type="int" />
-    <Property Name="FullAddress" Type="varchar" MaxLength="200" />
-    <Property Name="Vacant" Type="varchar" MaxLength="50" />
-    <Property Name="MailingAddressActive" Type="varchar" MaxLength="50" />
+    <Property Name="FormattedAddress" Type="varchar" MaxLength="250" />
+    <Property Name="IsVacant" Type="varchar" MaxLength="1" />
+    <Property Name="IsMailingAddressActive" Type="varchar" MaxLength="1" />
+    <Property Name="City" Type="varchar" MaxLength="64" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="ECBAmountDue" Type="numeric" Precision="38" Scale="2" />
+    <Property Name="ECBOpenTickets" Type="int" />
   </EntityType>
   <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
     <Parameter Name="ZipCodes" Type="nvarchar" Mode="In" />
@@ -54,46 +58,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Parameter Name="Borough" Type="nvarchar" Mode="In" />
     <Parameter Name="Vacant" Type="nvarchar" Mode="In" />
     <Parameter Name="MailingAddressActive" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="tfnGetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
-    <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
-    <ReturnType>
-      <CollectionType>
-        <RowType>
-          <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
-          <Property Name="TaxClass" Type="varchar" MaxLength="2" />
-          <Property Name="LotFrontage" Type="float" />
-          <Property Name="LotDepth" Type="float" />
-          <Property Name="LotArea" Type="int" />
-          <Property Name="BuildingClassCode" Type="varchar" MaxLength="2" />
-          <Property Name="BuildingClass" Type="varchar" MaxLength="255" />
-          <Property Name="BuildingFrontage" Type="float" />
-          <Property Name="BuildingDepth" Type="float" />
-          <Property Name="Stories" Type="float" />
-          <Property Name="NumberOfBuildingsOnLot" Type="float" />
-          <Property Name="BuildingGrossArea" Type="int" />
-          <Property Name="BuiltFAR" Type="float" />
-          <Property Name="MaxResidentialFAR" Type="float" />
-          <Property Name="YearBuilt" Type="int" />
-          <Property Name="Borough" Type="varchar" MaxLength="1" />
-          <Property Name="BoroughName" Type="varchar" MaxLength="15" />
-          <Property Name="Block" Type="int" />
-          <Property Name="Lot" Type="int" />
-          <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
-          <Property Name="StreetName" Type="varchar" MaxLength="20" />
-          <Property Name="ZipCode" Type="varchar" MaxLength="10" />
-          <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
-          <Property Name="NTA" Type="varchar" MaxLength="4" />
-          <Property Name="Zoning" Type="varchar" MaxLength="9" />
-          <Property Name="UnitNumber" Type="varchar" MaxLength="5" />
-          <Property Name="East" Type="int" />
-          <Property Name="North" Type="int" />
-          <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="ResidentialUnits" Type="float" />
-        </RowType>
-      </CollectionType>
-    </ReturnType>
+    <Parameter Name="Violations" Type="nvarchar" Mode="In" />
+    <Parameter Name="City" Type="nvarchar" Mode="In" />
+    <Parameter Name="Neighborhood" Type="nvarchar" Mode="In" />
+    <Parameter Name="State" Type="nvarchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
@@ -134,9 +102,13 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[TaxLienLPs] AS [TaxLienLPs], 
     [vwGeneralLeadInfomation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
     [vwGeneralLeadInfomation].[COSPresent] AS [COSPresent], 
-    [vwGeneralLeadInfomation].[FullAddress] AS [FullAddress], 
-    [vwGeneralLeadInfomation].[Vacant] AS [Vacant], 
-    [vwGeneralLeadInfomation].[MailingAddressActive] AS [MailingAddressActive]
+    [vwGeneralLeadInfomation].[FormattedAddress] AS [FormattedAddress], 
+    [vwGeneralLeadInfomation].[IsVacant] AS [IsVacant], 
+    [vwGeneralLeadInfomation].[IsMailingAddressActive] AS [IsMailingAddressActive], 
+    [vwGeneralLeadInfomation].[City] AS [City], 
+    [vwGeneralLeadInfomation].[State] AS [State], 
+    [vwGeneralLeadInfomation].[ECBAmountDue] AS [ECBAmountDue], 
+    [vwGeneralLeadInfomation].[ECBOpenTickets] AS [ECBOpenTickets]
     FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
     </EntitySet>
   </EntityContainer>

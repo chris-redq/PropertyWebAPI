@@ -124,5 +124,19 @@ namespace eCourtsDB
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetMortgageForeclosureLPsForaProperty_Result>("[NYCOURTSEntities].[tfnGetMortgageForeclosureLPsForaProperty](@BBL, @StartDate)", bBLParameter, startDateParameter);
         }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetDocumentExtractForCase")]
+        public virtual IQueryable<tfnGetDocumentExtractForCase_Result> tfnGetDocumentExtractForCase(string countyId, string caseIndexNumber)
+        {
+            var countyIdParameter = countyId != null ?
+                new ObjectParameter("CountyId", countyId) :
+                new ObjectParameter("CountyId", typeof(string));
+    
+            var caseIndexNumberParameter = caseIndexNumber != null ?
+                new ObjectParameter("CaseIndexNumber", caseIndexNumber) :
+                new ObjectParameter("CaseIndexNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetDocumentExtractForCase_Result>("[NYCOURTSEntities].[tfnGetDocumentExtractForCase](@CountyId, @CaseIndexNumber)", countyIdParameter, caseIndexNumberParameter);
+        }
     }
 }

@@ -162,6 +162,24 @@ namespace PropertyWebAPI.Controllers
         }
 
         /// <summary>  
+        /// Use this api to get a list of minutes associated (documents filed with court) with a case. Currently, we have data only for
+        /// New York and Kings County
+        /// </summary>  
+        /// <param name="countyId">
+        ///     CCIS County Id associated with the case. 
+        /// </param>  
+        /// <param name="caseIndexNumber">
+        ///    Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+        /// </param> 
+        /// <returns>Returns a list of minutes for a case</returns>
+        [Route("api/cases/{countyId}/{caseIndexNumber}/minutes")]
+        [ResponseType(typeof(List<DAL.MotionDetails>))]
+        public IHttpActionResult GetCaseMinutes(string countyId, string caseIndexNumber)
+        {
+            return TemplateCaseIndexNumberQueriesList<DAL.CaseDocumentDetails>(countyId, caseIndexNumber, DAL.eCourts.GetAllMinutesForACase);
+        }
+
+        /// <summary>  
         ///     Use this api to find NYS Supreme Court Mortgage Foreclosure Cases and their respective status for a property in NYC. 
         /// </summary>  
         /// <param name="propertyBBL">

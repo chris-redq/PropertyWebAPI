@@ -2,8 +2,16 @@
 <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="GPADBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="vwGeneralLeadInfomations" EntityType="GPADBModel.vwGeneralLeadInfomation" />
-    <FunctionImport Name="tfnGetPropertyLeads" IsComposable="true" ReturnType="Collection(GPADBModel.tfnGetPropertyLeads_Result)">
+    <FunctionImport Name="GetPropertyLeads">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
+      <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
+      <Parameter Name="Borough" Mode="In" Type="String" />
+      <Parameter Name="Vacant" Mode="In" Type="String" />
+      <Parameter Name="MailingAddressActive" Mode="In" Type="String" />
+      <Parameter Name="Violations" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="Neighborhood" Mode="In" Type="String" />
+      <Parameter Name="State" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInfomations" ReturnType="Collection(GPADBModel.vwGeneralLeadInfomation)">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -11,6 +19,10 @@
       <Parameter Name="Borough" Mode="In" Type="String" />
       <Parameter Name="Vacant" Mode="In" Type="String" />
       <Parameter Name="MailingAddressActive" Mode="In" Type="String" />
+      <Parameter Name="Violations" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="Neighborhood" Mode="In" Type="String" />
+      <Parameter Name="State" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="vwGeneralLeadInfomation">
@@ -55,41 +67,12 @@
     <Property Name="TaxLienLPs" Type="Int32" />
     <Property Name="TaxLienActiveCases" Type="Int32" />
     <Property Name="COSPresent" Type="Int32" />
-    <Property Name="FullAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Vacant" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="MailingAddressActive" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FormattedAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsVacant" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IsMailingAddressActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="ECBAmountDue" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="ECBOpenTickets" Type="Int32" />
   </EntityType>
-  <ComplexType Name="tfnGetPropertyLeads_Result">
-    <Property Type="String" Name="BBLE" Nullable="false" MaxLength="11" />
-    <Property Type="String" Name="TaxClass" Nullable="true" MaxLength="2" />
-    <Property Type="Double" Name="LotFrontage" Nullable="true" />
-    <Property Type="Double" Name="LotDepth" Nullable="true" />
-    <Property Type="Int32" Name="LotArea" Nullable="true" />
-    <Property Type="String" Name="BuildingClassCode" Nullable="true" MaxLength="2" />
-    <Property Type="String" Name="BuildingClass" Nullable="true" MaxLength="255" />
-    <Property Type="Double" Name="BuildingFrontage" Nullable="true" />
-    <Property Type="Double" Name="BuildingDepth" Nullable="true" />
-    <Property Type="Double" Name="Stories" Nullable="true" />
-    <Property Type="Double" Name="NumberOfBuildingsOnLot" Nullable="true" />
-    <Property Type="Int32" Name="BuildingGrossArea" Nullable="true" />
-    <Property Type="Double" Name="BuiltFAR" Nullable="true" />
-    <Property Type="Double" Name="MaxResidentialFAR" Nullable="true" />
-    <Property Type="Int32" Name="YearBuilt" Nullable="true" />
-    <Property Type="String" Name="Borough" Nullable="true" MaxLength="1" />
-    <Property Type="String" Name="BoroughName" Nullable="true" MaxLength="15" />
-    <Property Type="Int32" Name="Block" Nullable="true" />
-    <Property Type="Int32" Name="Lot" Nullable="true" />
-    <Property Type="String" Name="StreetNumber" Nullable="true" MaxLength="30" />
-    <Property Type="String" Name="StreetName" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
-    <Property Type="String" Name="NeighborhoodName" Nullable="true" MaxLength="60" />
-    <Property Type="String" Name="NTA" Nullable="true" MaxLength="4" />
-    <Property Type="String" Name="Zoning" Nullable="true" MaxLength="9" />
-    <Property Type="String" Name="UnitNumber" Nullable="true" MaxLength="5" />
-    <Property Type="Int32" Name="East" Nullable="true" />
-    <Property Type="Int32" Name="North" Nullable="true" />
-    <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="28" Scale="4" />
-    <Property Type="Decimal" Name="Latitude" Nullable="true" Precision="28" Scale="4" />
-    <Property Type="Double" Name="ResidentialUnits" Nullable="true" />
-  </ComplexType>
 </Schema>

@@ -29,17 +29,7 @@ namespace GPADB
     
         public virtual DbSet<vwGeneralLeadInfomation> vwGeneralLeadInfomations { get; set; }
     
-        [DbFunction("GPADBEntities", "tfnGetPropertyLeads")]
-        public virtual IQueryable<tfnGetPropertyLeads_Result> tfnGetPropertyLeads(string zipCodes)
-        {
-            var zipCodesParameter = zipCodes != null ?
-                new ObjectParameter("ZipCodes", zipCodes) :
-                new ObjectParameter("ZipCodes", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetPropertyLeads_Result>("[GPADBEntities].[tfnGetPropertyLeads](@ZipCodes)", zipCodesParameter);
-        }
-    
-        public virtual ObjectResult<vwGeneralLeadInfomation> GetLeads(string zipCodes, string buildingClassCodes, string borough, string vacant, string mailingAddressActive)
+        public virtual int GetPropertyLeads(string zipCodes, string buildingClassCodes, string borough, string vacant, string mailingAddressActive, string violations, string city, string neighborhood, string state)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -61,10 +51,26 @@ namespace GPADB
                 new ObjectParameter("MailingAddressActive", mailingAddressActive) :
                 new ObjectParameter("MailingAddressActive", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInfomation>("GetLeads", zipCodesParameter, buildingClassCodesParameter, boroughParameter, vacantParameter, mailingAddressActiveParameter);
+            var violationsParameter = violations != null ?
+                new ObjectParameter("Violations", violations) :
+                new ObjectParameter("Violations", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("City", city) :
+                new ObjectParameter("City", typeof(string));
+    
+            var neighborhoodParameter = neighborhood != null ?
+                new ObjectParameter("Neighborhood", neighborhood) :
+                new ObjectParameter("Neighborhood", typeof(string));
+    
+            var stateParameter = state != null ?
+                new ObjectParameter("State", state) :
+                new ObjectParameter("State", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetPropertyLeads", zipCodesParameter, buildingClassCodesParameter, boroughParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, cityParameter, neighborhoodParameter, stateParameter);
         }
     
-        public virtual ObjectResult<vwGeneralLeadInfomation> GetLeads(string zipCodes, string buildingClassCodes, string borough, string vacant, string mailingAddressActive, MergeOption mergeOption)
+        public virtual ObjectResult<vwGeneralLeadInfomation> GetLeads(string zipCodes, string buildingClassCodes, string borough, string vacant, string mailingAddressActive, string violations, string city, string neighborhood, string state)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -86,7 +92,64 @@ namespace GPADB
                 new ObjectParameter("MailingAddressActive", mailingAddressActive) :
                 new ObjectParameter("MailingAddressActive", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInfomation>("GetLeads", mergeOption, zipCodesParameter, buildingClassCodesParameter, boroughParameter, vacantParameter, mailingAddressActiveParameter);
+            var violationsParameter = violations != null ?
+                new ObjectParameter("Violations", violations) :
+                new ObjectParameter("Violations", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("City", city) :
+                new ObjectParameter("City", typeof(string));
+    
+            var neighborhoodParameter = neighborhood != null ?
+                new ObjectParameter("Neighborhood", neighborhood) :
+                new ObjectParameter("Neighborhood", typeof(string));
+    
+            var stateParameter = state != null ?
+                new ObjectParameter("State", state) :
+                new ObjectParameter("State", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInfomation>("GetLeads", zipCodesParameter, buildingClassCodesParameter, boroughParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, cityParameter, neighborhoodParameter, stateParameter);
+        }
+    
+        public virtual ObjectResult<vwGeneralLeadInfomation> GetLeads(string zipCodes, string buildingClassCodes, string borough, string vacant, string mailingAddressActive, string violations, string city, string neighborhood, string state, MergeOption mergeOption)
+        {
+            var zipCodesParameter = zipCodes != null ?
+                new ObjectParameter("ZipCodes", zipCodes) :
+                new ObjectParameter("ZipCodes", typeof(string));
+    
+            var buildingClassCodesParameter = buildingClassCodes != null ?
+                new ObjectParameter("BuildingClassCodes", buildingClassCodes) :
+                new ObjectParameter("BuildingClassCodes", typeof(string));
+    
+            var boroughParameter = borough != null ?
+                new ObjectParameter("Borough", borough) :
+                new ObjectParameter("Borough", typeof(string));
+    
+            var vacantParameter = vacant != null ?
+                new ObjectParameter("Vacant", vacant) :
+                new ObjectParameter("Vacant", typeof(string));
+    
+            var mailingAddressActiveParameter = mailingAddressActive != null ?
+                new ObjectParameter("MailingAddressActive", mailingAddressActive) :
+                new ObjectParameter("MailingAddressActive", typeof(string));
+    
+            var violationsParameter = violations != null ?
+                new ObjectParameter("Violations", violations) :
+                new ObjectParameter("Violations", typeof(string));
+    
+            var cityParameter = city != null ?
+                new ObjectParameter("City", city) :
+                new ObjectParameter("City", typeof(string));
+    
+            var neighborhoodParameter = neighborhood != null ?
+                new ObjectParameter("Neighborhood", neighborhood) :
+                new ObjectParameter("Neighborhood", typeof(string));
+    
+            var stateParameter = state != null ?
+                new ObjectParameter("State", state) :
+                new ObjectParameter("State", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInfomation>("GetLeads", mergeOption, zipCodesParameter, buildingClassCodesParameter, boroughParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, cityParameter, neighborhoodParameter, stateParameter);
         }
     }
 }

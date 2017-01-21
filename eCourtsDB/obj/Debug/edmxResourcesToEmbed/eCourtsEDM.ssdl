@@ -767,6 +767,26 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
       </CollectionType>
     </ReturnType>
   </Function>
+  <Function Name="tfnGetDocumentExtractForCase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="nyscef">
+    <Parameter Name="CountyId" Type="varchar" Mode="In" />
+    <Parameter Name="CaseIndexNumber" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="DocumentId" Type="int" Nullable="false" />
+          <Property Name="CountyId" Type="varchar" MaxLength="2" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="CaseIndexNumberExternal" Type="varchar" MaxLength="15" />
+          <Property Name="DocumentNumber" Type="varchar" MaxLength="10" />
+          <Property Name="DocumentType" Type="varchar" MaxLength="250" />
+          <Property Name="DocumentDescription" Type="varchar(max)" />
+          <Property Name="DateCreated" Type="date" />
+          <Property Name="DocumentStatus" Type="varchar" MaxLength="50" />
+          <Property Name="CaseCaption" Type="varchar(max)" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <EntityContainer Name="NYCOURTSModelStoreContainer">
     <EntitySet Name="Appearance" EntityType="Self.Appearance" Schema="ccis" store:Type="Tables" />
     <EntitySet Name="Attorney" EntityType="Self.Attorney" Schema="ccis" store:Type="Tables" />

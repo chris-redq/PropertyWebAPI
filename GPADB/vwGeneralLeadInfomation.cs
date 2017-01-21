@@ -50,8 +50,12 @@ namespace GPADB
         public Nullable<int> TaxLienLPs { get; set; }
         public Nullable<int> TaxLienActiveCases { get; set; }
         public Nullable<int> COSPresent { get; set; }
-        public string FullAddress { get; set; }
-        public string Vacant { get; set; }
-        public string MailingAddressActive { get; set; }
+        public string FormattedAddress { get; set; }
+        public string IsVacant { get; set; }
+        public string IsMailingAddressActive { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public Nullable<decimal> ECBAmountDue { get; set; }
+        public Nullable<int> ECBOpenTickets { get; set; }
     }
 }

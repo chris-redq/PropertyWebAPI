@@ -945,23 +945,24 @@
             This controller handles all api requests associated with property leads
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.Get(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.Get(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>  
             Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
             multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
             </summary>  
             <param name="borough">Optional parameter valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island</param>
-            <param name="buildingClassCodes">Optional parameter. Multiple values can be sent along with wildcard. For example: A*,B1</param>
-            <param name="isMailingAddressActive">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
-            <param name="isVacant">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
-            <param name="zipCodes">Optional parameter. Multiple values can be sent. No wildcards.</param>
+            <param name="buildingclasscodes">Optional parameter. Multiple values can be sent along with wildcard. For example: A*,B1</param>
+            <param name="ismailingaddressactive">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
+            <param name="isvacant">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
+            <param name="zipcodes">Optional parameter. Multiple values can be sent. No wildcards.</param>
+            <param name="violations">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
             <returns>Returns a list of leads (properties)</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">
             <summary>  
             Use this api to get a lead details
             </summary>  
-            <param name="propertyBBL">
+            <param name="propertybbl">
                 Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
             </param>  
             <returns>Returns lead details</returns>
@@ -1065,6 +1066,19 @@
             <returns>
                 Returns a list of changes that happened on case. For example Appearances, Motions, Attorneys, Case Details
             </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetCaseMinutes(System.String,System.String)">
+            <summary>  
+            Use this api to get a list of minutes associated (documents filed with court) with a case. Currently, we have data only for
+            New York and Kings County
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the case. 
+            </param>  
+            <param name="caseIndexNumber">
+               Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+            </param> 
+            <returns>Returns a list of minutes for a case</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.GetMortgageForeclosureCasesForaProperty(System.String)">
             <summary>  

@@ -97,6 +97,9 @@
     <Compile Include="tfnGetCaseUpdates_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnGetDocumentExtractForCase_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="tfnGetMortgageForeclosureCasesForaProperty_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>

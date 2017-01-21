@@ -40,6 +40,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetCaseColumnChanges_Result, DAL.CaseDataChange>();
                 cfg.CreateMap<tfnGetUnsatisfiedMortgages_Result, BAL.DeedDocument>();
                 cfg.CreateMap<vwGeneralLeadInfomation, Controllers.LeadSummaryData>();
+                cfg.CreateMap<tfnGetDocumentExtractForCase_Result, DAL.CaseDocumentDetails>();
             });
         }
     }
