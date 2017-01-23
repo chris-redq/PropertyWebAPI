@@ -26,33 +26,44 @@
     {
         /// <summary>  
         /// Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
-        /// multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
+        /// multiple values separated by commas. For string values wildcards are provided. Wildcards is denoted by '*' 
         /// </summary>  
-        /// <param name="borough">Optional parameter valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island</param>
-        /// <param name="buildingclasscodes">Optional parameter. Multiple values can be sent along with wildcard. For example: A*,B1</param>
+        /// <param name="counties">Optional parameter. Multiple values can be sent. No wildcards.</param>
+        /// <param name="buildingclasscodes">Optional parameter. Multiple values can be sent along with wildcards. For example: A*,B1</param>
         /// <param name="ismailingaddressactive">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
         /// <param name="isvacant">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
         /// <param name="zipcodes">Optional parameter. Multiple values can be sent. No wildcards.</param>
         /// <param name="violations">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
+        /// <param name="lientypes">Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS and ALL. By default if multiple values
+        /// <param name="states">Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</param>
+        /// <param name="cities">Optional parameter. Multiple values can be sent. No wildcards.</param>
+        /// <param name="leadgrades">Optional parameter. Multiple values can be sent. No wildcards</param>
+        /// <param name="ltv">Optional parameter. Minimum one value, max two values can be sent. No wildcards</param>
+        /// <param name="neighborhoods">Optional parameter. Multiple values can be sent along with wildcards.</param>
+        /// <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
+        /// <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+        /// <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+        /// are provided the search is an OR between the various lien types. To AND the lien types send an additional value OPERATORAND</param>
         /// <returns>Returns a list of leads (properties)</returns>
         [Route("api/leads/")]
         [ResponseType(typeof(List<LeadSummaryData>))]
         public IHttpActionResult Get(string zipcodes = null, string neighborhoods = null, string isvacant = null, string leadgrades = null,
-                                     string buildingclasscodes = null, string borough = null, string ismailingaddressactive = null,
+                                     string buildingclasscodes = null, string counties = null, string ismailingaddressactive = null,
                                      string lientypes = null, string ltv = null, string equity = null, string violations = null,
-                                     string cities = null, string states= null)
+                                     string cities = null, string states= null, string isfannie=null, string isfreddie=null)
         {
-            if (zipcodes==null && buildingclasscodes==null && borough==null && 
+            if (zipcodes==null && buildingclasscodes==null && counties==null && 
                 isvacant==null && violations==null && ismailingaddressactive == null &&
-                cities==null && neighborhoods==null && states==null)
+                cities==null && neighborhoods==null && states==null && lientypes==null &&
+                leadgrades==null && ltv==null && equity==null && isfannie==null && isfreddie==null )
                 return this.BadRequest("At least one filter is required");
 
             try
             {
                 using (GPADBEntities gpaE = new GPADBEntities())
                 {
-                    List<vwGeneralLeadInfomation> leadList = gpaE.GetLeads(zipcodes, buildingclasscodes, borough, isvacant, ismailingaddressactive, violations,
-                                                                           cities, neighborhoods, states).ToList();
+                    List<vwGeneralLeadInfomation> leadList = gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
+                                                                           cities, neighborhoods, states, lientypes,leadgrades,ltv,equity,isfannie,isfreddie).ToList();
                     if (leadList == null || leadList.Count == 0)
                         return NotFound();
                     return Ok(Mapper.Map<List<vwGeneralLeadInfomation>, List<LeadSummaryData>>(leadList));

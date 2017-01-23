@@ -45,17 +45,25 @@ namespace GPADB
         public Nullable<decimal> Longitude { get; set; }
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<double> ResidentialUnits { get; set; }
-        public int TaxLienList { get; set; }
-        public int PoolA { get; set; }
+        public Nullable<int> TaxLienList { get; set; }
+        public Nullable<int> PoolA { get; set; }
         public Nullable<int> TaxLienLPs { get; set; }
         public Nullable<int> TaxLienActiveCases { get; set; }
+        public Nullable<int> MortgageForeclosureLPs { get; set; }
+        public Nullable<int> MortgageForeclosureActiveCases { get; set; }
         public Nullable<int> COSPresent { get; set; }
         public string FormattedAddress { get; set; }
         public string IsVacant { get; set; }
         public string IsMailingAddressActive { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        public string County { get; set; }
         public Nullable<decimal> ECBAmountDue { get; set; }
         public Nullable<int> ECBOpenTickets { get; set; }
+        public int IsFannieMaeMortgage { get; set; }
+        public int IsFreddieMacMortgagge { get; set; }
+        public int LeadGrade { get; set; }
+        public decimal Equity { get; set; }
+        public decimal LTV { get; set; }
     }
 }
