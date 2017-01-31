@@ -217,7 +217,10 @@
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
     <Compile Include="BAL\Portal.cs" />
     <Compile Include="BAL\Results.cs" />
+    <Compile Include="Controllers\CMAController.cs" />
     <Compile Include="Controllers\LeadsController.cs" />
+    <Compile Include="Controllers\LiensController.cs" />
+    <Compile Include="DAL\CMA.cs" />
     <Compile Include="DAL\eCourts.cs" />
     <Compile Include="BAL\MortgageServicer.cs" />
     <Compile Include="BAL\NYCPhysicalPropertyData.cs" />
@@ -233,7 +236,9 @@
     <Compile Include="Controllers\WebDataController.cs" />
     <Compile Include="Controllers\ZillowController.cs" />
     <Compile Include="DAL\DataRequestLog.cs" />
+    <Compile Include="DAL\Liens.cs" />
     <Compile Include="DAL\Request.cs" />
+    <Compile Include="DAL\Violations.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -292,9 +297,21 @@
       <Project>{6b287c2a-85ff-4970-8c6f-32a9aaef8aae}</Project>
       <Name>GPADB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NYCDOB\NYCDOB.csproj">
+      <Project>{60757d61-92c2-4e34-900b-5e5749ac3af2}</Project>
+      <Name>NYCDOB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NYCDOF\NYCDOF.csproj">
       <Project>{be01f187-9ac1-440c-8096-9ea1109c6822}</Project>
       <Name>NYCDOF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NYCMADB\NYCMADB.csproj">
+      <Project>{31933f5c-73e1-4f20-9b19-76f4fe7225c3}</Project>
+      <Name>NYCMADB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NYCVNL\NYCVNL.csproj">
+      <Project>{84601efb-db0c-4ed6-8282-e5c18c40369c}</Project>
+      <Name>NYCVNL</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebAPISecurityDB\WebAPISecurityDB.csproj">
       <Project>{c0c00ed9-ddc7-4626-8817-482a6e5b5bd9}</Project>

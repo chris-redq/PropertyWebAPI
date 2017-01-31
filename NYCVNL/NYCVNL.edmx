@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NYCVNLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ECBViolationsSummary">
+          <Key>
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Open" Type="int" />
+          <Property Name="Closed" Type="int" />
+          <Property Name="Total" Type="int" />
+          <Property Name="TotalDue" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ECBViolationsSummaryByAgency">
+          <Key>
+            <PropertyRef Name="BBL" />
+            <PropertyRef Name="IssuingAgency" />
+          </Key>
+          <Property Name="BBL" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="IssuingAgency" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Open" Type="int" />
+          <Property Name="Closed" Type="int" />
+          <Property Name="Total" Type="int" />
+          <Property Name="TotalDue" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="MultiAgencyViolations">
+          <Key>
+            <PropertyRef Name="TicketNumber" />
+          </Key>
+          <Property Name="TicketNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ViolationDate" Type="date" />
+          <Property Name="ViolationTime" Type="varchar" MaxLength="50" />
+          <Property Name="IssuingAgency" Type="varchar" MaxLength="50" />
+          <Property Name="RespondentName" Type="varchar" MaxLength="102" />
+          <Property Name="BalanceDue" Type="money" />
+          <Property Name="BBL" Type="varchar" MaxLength="11" />
+          <Property Name="ViolationLocationHouseNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationLocationStreetNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationLocationFloor" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationLocationCity" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationLocationZipCode" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationLocationStateName" Type="varchar" MaxLength="50" />
+          <Property Name="RespondentAddressBorough" Type="varchar" MaxLength="50" />
+          <Property Name="RespondentAddressHouseNumber" Type="varchar" MaxLength="50" />
+          <Property Name="RespondentAddressStreetName" Type="varchar" MaxLength="50" />
+          <Property Name="RespondentAddressCity" Type="varchar" MaxLength="50" />
+          <Property Name="RespondentAddressZipCode" Type="varchar" MaxLength="50" />
+          <Property Name="RespondentAddressStateName" Type="varchar" MaxLength="50" />
+          <Property Name="HearingStatus" Type="varchar" MaxLength="50" />
+          <Property Name="HearingResult" Type="varchar" MaxLength="50" />
+          <Property Name="ScheduledHearingLocation" Type="varchar" MaxLength="50" />
+          <Property Name="HearingDate" Type="date" />
+          <Property Name="HearingTime" Type="varchar" MaxLength="50" />
+          <Property Name="DecisionLocation" Type="varchar" MaxLength="50" />
+          <Property Name="DecisionDate" Type="date" />
+          <Property Name="TotalViolationAmount" Type="money" />
+          <Property Name="ViolationDetails" Type="varchar" MaxLength="500" />
+          <Property Name="JudgementDocketedDate" Type="date" />
+          <Property Name="RespondentAddressFacilityNumber" Type="varchar" MaxLength="50" />
+          <Property Name="PenaltyImposed" Type="money" />
+          <Property Name="AmountPaid" Type="money" />
+          <Property Name="AdditionalPenaltiesLateFees" Type="money" />
+          <Property Name="ComplianceStatus" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationDescription" Type="varchar" MaxLength="50" />
+          <Property Name="Charge1Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge1Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge1Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge1InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge2Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge2Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge2Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge2InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge3Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge3Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge3Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge3InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge4Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge4Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge4Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge4InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge5Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge5Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge5Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge5InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge6Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge6Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge6Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge6InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge7Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge7Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge7Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge7InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge8Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge8Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge8Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge8InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge9Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge9Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge9Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge9InfractionAmount" Type="varchar" MaxLength="50" />
+          <Property Name="Charge10Code" Type="varchar" MaxLength="50" />
+          <Property Name="Charge10Section" Type="varchar" MaxLength="50" />
+          <Property Name="Charge10Description" Type="varchar" MaxLength="250" />
+          <Property Name="Charge10InfractionAmount" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="NYCVNLModelStoreContainer">
+          <EntitySet Name="ECBViolationsSummary" EntityType="Self.ECBViolationsSummary" Schema="ecb" store:Type="Tables" />
+          <EntitySet Name="ECBViolationsSummaryByAgency" EntityType="Self.ECBViolationsSummaryByAgency" Schema="ecb" store:Type="Tables" />
+          <EntitySet Name="MultiAgencyViolations" EntityType="Self.MultiAgencyViolations" Schema="ecb" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NYCVNLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MultiAgencyViolation">
+          <Key>
+            <PropertyRef Name="TicketNumber" />
+          </Key>
+          <Property Name="TicketNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ViolationDate" Type="DateTime" Precision="0" />
+          <Property Name="ViolationTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IssuingAgency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondentName" Type="String" MaxLength="102" FixedLength="false" Unicode="false" />
+          <Property Name="BalanceDue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BBL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationLocationHouseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationLocationStreetNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationLocationFloor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationLocationCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationLocationZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationLocationStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondentAddressBorough" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondentAddressHouseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondentAddressStreetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondentAddressCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondentAddressZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RespondentAddressStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HearingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HearingResult" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ScheduledHearingLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HearingDate" Type="DateTime" Precision="0" />
+          <Property Name="HearingTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DecisionLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DecisionDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalViolationAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ViolationDetails" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="JudgementDocketedDate" Type="DateTime" Precision="0" />
+          <Property Name="RespondentAddressFacilityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PenaltyImposed" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="AmountPaid" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="AdditionalPenaltiesLateFees" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ComplianceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge1Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge1Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge1Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge1InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge2Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge2Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge2Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge2InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge3Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge3Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge3Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge3InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge4Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge4Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge4Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge4InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge5Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge5Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge5Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge5InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge6Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge6Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge6Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge6InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge7Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge7Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge7Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge7InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge8Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge8Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge8Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge8InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge9Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge9Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge9Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge9InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge10Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge10Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Charge10Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Charge10InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="NYCVNLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MultiAgencyViolations" EntityType="Self.MultiAgencyViolation" />
+          <EntitySet Name="ECBViolationsSummaries" EntityType="NYCVNLModel.ECBViolationsSummary" />
+          <EntitySet Name="ECBViolationsSummaryByAgencies" EntityType="NYCVNLModel.ECBViolationsSummaryByAgency" />
+        </EntityContainer>
+        <EntityType Name="ECBViolationsSummary">
+          <Key>
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Open" Type="Int32" />
+          <Property Name="Closed" Type="Int32" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ECBViolationsSummaryByAgency">
+          <Key>
+            <PropertyRef Name="BBL" />
+            <PropertyRef Name="IssuingAgency" />
+          </Key>
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="IssuingAgency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Open" Type="Int32" />
+          <Property Name="Closed" Type="Int32" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NYCVNLModelStoreContainer" CdmEntityContainer="NYCVNLEntities">
+          <EntitySetMapping Name="MultiAgencyViolations">
+            <EntityTypeMapping TypeName="NYCVNLModel.MultiAgencyViolation">
+              <MappingFragment StoreEntitySet="MultiAgencyViolations">
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+                <ScalarProperty Name="ViolationDate" ColumnName="ViolationDate" />
+                <ScalarProperty Name="ViolationTime" ColumnName="ViolationTime" />
+                <ScalarProperty Name="IssuingAgency" ColumnName="IssuingAgency" />
+                <ScalarProperty Name="RespondentName" ColumnName="RespondentName" />
+                <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="ViolationLocationHouseNumber" ColumnName="ViolationLocationHouseNumber" />
+                <ScalarProperty Name="ViolationLocationStreetNumber" ColumnName="ViolationLocationStreetNumber" />
+                <ScalarProperty Name="ViolationLocationFloor" ColumnName="ViolationLocationFloor" />
+                <ScalarProperty Name="ViolationLocationCity" ColumnName="ViolationLocationCity" />
+                <ScalarProperty Name="ViolationLocationZipCode" ColumnName="ViolationLocationZipCode" />
+                <ScalarProperty Name="ViolationLocationStateName" ColumnName="ViolationLocationStateName" />
+                <ScalarProperty Name="RespondentAddressBorough" ColumnName="RespondentAddressBorough" />
+                <ScalarProperty Name="RespondentAddressHouseNumber" ColumnName="RespondentAddressHouseNumber" />
+                <ScalarProperty Name="RespondentAddressStreetName" ColumnName="RespondentAddressStreetName" />
+                <ScalarProperty Name="RespondentAddressCity" ColumnName="RespondentAddressCity" />
+                <ScalarProperty Name="RespondentAddressZipCode" ColumnName="RespondentAddressZipCode" />
+                <ScalarProperty Name="RespondentAddressStateName" ColumnName="RespondentAddressStateName" />
+                <ScalarProperty Name="HearingStatus" ColumnName="HearingStatus" />
+                <ScalarProperty Name="HearingResult" ColumnName="HearingResult" />
+                <ScalarProperty Name="ScheduledHearingLocation" ColumnName="ScheduledHearingLocation" />
+                <ScalarProperty Name="HearingDate" ColumnName="HearingDate" />
+                <ScalarProperty Name="HearingTime" ColumnName="HearingTime" />
+                <ScalarProperty Name="DecisionLocation" ColumnName="DecisionLocation" />
+                <ScalarProperty Name="DecisionDate" ColumnName="DecisionDate" />
+                <ScalarProperty Name="TotalViolationAmount" ColumnName="TotalViolationAmount" />
+                <ScalarProperty Name="ViolationDetails" ColumnName="ViolationDetails" />
+                <ScalarProperty Name="JudgementDocketedDate" ColumnName="JudgementDocketedDate" />
+                <ScalarProperty Name="RespondentAddressFacilityNumber" ColumnName="RespondentAddressFacilityNumber" />
+                <ScalarProperty Name="PenaltyImposed" ColumnName="PenaltyImposed" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="AdditionalPenaltiesLateFees" ColumnName="AdditionalPenaltiesLateFees" />
+                <ScalarProperty Name="ComplianceStatus" ColumnName="ComplianceStatus" />
+                <ScalarProperty Name="ViolationDescription" ColumnName="ViolationDescription" />
+                <ScalarProperty Name="Charge1Code" ColumnName="Charge1Code" />
+                <ScalarProperty Name="Charge1Section" ColumnName="Charge1Section" />
+                <ScalarProperty Name="Charge1Description" ColumnName="Charge1Description" />
+                <ScalarProperty Name="Charge1InfractionAmount" ColumnName="Charge1InfractionAmount" />
+                <ScalarProperty Name="Charge2Code" ColumnName="Charge2Code" />
+                <ScalarProperty Name="Charge2Section" ColumnName="Charge2Section" />
+                <ScalarProperty Name="Charge2Description" ColumnName="Charge2Description" />
+                <ScalarProperty Name="Charge2InfractionAmount" ColumnName="Charge2InfractionAmount" />
+                <ScalarProperty Name="Charge3Code" ColumnName="Charge3Code" />
+                <ScalarProperty Name="Charge3Section" ColumnName="Charge3Section" />
+                <ScalarProperty Name="Charge3Description" ColumnName="Charge3Description" />
+                <ScalarProperty Name="Charge3InfractionAmount" ColumnName="Charge3InfractionAmount" />
+                <ScalarProperty Name="Charge4Code" ColumnName="Charge4Code" />
+                <ScalarProperty Name="Charge4Section" ColumnName="Charge4Section" />
+                <ScalarProperty Name="Charge4Description" ColumnName="Charge4Description" />
+                <ScalarProperty Name="Charge4InfractionAmount" ColumnName="Charge4InfractionAmount" />
+                <ScalarProperty Name="Charge5Code" ColumnName="Charge5Code" />
+                <ScalarProperty Name="Charge5Section" ColumnName="Charge5Section" />
+                <ScalarProperty Name="Charge5Description" ColumnName="Charge5Description" />
+                <ScalarProperty Name="Charge5InfractionAmount" ColumnName="Charge5InfractionAmount" />
+                <ScalarProperty Name="Charge6Code" ColumnName="Charge6Code" />
+                <ScalarProperty Name="Charge6Section" ColumnName="Charge6Section" />
+                <ScalarProperty Name="Charge6Description" ColumnName="Charge6Description" />
+                <ScalarProperty Name="Charge6InfractionAmount" ColumnName="Charge6InfractionAmount" />
+                <ScalarProperty Name="Charge7Code" ColumnName="Charge7Code" />
+                <ScalarProperty Name="Charge7Section" ColumnName="Charge7Section" />
+                <ScalarProperty Name="Charge7Description" ColumnName="Charge7Description" />
+                <ScalarProperty Name="Charge7InfractionAmount" ColumnName="Charge7InfractionAmount" />
+                <ScalarProperty Name="Charge8Code" ColumnName="Charge8Code" />
+                <ScalarProperty Name="Charge8Section" ColumnName="Charge8Section" />
+                <ScalarProperty Name="Charge8Description" ColumnName="Charge8Description" />
+                <ScalarProperty Name="Charge8InfractionAmount" ColumnName="Charge8InfractionAmount" />
+                <ScalarProperty Name="Charge9Code" ColumnName="Charge9Code" />
+                <ScalarProperty Name="Charge9Section" ColumnName="Charge9Section" />
+                <ScalarProperty Name="Charge9Description" ColumnName="Charge9Description" />
+                <ScalarProperty Name="Charge9InfractionAmount" ColumnName="Charge9InfractionAmount" />
+                <ScalarProperty Name="Charge10Code" ColumnName="Charge10Code" />
+                <ScalarProperty Name="Charge10Section" ColumnName="Charge10Section" />
+                <ScalarProperty Name="Charge10Description" ColumnName="Charge10Description" />
+                <ScalarProperty Name="Charge10InfractionAmount" ColumnName="Charge10InfractionAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ECBViolationsSummaries">
+            <EntityTypeMapping TypeName="NYCVNLModel.ECBViolationsSummary">
+              <MappingFragment StoreEntitySet="ECBViolationsSummary">
+                <ScalarProperty Name="TotalDue" ColumnName="TotalDue" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="Open" ColumnName="Open" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ECBViolationsSummaryByAgencies">
+            <EntityTypeMapping TypeName="NYCVNLModel.ECBViolationsSummaryByAgency">
+              <MappingFragment StoreEntitySet="ECBViolationsSummaryByAgency">
+                <ScalarProperty Name="TotalDue" ColumnName="TotalDue" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="Open" ColumnName="Open" />
+                <ScalarProperty Name="IssuingAgency" ColumnName="IssuingAgency" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

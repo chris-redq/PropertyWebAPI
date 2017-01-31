@@ -27,6 +27,7 @@ namespace NYCDOF
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<vwTaxLien> vwTaxLiens { get; set; }
     
         [DbFunction("NYCDOFEntities", "tfnGetGeneralPropertyInformation")]
         public virtual IQueryable<tfnGetGeneralPropertyInformation_Result> tfnGetGeneralPropertyInformation(string bBLE)

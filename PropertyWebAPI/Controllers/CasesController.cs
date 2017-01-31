@@ -24,6 +24,7 @@ namespace PropertyWebAPI.Controllers
     [Authorize]
     public class CasesController : ApiController
     {
+        #region Get Data By CaseIndexNumber
         /// <summary>  
         ///     Use this method when calling parameters are CountyId and CaseIndexNumber and return type is a List
         /// </summary>
@@ -173,11 +174,14 @@ namespace PropertyWebAPI.Controllers
         /// </param> 
         /// <returns>Returns a list of minutes for a case</returns>
         [Route("api/cases/{countyId}/{caseIndexNumber}/minutes")]
-        [ResponseType(typeof(List<DAL.MotionDetails>))]
+        [ResponseType(typeof(List<DAL.CaseDocumentDetails>))]
         public IHttpActionResult GetCaseMinutes(string countyId, string caseIndexNumber)
         {
             return TemplateCaseIndexNumberQueriesList<DAL.CaseDocumentDetails>(countyId, caseIndexNumber, DAL.eCourts.GetAllMinutesForACase);
         }
+        #endregion
+
+        #region Get Data Based on BBL
 
         /// <summary>  
         ///     Use this api to find NYS Supreme Court Mortgage Foreclosure Cases and their respective status for a property in NYC. 
@@ -261,7 +265,7 @@ namespace PropertyWebAPI.Controllers
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
-
+        
         /// <summary>  
         ///     Use this api to get all new mortgage foreclosure cases added for a select set of counties within a data range. The select set currently is 5 Boroughs and LI counties 
         /// </summary>  
@@ -304,7 +308,9 @@ namespace PropertyWebAPI.Controllers
             }
         }
 
+        #endregion
 
+        #region Audit data
         /// <summary>  
         ///     Use this api to find any changes in a specific column on the CCIS Case table for a given date range. 
         ///     For example use this API if you want to check which cases had their CaseStatus change for a given date range
@@ -349,5 +355,134 @@ namespace PropertyWebAPI.Controllers
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
+        #endregion
+
+        #region Statistics
+
+        /// <summary>  
+        ///     Use this api to get a list of cases associated with a Relief Sought for a given judge in a county
+        /// </summary>  
+        /// <param name="countyId">
+        ///     CCIS County Id associated with the Judge. 
+        /// </param>  
+        /// <param name="judgeId">
+        ///     ID of the Judge as it appears in the data
+        /// </param>  
+        /// <param name="reliefSought">
+        ///     Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+        /// </param>
+        /// <returns>
+        ///     Returns a list of cases associated with a Relief Sought for a given judge in a county
+        /// </returns>
+        [Route("api/cases/statistics/{countyId}/{judgeId}/{reliefSought}/CasesForJudgeWithReliefSought")]
+        [ResponseType(typeof(List<vwCaseByJudgeReliefSought>))]
+        public IHttpActionResult GetCasesByJudgeReliefSought(string countyId, string judgeId, string reliefSought)
+        {
+            try
+            {
+                var result = DAL.eCourts.GetCasesByJudgeReliefSought(countyId, judgeId, reliefSought);
+                if (result == null || result.Count == 0)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1} ReliefSought: {2}{3}", countyId, judgeId, reliefSought, Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+
+        /// <summary>  
+        ///     Use this api to get a list of decision statistics for a Relief Sought for all judges in NYC Counties.
+        /// </summary>  
+        /// <param name="reliefSought">
+        ///     Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+        /// </param> 
+        /// <returns>
+        ///     Returns a list of decision statistics for a Relief Sought for all judges in NYC Counties.
+        /// </returns>
+        [Route("api/cases/statistics/{reliefSought}/DecisionSummaryByReliefSought")]
+        [ResponseType(typeof(vwMotionSummaryByReliefSought))]
+        public IHttpActionResult  GetMotionSummaryStatisticsByReliefSought(string reliefSought)
+        {
+            try
+            {
+                var result = DAL.eCourts.GetMotionSummaryStatisticsByReliefSought(reliefSought);
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered for ReliefSought: {0}{1}", reliefSought, Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+        /// <summary>  
+        ///     Use this api to get a list of decision statistics for various Relief Sought for a given judge.
+        /// </summary>  
+        /// <param name="countyId">
+        ///     CCIS County Id associated with the Judge. 
+        /// </param>    
+        /// <param name="judgeId">
+        ///     Id of the Judge as it appears in the data do not modify it 
+        /// </param>  
+        /// <returns>
+        ///     Returns a list of decision statistics for various Relief Sought for a given judge.
+        /// </returns>
+        [Route("api/cases/statistics/{countyId}/{judgeId}/DecisionSummaryForJudgeByReleifSought")]
+        [ResponseType(typeof(List<vwMotionSummaryByJudgeReliefSought>))]
+        public IHttpActionResult  GetMotionSummaryStatisticsByJudgeReliefSought(string countyId, string judgeId)
+        {
+            try
+            {
+                var result = DAL.eCourts.GetMotionSummaryStatisticsByJudgeReliefSought(countyId, judgeId);
+                if (result == null || result.Count == 0)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1}{2}", countyId, judgeId, Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+
+        }
+
+        /// <summary>  
+        ///     Use this api to get a 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.
+        /// </summary>  
+        /// <param name="countyId">
+        ///     CCIS County Id associated with the Judge. 
+        /// </param> 
+        /// <param name="judgeId">
+        ///     Id of the Judge as it appears in the data do not modify it 
+        /// </param>  
+        /// <param name="reliefSought">
+        ///     Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+        /// </param>
+        /// <returns>
+        ///     Returns 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.
+        /// </returns>
+        [Route("api/cases/statistics/{countyId}/{judgeId}/{reliefSought}/DecisionTimeByReleifSought")]
+        [ResponseType(typeof(vwJudgeReliefSought5NumberSummary))]
+        public IHttpActionResult  GetJudgeReliefSought5PlusNumberSummary(string countyId, string judgeId, string reliefSought)
+        {
+            try
+            {
+                var result = DAL.eCourts.GetJudgeReliefSought5PlusNumberSummary(countyId, judgeId, reliefSought);
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1} ReliefSought: {2}{3}", countyId, judgeId, reliefSought, Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        } 
+        #endregion
     }
 }

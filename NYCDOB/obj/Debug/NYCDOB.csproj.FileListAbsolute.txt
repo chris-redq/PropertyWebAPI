@@ -1,0 +1,9 @@
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\NYCDOB.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\NYCDOB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\NYCDOB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\obj\Debug\NYCDOB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\obj\Debug\NYCDOB.pdb

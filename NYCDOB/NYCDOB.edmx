@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NYCDOBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="ComplaintId" />
+          </Key>
+          <Property Name="ComplaintId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BIN" Type="varchar" MaxLength="7" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" />
+          <Property Name="ComplaintNumber" Type="varchar" MaxLength="15" />
+          <Property Name="Status" Type="varchar" MaxLength="15" />
+          <Property Name="DateEntered" Type="date" />
+          <Property Name="InvalidDateEntered" Type="varchar" MaxLength="15" />
+          <Property Name="HouseNumber" Type="varchar" MaxLength="15" />
+          <Property Name="StreetName" Type="varchar" MaxLength="50" />
+          <Property Name="CommunityBoard" Type="varchar" MaxLength="5" />
+          <Property Name="SpecialDistrict" Type="varchar" MaxLength="15" />
+          <Property Name="ComplaintCategory" Type="varchar" MaxLength="5" />
+          <Property Name="Unit" Type="varchar" MaxLength="20" />
+          <Property Name="DispositionDate" Type="date" />
+          <Property Name="InvalidDispositionDate" Type="varchar" MaxLength="15" />
+          <Property Name="DispositionCode" Type="varchar" MaxLength="5" />
+          <Property Name="InspectionDate" Type="date" />
+          <Property Name="InvalidInspectionDate" Type="varchar" MaxLength="15" />
+          <Property Name="DOBRunDate" Type="date" />
+          <Property Name="InvalidDOBRunDate" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Violation">
+          <Key>
+            <PropertyRef Name="ISNDOBBISVIOLATION" />
+          </Key>
+          <Property Name="ISNDOBBISVIOLATION" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" />
+          <Property Name="InvalidBBL" Type="varchar" MaxLength="50" />
+          <Property Name="BIN" Type="varchar" MaxLength="50" />
+          <Property Name="IssueDate" Type="date" />
+          <Property Name="InValidIssueDate" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationTypeCode" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationNumber" Type="varchar" MaxLength="50" />
+          <Property Name="HouseNumber" Type="varchar" MaxLength="50" />
+          <Property Name="StreetName" Type="varchar" MaxLength="50" />
+          <Property Name="DispositionDate" Type="date" />
+          <Property Name="InValidDispositionDate" Type="varchar" MaxLength="50" />
+          <Property Name="DispositionComments" Type="varchar" MaxLength="500" />
+          <Property Name="DeviceNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationDescription" Type="varchar" MaxLength="500" />
+          <Property Name="ECBNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Number" Type="varchar" MaxLength="50" />
+          <Property Name="ViolationCategory" Type="varchar" MaxLength="500" />
+          <Property Name="ViolationType" Type="varchar" MaxLength="500" />
+          <Property Name="IsClosed" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOB.dob.vwComplaintsSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwComplaintsSummary">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="int" Nullable="false" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" />
+          <Property Name="Open" Type="int" />
+          <Property Name="Closed" Type="int" />
+          <Property Name="Total" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOB.dob.vwViolationSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwViolationSummary">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="int" Nullable="false" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" />
+          <Property Name="Closed" Type="int" />
+          <Property Name="Open" Type="int" />
+          <Property Name="OpenClass1" Type="int" />
+          <Property Name="Total" Type="int" />
+          <Property Name="DOBCivilPenalties" Type="decimal" Precision="11" Scale="2" />
+        </EntityType>
+        <EntityContainer Name="NYCDOBModelStoreContainer">
+          <EntitySet Name="Complaint" EntityType="Self.Complaint" Schema="dob" store:Type="Tables" />
+          <EntitySet Name="Violation" EntityType="Self.Violation" Schema="dob" store:Type="Tables" />
+          <EntitySet Name="vwComplaintsSummary" EntityType="Self.vwComplaintsSummary" store:Type="Views" store:Schema="dob">
+            <DefiningQuery>SELECT 
+    [vwComplaintsSummary].[PKID] AS [PKID], 
+    [vwComplaintsSummary].[BBL] AS [BBL], 
+    [vwComplaintsSummary].[Open] AS [Open], 
+    [vwComplaintsSummary].[Closed] AS [Closed], 
+    [vwComplaintsSummary].[Total] AS [Total]
+    FROM [dob].[vwComplaintsSummary] AS [vwComplaintsSummary]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwViolationSummary" EntityType="Self.vwViolationSummary" store:Type="Views" store:Schema="dob">
+            <DefiningQuery>SELECT 
+    [vwViolationSummary].[PKID] AS [PKID], 
+    [vwViolationSummary].[BBL] AS [BBL], 
+    [vwViolationSummary].[Closed] AS [Closed], 
+    [vwViolationSummary].[Open] AS [Open], 
+    [vwViolationSummary].[OpenClass1] AS [OpenClass1], 
+    [vwViolationSummary].[Total] AS [Total], 
+    [vwViolationSummary].[DOBCivilPenalties] AS [DOBCivilPenalties]
+    FROM [dob].[vwViolationSummary] AS [vwViolationSummary]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NYCDOBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NYCDOBEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Complaints" EntityType="NYCDOBModel.Complaint" />
+          <EntitySet Name="Violations" EntityType="NYCDOBModel.Violation" />
+          <EntitySet Name="vwComplaintsSummaries" EntityType="NYCDOBModel.vwComplaintsSummary" />
+          <EntitySet Name="vwViolationSummaries" EntityType="NYCDOBModel.vwViolationSummary" />
+        </EntityContainer>
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="ComplaintId" />
+          </Key>
+          <Property Name="ComplaintId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BIN" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ComplaintNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DateEntered" Type="DateTime" Precision="0" />
+          <Property Name="InvalidDateEntered" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="HouseNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="StreetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CommunityBoard" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialDistrict" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ComplaintCategory" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DispositionDate" Type="DateTime" Precision="0" />
+          <Property Name="InvalidDispositionDate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DispositionCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="InspectionDate" Type="DateTime" Precision="0" />
+          <Property Name="InvalidInspectionDate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DOBRunDate" Type="DateTime" Precision="0" />
+          <Property Name="InvalidDOBRunDate" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Violation">
+          <Key>
+            <PropertyRef Name="ISNDOBBISVIOLATION" />
+          </Key>
+          <Property Name="ISNDOBBISVIOLATION" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="InvalidBBL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IssueDate" Type="DateTime" Precision="0" />
+          <Property Name="InValidIssueDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationTypeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HouseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StreetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DispositionDate" Type="DateTime" Precision="0" />
+          <Property Name="InValidDispositionDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DispositionComments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ECBNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationCategory" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ViolationType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsClosed" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="vwComplaintsSummary">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="Int32" Nullable="false" />
+          <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Open" Type="Int32" />
+          <Property Name="Closed" Type="Int32" />
+          <Property Name="Total" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vwViolationSummary">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="Int32" Nullable="false" />
+          <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Closed" Type="Int32" />
+          <Property Name="Open" Type="Int32" />
+          <Property Name="OpenClass1" Type="Int32" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="DOBCivilPenalties" Type="Decimal" Precision="11" Scale="2" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NYCDOBModelStoreContainer" CdmEntityContainer="NYCDOBEntities" >
+          <EntitySetMapping Name="Complaints">
+            <EntityTypeMapping TypeName="NYCDOBModel.Complaint">
+              <MappingFragment StoreEntitySet="Complaint">
+                <ScalarProperty Name="InvalidDOBRunDate" ColumnName="InvalidDOBRunDate" />
+                <ScalarProperty Name="DOBRunDate" ColumnName="DOBRunDate" />
+                <ScalarProperty Name="InvalidInspectionDate" ColumnName="InvalidInspectionDate" />
+                <ScalarProperty Name="InspectionDate" ColumnName="InspectionDate" />
+                <ScalarProperty Name="DispositionCode" ColumnName="DispositionCode" />
+                <ScalarProperty Name="InvalidDispositionDate" ColumnName="InvalidDispositionDate" />
+                <ScalarProperty Name="DispositionDate" ColumnName="DispositionDate" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ComplaintCategory" ColumnName="ComplaintCategory" />
+                <ScalarProperty Name="SpecialDistrict" ColumnName="SpecialDistrict" />
+                <ScalarProperty Name="CommunityBoard" ColumnName="CommunityBoard" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="InvalidDateEntered" ColumnName="InvalidDateEntered" />
+                <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ComplaintNumber" ColumnName="ComplaintNumber" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="BIN" ColumnName="BIN" />
+                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Violations">
+            <EntityTypeMapping TypeName="NYCDOBModel.Violation">
+              <MappingFragment StoreEntitySet="Violation">
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+                <ScalarProperty Name="ViolationType" ColumnName="ViolationType" />
+                <ScalarProperty Name="ViolationCategory" ColumnName="ViolationCategory" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ECBNumber" ColumnName="ECBNumber" />
+                <ScalarProperty Name="ViolationDescription" ColumnName="ViolationDescription" />
+                <ScalarProperty Name="DeviceNumber" ColumnName="DeviceNumber" />
+                <ScalarProperty Name="DispositionComments" ColumnName="DispositionComments" />
+                <ScalarProperty Name="InValidDispositionDate" ColumnName="InValidDispositionDate" />
+                <ScalarProperty Name="DispositionDate" ColumnName="DispositionDate" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="ViolationNumber" ColumnName="ViolationNumber" />
+                <ScalarProperty Name="ViolationTypeCode" ColumnName="ViolationTypeCode" />
+                <ScalarProperty Name="InValidIssueDate" ColumnName="InValidIssueDate" />
+                <ScalarProperty Name="IssueDate" ColumnName="IssueDate" />
+                <ScalarProperty Name="BIN" ColumnName="BIN" />
+                <ScalarProperty Name="InvalidBBL" ColumnName="InvalidBBL" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="ISNDOBBISVIOLATION" ColumnName="ISNDOBBISVIOLATION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwComplaintsSummaries">
+            <EntityTypeMapping TypeName="NYCDOBModel.vwComplaintsSummary">
+              <MappingFragment StoreEntitySet="vwComplaintsSummary">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="Open" ColumnName="Open" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwViolationSummaries">
+            <EntityTypeMapping TypeName="NYCDOBModel.vwViolationSummary">
+              <MappingFragment StoreEntitySet="vwViolationSummary">
+                <ScalarProperty Name="DOBCivilPenalties" ColumnName="DOBCivilPenalties" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="OpenClass1" ColumnName="OpenClass1" />
+                <ScalarProperty Name="Open" ColumnName="Open" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

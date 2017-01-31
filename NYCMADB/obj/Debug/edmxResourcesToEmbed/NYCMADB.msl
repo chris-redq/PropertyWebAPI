@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NYCMAModelStoreContainer" CdmEntityContainer="NYCMAEntities">
+    <EntitySetMapping Name="vwSuggestedSubjectPrices">
+      <EntityTypeMapping TypeName="NYCMAModel.vwSuggestedSubjectPrice">
+        <MappingFragment StoreEntitySet="vwSuggestedSubjectPrices">
+          <ScalarProperty Name="SubjectBBL" ColumnName="SubjectBBL" />
+          <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
+          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+          <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetCMA" FunctionName="NYCMAModel.Store.tfnGetCMA">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCMAModel.tfnGetCMA_Result">
+          <ScalarProperty Name="AlgorithmType" ColumnName="AlgorithmType" />
+          <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="StreetNumberLow" ColumnName="StreetNumberLow" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="DeedAmount" ColumnName="DeedAmount" />
+          <ScalarProperty Name="DeedDate" ColumnName="DeedDate" />
+          <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+          <ScalarProperty Name="GLA" ColumnName="GLA" />
+          <ScalarProperty Name="CalcGLA" ColumnName="CalcGLA" />
+          <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+          <ScalarProperty Name="LAPercent" ColumnName="LAPercent" />
+          <ScalarProperty Name="GLAPercent" ColumnName="GLAPercent" />
+          <ScalarProperty Name="AgeDiff" ColumnName="AgeDiff" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+          <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+          <ScalarProperty Name="IsBuildingIrregularShaped" ColumnName="IsBuildingIrregularShaped" />
+          <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+          <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+          <ScalarProperty Name="IsIrregularLot" ColumnName="IsIrregularLot" />
+          <ScalarProperty Name="TotalUnits" ColumnName="TotalUnits" />
+          <ScalarProperty Name="Stories" ColumnName="Stories" />
+          <ScalarProperty Name="ZoningCode" ColumnName="ZoningCode" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="vwSalesByMonthByNTAs">
+      <EntityTypeMapping TypeName="NYCMAModel.vwSalesByMonthByNTA">
+        <MappingFragment StoreEntitySet="vwSalesByMonthByNTA">
+          <ScalarProperty Name="NumberofSales" ColumnName="NumberofSales" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Assessments">
+      <EntityTypeMapping TypeName="NYCMAModel.Assessment">
+        <MappingFragment StoreEntitySet="Assessment">
+          <ScalarProperty Name="GarageArea" ColumnName="GarageArea" />
+          <ScalarProperty Name="BuildingGrossAreaCalculated" ColumnName="BuildingGrossAreaCalculated" />
+          <ScalarProperty Name="CoordinatesSource" ColumnName="CoordinatesSource" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="North" ColumnName="North" />
+          <ScalarProperty Name="East" ColumnName="East" />
+          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+          <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+          <ScalarProperty Name="CommunityDistrict" ColumnName="CommunityDistrict" />
+          <ScalarProperty Name="SchoolDistrict" ColumnName="SchoolDistrict" />
+          <ScalarProperty Name="ExemptionsCount" ColumnName="ExemptionsCount" />
+          <ScalarProperty Name="ExemptionIndicatorFlags" ColumnName="ExemptionIndicatorFlags" />
+          <ScalarProperty Name="COOPidentificationNumber" ColumnName="COOPidentificationNumber" />
+          <ScalarProperty Name="ApartmentNumberForCondominiumProperties" ColumnName="ApartmentNumberForCondominiumProperties" />
+          <ScalarProperty Name="BuildingPercentOfCommonInterestInTheEntireCondo" ColumnName="BuildingPercentOfCommonInterestInTheEntireCondo" />
+          <ScalarProperty Name="BuildingInProgress" ColumnName="BuildingInProgress" />
+          <ScalarProperty Name="LotWillBeDropped" ColumnName="LotWillBeDropped" />
+          <ScalarProperty Name="NewLot" ColumnName="NewLot" />
+          <ScalarProperty Name="RecordType" ColumnName="RecordType" />
+          <ScalarProperty Name="NumberOfBuildingsOnLot" ColumnName="NumberOfBuildingsOnLot" />
+          <ScalarProperty Name="AssessedValueLimited" ColumnName="AssessedValueLimited" />
+          <ScalarProperty Name="OldTaxClass" ColumnName="OldTaxClass" />
+          <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
+          <ScalarProperty Name="IsTentative" ColumnName="IsTentative" />
+          <ScalarProperty Name="FinalActualExemptTotalValue" ColumnName="FinalActualExemptTotalValue" />
+          <ScalarProperty Name="FinalActualExemptLandValue" ColumnName="FinalActualExemptLandValue" />
+          <ScalarProperty Name="FinalActualAssessedTotalValue" ColumnName="FinalActualAssessedTotalValue" />
+          <ScalarProperty Name="FinalActualAssessedLandValue" ColumnName="FinalActualAssessedLandValue" />
+          <ScalarProperty Name="LandPercentOfCommonInterestInTheEntireCondo" ColumnName="LandPercentOfCommonInterestInTheEntireCondo" />
+          <ScalarProperty Name="Suffix1SequenceNumber" ColumnName="Suffix1SequenceNumber" />
+          <ScalarProperty Name="IsCondoCommercialOrResidential" ColumnName="IsCondoCommercialOrResidential" />
+          <ScalarProperty Name="CondoIdentificationNumber" ColumnName="CondoIdentificationNumber" />
+          <ScalarProperty Name="ParcelValuesAreReflectedInAnotherLot" ColumnName="ParcelValuesAreReflectedInAnotherLot" />
+          <ScalarProperty Name="PriorYearAssessedValueLimited" ColumnName="PriorYearAssessedValueLimited" />
+          <ScalarProperty Name="EndYearBuilt" ColumnName="EndYearBuilt" />
+          <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+          <ScalarProperty Name="ZoningCode" ColumnName="ZoningCode" />
+          <ScalarProperty Name="BuildingGrossArea" ColumnName="BuildingGrossArea" />
+          <ScalarProperty Name="LandArea" ColumnName="LandArea" />
+          <ScalarProperty Name="CornerLotInformation" ColumnName="CornerLotInformation" />
+          <ScalarProperty Name="Stories" ColumnName="Stories" />
+          <ScalarProperty Name="ExtensionType" ColumnName="ExtensionType" />
+          <ScalarProperty Name="IsBuildingIrregularShaped" ColumnName="IsBuildingIrregularShaped" />
+          <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+          <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+          <ScalarProperty Name="IsIrregularLot" ColumnName="IsIrregularLot" />
+          <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+          <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+          <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+          <ScalarProperty Name="ResidentialUnits" ColumnName="ResidentialUnits" />
+          <ScalarProperty Name="TotalUnits" ColumnName="TotalUnits" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="IsStreetNumberRange" ColumnName="IsStreetNumberRange" />
+          <ScalarProperty Name="StreetNumberHigh" ColumnName="StreetNumberHigh" />
+          <ScalarProperty Name="StreetNumberLow" ColumnName="StreetNumberLow" />
+          <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="NewTotalMarketValue" ColumnName="NewTotalMarketValue" />
+          <ScalarProperty Name="NewTotalMarketValueLand" ColumnName="NewTotalMarketValueLand" />
+          <ScalarProperty Name="CurrentTotalMarketValue" ColumnName="CurrentTotalMarketValue" />
+          <ScalarProperty Name="CurrentTotalMarketValueLand" ColumnName="CurrentTotalMarketValueLand" />
+          <ScalarProperty Name="AssessmentYear" ColumnName="AssessmentYear" />
+          <ScalarProperty Name="Easement" ColumnName="Easement" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="Boro" ColumnName="Boro" />
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothings">
+      <EntityTypeMapping TypeName="NYCMAModel.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
+        <MappingFragment StoreEntitySet="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
+          <ScalarProperty Name="MaxPricePerSqft" ColumnName="MaxPricePerSqft" />
+          <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
+          <ScalarProperty Name="MedianPricePerSqft" ColumnName="MedianPricePerSqft" />
+          <ScalarProperty Name="Q1PricePerSqft" ColumnName="Q1PricePerSqft" />
+          <ScalarProperty Name="MinPricePerSqft" ColumnName="MinPricePerSqft" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalePriceStatisticsByMonthByNTAMeanSmoothings">
+      <EntityTypeMapping TypeName="NYCMAModel.SalePriceStatisticsByMonthByNTAMeanSmoothing">
+        <MappingFragment StoreEntitySet="SalePriceStatisticsByMonthByNTAMeanSmoothing">
+          <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+          <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
+          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+          <ScalarProperty Name="Q1Price" ColumnName="Q1Price" />
+          <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ShowCMASubject" FunctionName="NYCMAModel.Store.ShowCMASubject">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCMAModel.ShowCMASubject_Result">
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="Boro" ColumnName="Boro" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Neigborhood" ColumnName="Neigborhood" />
+          <ScalarProperty Name="SchoolDistrict" ColumnName="SchoolDistrict" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+          <ScalarProperty Name="Stories" ColumnName="Stories" />
+          <ScalarProperty Name="TotalUnits" ColumnName="TotalUnits" />
+          <ScalarProperty Name="ZoningCode" ColumnName="ZoningCode" />
+          <ScalarProperty Name="GLA" ColumnName="GLA" />
+          <ScalarProperty Name="CalcGLA" ColumnName="CalcGLA" />
+          <ScalarProperty Name="BuildingFront" ColumnName="BuildingFront" />
+          <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+          <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+          <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+          <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+          <ScalarProperty Name="IsBuildingIrregularShaped" ColumnName="IsBuildingIrregularShaped" />
+          <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+          <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+          <ScalarProperty Name="IsIrregularLot" ColumnName="IsIrregularLot" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="SaleParties">
+      <EntityTypeMapping TypeName="NYCMAModel.SaleParty">
+        <MappingFragment StoreEntitySet="SaleParty">
+          <ScalarProperty Name="PartyType" ColumnName="PartyType" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="PartyName" ColumnName="PartyName" />
+          <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

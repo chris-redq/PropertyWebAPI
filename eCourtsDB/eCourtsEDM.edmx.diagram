@@ -18,6 +18,10 @@
         <EntityTypeShape EntityType="NYCOURTSModel.vwCaseExpanded" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NYCOURTSModel.vwMotionExpanded" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NYCOURTSModel.vwGeneralDataExpanded" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NYCOURTSModel.vwCaseByJudgeReliefSought" Width="1.5" PointX="15.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NYCOURTSModel.vwJudgeReliefSought5NumberSummary" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="NYCOURTSModel.vwMotionSummaryByJudgeReliefSought" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NYCOURTSModel.vwMotionSummaryByReliefSought" Width="1.5" PointX="17.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

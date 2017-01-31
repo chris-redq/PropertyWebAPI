@@ -940,12 +940,117 @@
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>
         </member>
+        <member name="T:PropertyWebAPI.Controllers.CMAController">
+            <summary>  
+            This controller handles all api requests associated with CMA related information
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSuggestedPrices(System.String)">
+            <summary>  
+                Use this api to get suggested prices for a property in NYC
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <returns>
+                Returns Average Low, Median and Avg High Price for a property in NYC
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSalesTrendAroundProperty(System.String,System.Int32)">
+            <summary>  
+                Use this api to get sales data by month for the neighborhood around a given property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="timeSpanInYears">
+                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
+            </param>
+            <returns>
+                Returns sales data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSalesPriceTrendAroundProperty(System.String,System.Int32)">
+            <summary>  
+                Use this api to get sales price data by month for the neighborhood around a given property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="timeSpanInYears">
+                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
+            </param>
+            <returns>
+                Returns sales price data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetPricePerSqFtTrendAroundProperty(System.String,System.Int32)">
+            <summary>  
+                Use this api to get price per sqft data by month for the neighborhood around a given property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="timeSpanInYears">
+                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
+            </param>
+            <returns>
+                Returns sales price per sqft data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+            <summary>  
+                Use this api to get a list of comparables for the given property and associated parameters
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="algorithmType"></param>
+            <param name="maxRecords"></param>
+            <param name="monthOffset"></param>
+            <param name="classMatchType"></param>
+            <param name="sameNeighboorhood"></param>
+            <param name="sameSchoolDistrict"></param>
+            <param name="sameZip"></param>
+            <param name="sameBlock"></param>
+            <param name="sameStreetName"></param>
+            <param name="minSalePrice"></param>
+            <param name="maxSalePrice"></param>
+            <param name="isNotIntraFamily"></param>
+            <param name="isBuyeraCompany"></param>
+            <param name="isSelleraCompany"></param>
+            <returns>
+                Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSubjectDetails(System.String)">
+            <summary>  
+                Use this api to get a subject property's details
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <returns>
+                Returns subject property's details
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetDeedParties(System.String)">
+            <summary>  
+                Use this api to get parties associated with a deed (buyers and sellers)
+            </summary>  
+            <param name="deedUniqueKey">
+                Document Unique Key associated with a Deed document in ACRIS
+            </param>
+            <returns>
+                Returns parties associated with a deed (buyers and sellers)
+            </returns>
+        </member>
         <member name="T:PropertyWebAPI.Controllers.LeadsController">
             <summary>  
             This controller handles all api requests associated with property leads
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.Get(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.Get(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>  
             Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
             multiple values separated by commas. For string values wildcards are provided. Wildcards is denoted by '*' 
@@ -956,7 +1061,9 @@
             <param name="isvacant">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
             <param name="zipcodes">Optional parameter. Multiple values can be sent. No wildcards.</param>
             <param name="violations">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
-            <param name="lientypes">Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS and ALL. By default if multiple values
+            <param name="lientypes">Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS and ALL. 
+            By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
+            the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</param>
             <param name="states">Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</param>
             <param name="cities">Optional parameter. Multiple values can be sent. No wildcards.</param>
             <param name="leadgrades">Optional parameter. Multiple values can be sent. No wildcards</param>
@@ -965,7 +1072,7 @@
             <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
             <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-            are provided the search is an OR between the various lien types. To AND the lien types send an additional value OPERATORAND</param>
+            <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <returns>Returns a list of leads (properties)</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">
@@ -976,6 +1083,15 @@
                 Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
             </param>  
             <returns>Returns lead details</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LiensController.GetPropertyLead(System.String)">
+            <summary>  
+                Use this api to get all liens associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>Returns all lien details</returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.BillsController">
             <summary>  
@@ -1145,6 +1261,65 @@
             </param> 
             <returns>
                 Returns a list of rows (cases) with old column value and new value
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetCasesByJudgeReliefSought(System.String,System.String,System.String)">
+            <summary>  
+                Use this api to get a list of cases associated with a Relief Sought for a given judge in a county
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the Judge. 
+            </param>  
+            <param name="judgeId">
+                ID of the Judge as it appears in the data
+            </param>  
+            <param name="reliefSought">
+                Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+            </param>
+            <returns>
+                Returns a list of cases associated with a Relief Sought for a given judge in a county
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMotionSummaryStatisticsByReliefSought(System.String)">
+            <summary>  
+                Use this api to get a list of decision statistics for a Relief Sought for all judges in NYC Counties.
+            </summary>  
+            <param name="reliefSought">
+                Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+            </param> 
+            <returns>
+                Returns a list of decision statistics for a Relief Sought for all judges in NYC Counties.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMotionSummaryStatisticsByJudgeReliefSought(System.String,System.String)">
+            <summary>  
+                Use this api to get a list of decision statistics for various Relief Sought for a given judge.
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the Judge. 
+            </param>    
+            <param name="judgeId">
+                Id of the Judge as it appears in the data do not modify it 
+            </param>  
+            <returns>
+                Returns a list of decision statistics for various Relief Sought for a given judge.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetJudgeReliefSought5PlusNumberSummary(System.String,System.String,System.String)">
+            <summary>  
+                Use this api to get a 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the Judge. 
+            </param> 
+            <param name="judgeId">
+                Id of the Judge as it appears in the data do not modify it 
+            </param>  
+            <param name="reliefSought">
+                Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+            </param>
+            <returns>
+                Returns 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.
             </returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.MortgagesDeedsController">
@@ -1430,6 +1605,102 @@
             </param>
             <returns>
                 Returns totals for all violation/Penalties amounts associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBViolations(System.String,System.String)">
+            <summary>  
+                Use this method to get a list of all (active,closed or both) DOB Violations associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="active">
+                Set this optional parameter to N if you want the all closed DOB Violations or set the parameter to ignore if you want all violations.
+                The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns a list of DOB Violations associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBViolationsSummary(System.String)">
+            <summary>  
+                Use this method to get a summary of DOB Violations associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of DOB Violations associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetECBViolations(System.String,System.String)">
+            <summary>  
+                Use this method to get a list of all (active, closed or both) ECB Violations associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="active">
+                Set this optional parameter to N if you want the all closed ECB Violations or set the parameter to ignore if you want all violations.
+                The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns a list of ECB Violations associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetECBViolationsSummary(System.String)">
+            <summary>  
+                Use this method to get a summary of ECB Violations (across multiple agencies) associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of ECB Violations (across multiple agencies) associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetECBViolationsSummaryByAgency(System.String)">
+            <summary>  
+                Use this method to get a summary of ECB Violations by agency associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of ECB Violations by agency associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBCompliants(System.String,System.String)">
+            <summary>  
+                Use this method to get a list of all active DOB Complaints associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="active">
+                Set this optional parameter to N if you want the all closed DOB Complaints or set the parameter to ignore if you want all violations.
+                The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns a list of DOB Complaints associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBComplaintsSummary(System.String)">
+            <summary>  
+                Use this method to get a summary of DOB Complaints associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of DOB Complaints associated with a property
             </returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.WebDataController">

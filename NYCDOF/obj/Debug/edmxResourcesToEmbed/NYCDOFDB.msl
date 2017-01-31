@@ -35,5 +35,28 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="vwTaxLiens">
+      <EntityTypeMapping TypeName="NYCDOFModel.vwTaxLien">
+        <MappingFragment StoreEntitySet="vwTaxLien">
+          <ScalarProperty Name="DEPInterestRate" ColumnName="DEPInterestRate" />
+          <ScalarProperty Name="DOFInterestRate" ColumnName="DOFInterestRate" />
+          <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
+          <ScalarProperty Name="LienTotal" ColumnName="LienTotal" />
+          <ScalarProperty Name="Surchages" ColumnName="Surchages" />
+          <ScalarProperty Name="NoticingFees" ColumnName="NoticingFees" />
+          <ScalarProperty Name="CIS" ColumnName="CIS" />
+          <ScalarProperty Name="Environmental" ColumnName="Environmental" />
+          <ScalarProperty Name="ERP" ColumnName="ERP" />
+          <ScalarProperty Name="Other" ColumnName="Other" />
+          <ScalarProperty Name="Property" ColumnName="Property" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="IsWaterDebtOnly" ColumnName="IsWaterDebtOnly" />
+          <ScalarProperty Name="TaxLienCertificate" ColumnName="TaxLienCertificate" />
+          <ScalarProperty Name="TaxLienSold" ColumnName="TaxLienSold" />
+          <ScalarProperty Name="TaxLienSaleList" ColumnName="TaxLienSaleList" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

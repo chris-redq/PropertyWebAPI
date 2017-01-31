@@ -7,6 +7,9 @@ using ACRISDB;
 using NYCDOF;
 using eCourtsDB;
 using GPADB;
+using NYCDOB;
+using NYCMADB;
+using NYCVNL;
 using log4net;
 using AutoMapper;
 using System.Text.RegularExpressions;
@@ -41,6 +44,16 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetUnsatisfiedMortgages_Result, BAL.DeedDocument>();
                 cfg.CreateMap<vwGeneralLeadInfomation, Controllers.LeadSummaryData>();
                 cfg.CreateMap<tfnGetDocumentExtractForCase_Result, DAL.CaseDocumentDetails>();
+                cfg.CreateMap<vwViolationSummary, DAL.ViolationSummary>();
+                cfg.CreateMap<vwComplaintsSummary, DAL.DOBComplaintsSummary>();
+                cfg.CreateMap<MultiAgencyViolation, DAL.ECBViolationDetail>();
+                cfg.CreateMap<vwTaxLien, DAL.LocalTaxLienDetails>();
+                cfg.CreateMap<vwSuggestedSubjectPrice, DAL.SuggestPropertPrices>();
+                cfg.CreateMap<vwSalesByMonthByNTA, DAL.SalesDataDetailsByMonth>();
+                cfg.CreateMap<SalePriceStatisticsByMonthByNTAMeanSmoothing, DAL.PriceDetailsByMonth>();
+                cfg.CreateMap<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
+                cfg.CreateMap<ShowCMASubject_Result, DAL.SubjectDetails>();
+                
             });
         }
     }

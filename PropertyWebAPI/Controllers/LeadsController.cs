@@ -34,7 +34,9 @@
         /// <param name="isvacant">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
         /// <param name="zipcodes">Optional parameter. Multiple values can be sent. No wildcards.</param>
         /// <param name="violations">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
-        /// <param name="lientypes">Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS and ALL. By default if multiple values
+        /// <param name="lientypes">Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS and ALL. 
+        /// By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
+        /// the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</param>
         /// <param name="states">Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</param>
         /// <param name="cities">Optional parameter. Multiple values can be sent. No wildcards.</param>
         /// <param name="leadgrades">Optional parameter. Multiple values can be sent. No wildcards</param>
@@ -43,19 +45,20 @@
         /// <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
         /// <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-        /// are provided the search is an OR between the various lien types. To AND the lien types send an additional value OPERATORAND</param>
+        /// <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <returns>Returns a list of leads (properties)</returns>
         [Route("api/leads/")]
         [ResponseType(typeof(List<LeadSummaryData>))]
         public IHttpActionResult Get(string zipcodes = null, string neighborhoods = null, string isvacant = null, string leadgrades = null,
                                      string buildingclasscodes = null, string counties = null, string ismailingaddressactive = null,
                                      string lientypes = null, string ltv = null, string equity = null, string violations = null,
-                                     string cities = null, string states= null, string isfannie=null, string isfreddie=null)
+                                     string cities = null, string states= null, string isfannie=null, string isfreddie=null, string unbuilt=null)
         {
             if (zipcodes==null && buildingclasscodes==null && counties==null && 
                 isvacant==null && violations==null && ismailingaddressactive == null &&
                 cities==null && neighborhoods==null && states==null && lientypes==null &&
-                leadgrades==null && ltv==null && equity==null && isfannie==null && isfreddie==null )
+                leadgrades==null && ltv==null && equity==null && isfannie==null && isfreddie==null &&
+                unbuilt==null)
                 return this.BadRequest("At least one filter is required");
 
             try
@@ -63,7 +66,7 @@
                 using (GPADBEntities gpaE = new GPADBEntities())
                 {
                     List<vwGeneralLeadInfomation> leadList = gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
-                                                                           cities, neighborhoods, states, lientypes,leadgrades,ltv,equity,isfannie,isfreddie).ToList();
+                                                                           cities, neighborhoods, states, lientypes,leadgrades,ltv,equity,isfannie,isfreddie,unbuilt).ToList();
                     if (leadList == null || leadList.Count == 0)
                         return NotFound();
                     return Ok(Mapper.Map<List<vwGeneralLeadInfomation>, List<LeadSummaryData>>(leadList));

@@ -28,6 +28,7 @@ namespace GPADB
         public Nullable<double> BuildingGrossArea { get; set; }
         public Nullable<double> BuiltFAR { get; set; }
         public Nullable<double> MaxResidentialFAR { get; set; }
+        public Nullable<decimal> UnbuiltArea { get; set; }
         public Nullable<double> YearBuilt { get; set; }
         public Nullable<double> Borough { get; set; }
         public string BoroughName { get; set; }
@@ -60,10 +61,34 @@ namespace GPADB
         public string County { get; set; }
         public Nullable<decimal> ECBAmountDue { get; set; }
         public Nullable<int> ECBOpenTickets { get; set; }
+        public Nullable<decimal> DOBCivilPenaltiesDue { get; set; }
+        public Nullable<int> DOBOpenViolations { get; set; }
+        public Nullable<int> DOBOpenClass1Violations { get; set; }
         public int IsFannieMaeMortgage { get; set; }
         public int IsFreddieMacMortgagge { get; set; }
         public int LeadGrade { get; set; }
         public decimal Equity { get; set; }
         public decimal LTV { get; set; }
+        public Nullable<decimal> UnbuiltAreaAboveThreshold { get; set; }
+        public string LotType { get; set; }
+        public string Proximity { get; set; }
+        public Nullable<int> NumberOfBuildings { get; set; }
+        public string Style { get; set; }
+        public string ExteriorCondition { get; set; }
+        public Nullable<decimal> FinishedSquareFootage { get; set; }
+        public Nullable<decimal> UnfinishedSquareFootage { get; set; }
+        public Nullable<int> CommercialUnits { get; set; }
+        public Nullable<decimal> CommercialSquareFootage { get; set; }
+        public string GarageType { get; set; }
+        public Nullable<decimal> GarageSquareFootage { get; set; }
+        public string BasementGrade { get; set; }
+        public Nullable<decimal> BasementSquareFootage { get; set; }
+        public string BasementType { get; set; }
+        public string ConstructionType { get; set; }
+        public string ExteriorWall { get; set; }
+        public string StructureType { get; set; }
+        public string Grade { get; set; }
+        public Nullable<int> IsSRORestricted { get; set; }
+        public Nullable<int> IsLandmark { get; set; }
     }
 }

@@ -179,3 +179,9 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\Swashbuckle.Cor
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\WebActivatorEx.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\GPADB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\GPADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCDOB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCDOB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCVNL.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCVNL.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCMADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCMADB.pdb

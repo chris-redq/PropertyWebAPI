@@ -40,6 +40,10 @@ namespace eCourtsDB
         public virtual DbSet<vwCaseExpanded> vwCaseExpandeds { get; set; }
         public virtual DbSet<vwMotionExpanded> vwMotionExpandeds { get; set; }
         public virtual DbSet<vwGeneralDataExpanded> vwGeneralDataExpandeds { get; set; }
+        public virtual DbSet<vwCaseByJudgeReliefSought> vwCaseByJudgeReliefSoughts { get; set; }
+        public virtual DbSet<vwJudgeReliefSought5NumberSummary> vwJudgeReliefSought5NumberSummary { get; set; }
+        public virtual DbSet<vwMotionSummaryByJudgeReliefSought> vwMotionSummaryByJudgeReliefSoughts { get; set; }
+        public virtual DbSet<vwMotionSummaryByReliefSought> vwMotionSummaryByReliefSoughts { get; set; }
     
         [DbFunction("NYCOURTSEntities", "tfnGetAllCasesForaProperty")]
         public virtual IQueryable<tfnGetAllCasesForaProperty_Result> tfnGetAllCasesForaProperty(string bBL)

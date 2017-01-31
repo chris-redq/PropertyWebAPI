@@ -25,6 +25,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Property Name="BuildingGrossArea" Type="float" />
     <Property Name="BuiltFAR" Type="float" />
     <Property Name="MaxResidentialFAR" Type="float" />
+    <Property Name="UnbuiltArea" Type="decimal" Precision="8" Scale="2" />
     <Property Name="YearBuilt" Type="float" />
     <Property Name="Borough" Type="float" />
     <Property Name="BoroughName" Type="varchar" MaxLength="13" />
@@ -55,13 +56,37 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Property Name="City" Type="varchar" MaxLength="64" />
     <Property Name="State" Type="varchar" MaxLength="2" />
     <Property Name="County" Type="varchar" MaxLength="64" />
-    <Property Name="ECBAmountDue" Type="numeric" Precision="38" Scale="2" />
+    <Property Name="ECBAmountDue" Type="numeric" Precision="18" Scale="2" />
     <Property Name="ECBOpenTickets" Type="int" />
+    <Property Name="DOBCivilPenaltiesDue" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="DOBOpenViolations" Type="int" />
+    <Property Name="DOBOpenClass1Violations" Type="int" />
     <Property Name="IsFannieMaeMortgage" Type="int" Nullable="false" />
     <Property Name="IsFreddieMacMortgagge" Type="int" Nullable="false" />
     <Property Name="LeadGrade" Type="int" Nullable="false" />
     <Property Name="Equity" Type="numeric" Precision="2" Scale="2" Nullable="false" />
     <Property Name="LTV" Type="numeric" Precision="2" Scale="2" Nullable="false" />
+    <Property Name="UnbuiltAreaAboveThreshold" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="LotType" Type="varchar" MaxLength="50" />
+    <Property Name="Proximity" Type="varchar" MaxLength="50" />
+    <Property Name="NumberOfBuildings" Type="int" />
+    <Property Name="Style" Type="varchar" MaxLength="50" />
+    <Property Name="ExteriorCondition" Type="varchar" MaxLength="50" />
+    <Property Name="FinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="UnfinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialUnits" Type="int" />
+    <Property Name="CommercialSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="GarageType" Type="varchar" MaxLength="50" />
+    <Property Name="GarageSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="BasementGrade" Type="varchar" MaxLength="50" />
+    <Property Name="BasementSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="BasementType" Type="varchar" MaxLength="50" />
+    <Property Name="ConstructionType" Type="varchar" MaxLength="50" />
+    <Property Name="ExteriorWall" Type="varchar" MaxLength="50" />
+    <Property Name="StructureType" Type="varchar" MaxLength="50" />
+    <Property Name="Grade" Type="varchar" MaxLength="50" />
+    <Property Name="IsSRORestricted" Type="int" />
+    <Property Name="IsLandmark" Type="int" />
   </EntityType>
   <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
     <Parameter Name="ZipCodes" Type="nvarchar" Mode="In" />
@@ -79,46 +104,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Parameter Name="Equity" Type="nvarchar" Mode="In" />
     <Parameter Name="IsFannie" Type="nvarchar" Mode="In" />
     <Parameter Name="IsFreddie" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="tfnGetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
-    <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
-    <ReturnType>
-      <CollectionType>
-        <RowType>
-          <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
-          <Property Name="TaxClass" Type="varchar" MaxLength="2" />
-          <Property Name="LotFrontage" Type="float" />
-          <Property Name="LotDepth" Type="float" />
-          <Property Name="LotArea" Type="int" />
-          <Property Name="BuildingClassCode" Type="varchar" MaxLength="2" />
-          <Property Name="BuildingClass" Type="varchar" MaxLength="255" />
-          <Property Name="BuildingFrontage" Type="float" />
-          <Property Name="BuildingDepth" Type="float" />
-          <Property Name="Stories" Type="float" />
-          <Property Name="NumberOfBuildingsOnLot" Type="float" />
-          <Property Name="BuildingGrossArea" Type="int" />
-          <Property Name="BuiltFAR" Type="float" />
-          <Property Name="MaxResidentialFAR" Type="float" />
-          <Property Name="YearBuilt" Type="int" />
-          <Property Name="Borough" Type="varchar" MaxLength="1" />
-          <Property Name="BoroughName" Type="varchar" MaxLength="15" />
-          <Property Name="Block" Type="int" />
-          <Property Name="Lot" Type="int" />
-          <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
-          <Property Name="StreetName" Type="varchar" MaxLength="20" />
-          <Property Name="ZipCode" Type="varchar" MaxLength="10" />
-          <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
-          <Property Name="NTA" Type="varchar" MaxLength="4" />
-          <Property Name="Zoning" Type="varchar" MaxLength="9" />
-          <Property Name="UnitNumber" Type="varchar" MaxLength="5" />
-          <Property Name="East" Type="int" />
-          <Property Name="North" Type="int" />
-          <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="ResidentialUnits" Type="float" />
-        </RowType>
-      </CollectionType>
-    </ReturnType>
+    <Parameter Name="UnbuiltArea" Type="nvarchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
@@ -137,6 +123,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[BuildingGrossArea] AS [BuildingGrossArea], 
     [vwGeneralLeadInfomation].[BuiltFAR] AS [BuiltFAR], 
     [vwGeneralLeadInfomation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
+    [vwGeneralLeadInfomation].[UnbuiltArea] AS [UnbuiltArea], 
     [vwGeneralLeadInfomation].[YearBuilt] AS [YearBuilt], 
     [vwGeneralLeadInfomation].[Borough] AS [Borough], 
     [vwGeneralLeadInfomation].[BoroughName] AS [BoroughName], 
@@ -169,11 +156,35 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[County] AS [County], 
     [vwGeneralLeadInfomation].[ECBAmountDue] AS [ECBAmountDue], 
     [vwGeneralLeadInfomation].[ECBOpenTickets] AS [ECBOpenTickets], 
+    [vwGeneralLeadInfomation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
+    [vwGeneralLeadInfomation].[DOBOpenViolations] AS [DOBOpenViolations], 
+    [vwGeneralLeadInfomation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
     [vwGeneralLeadInfomation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
     [vwGeneralLeadInfomation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
     [vwGeneralLeadInfomation].[LeadGrade] AS [LeadGrade], 
     [vwGeneralLeadInfomation].[Equity] AS [Equity], 
-    [vwGeneralLeadInfomation].[LTV] AS [LTV]
+    [vwGeneralLeadInfomation].[LTV] AS [LTV], 
+    [vwGeneralLeadInfomation].[UnbuiltAreaAboveThreshold] AS [UnbuiltAreaAboveThreshold], 
+    [vwGeneralLeadInfomation].[LotType] AS [LotType], 
+    [vwGeneralLeadInfomation].[Proximity] AS [Proximity], 
+    [vwGeneralLeadInfomation].[NumberOfBuildings] AS [NumberOfBuildings], 
+    [vwGeneralLeadInfomation].[Style] AS [Style], 
+    [vwGeneralLeadInfomation].[ExteriorCondition] AS [ExteriorCondition], 
+    [vwGeneralLeadInfomation].[FinishedSquareFootage] AS [FinishedSquareFootage], 
+    [vwGeneralLeadInfomation].[UnfinishedSquareFootage] AS [UnfinishedSquareFootage], 
+    [vwGeneralLeadInfomation].[CommercialUnits] AS [CommercialUnits], 
+    [vwGeneralLeadInfomation].[CommercialSquareFootage] AS [CommercialSquareFootage], 
+    [vwGeneralLeadInfomation].[GarageType] AS [GarageType], 
+    [vwGeneralLeadInfomation].[GarageSquareFootage] AS [GarageSquareFootage], 
+    [vwGeneralLeadInfomation].[BasementGrade] AS [BasementGrade], 
+    [vwGeneralLeadInfomation].[BasementSquareFootage] AS [BasementSquareFootage], 
+    [vwGeneralLeadInfomation].[BasementType] AS [BasementType], 
+    [vwGeneralLeadInfomation].[ConstructionType] AS [ConstructionType], 
+    [vwGeneralLeadInfomation].[ExteriorWall] AS [ExteriorWall], 
+    [vwGeneralLeadInfomation].[StructureType] AS [StructureType], 
+    [vwGeneralLeadInfomation].[Grade] AS [Grade], 
+    [vwGeneralLeadInfomation].[IsSRORestricted] AS [IsSRORestricted], 
+    [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark]
     FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
     </EntitySet>
   </EntityContainer>

@@ -70,6 +70,9 @@
     <Compile Include="tfnGetGeneralPropertyInformation_Result.cs">
       <DependentUpon>NYCDOFDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwTaxLien.cs">
+      <DependentUpon>NYCDOFDB.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

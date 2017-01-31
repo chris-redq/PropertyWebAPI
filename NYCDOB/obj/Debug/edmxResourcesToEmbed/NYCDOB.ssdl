@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NYCDOBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Complaint">
+    <Key>
+      <PropertyRef Name="ComplaintId" />
+    </Key>
+    <Property Name="ComplaintId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BIN" Type="varchar" MaxLength="7" />
+    <Property Name="BBL" Type="varchar" MaxLength="10" />
+    <Property Name="ComplaintNumber" Type="varchar" MaxLength="15" />
+    <Property Name="Status" Type="varchar" MaxLength="15" />
+    <Property Name="DateEntered" Type="date" />
+    <Property Name="InvalidDateEntered" Type="varchar" MaxLength="15" />
+    <Property Name="HouseNumber" Type="varchar" MaxLength="15" />
+    <Property Name="StreetName" Type="varchar" MaxLength="50" />
+    <Property Name="CommunityBoard" Type="varchar" MaxLength="5" />
+    <Property Name="SpecialDistrict" Type="varchar" MaxLength="15" />
+    <Property Name="ComplaintCategory" Type="varchar" MaxLength="5" />
+    <Property Name="Unit" Type="varchar" MaxLength="20" />
+    <Property Name="DispositionDate" Type="date" />
+    <Property Name="InvalidDispositionDate" Type="varchar" MaxLength="15" />
+    <Property Name="DispositionCode" Type="varchar" MaxLength="5" />
+    <Property Name="InspectionDate" Type="date" />
+    <Property Name="InvalidInspectionDate" Type="varchar" MaxLength="15" />
+    <Property Name="DOBRunDate" Type="date" />
+    <Property Name="InvalidDOBRunDate" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Violation">
+    <Key>
+      <PropertyRef Name="ISNDOBBISVIOLATION" />
+    </Key>
+    <Property Name="ISNDOBBISVIOLATION" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="BBL" Type="varchar" MaxLength="10" />
+    <Property Name="InvalidBBL" Type="varchar" MaxLength="50" />
+    <Property Name="BIN" Type="varchar" MaxLength="50" />
+    <Property Name="IssueDate" Type="date" />
+    <Property Name="InValidIssueDate" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationTypeCode" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationNumber" Type="varchar" MaxLength="50" />
+    <Property Name="HouseNumber" Type="varchar" MaxLength="50" />
+    <Property Name="StreetName" Type="varchar" MaxLength="50" />
+    <Property Name="DispositionDate" Type="date" />
+    <Property Name="InValidDispositionDate" Type="varchar" MaxLength="50" />
+    <Property Name="DispositionComments" Type="varchar" MaxLength="500" />
+    <Property Name="DeviceNumber" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationDescription" Type="varchar" MaxLength="500" />
+    <Property Name="ECBNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Number" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationCategory" Type="varchar" MaxLength="500" />
+    <Property Name="ViolationType" Type="varchar" MaxLength="500" />
+    <Property Name="IsClosed" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOB.dob.vwComplaintsSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwComplaintsSummary">
+    <Key>
+      <PropertyRef Name="PKID" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="BBL" Type="varchar" MaxLength="10" />
+    <Property Name="Open" Type="int" />
+    <Property Name="Closed" Type="int" />
+    <Property Name="Total" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOB.dob.vwViolationSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwViolationSummary">
+    <Key>
+      <PropertyRef Name="PKID" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="BBL" Type="varchar" MaxLength="10" />
+    <Property Name="Closed" Type="int" />
+    <Property Name="Open" Type="int" />
+    <Property Name="OpenClass1" Type="int" />
+    <Property Name="Total" Type="int" />
+    <Property Name="DOBCivilPenalties" Type="decimal" Precision="11" Scale="2" />
+  </EntityType>
+  <EntityContainer Name="NYCDOBModelStoreContainer">
+    <EntitySet Name="Complaint" EntityType="Self.Complaint" Schema="dob" store:Type="Tables" />
+    <EntitySet Name="Violation" EntityType="Self.Violation" Schema="dob" store:Type="Tables" />
+    <EntitySet Name="vwComplaintsSummary" EntityType="Self.vwComplaintsSummary" store:Type="Views" store:Schema="dob">
+      <DefiningQuery>SELECT 
+    [vwComplaintsSummary].[PKID] AS [PKID], 
+    [vwComplaintsSummary].[BBL] AS [BBL], 
+    [vwComplaintsSummary].[Open] AS [Open], 
+    [vwComplaintsSummary].[Closed] AS [Closed], 
+    [vwComplaintsSummary].[Total] AS [Total]
+    FROM [dob].[vwComplaintsSummary] AS [vwComplaintsSummary]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwViolationSummary" EntityType="Self.vwViolationSummary" store:Type="Views" store:Schema="dob">
+      <DefiningQuery>SELECT 
+    [vwViolationSummary].[PKID] AS [PKID], 
+    [vwViolationSummary].[BBL] AS [BBL], 
+    [vwViolationSummary].[Closed] AS [Closed], 
+    [vwViolationSummary].[Open] AS [Open], 
+    [vwViolationSummary].[OpenClass1] AS [OpenClass1], 
+    [vwViolationSummary].[Total] AS [Total], 
+    [vwViolationSummary].[DOBCivilPenalties] AS [DOBCivilPenalties]
+    FROM [dob].[vwViolationSummary] AS [vwViolationSummary]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

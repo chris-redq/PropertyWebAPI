@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NYCVNLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ECBViolationsSummary">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Open" Type="int" />
+    <Property Name="Closed" Type="int" />
+    <Property Name="Total" Type="int" />
+    <Property Name="TotalDue" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="ECBViolationsSummaryByAgency">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="IssuingAgency" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="IssuingAgency" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Open" Type="int" />
+    <Property Name="Closed" Type="int" />
+    <Property Name="Total" Type="int" />
+    <Property Name="TotalDue" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="MultiAgencyViolations">
+    <Key>
+      <PropertyRef Name="TicketNumber" />
+    </Key>
+    <Property Name="TicketNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ViolationDate" Type="date" />
+    <Property Name="ViolationTime" Type="varchar" MaxLength="50" />
+    <Property Name="IssuingAgency" Type="varchar" MaxLength="50" />
+    <Property Name="RespondentName" Type="varchar" MaxLength="102" />
+    <Property Name="BalanceDue" Type="money" />
+    <Property Name="BBL" Type="varchar" MaxLength="11" />
+    <Property Name="ViolationLocationHouseNumber" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationLocationStreetNumber" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationLocationFloor" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationLocationCity" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationLocationZipCode" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationLocationStateName" Type="varchar" MaxLength="50" />
+    <Property Name="RespondentAddressBorough" Type="varchar" MaxLength="50" />
+    <Property Name="RespondentAddressHouseNumber" Type="varchar" MaxLength="50" />
+    <Property Name="RespondentAddressStreetName" Type="varchar" MaxLength="50" />
+    <Property Name="RespondentAddressCity" Type="varchar" MaxLength="50" />
+    <Property Name="RespondentAddressZipCode" Type="varchar" MaxLength="50" />
+    <Property Name="RespondentAddressStateName" Type="varchar" MaxLength="50" />
+    <Property Name="HearingStatus" Type="varchar" MaxLength="50" />
+    <Property Name="HearingResult" Type="varchar" MaxLength="50" />
+    <Property Name="ScheduledHearingLocation" Type="varchar" MaxLength="50" />
+    <Property Name="HearingDate" Type="date" />
+    <Property Name="HearingTime" Type="varchar" MaxLength="50" />
+    <Property Name="DecisionLocation" Type="varchar" MaxLength="50" />
+    <Property Name="DecisionDate" Type="date" />
+    <Property Name="TotalViolationAmount" Type="money" />
+    <Property Name="ViolationDetails" Type="varchar" MaxLength="500" />
+    <Property Name="JudgementDocketedDate" Type="date" />
+    <Property Name="RespondentAddressFacilityNumber" Type="varchar" MaxLength="50" />
+    <Property Name="PenaltyImposed" Type="money" />
+    <Property Name="AmountPaid" Type="money" />
+    <Property Name="AdditionalPenaltiesLateFees" Type="money" />
+    <Property Name="ComplianceStatus" Type="varchar" MaxLength="50" />
+    <Property Name="ViolationDescription" Type="varchar" MaxLength="50" />
+    <Property Name="Charge1Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge1Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge1Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge1InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge2Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge2Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge2Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge2InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge3Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge3Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge3Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge3InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge4Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge4Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge4Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge4InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge5Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge5Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge5Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge5InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge6Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge6Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge6Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge6InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge7Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge7Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge7Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge7InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge8Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge8Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge8Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge8InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge9Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge9Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge9Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge9InfractionAmount" Type="varchar" MaxLength="50" />
+    <Property Name="Charge10Code" Type="varchar" MaxLength="50" />
+    <Property Name="Charge10Section" Type="varchar" MaxLength="50" />
+    <Property Name="Charge10Description" Type="varchar" MaxLength="250" />
+    <Property Name="Charge10InfractionAmount" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityContainer Name="NYCVNLModelStoreContainer">
+    <EntitySet Name="ECBViolationsSummary" EntityType="Self.ECBViolationsSummary" Schema="ecb" store:Type="Tables" />
+    <EntitySet Name="ECBViolationsSummaryByAgency" EntityType="Self.ECBViolationsSummaryByAgency" Schema="ecb" store:Type="Tables" />
+    <EntitySet Name="MultiAgencyViolations" EntityType="Self.MultiAgencyViolations" Schema="ecb" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

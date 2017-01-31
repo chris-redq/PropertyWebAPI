@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NYCVNLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="MultiAgencyViolation">
+    <Key>
+      <PropertyRef Name="TicketNumber" />
+    </Key>
+    <Property Name="TicketNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ViolationDate" Type="DateTime" Precision="0" />
+    <Property Name="ViolationTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IssuingAgency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RespondentName" Type="String" MaxLength="102" FixedLength="false" Unicode="false" />
+    <Property Name="BalanceDue" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="BBL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="ViolationLocationHouseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ViolationLocationStreetNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ViolationLocationFloor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ViolationLocationCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ViolationLocationZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ViolationLocationStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RespondentAddressBorough" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RespondentAddressHouseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RespondentAddressStreetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RespondentAddressCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RespondentAddressZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RespondentAddressStateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="HearingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="HearingResult" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ScheduledHearingLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="HearingDate" Type="DateTime" Precision="0" />
+    <Property Name="HearingTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DecisionLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DecisionDate" Type="DateTime" Precision="0" />
+    <Property Name="TotalViolationAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ViolationDetails" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="JudgementDocketedDate" Type="DateTime" Precision="0" />
+    <Property Name="RespondentAddressFacilityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PenaltyImposed" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="AmountPaid" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="AdditionalPenaltiesLateFees" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ComplianceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ViolationDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge1Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge1Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge1Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge1InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge2Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge2Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge2Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge2InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge3Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge3Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge3Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge3InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge4Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge4Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge4Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge4InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge5Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge5Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge5Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge5InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge6Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge6Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge6Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge6InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge7Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge7Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge7Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge7InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge8Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge8Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge8Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge8InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge9Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge9Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge9Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge9InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge10Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge10Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge10Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Charge10InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="NYCVNLEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="MultiAgencyViolations" EntityType="Self.MultiAgencyViolation" />
+    <EntitySet Name="ECBViolationsSummaries" EntityType="NYCVNLModel.ECBViolationsSummary" />
+    <EntitySet Name="ECBViolationsSummaryByAgencies" EntityType="NYCVNLModel.ECBViolationsSummaryByAgency" />
+  </EntityContainer>
+  <EntityType Name="ECBViolationsSummary">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Open" Type="Int32" />
+    <Property Name="Closed" Type="Int32" />
+    <Property Name="Total" Type="Int32" />
+    <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="ECBViolationsSummaryByAgency">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="IssuingAgency" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="IssuingAgency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Open" Type="Int32" />
+    <Property Name="Closed" Type="Int32" />
+    <Property Name="Total" Type="Int32" />
+    <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+</Schema>

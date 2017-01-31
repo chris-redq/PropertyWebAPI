@@ -118,13 +118,25 @@
     <Compile Include="vwAttorneyExpanded.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwCaseByJudgeReliefSought.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwCaseExpanded.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="vwGeneralDataExpanded.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwJudgeReliefSought5NumberSummary.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwMotionExpanded.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwMotionSummaryByJudgeReliefSought.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwMotionSummaryByReliefSought.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
   </ItemGroup>

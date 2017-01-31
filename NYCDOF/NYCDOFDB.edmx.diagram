@@ -4,7 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="39c968ca99a74d7fa1c4d0b91af34a36" Name="Diagram1" />
+      <Diagram DiagramId="39c968ca99a74d7fa1c4d0b91af34a36" Name="Diagram1" >
+        <EntityTypeShape EntityType="NYCDOFModel.vwTaxLien" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

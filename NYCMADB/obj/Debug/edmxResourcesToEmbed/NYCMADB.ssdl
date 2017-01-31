@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NYCMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Assessment">
+    <Key>
+      <PropertyRef Name="BBLE" />
+    </Key>
+    <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="Boro" Type="float" />
+    <Property Name="Block" Type="float" />
+    <Property Name="Lot" Type="float" />
+    <Property Name="Easement" Type="nvarchar" MaxLength="1" />
+    <Property Name="AssessmentYear" Type="float" Nullable="false" />
+    <Property Name="CurrentTotalMarketValueLand" Type="float" />
+    <Property Name="CurrentTotalMarketValue" Type="float" />
+    <Property Name="NewTotalMarketValueLand" Type="float" />
+    <Property Name="NewTotalMarketValue" Type="float" />
+    <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OwnerName" Type="nvarchar" MaxLength="21" />
+    <Property Name="StreetNumberLow" Type="varchar" MaxLength="12" />
+    <Property Name="StreetNumberHigh" Type="varchar" MaxLength="12" />
+    <Property Name="IsStreetNumberRange" Type="varchar" MaxLength="1" />
+    <Property Name="StreetName" Type="nvarchar" MaxLength="20" />
+    <Property Name="Zip" Type="float" />
+    <Property Name="TotalUnits" Type="float" />
+    <Property Name="ResidentialUnits" Type="float" />
+    <Property Name="LotFrontage" Type="float" />
+    <Property Name="LotDepth" Type="float" />
+    <Property Name="LotArea" Type="float" />
+    <Property Name="IsIrregularLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingFrontage" Type="float" />
+    <Property Name="BuildingDepth" Type="float" />
+    <Property Name="IsBuildingIrregularShaped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ExtensionType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Stories" Type="float" />
+    <Property Name="CornerLotInformation" Type="nvarchar" MaxLength="2" />
+    <Property Name="LandArea" Type="float" />
+    <Property Name="BuildingGrossArea" Type="float" />
+    <Property Name="ZoningCode" Type="nvarchar" MaxLength="9" />
+    <Property Name="YearBuilt" Type="float" />
+    <Property Name="EndYearBuilt" Type="float" />
+    <Property Name="PriorYearAssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="ParcelValuesAreReflectedInAnotherLot" Type="nvarchar" MaxLength="1" />
+    <Property Name="CondoIdentificationNumber" Type="float" />
+    <Property Name="IsCondoCommercialOrResidential" Type="varchar" MaxLength="33" Nullable="false" />
+    <Property Name="Suffix1SequenceNumber" Type="nvarchar" MaxLength="1" />
+    <Property Name="LandPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="FinalActualAssessedLandValue" Type="float" />
+    <Property Name="FinalActualAssessedTotalValue" Type="float" />
+    <Property Name="FinalActualExemptLandValue" Type="float" />
+    <Property Name="FinalActualExemptTotalValue" Type="float" />
+    <Property Name="IsTentative" Type="int" Nullable="false" />
+    <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="OldTaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="AssessedValueLimited" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="NumberOfBuildingsOnLot" Type="float" />
+    <Property Name="RecordType" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="NewLot" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="LotWillBeDropped" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingInProgress" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="BuildingPercentOfCommonInterestInTheEntireCondo" Type="nvarchar" MaxLength="10" />
+    <Property Name="ApartmentNumberForCondominiumProperties" Type="nvarchar" MaxLength="5" />
+    <Property Name="COOPidentificationNumber" Type="float" />
+    <Property Name="ExemptionIndicatorFlags" Type="nvarchar" MaxLength="4" />
+    <Property Name="ExemptionsCount" Type="float" />
+    <Property Name="SchoolDistrict" Type="varchar" MaxLength="2" />
+    <Property Name="CommunityDistrict" Type="numeric" Precision="4" Scale="0" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+    <Property Name="NTACode" Type="varchar" MaxLength="4" />
+    <Property Name="East" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="North" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="CoordinatesSource" Type="varchar" MaxLength="50" />
+    <Property Name="BuildingGrossAreaCalculated" Type="float" />
+    <Property Name="GarageArea" Type="numeric" Precision="9" Scale="0" />
+  </EntityType>
+  <EntityType Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
+    <Key>
+      <PropertyRef Name="NTACode" />
+      <PropertyRef Name="YearMonth" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="NTACode" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="YearMonth" Type="date" Nullable="false" />
+    <Property Name="MinPricePerSqft" Type="float" />
+    <Property Name="Q1PricePerSqft" Type="float" />
+    <Property Name="MedianPricePerSqft" Type="float" />
+    <Property Name="Q3Price" Type="float" />
+    <Property Name="MaxPricePerSqft" Type="float" />
+  </EntityType>
+  <EntityType Name="SaleParty">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="DeedUniqueKey" />
+      <PropertyRef Name="PartyName" />
+      <PropertyRef Name="PartyType" />
+    </Key>
+    <Property Name="BBLE" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="DeedUniqueKey" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="PartyName" Type="varchar" MaxLength="70" Nullable="false" />
+    <Property Name="Address1" Type="varchar" MaxLength="60" />
+    <Property Name="Address2" Type="varchar" MaxLength="60" />
+    <Property Name="City" Type="varchar" MaxLength="30" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="Zip" Type="varchar" MaxLength="9" />
+    <Property Name="Country" Type="varchar" MaxLength="2" />
+    <Property Name="PartyType" Type="varchar" MaxLength="6" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SalePriceStatisticsByMonthByNTAMeanSmoothing">
+    <Key>
+      <PropertyRef Name="NTACode" />
+      <PropertyRef Name="YearMonth" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="NTACode" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="YearMonth" Type="date" Nullable="false" />
+    <Property Name="MinPrice" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="Q1Price" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="MedianPrice" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="Q3Price" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="MaxPrice" Type="numeric" Precision="38" Scale="6" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwSalesByMonthByNTA">
+    <Key>
+      <PropertyRef Name="PKID" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="NTACode" Type="varchar" MaxLength="5" />
+    <Property Name="YearMonth" Type="date" />
+    <Property Name="NumberofSales" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwSuggestedSubjectPrices">
+    <Key>
+      <PropertyRef Name="SubjectBBL" />
+    </Key>
+    <Property Name="SubjectBBL" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="AVGLowPrice" Type="float" />
+    <Property Name="MedianPrice" Type="float" />
+    <Property Name="AVGHighPice" Type="float" />
+  </EntityType>
+  <Function Name="tfnGetCMA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="App">
+    <Parameter Name="AlgorithmType" Type="char" Mode="In" />
+    <Parameter Name="sbjBBLE" Type="varchar" Mode="In" />
+    <Parameter Name="MaxRecords" Type="int" Mode="In" />
+    <Parameter Name="SameNeighborhood" Type="bit" Mode="In" />
+    <Parameter Name="SameSchoolDistrict" Type="bit" Mode="In" />
+    <Parameter Name="SameZip" Type="bit" Mode="In" />
+    <Parameter Name="SameBlock" Type="bit" Mode="In" />
+    <Parameter Name="SameStreetName" Type="bit" Mode="In" />
+    <Parameter Name="MonthOffset" Type="int" Mode="In" />
+    <Parameter Name="MinSalePrice" Type="float" Mode="In" />
+    <Parameter Name="MaxSalePrice" Type="float" Mode="In" />
+    <Parameter Name="ClassMatchType" Type="int" Mode="In" />
+    <Parameter Name="IsNotIntraFamily" Type="bit" Mode="In" />
+    <Parameter Name="IsSelleraCompany" Type="bit" Mode="In" />
+    <Parameter Name="IsBuyeraCompany" Type="bit" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="AlgorithmType" Type="varchar" MaxLength="25" />
+          <Property Name="DeedUniqueKey" Type="varchar" MaxLength="16" />
+          <Property Name="BBLE" Type="varchar" MaxLength="11" />
+          <Property Name="StreetNumberLow" Type="varchar" MaxLength="12" />
+          <Property Name="StreetName" Type="varchar" MaxLength="20" />
+          <Property Name="DeedAmount" Type="float" />
+          <Property Name="DeedDate" Type="date" />
+          <Property Name="LotArea" Type="int" />
+          <Property Name="GLA" Type="int" />
+          <Property Name="CalcGLA" Type="int" />
+          <Property Name="YearBuilt" Type="int" />
+          <Property Name="LAPercent" Type="float" />
+          <Property Name="GLAPercent" Type="float" />
+          <Property Name="AgeDiff" Type="int" />
+          <Property Name="Distance" Type="float" />
+          <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+          <Property Name="NTACode" Type="varchar" MaxLength="4" />
+          <Property Name="Zip" Type="float" />
+          <Property Name="Block" Type="float" />
+          <Property Name="BuildingFrontage" Type="float" />
+          <Property Name="BuildingDepth" Type="float" />
+          <Property Name="IsBuildingIrregularShaped" Type="varchar" MaxLength="1" />
+          <Property Name="LotFrontage" Type="float" />
+          <Property Name="LotDepth" Type="float" />
+          <Property Name="IsIrregularLot" Type="varchar" MaxLength="1" />
+          <Property Name="TotalUnits" Type="float" />
+          <Property Name="Stories" Type="float" />
+          <Property Name="ZoningCode" Type="varchar" MaxLength="9" />
+          <Property Name="BuildingClass" Type="varchar" MaxLength="2" />
+          <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="Cost" Type="float" />
+          <Property Name="SortOrder" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="ShowCMASubject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="sbjBBLE" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="NYCMAModelStoreContainer">
+    <EntitySet Name="Assessment" EntityType="Self.Assessment" Schema="exdata" store:Type="Tables" />
+    <EntitySet Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing" EntityType="Self.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing" Schema="exdata" store:Type="Tables" />
+    <EntitySet Name="SaleParty" EntityType="Self.SaleParty" Schema="exdata" store:Type="Tables" />
+    <EntitySet Name="SalePriceStatisticsByMonthByNTAMeanSmoothing" EntityType="Self.SalePriceStatisticsByMonthByNTAMeanSmoothing" Schema="exdata" store:Type="Tables" />
+    <EntitySet Name="vwSalesByMonthByNTA" EntityType="Self.vwSalesByMonthByNTA" store:Type="Views" store:Schema="App">
+      <DefiningQuery>SELECT 
+    [vwSalesByMonthByNTA].[PKID] AS [PKID], 
+    [vwSalesByMonthByNTA].[NTACode] AS [NTACode], 
+    [vwSalesByMonthByNTA].[YearMonth] AS [YearMonth], 
+    [vwSalesByMonthByNTA].[NumberofSales] AS [NumberofSales]
+    FROM [App].[vwSalesByMonthByNTA] AS [vwSalesByMonthByNTA]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrices" store:Type="Views" store:Schema="App">
+      <DefiningQuery>SELECT 
+    [vwSuggestedSubjectPrices].[SubjectBBL] AS [SubjectBBL], 
+    [vwSuggestedSubjectPrices].[AVGLowPrice] AS [AVGLowPrice], 
+    [vwSuggestedSubjectPrices].[MedianPrice] AS [MedianPrice], 
+    [vwSuggestedSubjectPrices].[AVGHighPice] AS [AVGHighPice]
+    FROM [App].[vwSuggestedSubjectPrices] AS [vwSuggestedSubjectPrices]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

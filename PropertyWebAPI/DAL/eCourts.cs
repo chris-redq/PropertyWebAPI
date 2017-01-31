@@ -136,6 +136,45 @@ namespace PropertyWebAPI.DAL
                                 .ThenBy(m => m.DateTimeProcessed).ToList());
             }
         }
+
+        public static List<vwCaseByJudgeReliefSought> GetCasesByJudgeReliefSought(string countyId, string judgeId, string reliefSought)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return (nycourtsE.vwCaseByJudgeReliefSoughts.Where(i => i.CountyId == countyId && 
+                                                                        i.JudgeId == judgeId && 
+                                                                        i.ReliefSought== reliefSought).ToList());
+                                
+            }
+        }
+
+        public static vwMotionSummaryByReliefSought GetMotionSummaryStatisticsByReliefSought(string reliefSought)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return (nycourtsE.vwMotionSummaryByReliefSoughts.Where(i => i.ReliefSought == reliefSought).FirstOrDefault());
+
+            }
+        }
+
+        public static List<vwMotionSummaryByJudgeReliefSought> GetMotionSummaryStatisticsByJudgeReliefSought(string countyId, string judgeId)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return (nycourtsE.vwMotionSummaryByJudgeReliefSoughts.Where(i => i.CountyId==countyId &&
+                                                                                 i.JudgeId==judgeId).ToList());
+            }
+        }
+
+        public static vwJudgeReliefSought5NumberSummary GetJudgeReliefSought5PlusNumberSummary(string countyId, string judgeId, string reliefSought)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return (nycourtsE.vwJudgeReliefSought5NumberSummary.Where(i => i.CountyId == countyId &&
+                                                                               i.JudgeId == judgeId &&
+                                                                               i.ReliefSought == reliefSought).FirstOrDefault());
+            }
+        }
     }
 
 }
