@@ -3,21 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Text.RegularExpressions;
     using System.Web.Http;
-    using System.Web.Http.Description;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
     using GPADB;
+    using System.Web.Http.Description;
     using AutoMapper;
 
-    
-    public class LeadSummaryData : vwGeneralLeadInfomation
-    {
-        //Blank classes to mask entity framework details
-    }
+
+
     /// <summary>  
     /// This controller handles all api requests associated with property leads
     /// </summary>  
@@ -46,31 +38,39 @@
         /// <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+        /// <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
         /// <returns>Returns a list of leads (properties)</returns>
         [Route("api/leads/")]
-        [ResponseType(typeof(List<LeadSummaryData>))]
+        [ResponseType(typeof(List<DAL.LeadSummaryData>))]
         public IHttpActionResult Get(string zipcodes = null, string neighborhoods = null, string isvacant = null, string leadgrades = null,
                                      string buildingclasscodes = null, string counties = null, string ismailingaddressactive = null,
                                      string lientypes = null, string ltv = null, string equity = null, string violations = null,
-                                     string cities = null, string states= null, string isfannie=null, string isfreddie=null, string unbuilt=null)
+                                     string cities = null, string states= null, string isfannie=null, string isfreddie=null, string unbuilt=null, string servicer=null)
         {
             if (zipcodes==null && buildingclasscodes==null && counties==null && 
                 isvacant==null && violations==null && ismailingaddressactive == null &&
                 cities==null && neighborhoods==null && states==null && lientypes==null &&
                 leadgrades==null && ltv==null && equity==null && isfannie==null && isfreddie==null &&
-                unbuilt==null)
+                unbuilt==null && servicer==null)
                 return this.BadRequest("At least one filter is required");
 
             try
             {
-                using (GPADBEntities gpaE = new GPADBEntities())
+                using (GPADBEntities1 gpaE = new GPADBEntities1())
                 {
-                    List<vwGeneralLeadInfomation> leadList = gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
-                                                                           cities, neighborhoods, states, lientypes,leadgrades,ltv,equity,isfannie,isfreddie,unbuilt).ToList();
+                    var leadList = Mapper.Map<List<vwGeneralLeadInfomation>, List<DAL.LeadSummaryData>>(gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
+                                                                                                         cities, neighborhoods, states, lientypes, leadgrades, ltv, equity, isfannie,
+                                                                                                         isfreddie, unbuilt, servicer).ToList());
                     if (leadList == null || leadList.Count == 0)
                         return NotFound();
-                    return Ok(Mapper.Map<List<vwGeneralLeadInfomation>, List<LeadSummaryData>>(leadList));
+                    return Ok(leadList);
                 }
+                /*
+                var leadList = DAL.Lead.GetPropertyLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations, cities, neighborhoods, states, 
+                                                         lientypes,leadgrades,ltv,equity,isfannie,isfreddie,unbuilt).ToList();
+                */
+                
+                
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@
         /// </param>  
         /// <returns>Returns lead details</returns>
         [Route("api/leads/{propertybbl}")]
-        [ResponseType(typeof(LeadSummaryData))]
+        [ResponseType(typeof(BAL.LeadDetailData))]
         public IHttpActionResult GetPropertyLead(string propertybbl)
         {
             if (!BAL.BBL.IsValidFormat(propertybbl))
@@ -95,18 +95,45 @@
 
             try
             {
-                using (GPADBEntities gpaE = new GPADBEntities())
-                {
-                    var lead = Mapper.Map<LeadSummaryData>(gpaE.vwGeneralLeadInfomations.Where(x=> x.BBLE==propertybbl).FirstOrDefault());
+                var lead = BAL.Lead.GetPropertyLead(propertybbl);
                     
-                    if (lead == null)
-                        return NotFound();
-                    return Ok(lead);
-                }
+                if (lead == null)
+                    return NotFound();
+
+                return Ok(lead);
             }
             catch (Exception e)
             {
                 Common.Logs.log().Error(string.Format("Exception encountered while retrieving Lead for {0}{1}", propertybbl, Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+        [Route("api/leads/test")]
+        [ResponseType(typeof(List<DAL.LeadSummaryData>))]
+        public IHttpActionResult GetListTest(string zipcodes = null, string neighborhoods = null, string isvacant = null, string leadgrades = null,
+                                     string buildingclasscodes = null, string counties = null, string ismailingaddressactive = null,
+                                     string lientypes = null, string ltv = null, string equity = null, string violations = null,
+                                     string cities = null, string states = null, string isfannie = null, string isfreddie = null, string unbuilt = null, string servicer=null)
+        {
+            if (zipcodes == null && buildingclasscodes == null && counties == null &&
+                isvacant == null && violations == null && ismailingaddressactive == null &&
+                cities == null && neighborhoods == null && states == null && lientypes == null &&
+                leadgrades == null && ltv == null && equity == null && isfannie == null && isfreddie == null &&
+                unbuilt == null && servicer==null)
+                return this.BadRequest("At least one filter is required");
+
+            try
+            {
+                var leadList = DAL.Lead.GetPropertyLeads(zipcodes, neighborhoods, isvacant, leadgrades, buildingclasscodes, counties, ismailingaddressactive,
+                                                         lientypes, ltv, equity, violations, cities, states, isfannie, isfreddie, unbuilt, servicer).ToList();
+                if (leadList == null || leadList.Count == 0)
+                        return NotFound();
+                    return Ok(leadList);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Leads{0}", Common.Utilities.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }

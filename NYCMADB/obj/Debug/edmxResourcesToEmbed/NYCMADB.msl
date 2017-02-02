@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="NYCMAModelStoreContainer" CdmEntityContainer="NYCMAEntities">
-    <EntitySetMapping Name="vwSuggestedSubjectPrices">
-      <EntityTypeMapping TypeName="NYCMAModel.vwSuggestedSubjectPrice">
-        <MappingFragment StoreEntitySet="vwSuggestedSubjectPrices">
-          <ScalarProperty Name="SubjectBBL" ColumnName="SubjectBBL" />
-          <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
-          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-          <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="tfnGetCMA" FunctionName="NYCMAModel.Store.tfnGetCMA">
       <ResultMapping>
         <ComplexTypeMapping TypeName="NYCMAModel.tfnGetCMA_Result">
@@ -210,6 +200,17 @@
           <ScalarProperty Name="PartyName" ColumnName="PartyName" />
           <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
           <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwSuggestedSubjectPrices">
+      <EntityTypeMapping TypeName="NYCMAModel.vwSuggestedSubjectPrice">
+        <MappingFragment StoreEntitySet="vwSuggestedSubjectPrices">
+          <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
+          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+          <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
+          <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
+          <ScalarProperty Name="SubjectBBL" ColumnName="SubjectBBL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

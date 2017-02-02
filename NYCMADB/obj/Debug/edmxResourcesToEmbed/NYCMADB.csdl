@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="NYCMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="vwSuggestedSubjectPrice">
-    <Key>
-      <PropertyRef Name="SubjectBBL" />
-    </Key>
-    <Property Name="SubjectBBL" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="AVGLowPrice" Type="Double" />
-    <Property Name="MedianPrice" Type="Double" />
-    <Property Name="AVGHighPice" Type="Double" />
-  </EntityType>
   <EntityContainer Name="NYCMAEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrice" />
     <FunctionImport Name="GetCMA">
       <Parameter Name="AlgorithmType" Mode="In" Type="String" />
       <Parameter Name="sbjBBLE" Mode="In" Type="String" />
@@ -54,6 +44,7 @@
       <Parameter Name="sbjBBLE" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="SaleParties" EntityType="NYCMAModel.SaleParty" />
+    <EntitySet Name="vwSuggestedSubjectPrices" EntityType="NYCMAModel.vwSuggestedSubjectPrice" />
   </EntityContainer>
   <ComplexType Name="tfnGetCMA_Result">
     <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
@@ -248,5 +239,15 @@
     <Property Name="Zip" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
     <Property Name="Country" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="PartyType" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vwSuggestedSubjectPrice">
+    <Key>
+      <PropertyRef Name="SubjectBBL" />
+    </Key>
+    <Property Name="SubjectBBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="AVGLowPrice" Type="Double" />
+    <Property Name="AVGLowPriceNoLP" Type="Double" />
+    <Property Name="MedianPrice" Type="Double" />
+    <Property Name="AVGHighPice" Type="Double" />
   </EntityType>
 </Schema>

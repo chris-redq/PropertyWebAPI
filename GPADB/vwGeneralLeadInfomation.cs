@@ -50,6 +50,7 @@ namespace GPADB
         public Nullable<int> PoolA { get; set; }
         public Nullable<int> TaxLienLPs { get; set; }
         public Nullable<int> TaxLienActiveCases { get; set; }
+        public Nullable<decimal> TaxLienSoldAmount { get; set; }
         public Nullable<int> MortgageForeclosureLPs { get; set; }
         public Nullable<int> MortgageForeclosureActiveCases { get; set; }
         public Nullable<int> COSPresent { get; set; }
@@ -90,5 +91,6 @@ namespace GPADB
         public string Grade { get; set; }
         public Nullable<int> IsSRORestricted { get; set; }
         public Nullable<int> IsLandmark { get; set; }
+        public string ServicerName { get; set; }
     }
 }

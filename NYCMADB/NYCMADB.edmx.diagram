@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="88c407422abf46fc934175a0d8e66c1b" Name="Diagram1">
-        <EntityTypeShape EntityType="NYCMAModel.vwSuggestedSubjectPrice" Width="1.875" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NYCMAModel.vwSalesByMonthByNTA" Width="3.125" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="NYCMAModel.Assessment" Width="1.5" PointX="7.375" PointY="3.75" />
         <EntityTypeShape EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing" Width="4" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="NYCMAModel.SalePriceStatisticsByMonthByNTAMeanSmoothing" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="NYCMAModel.SaleParty" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="NYCMAModel.vwSuggestedSubjectPrice" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -42,7 +42,8 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetNewMortgageForeclosureCases_Result, DAL.CaseBasicInformationWithBBL>();
                 cfg.CreateMap<tfnGetCaseColumnChanges_Result, DAL.CaseDataChange>();
                 cfg.CreateMap<tfnGetUnsatisfiedMortgages_Result, BAL.DeedDocument>();
-                cfg.CreateMap<vwGeneralLeadInfomation, Controllers.LeadSummaryData>();
+                cfg.CreateMap<vwGeneralLeadInfomation, DAL.LeadSummaryData>();
+                cfg.CreateMap<vwGeneralLeadInfomation, BAL.LeadDetailData>();
                 cfg.CreateMap<tfnGetDocumentExtractForCase_Result, DAL.CaseDocumentDetails>();
                 cfg.CreateMap<vwViolationSummary, DAL.ViolationSummary>();
                 cfg.CreateMap<vwComplaintsSummary, DAL.DOBComplaintsSummary>();

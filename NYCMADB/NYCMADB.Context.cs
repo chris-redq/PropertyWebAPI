@@ -27,12 +27,12 @@ namespace NYCMADB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<vwSuggestedSubjectPrice> vwSuggestedSubjectPrices { get; set; }
         public virtual DbSet<vwSalesByMonthByNTA> vwSalesByMonthByNTAs { get; set; }
         public virtual DbSet<Assessment> Assessments { get; set; }
         public virtual DbSet<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing> PricePerSqFtStatisticsByMonthByNTAMeanSmoothings { get; set; }
         public virtual DbSet<SalePriceStatisticsByMonthByNTAMeanSmoothing> SalePriceStatisticsByMonthByNTAMeanSmoothings { get; set; }
         public virtual DbSet<SaleParty> SaleParties { get; set; }
+        public virtual DbSet<vwSuggestedSubjectPrice> vwSuggestedSubjectPrices { get; set; }
     
         public virtual int GetCMA(string algorithmType, string sbjBBLE, Nullable<int> maxRecords, Nullable<bool> sameNeighborhood, Nullable<bool> sameSchoolDistrict, Nullable<bool> sameZip, Nullable<bool> sameBlock, Nullable<bool> sameStreetName, Nullable<int> monthOffset, Nullable<double> minSalePrice, Nullable<double> maxSalePrice, Nullable<int> classMatchType, Nullable<bool> isNotIntraFamily, Nullable<bool> isSelleraCompany, Nullable<bool> isBuyeraCompany, Nullable<bool> isDebugMode)
         {

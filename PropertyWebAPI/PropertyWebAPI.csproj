@@ -215,6 +215,7 @@
     <Compile Include="BAL\BaseResult.cs" />
     <Compile Include="BAL\BBL.cs" />
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
+    <Compile Include="BAL\Lead.cs" />
     <Compile Include="BAL\Portal.cs" />
     <Compile Include="BAL\Results.cs" />
     <Compile Include="Controllers\CMAController.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Controllers\WebDataController.cs" />
     <Compile Include="Controllers\ZillowController.cs" />
     <Compile Include="DAL\DataRequestLog.cs" />
+    <Compile Include="DAL\Lead.cs" />
     <Compile Include="DAL\Liens.cs" />
     <Compile Include="DAL\Request.cs" />
     <Compile Include="DAL\Violations.cs" />

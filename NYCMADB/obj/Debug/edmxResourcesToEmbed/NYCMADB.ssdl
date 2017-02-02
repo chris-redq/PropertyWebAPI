@@ -139,6 +139,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
     </Key>
     <Property Name="SubjectBBL" Type="nvarchar" MaxLength="11" Nullable="false" />
     <Property Name="AVGLowPrice" Type="float" />
+    <Property Name="AVGLowPriceNoLP" Type="float" />
     <Property Name="MedianPrice" Type="float" />
     <Property Name="AVGHighPice" Type="float" />
   </EntityType>
@@ -218,6 +219,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
       <DefiningQuery>SELECT 
     [vwSuggestedSubjectPrices].[SubjectBBL] AS [SubjectBBL], 
     [vwSuggestedSubjectPrices].[AVGLowPrice] AS [AVGLowPrice], 
+    [vwSuggestedSubjectPrices].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
     [vwSuggestedSubjectPrices].[MedianPrice] AS [MedianPrice], 
     [vwSuggestedSubjectPrices].[AVGHighPice] AS [AVGHighPice]
     FROM [App].[vwSuggestedSubjectPrices] AS [vwSuggestedSubjectPrices]</DefiningQuery>

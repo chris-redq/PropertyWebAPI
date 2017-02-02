@@ -1050,7 +1050,7 @@
             This controller handles all api requests associated with property leads
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.Get(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.Get(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>  
             Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
             multiple values separated by commas. For string values wildcards are provided. Wildcards is denoted by '*' 
@@ -1073,6 +1073,7 @@
             <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
             <returns>Returns a list of leads (properties)</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">

@@ -47,6 +47,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Property Name="PoolA" Type="int" />
     <Property Name="TaxLienLPs" Type="int" />
     <Property Name="TaxLienActiveCases" Type="int" />
+    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="18" Scale="2" />
     <Property Name="MortgageForeclosureLPs" Type="int" />
     <Property Name="MortgageForeclosureActiveCases" Type="int" />
     <Property Name="COSPresent" Type="int" />
@@ -87,24 +88,26 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Property Name="Grade" Type="varchar" MaxLength="50" />
     <Property Name="IsSRORestricted" Type="int" />
     <Property Name="IsLandmark" Type="int" />
+    <Property Name="ServicerName" Type="varchar" MaxLength="250" />
   </EntityType>
   <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
-    <Parameter Name="ZipCodes" Type="nvarchar" Mode="In" />
-    <Parameter Name="BuildingClassCodes" Type="nvarchar" Mode="In" />
-    <Parameter Name="Counties" Type="nvarchar" Mode="In" />
-    <Parameter Name="Vacant" Type="nvarchar" Mode="In" />
-    <Parameter Name="MailingAddressActive" Type="nvarchar" Mode="In" />
-    <Parameter Name="Violations" Type="nvarchar" Mode="In" />
-    <Parameter Name="Cities" Type="nvarchar" Mode="In" />
-    <Parameter Name="Neighborhoods" Type="nvarchar" Mode="In" />
-    <Parameter Name="States" Type="nvarchar" Mode="In" />
-    <Parameter Name="LienTypes" Type="nvarchar" Mode="In" />
-    <Parameter Name="LeadGrades" Type="nvarchar" Mode="In" />
-    <Parameter Name="LTV" Type="nvarchar" Mode="In" />
-    <Parameter Name="Equity" Type="nvarchar" Mode="In" />
-    <Parameter Name="IsFannie" Type="nvarchar" Mode="In" />
-    <Parameter Name="IsFreddie" Type="nvarchar" Mode="In" />
-    <Parameter Name="UnbuiltArea" Type="nvarchar" Mode="In" />
+    <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
+    <Parameter Name="BuildingClassCodes" Type="varchar" Mode="In" />
+    <Parameter Name="Counties" Type="varchar" Mode="In" />
+    <Parameter Name="Vacant" Type="varchar" Mode="In" />
+    <Parameter Name="MailingAddressActive" Type="varchar" Mode="In" />
+    <Parameter Name="Violations" Type="varchar" Mode="In" />
+    <Parameter Name="Cities" Type="varchar" Mode="In" />
+    <Parameter Name="Neighborhoods" Type="varchar" Mode="In" />
+    <Parameter Name="States" Type="varchar" Mode="In" />
+    <Parameter Name="LienTypes" Type="varchar" Mode="In" />
+    <Parameter Name="LeadGrades" Type="varchar" Mode="In" />
+    <Parameter Name="LTV" Type="varchar" Mode="In" />
+    <Parameter Name="Equity" Type="varchar" Mode="In" />
+    <Parameter Name="IsFannie" Type="varchar" Mode="In" />
+    <Parameter Name="IsFreddie" Type="varchar" Mode="In" />
+    <Parameter Name="UnbuiltArea" Type="varchar" Mode="In" />
+    <Parameter Name="Servicer" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
@@ -145,6 +148,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[PoolA] AS [PoolA], 
     [vwGeneralLeadInfomation].[TaxLienLPs] AS [TaxLienLPs], 
     [vwGeneralLeadInfomation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
+    [vwGeneralLeadInfomation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
     [vwGeneralLeadInfomation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
     [vwGeneralLeadInfomation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
     [vwGeneralLeadInfomation].[COSPresent] AS [COSPresent], 
@@ -184,7 +188,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[StructureType] AS [StructureType], 
     [vwGeneralLeadInfomation].[Grade] AS [Grade], 
     [vwGeneralLeadInfomation].[IsSRORestricted] AS [IsSRORestricted], 
-    [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark]
+    [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark], 
+    [vwGeneralLeadInfomation].[ServicerName] AS [ServicerName]
     FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
     </EntitySet>
   </EntityContainer>

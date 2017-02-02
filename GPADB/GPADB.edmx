@@ -52,6 +52,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="PoolA" Type="int" />
           <Property Name="TaxLienLPs" Type="int" />
           <Property Name="TaxLienActiveCases" Type="int" />
+          <Property Name="TaxLienSoldAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="MortgageForeclosureLPs" Type="int" />
           <Property Name="MortgageForeclosureActiveCases" Type="int" />
           <Property Name="COSPresent" Type="int" />
@@ -92,24 +93,26 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="Grade" Type="varchar" MaxLength="50" />
           <Property Name="IsSRORestricted" Type="int" />
           <Property Name="IsLandmark" Type="int" />
+          <Property Name="ServicerName" Type="varchar" MaxLength="250" />
         </EntityType>
         <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
-          <Parameter Name="ZipCodes" Type="nvarchar" Mode="In" />
-          <Parameter Name="BuildingClassCodes" Type="nvarchar" Mode="In" />
-          <Parameter Name="Counties" Type="nvarchar" Mode="In" />
-          <Parameter Name="Vacant" Type="nvarchar" Mode="In" />
-          <Parameter Name="MailingAddressActive" Type="nvarchar" Mode="In" />
-          <Parameter Name="Violations" Type="nvarchar" Mode="In" />
-          <Parameter Name="Cities" Type="nvarchar" Mode="In" />
-          <Parameter Name="Neighborhoods" Type="nvarchar" Mode="In" />
-          <Parameter Name="States" Type="nvarchar" Mode="In" />
-          <Parameter Name="LienTypes" Type="nvarchar" Mode="In" />
-          <Parameter Name="LeadGrades" Type="nvarchar" Mode="In" />
-          <Parameter Name="LTV" Type="nvarchar" Mode="In" />
-          <Parameter Name="Equity" Type="nvarchar" Mode="In" />
-          <Parameter Name="IsFannie" Type="nvarchar" Mode="In" />
-          <Parameter Name="IsFreddie" Type="nvarchar" Mode="In" />
-          <Parameter Name="UnbuiltArea" Type="nvarchar" Mode="In" />
+          <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingClassCodes" Type="varchar" Mode="In" />
+          <Parameter Name="Counties" Type="varchar" Mode="In" />
+          <Parameter Name="Vacant" Type="varchar" Mode="In" />
+          <Parameter Name="MailingAddressActive" Type="varchar" Mode="In" />
+          <Parameter Name="Violations" Type="varchar" Mode="In" />
+          <Parameter Name="Cities" Type="varchar" Mode="In" />
+          <Parameter Name="Neighborhoods" Type="varchar" Mode="In" />
+          <Parameter Name="States" Type="varchar" Mode="In" />
+          <Parameter Name="LienTypes" Type="varchar" Mode="In" />
+          <Parameter Name="LeadGrades" Type="varchar" Mode="In" />
+          <Parameter Name="LTV" Type="varchar" Mode="In" />
+          <Parameter Name="Equity" Type="varchar" Mode="In" />
+          <Parameter Name="IsFannie" Type="varchar" Mode="In" />
+          <Parameter Name="IsFreddie" Type="varchar" Mode="In" />
+          <Parameter Name="UnbuiltArea" Type="varchar" Mode="In" />
+          <Parameter Name="Servicer" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="GPADBModelStoreContainer">
           <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
@@ -150,6 +153,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[PoolA] AS [PoolA], 
     [vwGeneralLeadInfomation].[TaxLienLPs] AS [TaxLienLPs], 
     [vwGeneralLeadInfomation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
+    [vwGeneralLeadInfomation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
     [vwGeneralLeadInfomation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
     [vwGeneralLeadInfomation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
     [vwGeneralLeadInfomation].[COSPresent] AS [COSPresent], 
@@ -189,7 +193,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[StructureType] AS [StructureType], 
     [vwGeneralLeadInfomation].[Grade] AS [Grade], 
     [vwGeneralLeadInfomation].[IsSRORestricted] AS [IsSRORestricted], 
-    [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark]
+    [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark], 
+    [vwGeneralLeadInfomation].[ServicerName] AS [ServicerName]
     FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -197,7 +202,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="GPADBEntities" annotation:LazyLoadingEnabled="true" >
+        <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vwGeneralLeadInfomations" EntityType="GPADBModel.vwGeneralLeadInfomation" />
           <FunctionImport Name="GetPropertyLeads">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
             <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -215,6 +221,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <Parameter Name="IsFannie" Mode="In" Type="String" />
             <Parameter Name="IsFreddie" Mode="In" Type="String" />
             <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
+            <Parameter Name="Servicer" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInfomations" ReturnType="Collection(GPADBModel.vwGeneralLeadInfomation)">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -233,42 +240,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <Parameter Name="IsFannie" Mode="In" Type="String" />
             <Parameter Name="IsFreddie" Mode="In" Type="String" />
             <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
+            <Parameter Name="Servicer" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vwGeneralLeadInfomations" EntityType="GPADBModel.vwGeneralLeadInfomation" />
         </EntityContainer>
-        <ComplexType Name="tfnGetPropertyLeads_Result">
-          <Property Type="String" Name="BBLE" Nullable="false" MaxLength="11" />
-          <Property Type="String" Name="TaxClass" Nullable="true" MaxLength="2" />
-          <Property Type="Double" Name="LotFrontage" Nullable="true" />
-          <Property Type="Double" Name="LotDepth" Nullable="true" />
-          <Property Type="Int32" Name="LotArea" Nullable="true" />
-          <Property Type="String" Name="BuildingClassCode" Nullable="true" MaxLength="2" />
-          <Property Type="String" Name="BuildingClass" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="BuildingFrontage" Nullable="true" />
-          <Property Type="Double" Name="BuildingDepth" Nullable="true" />
-          <Property Type="Double" Name="Stories" Nullable="true" />
-          <Property Type="Double" Name="NumberOfBuildingsOnLot" Nullable="true" />
-          <Property Type="Int32" Name="BuildingGrossArea" Nullable="true" />
-          <Property Type="Double" Name="BuiltFAR" Nullable="true" />
-          <Property Type="Double" Name="MaxResidentialFAR" Nullable="true" />
-          <Property Type="Int32" Name="YearBuilt" Nullable="true" />
-          <Property Type="String" Name="Borough" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="BoroughName" Nullable="true" MaxLength="15" />
-          <Property Type="Int32" Name="Block" Nullable="true" />
-          <Property Type="Int32" Name="Lot" Nullable="true" />
-          <Property Type="String" Name="StreetNumber" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="StreetName" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="NeighborhoodName" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="NTA" Nullable="true" MaxLength="4" />
-          <Property Type="String" Name="Zoning" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="UnitNumber" Nullable="true" MaxLength="5" />
-          <Property Type="Int32" Name="East" Nullable="true" />
-          <Property Type="Int32" Name="North" Nullable="true" />
-          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="28" Scale="4" />
-          <Property Type="Decimal" Name="Latitude" Nullable="true" Precision="28" Scale="4" />
-          <Property Type="Double" Name="ResidentialUnits" Nullable="true" />
-        </ComplexType>
         <EntityType Name="vwGeneralLeadInfomation">
           <Key>
             <PropertyRef Name="BBLE" />
@@ -314,6 +288,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="PoolA" Type="Int32" />
           <Property Name="TaxLienLPs" Type="Int32" />
           <Property Name="TaxLienActiveCases" Type="Int32" />
+          <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="MortgageForeclosureLPs" Type="Int32" />
           <Property Name="MortgageForeclosureActiveCases" Type="Int32" />
           <Property Name="COSPresent" Type="Int32" />
@@ -354,18 +329,18 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsSRORestricted" Type="Int32" />
           <Property Name="IsLandmark" Type="Int32" />
+          <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities" >
-          <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-          <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+        <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities1">
           <EntitySetMapping Name="vwGeneralLeadInfomations">
             <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInfomation">
               <MappingFragment StoreEntitySet="vwGeneralLeadInfomation">
+                <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
                 <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
                 <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
@@ -406,6 +381,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
                 <ScalarProperty Name="COSPresent" ColumnName="COSPresent" />
                 <ScalarProperty Name="MortgageForeclosureActiveCases" ColumnName="MortgageForeclosureActiveCases" />
                 <ScalarProperty Name="MortgageForeclosureLPs" ColumnName="MortgageForeclosureLPs" />
+                <ScalarProperty Name="TaxLienSoldAmount" ColumnName="TaxLienSoldAmount" />
                 <ScalarProperty Name="TaxLienActiveCases" ColumnName="TaxLienActiveCases" />
                 <ScalarProperty Name="TaxLienLPs" ColumnName="TaxLienLPs" />
                 <ScalarProperty Name="PoolA" ColumnName="PoolA" />
@@ -445,6 +421,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+          <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

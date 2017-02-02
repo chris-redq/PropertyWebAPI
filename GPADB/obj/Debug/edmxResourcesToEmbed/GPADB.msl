@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities">
-    <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-    <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+  <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities1">
     <EntitySetMapping Name="vwGeneralLeadInfomations">
       <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInfomation">
         <MappingFragment StoreEntitySet="vwGeneralLeadInfomation">
+          <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
           <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
           <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
           <ScalarProperty Name="Grade" ColumnName="Grade" />
@@ -46,6 +45,7 @@
           <ScalarProperty Name="COSPresent" ColumnName="COSPresent" />
           <ScalarProperty Name="MortgageForeclosureActiveCases" ColumnName="MortgageForeclosureActiveCases" />
           <ScalarProperty Name="MortgageForeclosureLPs" ColumnName="MortgageForeclosureLPs" />
+          <ScalarProperty Name="TaxLienSoldAmount" ColumnName="TaxLienSoldAmount" />
           <ScalarProperty Name="TaxLienActiveCases" ColumnName="TaxLienActiveCases" />
           <ScalarProperty Name="TaxLienLPs" ColumnName="TaxLienLPs" />
           <ScalarProperty Name="PoolA" ColumnName="PoolA" />
@@ -85,5 +85,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+    <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
   </EntityContainerMapping>
 </Mapping>
