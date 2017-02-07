@@ -142,5 +142,19 @@ namespace eCourtsDB
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetDocumentExtractForCase_Result>("[NYCOURTSEntities].[tfnGetDocumentExtractForCase](@CountyId, @CaseIndexNumber)", countyIdParameter, caseIndexNumberParameter);
         }
+    
+        [DbFunction("NYCOURTSEntities", "tfnActiveLPsForaProperty")]
+        public virtual IQueryable<tfnActiveLPsForaProperty_Result> tfnActiveLPsForaProperty(string bBL, Nullable<System.DateTime> startDate)
+        {
+            var bBLParameter = bBL != null ?
+                new ObjectParameter("BBL", bBL) :
+                new ObjectParameter("BBL", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnActiveLPsForaProperty_Result>("[NYCOURTSEntities].[tfnActiveLPsForaProperty](@BBL, @StartDate)", bBLParameter, startDateParameter);
+        }
     }
 }

@@ -22,13 +22,13 @@ namespace PropertyWebAPI.DAL
     {
         public static List<LeadSummaryData> GetPropertyLeads(string zipcodes, string neighborhoods, string isvacant, string leadgrades, string buildingclasscodes, string counties, 
                                                              string ismailingaddressactive, string lientypes, string ltv, string equity, string violations, string cities,
-                                                             string states,  string isfannie, string isfreddie, string unbuilt, string servicer)
+                                                             string states,  string isfannie, string isfreddie, string unbuilt, string servicer, string landmark)
         {
             using (GPADBEntities1 gpaE = new GPADBEntities1())
             {
                 return Mapper.Map<List<vwGeneralLeadInfomation>, List<LeadSummaryData>>(gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
                                                                                                      cities, neighborhoods, states, lientypes, leadgrades, ltv, equity, isfannie,
-                                                                                                     isfreddie, unbuilt, servicer).ToList());
+                                                                                                     isfreddie, unbuilt, servicer, landmark).ToList());
             }
         }
 

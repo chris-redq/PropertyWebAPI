@@ -12,7 +12,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <PropertyRef Name="BBLE" />
             <PropertyRef Name="IsFannieMaeMortgage" />
             <PropertyRef Name="IsFreddieMacMortgagge" />
-            <PropertyRef Name="LeadGrade" />
             <PropertyRef Name="Equity" />
             <PropertyRef Name="LTV" />
           </Key>
@@ -69,7 +68,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="DOBOpenClass1Violations" Type="int" />
           <Property Name="IsFannieMaeMortgage" Type="int" Nullable="false" />
           <Property Name="IsFreddieMacMortgagge" Type="int" Nullable="false" />
-          <Property Name="LeadGrade" Type="int" Nullable="false" />
+          <Property Name="LeadGrade" Type="varchar" MaxLength="2" />
           <Property Name="Equity" Type="numeric" Precision="2" Scale="2" Nullable="false" />
           <Property Name="LTV" Type="numeric" Precision="2" Scale="2" Nullable="false" />
           <Property Name="UnbuiltAreaAboveThreshold" Type="decimal" Precision="8" Scale="2" />
@@ -113,6 +112,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Parameter Name="IsFreddie" Type="varchar" Mode="In" />
           <Parameter Name="UnbuiltArea" Type="varchar" Mode="In" />
           <Parameter Name="Servicer" Type="varchar" Mode="In" />
+          <Parameter Name="Landmark" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="GPADBModelStoreContainer">
           <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
@@ -222,6 +222,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <Parameter Name="IsFreddie" Mode="In" Type="String" />
             <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
             <Parameter Name="Servicer" Mode="In" Type="String" />
+            <Parameter Name="Landmark" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInfomations" ReturnType="Collection(GPADBModel.vwGeneralLeadInfomation)">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -241,6 +242,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <Parameter Name="IsFreddie" Mode="In" Type="String" />
             <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
             <Parameter Name="Servicer" Mode="In" Type="String" />
+            <Parameter Name="Landmark" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="vwGeneralLeadInfomation">
@@ -248,7 +250,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <PropertyRef Name="BBLE" />
             <PropertyRef Name="IsFannieMaeMortgage" />
             <PropertyRef Name="IsFreddieMacMortgagge" />
-            <PropertyRef Name="LeadGrade" />
             <PropertyRef Name="Equity" />
             <PropertyRef Name="LTV" />
           </Key>
@@ -305,7 +306,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="DOBOpenClass1Violations" Type="Int32" />
           <Property Name="IsFannieMaeMortgage" Type="Int32" Nullable="false" />
           <Property Name="IsFreddieMacMortgagge" Type="Int32" Nullable="false" />
-          <Property Name="LeadGrade" Type="Int32" Nullable="false" />
+          <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
           <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
           <Property Name="UnbuiltAreaAboveThreshold" Type="Decimal" Precision="8" Scale="2" />
@@ -423,7 +424,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
           <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

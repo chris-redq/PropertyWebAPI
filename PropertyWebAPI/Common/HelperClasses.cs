@@ -54,7 +54,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<SalePriceStatisticsByMonthByNTAMeanSmoothing, DAL.PriceDetailsByMonth>();
                 cfg.CreateMap<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
                 cfg.CreateMap<ShowCMASubject_Result, DAL.SubjectDetails>();
-                
+                cfg.CreateMap<tfnActiveLPsForaProperty_Result, DAL.LPDetail>();
             });
         }
     }

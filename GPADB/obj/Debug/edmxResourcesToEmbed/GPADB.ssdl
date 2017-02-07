@@ -7,7 +7,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
       <PropertyRef Name="BBLE" />
       <PropertyRef Name="IsFannieMaeMortgage" />
       <PropertyRef Name="IsFreddieMacMortgagge" />
-      <PropertyRef Name="LeadGrade" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
     </Key>
@@ -64,7 +63,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Property Name="DOBOpenClass1Violations" Type="int" />
     <Property Name="IsFannieMaeMortgage" Type="int" Nullable="false" />
     <Property Name="IsFreddieMacMortgagge" Type="int" Nullable="false" />
-    <Property Name="LeadGrade" Type="int" Nullable="false" />
+    <Property Name="LeadGrade" Type="varchar" MaxLength="2" />
     <Property Name="Equity" Type="numeric" Precision="2" Scale="2" Nullable="false" />
     <Property Name="LTV" Type="numeric" Precision="2" Scale="2" Nullable="false" />
     <Property Name="UnbuiltAreaAboveThreshold" Type="decimal" Precision="8" Scale="2" />
@@ -108,6 +107,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Parameter Name="IsFreddie" Type="varchar" Mode="In" />
     <Parameter Name="UnbuiltArea" Type="varchar" Mode="In" />
     <Parameter Name="Servicer" Type="varchar" Mode="In" />
+    <Parameter Name="Landmark" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">

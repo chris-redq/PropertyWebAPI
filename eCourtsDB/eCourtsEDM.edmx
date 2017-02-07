@@ -891,6 +891,40 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="tfnActiveLPsForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="jdls">
+          <Parameter Name="BBL" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BBL" Type="varchar" MaxLength="10" />
+                <Property Name="JDLSCountyId" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="KeyValue" Type="varchar" MaxLength="9" Nullable="false" />
+                <Property Name="Seq" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="SourceDocument" Type="varchar" MaxLength="25" />
+                <Property Name="SourceDocumentIndexNumber" Type="varchar" MaxLength="10" />
+                <Property Name="Debtor" Type="varchar(max)" />
+                <Property Name="Creditor" Type="varchar(max)" />
+                <Property Name="DataEntryDateTime" Type="datetime" />
+                <Property Name="EffectiveDateTime" Type="datetime" />
+                <Property Name="ExpirationDate" Type="date" />
+                <Property Name="SatisfactionDate" Type="date" />
+                <Property Name="SatisfactionType" Type="varchar" MaxLength="50" />
+                <Property Name="Remarks" Type="varchar(max)" />
+                <Property Name="CountyName" Type="varchar" MaxLength="25" Nullable="false" />
+                <Property Name="CCISLookupCaseIndexNumber" Type="varchar" MaxLength="50" />
+                <Property Name="ActiveCase" Type="int" />
+                <Property Name="CountyId" Type="varchar" MaxLength="2" />
+                <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" />
+                <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+                <Property Name="CaseDispositionDate" Type="date" />
+                <Property Name="CaseType" Type="varchar" MaxLength="30" />
+                <Property Name="Comment" Type="varchar(max)" />
+                <Property Name="LienType" Type="varchar" MaxLength="13" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="tfnGetMortgageForeclosureLPsForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="jdls">
           <Parameter Name="BBL" Type="varchar" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -2149,6 +2183,10 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <EntitySet Name="vwJudgeReliefSought5NumberSummary" EntityType="NYCOURTSModel.vwJudgeReliefSought5NumberSummary" />
           <EntitySet Name="vwMotionSummaryByJudgeReliefSoughts" EntityType="NYCOURTSModel.vwMotionSummaryByJudgeReliefSought" />
           <EntitySet Name="vwMotionSummaryByReliefSoughts" EntityType="NYCOURTSModel.vwMotionSummaryByReliefSought" />
+          <FunctionImport Name="tfnActiveLPsForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnActiveLPsForaProperty_Result)">
+            <Parameter Name="BBL" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="tfnGetDocumentExtractForCase_Result">
           <Property Type="Int32" Name="DocumentId" Nullable="false" />
@@ -2305,6 +2343,32 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Name="Other" Type="Int32" />
           <Property Name="TotalInstances" Type="Int32" />
         </EntityType>
+        <ComplexType Name="tfnActiveLPsForaProperty_Result">
+          <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="JDLSCountyId" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="KeyValue" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="Seq" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="SourceDocument" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="SourceDocumentIndexNumber" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Debtor" Nullable="true" />
+          <Property Type="String" Name="Creditor" Nullable="true" />
+          <Property Type="DateTime" Name="DataEntryDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="EffectiveDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpirationDate" Nullable="true" Precision="10" />
+          <Property Type="DateTime" Name="SatisfactionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="SatisfactionType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Remarks" Nullable="true" />
+          <Property Type="String" Name="CountyName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="CCISLookupCaseIndexNumber" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ActiveCase" Nullable="true" />
+          <Property Type="String" Name="CountyId" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Comment" Nullable="true" />
+          <Property Type="String" Name="LienType" Nullable="false" MaxLength="13" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3188,6 +3252,36 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="tfnActiveLPsForaProperty" FunctionName="NYCOURTSModel.Store.tfnActiveLPsForaProperty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnActiveLPsForaProperty_Result">
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="JDLSCountyId" ColumnName="JDLSCountyId" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="SourceDocument" ColumnName="SourceDocument" />
+                <ScalarProperty Name="SourceDocumentIndexNumber" ColumnName="SourceDocumentIndexNumber" />
+                <ScalarProperty Name="Debtor" ColumnName="Debtor" />
+                <ScalarProperty Name="Creditor" ColumnName="Creditor" />
+                <ScalarProperty Name="DataEntryDateTime" ColumnName="DataEntryDateTime" />
+                <ScalarProperty Name="EffectiveDateTime" ColumnName="EffectiveDateTime" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="SatisfactionDate" ColumnName="SatisfactionDate" />
+                <ScalarProperty Name="SatisfactionType" ColumnName="SatisfactionType" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="CCISLookupCaseIndexNumber" ColumnName="CCISLookupCaseIndexNumber" />
+                <ScalarProperty Name="ActiveCase" ColumnName="ActiveCase" />
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="LienType" ColumnName="LienType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

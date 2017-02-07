@@ -64,6 +64,11 @@ namespace PropertyWebAPI.DAL
 
     }
 
+    public class LPDetail: tfnActiveLPsForaProperty_Result
+    {
+
+    }
+
     /// <summary>
     ///     All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
     /// </summary>
@@ -173,6 +178,14 @@ namespace PropertyWebAPI.DAL
                 return (nycourtsE.vwJudgeReliefSought5NumberSummary.Where(i => i.CountyId == countyId &&
                                                                                i.JudgeId == judgeId &&
                                                                                i.ReliefSought == reliefSought).FirstOrDefault());
+            }
+        }
+
+        public static List<LPDetail> GetAllActiveLPsForAProperty(string propertyBBL, DateTime? startdate)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnActiveLPsForaProperty_Result>, List<LPDetail>>(nycourtsE.tfnActiveLPsForaProperty(propertyBBL, startdate).ToList());
             }
         }
     }

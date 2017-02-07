@@ -218,6 +218,51 @@ namespace PropertyWebAPI.Controllers
         }
 
         /// <summary>  
+        ///     Use this api to find all active LPs associated with in a property in JDLS System. 
+        /// </summary>  
+        /// <param name="propertyBBL">
+        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+        /// </param>  
+        /// <param name="effectiveAsOfDate">This is an optional parameter in yyyyMMdd format. Use this parameter as a cutoff date to select LPs for consideration. Default Value is 01/01/2007</param>
+        /// <returns>
+        ///     Returns a list of all active LPs associated with in a property in JDLS System.
+        /// </returns>
+        [Route("api/cases/activelps/{propertyBBL}")]
+        [ResponseType(typeof(List<DAL.LPDetail>))]
+        public IHttpActionResult GetAllActiveLPsForaProperty(string propertyBBL, string effectiveAsOfDate="20070101")
+        {
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
+                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
+            DateTime? sDateTime = null;
+            DateTime actualDateTime = DateTime.MinValue;
+
+            if (effectiveAsOfDate != "" && !DateTime.TryParseExact(effectiveAsOfDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out actualDateTime))
+            {
+                return this.BadRequest("Incorrect Date Format - use yyyyMMdd format for dates - Eg: 20161030 which Oct 30, 2016");
+            }
+
+            if (effectiveAsOfDate != "")
+                sDateTime = actualDateTime;
+
+            try
+            {
+                using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+                {
+                    var resultList = DAL.eCourts.GetAllActiveLPsForAProperty(propertyBBL, sDateTime);
+                    if (resultList == null || resultList.Count == 0)
+                        return NotFound();
+                    return Ok(resultList);
+                }
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0} with effectiveDate{1}{2}", propertyBBL, effectiveAsOfDate, Common.Utilities.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+        /// <summary>  
         ///     Use this api to find all Mortgage Foreclosure related LPs for a property in NYC in the JDLS system and their corresponding cases in the NYS Supreme Court CCIS System. 
         /// </summary>  
         /// <param name="propertyBBL">

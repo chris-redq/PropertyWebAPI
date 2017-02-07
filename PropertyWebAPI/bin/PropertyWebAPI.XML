@@ -1059,10 +1059,10 @@
             </param>  
             <returns>Returns lead details</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>  
             Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
-            multiple values separated by commas. For string values wildcards are provided. Wildcards is denoted by '*' 
+            multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
             </summary>  
             <param name="counties">Optional parameter. Multiple values can be sent. No wildcards.</param>
             <param name="buildingclasscodes">Optional parameter. Multiple values can be sent along with wildcards. For example: A*,B1</param>
@@ -1075,7 +1075,7 @@
             the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</param>
             <param name="states">Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</param>
             <param name="cities">Optional parameter. Multiple values can be sent. No wildcards.</param>
-            <param name="leadgrades">Optional parameter. Multiple values can be sent. No wildcards</param>
+            <param name="leadgrades">Optional parameter. Multiple values can be sent. Valid values are A, B, C and D. No wildcards</param>
             <param name="ltv">Optional parameter. Minimum one value, max two values can be sent. No wildcards</param>
             <param name="neighborhoods">Optional parameter. Multiple values can be sent along with wildcards.</param>
             <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
@@ -1083,6 +1083,7 @@
             <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
+            <param name="landmark">Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</param>
             <returns>Returns a list of leads (properties)</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LiensController.GetPropertyLead(System.String)">
@@ -1216,6 +1217,18 @@
             </param>  
             <returns>
                 Returns a list of cases and their status in eCourts for the given property identified by BBL - Borough Block Lot Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetAllActiveLPsForaProperty(System.String,System.String)">
+            <summary>  
+                Use this api to find all active LPs associated with in a property in JDLS System. 
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="effectiveAsOfDate">This is an optional parameter in yyyyMMdd format. Use this parameter as a cutoff date to select LPs for consideration. Default Value is 01/01/2007</param>
+            <returns>
+                Returns a list of all active LPs associated with in a property in JDLS System.
             </returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.CasesController.GetMortgageForeclosureLPsForaProperty(System.String,System.String)">

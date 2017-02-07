@@ -62,7 +62,7 @@
         /// the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</param>
         /// <param name="states">Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</param>
         /// <param name="cities">Optional parameter. Multiple values can be sent. No wildcards.</param>
-        /// <param name="leadgrades">Optional parameter. Multiple values can be sent. No wildcards</param>
+        /// <param name="leadgrades">Optional parameter. Multiple values can be sent. Valid values are A, B, C and D. No wildcards</param>
         /// <param name="ltv">Optional parameter. Minimum one value, max two values can be sent. No wildcards</param>
         /// <param name="neighborhoods">Optional parameter. Multiple values can be sent along with wildcards.</param>
         /// <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
@@ -70,25 +70,27 @@
         /// <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
+        /// <param name="landmark">Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</param>
         /// <returns>Returns a list of leads (properties)</returns>
         [Route("api/leads/")]
         [ResponseType(typeof(List<DAL.LeadSummaryData>))]
         public IHttpActionResult GetLeads(string zipcodes = null, string neighborhoods = null, string isvacant = null, string leadgrades = null,
-                                     string buildingclasscodes = null, string counties = null, string ismailingaddressactive = null,
-                                     string lientypes = null, string ltv = null, string equity = null, string violations = null,
-                                     string cities = null, string states = null, string isfannie = null, string isfreddie = null, string unbuilt = null, string servicer=null)
+                                          string buildingclasscodes = null, string counties = null, string ismailingaddressactive = null,
+                                          string lientypes = null, string ltv = null, string equity = null, string violations = null,
+                                          string cities = null, string states = null, string isfannie = null, string isfreddie = null, 
+                                          string unbuilt = null, string servicer=null, string landmark = null)
         {
             if (zipcodes == null && buildingclasscodes == null && counties == null &&
                 isvacant == null && violations == null && ismailingaddressactive == null &&
                 cities == null && neighborhoods == null && states == null && lientypes == null &&
                 leadgrades == null && ltv == null && equity == null && isfannie == null && isfreddie == null &&
-                unbuilt == null && servicer==null)
+                unbuilt == null && servicer==null && landmark==null)
                 return this.BadRequest("At least one filter is required");
 
             try
             {
                 var leadList = DAL.Lead.GetPropertyLeads(zipcodes, neighborhoods, isvacant, leadgrades, buildingclasscodes, counties, ismailingaddressactive,
-                                                         lientypes, ltv, equity, violations, cities, states, isfannie, isfreddie, unbuilt, servicer).ToList();
+                                                         lientypes, ltv, equity, violations, cities, states, isfannie, isfreddie, unbuilt, servicer, landmark).ToList();
                 if (leadList == null || leadList.Count == 0)
                         return NotFound();
                     return Ok(leadList);

@@ -755,6 +755,10 @@
     <EntitySet Name="vwJudgeReliefSought5NumberSummary" EntityType="NYCOURTSModel.vwJudgeReliefSought5NumberSummary" />
     <EntitySet Name="vwMotionSummaryByJudgeReliefSoughts" EntityType="NYCOURTSModel.vwMotionSummaryByJudgeReliefSought" />
     <EntitySet Name="vwMotionSummaryByReliefSoughts" EntityType="NYCOURTSModel.vwMotionSummaryByReliefSought" />
+    <FunctionImport Name="tfnActiveLPsForaProperty" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnActiveLPsForaProperty_Result)">
+      <Parameter Name="BBL" Mode="In" Type="String" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="tfnGetDocumentExtractForCase_Result">
     <Property Type="Int32" Name="DocumentId" Nullable="false" />
@@ -911,4 +915,30 @@
     <Property Name="Other" Type="Int32" />
     <Property Name="TotalInstances" Type="Int32" />
   </EntityType>
+  <ComplexType Name="tfnActiveLPsForaProperty_Result">
+    <Property Type="String" Name="BBL" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="JDLSCountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="KeyValue" Nullable="false" MaxLength="9" />
+    <Property Type="String" Name="Seq" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="SourceDocument" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="SourceDocumentIndexNumber" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Debtor" Nullable="true" />
+    <Property Type="String" Name="Creditor" Nullable="true" />
+    <Property Type="DateTime" Name="DataEntryDateTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="EffectiveDateTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="ExpirationDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="SatisfactionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="SatisfactionType" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Remarks" Nullable="true" />
+    <Property Type="String" Name="CountyName" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="CCISLookupCaseIndexNumber" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="ActiveCase" Nullable="true" />
+    <Property Type="String" Name="CountyId" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="true" MaxLength="11" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="Comment" Nullable="true" />
+    <Property Type="String" Name="LienType" Nullable="false" MaxLength="13" />
+  </ComplexType>
 </Schema>

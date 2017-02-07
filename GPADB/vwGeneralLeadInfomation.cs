@@ -67,7 +67,7 @@ namespace GPADB
         public Nullable<int> DOBOpenClass1Violations { get; set; }
         public int IsFannieMaeMortgage { get; set; }
         public int IsFreddieMacMortgagge { get; set; }
-        public int LeadGrade { get; set; }
+        public string LeadGrade { get; set; }
         public decimal Equity { get; set; }
         public decimal LTV { get; set; }
         public Nullable<decimal> UnbuiltAreaAboveThreshold { get; set; }
