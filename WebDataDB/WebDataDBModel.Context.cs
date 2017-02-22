@@ -38,5 +38,6 @@ namespace WebDataDB
         public virtual DbSet<RequestStatusType> RequestStatusTypes { get; set; }
         public virtual DbSet<RequestType> RequestTypes { get; set; }
         public virtual DbSet<Zillow> Zillows { get; set; }
+        public virtual DbSet<NoticeOfProperyValue> NoticeOfProperyValues { get; set; }
     }
 }

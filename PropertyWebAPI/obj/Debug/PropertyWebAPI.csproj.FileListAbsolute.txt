@@ -185,3 +185,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCVNL.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCVNL.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCMADB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCMADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\RequestResponseBuilder.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\RequestResponseBuilder.pdb

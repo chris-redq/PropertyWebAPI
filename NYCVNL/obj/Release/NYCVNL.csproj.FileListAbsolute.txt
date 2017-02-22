@@ -1,0 +1,9 @@
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Release\NYCVNL.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Release\NYCVNL.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Release\NYCVNL.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\obj\Release\NYCVNL.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\obj\Release\NYCVNL.pdb

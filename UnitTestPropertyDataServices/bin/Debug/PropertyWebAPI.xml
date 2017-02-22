@@ -597,17 +597,74 @@
             <param name="requestObj"></param>
             <returns>True if successful else false</returns>
         </member>
-        <member name="T:PropertyWebAPI.BAL.Portal.ApiDetails">
+        <member name="T:PropertyWebAPI.BAL.NoticeOfPropertyValueService.Parameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to retrieve data
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueService.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all parameters required into a JSON object
+            </summary>
+            <param name="BBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueService.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into Parameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>Parameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueService.LogFailure(System.String,System.String,System.Int32)">
+            <summary>
+                Use this method in the controller to log failures that are processed before calling any 
+                other business methods of this class
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <param name="httpErrorCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueService.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},RequestResponseBuilder.Response.NoticeOfPropertyValue)">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueService.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the Notice Of Property Value details or creating the 
+                request for getting the data from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueService.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueService.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the Mortgage Servicer table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns>True if successful else false</returns>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.CallingSystem.ApiDetails">
             <summary>  
                 Helper class for relevant api information to connect and  
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.BAL.Portal.PostCallBack(PropertyWebAPI.BAL.Results)">
+        <member name="M:PropertyWebAPI.BAL.CallingSystem.PostCallBack(PropertyWebAPI.BAL.Results)">
             <summary>  
                 Method returns address corrections and details based on street number, street address and borough for NYC properties
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.BAL.Portal.PostCallBack(System.String,System.String,System.String,PropertyWebAPI.BAL.Results)">
+        <member name="M:PropertyWebAPI.BAL.CallingSystem.PostCallBack(System.String,System.String,System.String,System.String,PropertyWebAPI.BAL.Results)">
             <summary>  
                 Method returns address corrections and details based on street number, street address and borough for NYC properties
             </summary>  
@@ -1585,6 +1642,21 @@
                 Returns an object of contain cleaned property address and general information about the property
             </returns>
         </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNoticeOfPropertyValue(System.String,System.String)">
+            <summary>  
+                Use this api to get property information from the latest Notice of Property Value (NOPV) 
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+            </param>  
+            <param name="externalReferenceId">
+                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+            </param>
+            <returns>
+                Returns property information from the latest Notice of Property Value (NOPV)
+            </returns>
+        </member>
         <member name="T:PropertyWebAPI.Controllers.Violations">
             <summary>
                 This class is designed to capture all violations associated with a property. Currently, it only captures
@@ -1950,6 +2022,11 @@
         <member name="F:PropertyWebAPI.RequestTypes.NYCWaterBill">
             <summary>
             Request for Water bill
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.NYCNoticeOfPropertyValue">
+            <summary>
+            Request for Notice Of Property Value
             </summary>
         </member>
     </members>

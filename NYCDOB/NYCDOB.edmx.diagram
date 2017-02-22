@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4217b0ac0c5a4f49bcecf9615291be92" Name="Diagram1" >
-        <EntityTypeShape EntityType="NYCDOBModel.Complaint" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="NYCDOBModel.Violation" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="NYCDOBModel.vwComplaintsSummary" Width="1.5" PointX="5.375" PointY="3.75" />
-        <EntityTypeShape EntityType="NYCDOBModel.vwViolationSummary" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="NYCDOBModel.vwViolationSummary" Width="3.125" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="NYCDOBModel.Complaint" Width="1.5" PointX="0.5" PointY="1" />
+        <EntityTypeShape EntityType="NYCDOBModel.vwComplaintsSummary" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -27,7 +27,7 @@
           <Property Name="Total" Type="int" />
           <Property Name="TotalDue" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
-        <EntityType Name="MultiAgencyViolations">
+        <EntityType Name="MultiAgencyViolation">
           <Key>
             <PropertyRef Name="TicketNumber" />
           </Key>
@@ -110,17 +110,44 @@
         <EntityContainer Name="NYCVNLModelStoreContainer">
           <EntitySet Name="ECBViolationsSummary" EntityType="Self.ECBViolationsSummary" Schema="ecb" store:Type="Tables" />
           <EntitySet Name="ECBViolationsSummaryByAgency" EntityType="Self.ECBViolationsSummaryByAgency" Schema="ecb" store:Type="Tables" />
-          <EntitySet Name="MultiAgencyViolations" EntityType="Self.MultiAgencyViolations" Schema="ecb" store:Type="Tables" />
+          <EntitySet Name="MultiAgencyViolation" EntityType="Self.MultiAgencyViolation" Schema="ecb" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NYCVNLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NYCVNLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ECBViolationsSummaries" EntityType="NYCVNLModel.ECBViolationsSummary" />
+          <EntitySet Name="ECBViolationsSummaryByAgencies" EntityType="NYCVNLModel.ECBViolationsSummaryByAgency" />
+          <EntitySet Name="MultiAgencyViolations" EntityType="NYCVNLModel.MultiAgencyViolation" />
+        </EntityContainer>
+        <EntityType Name="ECBViolationsSummary">
+          <Key>
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Open" Type="Int32" />
+          <Property Name="Closed" Type="Int32" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ECBViolationsSummaryByAgency">
+          <Key>
+            <PropertyRef Name="BBL" />
+            <PropertyRef Name="IssuingAgency" />
+          </Key>
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="IssuingAgency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Open" Type="Int32" />
+          <Property Name="Closed" Type="Int32" />
+          <Property Name="Total" Type="Int32" />
+          <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="MultiAgencyViolation">
           <Key>
             <PropertyRef Name="TicketNumber" />
           </Key>
-          <Property Name="TicketNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TicketNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ViolationDate" Type="DateTime" Precision="0" />
           <Property Name="ViolationTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IssuingAgency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -196,120 +223,12 @@
           <Property Name="Charge10Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Charge10InfractionAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="NYCVNLEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="MultiAgencyViolations" EntityType="Self.MultiAgencyViolation" />
-          <EntitySet Name="ECBViolationsSummaries" EntityType="NYCVNLModel.ECBViolationsSummary" />
-          <EntitySet Name="ECBViolationsSummaryByAgencies" EntityType="NYCVNLModel.ECBViolationsSummaryByAgency" />
-        </EntityContainer>
-        <EntityType Name="ECBViolationsSummary">
-          <Key>
-            <PropertyRef Name="BBL" />
-          </Key>
-          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Open" Type="Int32" />
-          <Property Name="Closed" Type="Int32" />
-          <Property Name="Total" Type="Int32" />
-          <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
-        <EntityType Name="ECBViolationsSummaryByAgency">
-          <Key>
-            <PropertyRef Name="BBL" />
-            <PropertyRef Name="IssuingAgency" />
-          </Key>
-          <Property Name="BBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="IssuingAgency" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Open" Type="Int32" />
-          <Property Name="Closed" Type="Int32" />
-          <Property Name="Total" Type="Int32" />
-          <Property Name="TotalDue" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NYCVNLModelStoreContainer" CdmEntityContainer="NYCVNLEntities">
-          <EntitySetMapping Name="MultiAgencyViolations">
-            <EntityTypeMapping TypeName="NYCVNLModel.MultiAgencyViolation">
-              <MappingFragment StoreEntitySet="MultiAgencyViolations">
-                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
-                <ScalarProperty Name="ViolationDate" ColumnName="ViolationDate" />
-                <ScalarProperty Name="ViolationTime" ColumnName="ViolationTime" />
-                <ScalarProperty Name="IssuingAgency" ColumnName="IssuingAgency" />
-                <ScalarProperty Name="RespondentName" ColumnName="RespondentName" />
-                <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
-                <ScalarProperty Name="BBL" ColumnName="BBL" />
-                <ScalarProperty Name="ViolationLocationHouseNumber" ColumnName="ViolationLocationHouseNumber" />
-                <ScalarProperty Name="ViolationLocationStreetNumber" ColumnName="ViolationLocationStreetNumber" />
-                <ScalarProperty Name="ViolationLocationFloor" ColumnName="ViolationLocationFloor" />
-                <ScalarProperty Name="ViolationLocationCity" ColumnName="ViolationLocationCity" />
-                <ScalarProperty Name="ViolationLocationZipCode" ColumnName="ViolationLocationZipCode" />
-                <ScalarProperty Name="ViolationLocationStateName" ColumnName="ViolationLocationStateName" />
-                <ScalarProperty Name="RespondentAddressBorough" ColumnName="RespondentAddressBorough" />
-                <ScalarProperty Name="RespondentAddressHouseNumber" ColumnName="RespondentAddressHouseNumber" />
-                <ScalarProperty Name="RespondentAddressStreetName" ColumnName="RespondentAddressStreetName" />
-                <ScalarProperty Name="RespondentAddressCity" ColumnName="RespondentAddressCity" />
-                <ScalarProperty Name="RespondentAddressZipCode" ColumnName="RespondentAddressZipCode" />
-                <ScalarProperty Name="RespondentAddressStateName" ColumnName="RespondentAddressStateName" />
-                <ScalarProperty Name="HearingStatus" ColumnName="HearingStatus" />
-                <ScalarProperty Name="HearingResult" ColumnName="HearingResult" />
-                <ScalarProperty Name="ScheduledHearingLocation" ColumnName="ScheduledHearingLocation" />
-                <ScalarProperty Name="HearingDate" ColumnName="HearingDate" />
-                <ScalarProperty Name="HearingTime" ColumnName="HearingTime" />
-                <ScalarProperty Name="DecisionLocation" ColumnName="DecisionLocation" />
-                <ScalarProperty Name="DecisionDate" ColumnName="DecisionDate" />
-                <ScalarProperty Name="TotalViolationAmount" ColumnName="TotalViolationAmount" />
-                <ScalarProperty Name="ViolationDetails" ColumnName="ViolationDetails" />
-                <ScalarProperty Name="JudgementDocketedDate" ColumnName="JudgementDocketedDate" />
-                <ScalarProperty Name="RespondentAddressFacilityNumber" ColumnName="RespondentAddressFacilityNumber" />
-                <ScalarProperty Name="PenaltyImposed" ColumnName="PenaltyImposed" />
-                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
-                <ScalarProperty Name="AdditionalPenaltiesLateFees" ColumnName="AdditionalPenaltiesLateFees" />
-                <ScalarProperty Name="ComplianceStatus" ColumnName="ComplianceStatus" />
-                <ScalarProperty Name="ViolationDescription" ColumnName="ViolationDescription" />
-                <ScalarProperty Name="Charge1Code" ColumnName="Charge1Code" />
-                <ScalarProperty Name="Charge1Section" ColumnName="Charge1Section" />
-                <ScalarProperty Name="Charge1Description" ColumnName="Charge1Description" />
-                <ScalarProperty Name="Charge1InfractionAmount" ColumnName="Charge1InfractionAmount" />
-                <ScalarProperty Name="Charge2Code" ColumnName="Charge2Code" />
-                <ScalarProperty Name="Charge2Section" ColumnName="Charge2Section" />
-                <ScalarProperty Name="Charge2Description" ColumnName="Charge2Description" />
-                <ScalarProperty Name="Charge2InfractionAmount" ColumnName="Charge2InfractionAmount" />
-                <ScalarProperty Name="Charge3Code" ColumnName="Charge3Code" />
-                <ScalarProperty Name="Charge3Section" ColumnName="Charge3Section" />
-                <ScalarProperty Name="Charge3Description" ColumnName="Charge3Description" />
-                <ScalarProperty Name="Charge3InfractionAmount" ColumnName="Charge3InfractionAmount" />
-                <ScalarProperty Name="Charge4Code" ColumnName="Charge4Code" />
-                <ScalarProperty Name="Charge4Section" ColumnName="Charge4Section" />
-                <ScalarProperty Name="Charge4Description" ColumnName="Charge4Description" />
-                <ScalarProperty Name="Charge4InfractionAmount" ColumnName="Charge4InfractionAmount" />
-                <ScalarProperty Name="Charge5Code" ColumnName="Charge5Code" />
-                <ScalarProperty Name="Charge5Section" ColumnName="Charge5Section" />
-                <ScalarProperty Name="Charge5Description" ColumnName="Charge5Description" />
-                <ScalarProperty Name="Charge5InfractionAmount" ColumnName="Charge5InfractionAmount" />
-                <ScalarProperty Name="Charge6Code" ColumnName="Charge6Code" />
-                <ScalarProperty Name="Charge6Section" ColumnName="Charge6Section" />
-                <ScalarProperty Name="Charge6Description" ColumnName="Charge6Description" />
-                <ScalarProperty Name="Charge6InfractionAmount" ColumnName="Charge6InfractionAmount" />
-                <ScalarProperty Name="Charge7Code" ColumnName="Charge7Code" />
-                <ScalarProperty Name="Charge7Section" ColumnName="Charge7Section" />
-                <ScalarProperty Name="Charge7Description" ColumnName="Charge7Description" />
-                <ScalarProperty Name="Charge7InfractionAmount" ColumnName="Charge7InfractionAmount" />
-                <ScalarProperty Name="Charge8Code" ColumnName="Charge8Code" />
-                <ScalarProperty Name="Charge8Section" ColumnName="Charge8Section" />
-                <ScalarProperty Name="Charge8Description" ColumnName="Charge8Description" />
-                <ScalarProperty Name="Charge8InfractionAmount" ColumnName="Charge8InfractionAmount" />
-                <ScalarProperty Name="Charge9Code" ColumnName="Charge9Code" />
-                <ScalarProperty Name="Charge9Section" ColumnName="Charge9Section" />
-                <ScalarProperty Name="Charge9Description" ColumnName="Charge9Description" />
-                <ScalarProperty Name="Charge9InfractionAmount" ColumnName="Charge9InfractionAmount" />
-                <ScalarProperty Name="Charge10Code" ColumnName="Charge10Code" />
-                <ScalarProperty Name="Charge10Section" ColumnName="Charge10Section" />
-                <ScalarProperty Name="Charge10Description" ColumnName="Charge10Description" />
-                <ScalarProperty Name="Charge10InfractionAmount" ColumnName="Charge10InfractionAmount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ECBViolationsSummaries">
             <EntityTypeMapping TypeName="NYCVNLModel.ECBViolationsSummary">
               <MappingFragment StoreEntitySet="ECBViolationsSummary">
@@ -330,6 +249,87 @@
                 <ScalarProperty Name="Open" ColumnName="Open" />
                 <ScalarProperty Name="IssuingAgency" ColumnName="IssuingAgency" />
                 <ScalarProperty Name="BBL" ColumnName="BBL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MultiAgencyViolations">
+            <EntityTypeMapping TypeName="NYCVNLModel.MultiAgencyViolation">
+              <MappingFragment StoreEntitySet="MultiAgencyViolation">
+                <ScalarProperty Name="Charge10InfractionAmount" ColumnName="Charge10InfractionAmount" />
+                <ScalarProperty Name="Charge10Description" ColumnName="Charge10Description" />
+                <ScalarProperty Name="Charge10Section" ColumnName="Charge10Section" />
+                <ScalarProperty Name="Charge10Code" ColumnName="Charge10Code" />
+                <ScalarProperty Name="Charge9InfractionAmount" ColumnName="Charge9InfractionAmount" />
+                <ScalarProperty Name="Charge9Description" ColumnName="Charge9Description" />
+                <ScalarProperty Name="Charge9Section" ColumnName="Charge9Section" />
+                <ScalarProperty Name="Charge9Code" ColumnName="Charge9Code" />
+                <ScalarProperty Name="Charge8InfractionAmount" ColumnName="Charge8InfractionAmount" />
+                <ScalarProperty Name="Charge8Description" ColumnName="Charge8Description" />
+                <ScalarProperty Name="Charge8Section" ColumnName="Charge8Section" />
+                <ScalarProperty Name="Charge8Code" ColumnName="Charge8Code" />
+                <ScalarProperty Name="Charge7InfractionAmount" ColumnName="Charge7InfractionAmount" />
+                <ScalarProperty Name="Charge7Description" ColumnName="Charge7Description" />
+                <ScalarProperty Name="Charge7Section" ColumnName="Charge7Section" />
+                <ScalarProperty Name="Charge7Code" ColumnName="Charge7Code" />
+                <ScalarProperty Name="Charge6InfractionAmount" ColumnName="Charge6InfractionAmount" />
+                <ScalarProperty Name="Charge6Description" ColumnName="Charge6Description" />
+                <ScalarProperty Name="Charge6Section" ColumnName="Charge6Section" />
+                <ScalarProperty Name="Charge6Code" ColumnName="Charge6Code" />
+                <ScalarProperty Name="Charge5InfractionAmount" ColumnName="Charge5InfractionAmount" />
+                <ScalarProperty Name="Charge5Description" ColumnName="Charge5Description" />
+                <ScalarProperty Name="Charge5Section" ColumnName="Charge5Section" />
+                <ScalarProperty Name="Charge5Code" ColumnName="Charge5Code" />
+                <ScalarProperty Name="Charge4InfractionAmount" ColumnName="Charge4InfractionAmount" />
+                <ScalarProperty Name="Charge4Description" ColumnName="Charge4Description" />
+                <ScalarProperty Name="Charge4Section" ColumnName="Charge4Section" />
+                <ScalarProperty Name="Charge4Code" ColumnName="Charge4Code" />
+                <ScalarProperty Name="Charge3InfractionAmount" ColumnName="Charge3InfractionAmount" />
+                <ScalarProperty Name="Charge3Description" ColumnName="Charge3Description" />
+                <ScalarProperty Name="Charge3Section" ColumnName="Charge3Section" />
+                <ScalarProperty Name="Charge3Code" ColumnName="Charge3Code" />
+                <ScalarProperty Name="Charge2InfractionAmount" ColumnName="Charge2InfractionAmount" />
+                <ScalarProperty Name="Charge2Description" ColumnName="Charge2Description" />
+                <ScalarProperty Name="Charge2Section" ColumnName="Charge2Section" />
+                <ScalarProperty Name="Charge2Code" ColumnName="Charge2Code" />
+                <ScalarProperty Name="Charge1InfractionAmount" ColumnName="Charge1InfractionAmount" />
+                <ScalarProperty Name="Charge1Description" ColumnName="Charge1Description" />
+                <ScalarProperty Name="Charge1Section" ColumnName="Charge1Section" />
+                <ScalarProperty Name="Charge1Code" ColumnName="Charge1Code" />
+                <ScalarProperty Name="ViolationDescription" ColumnName="ViolationDescription" />
+                <ScalarProperty Name="ComplianceStatus" ColumnName="ComplianceStatus" />
+                <ScalarProperty Name="AdditionalPenaltiesLateFees" ColumnName="AdditionalPenaltiesLateFees" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="PenaltyImposed" ColumnName="PenaltyImposed" />
+                <ScalarProperty Name="RespondentAddressFacilityNumber" ColumnName="RespondentAddressFacilityNumber" />
+                <ScalarProperty Name="JudgementDocketedDate" ColumnName="JudgementDocketedDate" />
+                <ScalarProperty Name="ViolationDetails" ColumnName="ViolationDetails" />
+                <ScalarProperty Name="TotalViolationAmount" ColumnName="TotalViolationAmount" />
+                <ScalarProperty Name="DecisionDate" ColumnName="DecisionDate" />
+                <ScalarProperty Name="DecisionLocation" ColumnName="DecisionLocation" />
+                <ScalarProperty Name="HearingTime" ColumnName="HearingTime" />
+                <ScalarProperty Name="HearingDate" ColumnName="HearingDate" />
+                <ScalarProperty Name="ScheduledHearingLocation" ColumnName="ScheduledHearingLocation" />
+                <ScalarProperty Name="HearingResult" ColumnName="HearingResult" />
+                <ScalarProperty Name="HearingStatus" ColumnName="HearingStatus" />
+                <ScalarProperty Name="RespondentAddressStateName" ColumnName="RespondentAddressStateName" />
+                <ScalarProperty Name="RespondentAddressZipCode" ColumnName="RespondentAddressZipCode" />
+                <ScalarProperty Name="RespondentAddressCity" ColumnName="RespondentAddressCity" />
+                <ScalarProperty Name="RespondentAddressStreetName" ColumnName="RespondentAddressStreetName" />
+                <ScalarProperty Name="RespondentAddressHouseNumber" ColumnName="RespondentAddressHouseNumber" />
+                <ScalarProperty Name="RespondentAddressBorough" ColumnName="RespondentAddressBorough" />
+                <ScalarProperty Name="ViolationLocationStateName" ColumnName="ViolationLocationStateName" />
+                <ScalarProperty Name="ViolationLocationZipCode" ColumnName="ViolationLocationZipCode" />
+                <ScalarProperty Name="ViolationLocationCity" ColumnName="ViolationLocationCity" />
+                <ScalarProperty Name="ViolationLocationFloor" ColumnName="ViolationLocationFloor" />
+                <ScalarProperty Name="ViolationLocationStreetNumber" ColumnName="ViolationLocationStreetNumber" />
+                <ScalarProperty Name="ViolationLocationHouseNumber" ColumnName="ViolationLocationHouseNumber" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
+                <ScalarProperty Name="RespondentName" ColumnName="RespondentName" />
+                <ScalarProperty Name="IssuingAgency" ColumnName="IssuingAgency" />
+                <ScalarProperty Name="ViolationTime" ColumnName="ViolationTime" />
+                <ScalarProperty Name="ViolationDate" ColumnName="ViolationDate" />
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

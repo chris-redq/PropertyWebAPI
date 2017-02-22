@@ -20,6 +20,8 @@ namespace PropertyWebAPI.BAL
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public BAL.DOBPenaltiesAndViolationsSummaryData dobPenaltiesAndViolationsSummary;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public BAL.ZillowPropertyDetails zillowPorperty;
+        public BAL.ZillowPropertyDetails zillowProperty;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public BAL.NoticeOfPropertyValueResult noticeOfPropertyValueResult;
     }
 }

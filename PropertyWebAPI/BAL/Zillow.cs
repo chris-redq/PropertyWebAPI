@@ -99,16 +99,16 @@ namespace PropertyWebAPI.BAL
         private static void MakePortalCallBacks(List<DataRequestLog> logs, Decimal? zEstimate)
         {
             var resultObj = new BAL.Results();
-            resultObj.zillowPorperty = new ZillowPropertyDetails();
-            resultObj.zillowPorperty.zEstimate = zEstimate;
+            resultObj.zillowProperty = new ZillowPropertyDetails();
+            resultObj.zillowProperty.zEstimate = zEstimate;
 
             foreach (var rec in logs)
             {
-                resultObj.zillowPorperty.BBL = rec.BBL;
-                resultObj.zillowPorperty.requestId = rec.RequestId;
-                resultObj.zillowPorperty.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
-                resultObj.zillowPorperty.externalReferenceId = rec.ExternalReferenceId;
-                Portal.PostCallBack(resultObj);
+                resultObj.zillowProperty.BBL = rec.BBL;
+                resultObj.zillowProperty.requestId = rec.RequestId;
+                resultObj.zillowProperty.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
+                resultObj.zillowProperty.externalReferenceId = rec.ExternalReferenceId;
+                CallingSystem.PostCallBack(resultObj);
             }
         }
 

@@ -102,7 +102,7 @@ namespace PropertyWebAPI.BAL
                 resultObj.mortgageServicer.requestId = rec.RequestId;
                 resultObj.mortgageServicer.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.mortgageServicer.externalReferenceId = rec.ExternalReferenceId;
-                Portal.PostCallBack(resultObj);
+                CallingSystem.PostCallBack(resultObj);
             }
         }
         /// <summary>

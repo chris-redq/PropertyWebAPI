@@ -92,6 +92,7 @@
     <EntitySetMapping Name="Requests">
       <EntityTypeMapping TypeName="WebDataModel.Request">
         <MappingFragment StoreEntitySet="Request">
+          <ScalarProperty Name="NextAttemptTime" ColumnName="NextAttemptTime" />
           <ScalarProperty Name="ResponseData" ColumnName="ResponseData" />
           <ScalarProperty Name="RequestData" ColumnName="RequestData" />
           <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
@@ -117,6 +118,7 @@
     <EntitySetMapping Name="RequestTypes">
       <EntityTypeMapping TypeName="WebDataModel.RequestType">
         <MappingFragment StoreEntitySet="RequestType">
+          <ScalarProperty Name="TimeDelayInMinute" ColumnName="TimeDelayInMinute" />
           <ScalarProperty Name="MaxAttempts" ColumnName="MaxAttempts" />
           <ScalarProperty Name="RequestTypeName" ColumnName="RequestTypeName" />
           <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
@@ -128,6 +130,54 @@
         <MappingFragment StoreEntitySet="Zillow">
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
           <ScalarProperty Name="zEstimate" ColumnName="zEstimate" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NoticeOfProperyValues">
+      <EntityTypeMapping TypeName="WebDataModel.NoticeOfProperyValue">
+        <MappingFragment StoreEntitySet="NoticeOfProperyValue">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="GrossSquareFootageOfTheSuffix" ColumnName="GrossSquareFootageOfTheSuffix" />
+          <ScalarProperty Name="NumberOfCommercialLots" ColumnName="NumberOfCommercialLots" />
+          <ScalarProperty Name="NumberOfResidentialLots" ColumnName="NumberOfResidentialLots" />
+          <ScalarProperty Name="HotelClass" ColumnName="HotelClass" />
+          <ScalarProperty Name="NumberOfRooms" ColumnName="NumberOfRooms" />
+          <ScalarProperty Name="LandSize1" ColumnName="LandSize1" />
+          <ScalarProperty Name="LandType1" ColumnName="LandType1" />
+          <ScalarProperty Name="GrossResidentialSquareFootage" ColumnName="GrossResidentialSquareFootage" />
+          <ScalarProperty Name="LandFactorPerSqFtinDollars" ColumnName="LandFactorPerSqFtinDollars" />
+          <ScalarProperty Name="CommercialOverlay" ColumnName="CommercialOverlay" />
+          <ScalarProperty Name="GrossSquareFootage" ColumnName="GrossSquareFootage" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="StructureType" ColumnName="StructureType" />
+          <ScalarProperty Name="NumberOfStories" ColumnName="NumberOfStories" />
+          <ScalarProperty Name="ExteriorWall" ColumnName="ExteriorWall" />
+          <ScalarProperty Name="ConstructionType" ColumnName="ConstructionType" />
+          <ScalarProperty Name="BasementType" ColumnName="BasementType" />
+          <ScalarProperty Name="BasementSquareFootage" ColumnName="BasementSquareFootage" />
+          <ScalarProperty Name="BasementGrade" ColumnName="BasementGrade" />
+          <ScalarProperty Name="GarageSquareFootage" ColumnName="GarageSquareFootage" />
+          <ScalarProperty Name="GarageType" ColumnName="GarageType" />
+          <ScalarProperty Name="ResidentialUnits" ColumnName="ResidentialUnits" />
+          <ScalarProperty Name="CommercialSquareFootage" ColumnName="CommercialSquareFootage" />
+          <ScalarProperty Name="CommercialUnits" ColumnName="CommercialUnits" />
+          <ScalarProperty Name="UnfinishedSquareFootage" ColumnName="UnfinishedSquareFootage" />
+          <ScalarProperty Name="FinishedSquareFootage" ColumnName="FinishedSquareFootage" />
+          <ScalarProperty Name="ExteriorCondition" ColumnName="ExteriorCondition" />
+          <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+          <ScalarProperty Name="Style" ColumnName="Style" />
+          <ScalarProperty Name="NumberOfBuildings" ColumnName="NumberOfBuildings" />
+          <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+          <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+          <ScalarProperty Name="Proximity" ColumnName="Proximity" />
+          <ScalarProperty Name="LotType" ColumnName="LotType" />
+          <ScalarProperty Name="LotShape" ColumnName="LotShape" />
+          <ScalarProperty Name="LotSquareFootage" ColumnName="LotSquareFootage" />
+          <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+          <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+          <ScalarProperty Name="PrimaryZoning" ColumnName="PrimaryZoning" />
+          <ScalarProperty Name="BuildingClassCode" ColumnName="BuildingClassCode" />
           <ScalarProperty Name="BBL" ColumnName="BBL" />
         </MappingFragment>
       </EntityTypeMapping>

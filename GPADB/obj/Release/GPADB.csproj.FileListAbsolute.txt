@@ -1,0 +1,9 @@
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Release\GPADB.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Release\GPADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Release\GPADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Release\GPADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Release\GPADB.pdb

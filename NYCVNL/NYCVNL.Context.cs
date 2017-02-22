@@ -25,8 +25,8 @@ namespace NYCVNL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<MultiAgencyViolation> MultiAgencyViolations { get; set; }
         public virtual DbSet<ECBViolationsSummary> ECBViolationsSummaries { get; set; }
         public virtual DbSet<ECBViolationsSummaryByAgency> ECBViolationsSummaryByAgencies { get; set; }
+        public virtual DbSet<MultiAgencyViolation> MultiAgencyViolations { get; set; }
     }
 }

@@ -92,5 +92,9 @@ namespace GPADB
         public Nullable<int> IsSRORestricted { get; set; }
         public Nullable<int> IsLandmark { get; set; }
         public string ServicerName { get; set; }
+        public Nullable<double> AVGLowPrice { get; set; }
+        public Nullable<double> AVGLowPriceNoLP { get; set; }
+        public Nullable<double> MedianPrice { get; set; }
+        public Nullable<double> AVGHighPice { get; set; }
     }
 }

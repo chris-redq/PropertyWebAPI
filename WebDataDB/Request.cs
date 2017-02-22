@@ -31,6 +31,7 @@ namespace WebDataDB
         public int RequestStatusTypeId { get; set; }
         public string RequestData { get; set; }
         public string ResponseData { get; set; }
+        public Nullable<System.DateTime> NextAttemptTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DataRequestLog> DataRequestLogs { get; set; }

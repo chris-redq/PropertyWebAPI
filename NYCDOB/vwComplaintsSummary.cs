@@ -18,6 +18,9 @@ namespace NYCDOB
         public string BBL { get; set; }
         public Nullable<int> Open { get; set; }
         public Nullable<int> Closed { get; set; }
+        public Nullable<int> VacateOrder { get; set; }
+        public Nullable<int> StopWorkOrder { get; set; }
+        public Nullable<int> PartialVacateOrder { get; set; }
         public Nullable<int> Total { get; set; }
     }
 }

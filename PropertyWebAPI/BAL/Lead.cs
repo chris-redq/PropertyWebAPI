@@ -21,11 +21,12 @@ namespace PropertyWebAPI.BAL
         public static LeadDetailData GetPropertyLead(string propertyBBL)
         {
             var leadDetailData = Mapper.Map<LeadDetailData>(DAL.Lead.GetPropertyLead(propertyBBL));
-
-            var deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
-            if (deedDetailsObj != null)
-                leadDetailData.owners = deedDetailsObj.owners;
-
+            if (leadDetailData != null)
+            {
+                var deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
+                if (deedDetailsObj != null && deedDetailsObj.owners != null)
+                    leadDetailData.owners = deedDetailsObj.owners;
+            }
             return leadDetailData;
         }
     }

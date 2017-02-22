@@ -1,0 +1,1956 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PropertyWebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:PropertyWebAPI.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:PropertyWebAPI.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,PropertyWebAPI.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,PropertyWebAPI.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:PropertyWebAPI.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},PropertyWebAPI.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.#ctor(PropertyWebAPI.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,PropertyWebAPI.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:PropertyWebAPI.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyWebAPI.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PropertyWebAPI.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.BaseResult">
+            <summary>
+            Use the class to extend any result that needs to be send asynchronously
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.BaseResult.requestId">
+            <summary>
+            This is the unique ID assigned by the system for any unique request made by the API caller. If the user makes multiple requests 
+            (in a short period or while there is a pending request) for the same data, the system only generates one ID and sends the 
+            same ID back for the new request.
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.BaseResult.externalReferenceId">
+            <summary>
+            This is the api callers reference number. This reference number can span across multiple calls and can be used to query the data services for status or results
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.BaseResult.status">
+            <summary>
+            There are three possible values for Status - Success, Pending and Error. 
+            Success means the request was successfully process and the data available in the result returned
+            Pending means the request it yet to be processed
+            Error means the request resulted in an error and the no data is available.
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.NYCBaseResult">
+            <summary>
+            Use the class to extend any result that needs to be send asynchronously for NYC Properties 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.NYCBaseResult.BBL">
+            <summary>
+            Borough Block and Lot (BBL) of the property
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummaryData">
+            <summary>
+            Helper class used to capture DOB Civil Penalties detail and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummaryData.civilPenaltyAmount">
+            <summary>
+            Sum total of all Civil Penalties due
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummaryData.violationAmount">
+            <summary>
+            Sum total of all ECB Violations due
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary">
+            <summary>
+                This class deals with all the details associated with either returning DOB Violations and Penalties details or creating the 
+                request to get data scrapped from the web 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.Parameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get DOB Penalties and ECB Violations data 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all parameters required for DOB Civil Penalties and ECB Violations into a JSON object
+            </summary>
+            <param name="propertyBBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into Parameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>Parameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.Nullable{System.Decimal},System.Nullable{System.Decimal})">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="penaltyAmount"></param>
+            <param name="violationAmount"></param>
+            <param name="logs">List or Request Log Records</param>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.LogFailure(System.String,System.String,System.Int32)">
+            <summary>
+                Use this method in the controller to log failures that are processed before calling any 
+                other business methods of this class
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <param name="httpErrorCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the DOB Penalties and Violations details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the dCivilPenalties table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns>True if successful else false</returns>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.Portal.ApiDetails">
+            <summary>  
+                Helper class for relevant api information to connect and  
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Portal.PostCallBack(PropertyWebAPI.BAL.Results)">
+            <summary>  
+                Method returns address corrections and details based on street number, street address and borough for NYC properties
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Portal.PostCallBack(System.String,System.String,System.String,PropertyWebAPI.BAL.Results)">
+            <summary>  
+                Method returns address corrections and details based on street number, street address and borough for NYC properties
+            </summary>  
+        </member>
+        <member name="T:PropertyWebAPI.BAL.MortgageServicerDetails">
+            <summary>
+            Helper class used to capture Mortgage Servicer details and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.MortgageServicerDetails.servicerName">
+            <summary>
+            Name of the Mortgage Servicer
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.MortgageServicer">
+            <summary>
+                This class deals with all the details associated with either returning Mortgage Servicer details or creating the 
+                request to get data scrapped from the web 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.MortgageServicer.Parameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get Mortgage Servicer data
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all parameters required for Mortgage Servicer into a JSON object
+            </summary>
+            <param name="BBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into Mortgage Servicer Parameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>Parameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.LogFailure(System.String,System.String,System.Int32)">
+            <summary>
+                Use this method in the controller to log failures that are processed before calling any 
+                other business methods of this class
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <param name="httpErrorCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.String)">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="servicerName"></param>
+            <param name="logs">List or Request Log Records</param>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the Mortgage Servicer table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns>True if successful else false</returns>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.GeneralAddress">
+            <summary>  
+                Simple Address Class
+            </summary>  
+        </member>
+        <member name="T:PropertyWebAPI.BAL.GeneralPropertyInformation">
+            <summary>  
+                Helper class to return app_id and app_key fro GeoClient Api
+            </summary>  
+        </member>
+        <member name="T:PropertyWebAPI.BAL.NYCPhysicalPropertyData.AppTokens">
+            <summary>  
+                Helper class to return app_id and app_key fro GeoClient Api
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NYCPhysicalPropertyData.GetAddressDetailsFromGeoClientAPI(System.String,System.String,System.String)">
+            <summary>  
+                Method returns address corrections and details based on street number, street address and borough for NYC properties
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NYCPhysicalPropertyData.GetBBLDetailsFromGeoClientAPI(System.String)">
+            <summary>  
+                Method returns details based on BBL in NYC
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NYCPhysicalPropertyData.GetBuildingDetailsFromGeoClientAPI(System.String)">
+            <summary>  
+                Method returns building information based on the BIN in NYC
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NYCPhysicalPropertyData.CheckIfMessageContainsNotFound(Newtonsoft.Json.Linq.JObject,System.String)">
+            <summary>  
+                Method returns true if any of the messages in JSON contain NOT FOUND
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NYCPhysicalPropertyData.Get(System.String,System.Boolean)">
+            <summary>
+                Returns Physical Data about a property identified by BBL
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="addresscleanup"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.TaxBillDetails">
+            <summary>
+            Helper class used to capture Tax bill details and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.TaxBillDetails.billAmount">
+            <summary>
+            Amount owed in taxes
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.TaxBill">
+            <summary>
+                This class deals with all the details associated with either returning tax bill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.TaxBill.Parameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get Tax bill 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all parameters required for Tax Bills into a JSON object
+            </summary>
+            <param name="propertyBBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into Parameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>Parameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.Nullable{System.Decimal})">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="billAmount">Bill Amount</param>
+            <param name="logs">List or Request Log Records</param>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.LogFailure(System.String,System.String,System.Int32)">
+            <summary>
+                Use this method in the controller to log failures that are processed before calling any 
+                other business methods of this class
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <param name="httpErrorCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the tax bill details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the TaxBill table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns>True if successful else false</returns>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.WaterBillDetails">
+            <summary>
+            Helper class used to capture Water bill details and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.WaterBillDetails.billAmount">
+            <summary>
+            Amount owed in water bill
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.WaterBill">
+            <summary>
+                This class deals with all the details associated with either returning water bill details or creating the 
+                request for getting data to be scrapped from the web 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.WaterBill.Parameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get Water bill 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.ParametersToJSON(System.String)">
+            <summary>
+                This methods converts all parameters required for Water Bill into a JSON object
+            </summary>
+            <param name="propertyBBL"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into WaterBillParameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>waterBillParameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.Get(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the water bill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the WaterBill table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns>True if successful else false</returns>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.ZillowPropertyDetails">
+            <summary>
+            Helper class used to capture Tax bill details and used for serialization into JSON object 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ZillowPropertyDetails.zEstimate">
+            <summary>
+            zEstimate of the property
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.Zillow">
+            <summary>
+            This class deals with all the details associated with either returning Zillow details or creating the 
+            request to get data scrapped from the web 
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.BAL.Zillow.Parameters">
+            <summary>
+            Helper class used for serialization and deserialization of parameters necessary to get Zillow information 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.ParametersToJSON(System.String,System.String)">
+            <summary>
+                This methods converts all parameters required for Tax Bills into a JSON object
+            </summary>
+            <param name="BBL"></param>
+            <param name="address"></param>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.JSONToParameters(System.String)">
+            <summary>
+                This method converts a JSON back into Parameters Object
+            </summary>
+            <param name="jsonParameters"></param>
+            <returns>Parameters</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.LogFailure(System.String,System.String,System.Int32)">
+            <summary>
+                Use this method in the controller to log failures that are processed before calling any 
+                other business methods of this class
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <param name="httpErrorCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.MakePortalCallBacks(System.Collections.Generic.List{WebDataDB.DataRequestLog},System.Nullable{System.Decimal})">
+            <summary>
+                This method calls back portal for every log record in the list
+            </summary>
+            <param name="zEstimate"></param>
+            <param name="logs">List or Request Log Records</param>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.Get(System.String,System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the Zillow details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="address"></param>
+            <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.ReRun(WebDataDB.DataRequestLog)">
+            <summary>
+                This method gets the data or current status for a request 
+            </summary>
+            <param name="dataRequestLogObj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.UpdateData(WebDataDB.Request)">
+            <summary>
+                This method updates the Zillow table based on the information received from the Request Object
+            </summary>
+            <param name="requestObj"></param>
+            <returns>True if successful else false</returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.CMAController">
+            <summary>  
+            This controller handles all api requests associated with CMA related information
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSuggestedPrices(System.String)">
+            <summary>  
+                Use this api to get suggested prices for a property in NYC
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <returns>
+                Returns Average Low, Median and Avg High Price for a property in NYC
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSalesTrendAroundProperty(System.String,System.Int32)">
+            <summary>  
+                Use this api to get sales data by month for the neighborhood around a given property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="timeSpanInYears">
+                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
+            </param>
+            <returns>
+                Returns sales data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSalesPriceTrendAroundProperty(System.String,System.Int32)">
+            <summary>  
+                Use this api to get sales price data by month for the neighborhood around a given property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="timeSpanInYears">
+                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
+            </param>
+            <returns>
+                Returns sales price data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetPricePerSqFtTrendAroundProperty(System.String,System.Int32)">
+            <summary>  
+                Use this api to get price per sqft data by month for the neighborhood around a given property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="timeSpanInYears">
+                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
+            </param>
+            <returns>
+                Returns sales price per sqft data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+            <summary>  
+                Use this api to get a list of comparables for the given property and associated parameters
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="algorithmType"></param>
+            <param name="maxRecords"></param>
+            <param name="monthOffset"></param>
+            <param name="classMatchType"></param>
+            <param name="sameNeighboorhood"></param>
+            <param name="sameSchoolDistrict"></param>
+            <param name="sameZip"></param>
+            <param name="sameBlock"></param>
+            <param name="sameStreetName"></param>
+            <param name="minSalePrice"></param>
+            <param name="maxSalePrice"></param>
+            <param name="isNotIntraFamily"></param>
+            <param name="isBuyeraCompany"></param>
+            <param name="isSelleraCompany"></param>
+            <returns>
+                Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSubjectDetails(System.String)">
+            <summary>  
+                Use this api to get a subject property's details
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <returns>
+                Returns subject property's details
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetDeedParties(System.String)">
+            <summary>  
+                Use this api to get parties associated with a deed (buyers and sellers)
+            </summary>  
+            <param name="deedUniqueKey">
+                Document Unique Key associated with a Deed document in ACRIS
+            </param>
+            <returns>
+                Returns parties associated with a deed (buyers and sellers)
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.LeadsController">
+            <summary>  
+            This controller handles all api requests associated with property leads
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">
+            <summary>  
+            Use this api to get a lead details
+            </summary>  
+            <param name="propertybbl">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>Returns lead details</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>  
+            Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
+            multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
+            </summary>  
+            <param name="counties">Optional parameter. Multiple values can be sent. No wildcards.</param>
+            <param name="buildingclasscodes">Optional parameter. Multiple values can be sent along with wildcards. For example: A*,B1</param>
+            <param name="ismailingaddressactive">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
+            <param name="isvacant">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
+            <param name="zipcodes">Optional parameter. Multiple values can be sent. No wildcards.</param>
+            <param name="violations">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
+            <param name="lientypes">Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS and ALL. 
+            By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
+            the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</param>
+            <param name="states">Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</param>
+            <param name="cities">Optional parameter. Multiple values can be sent. No wildcards.</param>
+            <param name="leadgrades">Optional parameter. Multiple values can be sent. Valid values are A, B, C and D. No wildcards</param>
+            <param name="ltv">Optional parameter. Minimum one value, max two values can be sent. No wildcards</param>
+            <param name="neighborhoods">Optional parameter. Multiple values can be sent along with wildcards.</param>
+            <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
+            <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
+            <param name="landmark">Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</param>
+            <returns>Returns a list of leads (properties)</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LiensController.GetPropertyLead(System.String)">
+            <summary>  
+                Use this api to get all liens associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>Returns all lien details</returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.BillsController">
+            <summary>  
+            This controller handles all api requests associated with property bills
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.BillsController.GetBills(System.String,System.String,System.String)">
+            <summary>  
+                Use this method to get tax bill for a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+            </param>  
+            <param name="externalReferenceId">
+                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+            </param>
+            <param name="needTaxBill">
+                Set this optional parameter to N if you do not want the tax bill. The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.CasesController">
+            <summary>  
+            This controller handles all api requests associated with eCourts CCIS Case related data
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.TemplateCaseIndexNumberQueriesList``1(System.String,System.String,System.Func{System.String,System.String,System.Collections.Generic.List{``0}})">
+            <summary>  
+                Use this method when calling parameters are CountyId and CaseIndexNumber and return type is a List
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.TemplateCaseIndexNumberQueries``1(System.String,System.String,System.Func{System.String,System.String,``0})">
+            <summary>  
+                Use this method when calling parameters are CountyId and CaseIndexNumber and return type is an object
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.Get(System.String,System.String)">
+            <summary>  
+            Use this api to get a detailed information on a case
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the case. 
+            </param>  
+            <param name="caseIndexNumber">
+               Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+            </param> 
+            <returns>Returns detailed information on a case</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMotions(System.String,System.String)">
+            <summary>  
+            Use this api to get a list of Motions (both Defendant and Plaintiff) for a case
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the case. 
+            </param>  
+            <param name="caseIndexNumber">
+               Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+            </param> 
+            <returns>Returns a list of Motions for a case</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetApperances(System.String,System.String)">
+            <summary>  
+            Use this api to get a list of Appearances for a case
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the case. 
+            </param>  
+            <param name="caseIndexNumber">
+               Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+            </param> 
+            <returns>Returns a list of Appearances for a case</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetAttorneys(System.String,System.String)">
+            <summary>  
+            Use this api to get a list of attorneys (both Defendant and Plaintiff) for a case
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the case. 
+            </param>  
+            <param name="caseIndexNumber">
+               Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+            </param> 
+            <returns>Returns a list of Attorneys for a case</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetCaseHistory(System.String,System.String)">
+            <summary>  
+            Use this api to get a case's history in a chronological manner. This api returns events after April 18, 2016
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the case. 
+            </param>  
+            <param name="caseIndexNumber">
+               Case Index Number in YYYY9999999 format where YYYY represents the year
+            </param> 
+            <returns>
+                Returns a list of changes that happened on case. For example Appearances, Motions, Attorneys, Case Details
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetCaseMinutes(System.String,System.String)">
+            <summary>  
+            Use this api to get a list of minutes associated (documents filed with court) with a case. Currently, we have data only for
+            New York and Kings County
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the case. 
+            </param>  
+            <param name="caseIndexNumber">
+               Case Index Number in YYYYXXXXXXX format where YYYY represents the year
+            </param> 
+            <returns>Returns a list of minutes for a case</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMortgageForeclosureCasesForaProperty(System.String)">
+            <summary>  
+                Use this api to find NYS Supreme Court Mortgage Foreclosure Cases and their respective status for a property in NYC. 
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns a list of cases and their status in eCourts for the given property identified by BBL - Borough Block Lot Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetAllActiveLPsForaProperty(System.String,System.String)">
+            <summary>  
+                Use this api to find all active LPs associated with in a property in JDLS System. 
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="effectiveAsOfDate">This is an optional parameter in yyyyMMdd format. Use this parameter as a cutoff date to select LPs for consideration. Default Value is 01/01/2007</param>
+            <returns>
+                Returns a list of all active LPs associated with in a property in JDLS System.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMortgageForeclosureLPsForaProperty(System.String,System.String)">
+            <summary>  
+                Use this api to find all Mortgage Foreclosure related LPs for a property in NYC in the JDLS system and their corresponding cases in the NYS Supreme Court CCIS System. 
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param> 
+            <param name="effectiveDate">
+                Optional parameter in case LPs are requested on or after the supplied effectiveDate
+            </param> 
+            <returns>
+                Returns a list of LPs and their respective cases in eCourts for the given property identified by BBL - Borough Block Lot Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetNewMortgageForeclosureCases(System.String,System.String)">
+            <summary>  
+                Use this api to get all new mortgage foreclosure cases added for a select set of counties within a data range. The select set currently is 5 Boroughs and LI counties 
+            </summary>  
+            <param name="startDate">
+                Start date of the date range in yyyyMMdd format eg: 20160120
+            </param> 
+            <param name="endDate">
+                End date of the date range in yyyyMMdd format eg: 20161030
+            </param> 
+            <returns>
+                Returns a list of new foreclosure cases registered within the date range
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetCasesColumnValueChanges(System.String,System.String,System.String)">
+            <summary>  
+                Use this api to find any changes in a specific column on the CCIS Case table for a given date range. 
+                For example use this API if you want to check which cases had their CaseStatus change for a given date range
+            </summary>  
+            <param name="columnName">
+                Column name in the ccis.case table for which changes are being requested. For example CaseStatus
+            </param>  
+            <param name="startDate">
+               Start date of the date range in yyyyMMdd format eg: 20160120
+            </param> 
+            <param name="endDate">
+               End date of the date range in yyyyMMdd format eg: 20161030
+            </param> 
+            <returns>
+                Returns a list of rows (cases) with old column value and new value
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetCasesByJudgeReliefSought(System.String,System.String,System.String)">
+            <summary>  
+                Use this api to get a list of cases associated with a Relief Sought for a given judge in a county
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the Judge. 
+            </param>  
+            <param name="judgeId">
+                ID of the Judge as it appears in the data
+            </param>  
+            <param name="reliefSought">
+                Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+            </param>
+            <returns>
+                Returns a list of cases associated with a Relief Sought for a given judge in a county
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMotionSummaryStatisticsByReliefSought(System.String)">
+            <summary>  
+                Use this api to get a list of decision statistics for a Relief Sought for all judges in NYC Counties.
+            </summary>  
+            <param name="reliefSought">
+                Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+            </param> 
+            <returns>
+                Returns a list of decision statistics for a Relief Sought for all judges in NYC Counties.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetMotionSummaryStatisticsByJudgeReliefSought(System.String,System.String)">
+            <summary>  
+                Use this api to get a list of decision statistics for various Relief Sought for a given judge.
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the Judge. 
+            </param>    
+            <param name="judgeId">
+                Id of the Judge as it appears in the data do not modify it 
+            </param>  
+            <returns>
+                Returns a list of decision statistics for various Relief Sought for a given judge.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CasesController.GetJudgeReliefSought5PlusNumberSummary(System.String,System.String,System.String)">
+            <summary>  
+                Use this api to get a 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.
+            </summary>  
+            <param name="countyId">
+                CCIS County Id associated with the Judge. 
+            </param> 
+            <param name="judgeId">
+                Id of the Judge as it appears in the data do not modify it 
+            </param>  
+            <param name="reliefSought">
+                Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+            </param>
+            <returns>
+                Returns 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.MortgagesDeedsController">
+            <summary>  
+                This controller handles all ACRIS related requests for Mortgage and Deed related documents
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.Get(System.String)">
+            <summary>  
+                Use this method to retrieve all Mortgage and Deed related documents for a property in NYC from the ACRIS system, in a reverse chronological order by recording date (document date is sometimes NULL). 
+            </summary>  
+            <param name="propertyBBLE">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+            <returns>
+                Returns a list of all Mortgage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetAllDeeds(System.String)">
+            <summary>  
+                Use this method to retrieve all deeds associated with a property in NYC from the ACRIS system, in a reverse chronological order.
+                This does not include any Deed change documents
+            </summary>  
+            <param name="propertyBBLE">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+            <returns>
+                Returns a list of all deeds filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetMortgageServicer(System.String,System.String)">
+            <summary>  
+                Use this method to retrieve the current mortgage servicer for the property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+            </param>  
+            <param name="externalReferenceId"></param>
+            <returns>
+                Returns the name of the Mortgage Servicer
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetLatestDeedDetails(System.String)">
+            <summary>  
+                Use this method to retrieve details about the latest deed for a property
+            </summary>  
+            <param name="propertyBBLE">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+            <returns>
+                Returns deed details and owners filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetUnsatisfiedMortgages(System.String)">
+            <summary>  
+                Use this method to retrieve all unsatisfied mortgages for a property
+            </summary>  
+            <param name="propertyBBLE">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+            <returns>
+                Returns unsatisfied mortgages in the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetAllContractsOfSaleAndMemorandumsOfContract(System.String)">
+            <summary>  
+                Use this method to retrieve all Contract of Sales as well as Memorandum of Contracts associated with a property in NYC from the ACRIS system, 
+                in a reverse chronological order.
+            </summary>  
+            <param name="propertyBBLE">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+            <returns>
+                Returns a list of all Contract of Sales as well as Memorandum of Contracts filed with the ACRIS system for a given property identified by a 
+                BBLE - Borough Block Lot and Easement Number.
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.PhysicalDataController">
+            <summary>  
+            This controller handles all api requests associated with physical data associated with a property
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCBBL(System.String,System.String,System.String)">
+            <summary>  
+                Use this method to get Borough Block Lot Number associated with a property in NYC
+            </summary>  
+            <param name="streetNumber">
+                Street NUmber of the property without or without hyphens
+            </param>  
+            <param name="streetName">
+                Name of the street where property is located 
+            </param>
+            <param name="borough">
+                Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
+            </param>
+            <returns>
+                Returns BBL of the Property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCAddressDetails(System.String,System.String,System.String)">
+            <summary>  
+                Use this method to get Borough Block Lot NUmber associated with a property in NYC
+            </summary>  
+            <param name="streetNumber">
+                Street NUmber of the property without or without hyphens
+            </param>  
+            <param name="streetName">
+                Name of the street where property is located 
+            </param>
+            <param name="borough">
+                Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
+            </param>
+            <returns>
+                Returns a Json Object. 
+                
+                Below is an example of where an exact address match was found (note that the attribute bbl is present but the address was corrected see message attribute)
+                {"address":{"assemblyDistrict":"27","bbl":"4022680023","bblBoroughCode":"4","bblTaxBlock":"02268","bblTaxLot":"0023","boardOfElectionsPreferredLgc":"1",
+                            "boePreferredStreetName":"QUEENS BOULEVARD","boePreferredstreetCode":"45999001","boroughCode1In":"4","buildingIdentificationNumber":"4052806",
+                            "censusBlock2000":"8002","censusBlock2010":"3002","censusTract1990":" 757  ","censusTract2000":" 757  ","censusTract2010":" 75701","cityCouncilDistrict":"29",
+                            "civilCourtDistrict":"04","coincidentSegmentCount":"1","communityDistrict":"406","communityDistrictBoroughCode":"4","communityDistrictNumber":"06",
+                            "communitySchoolDistrict":"28","condominiumBillingBbl":"0000000000","congressionalDistrict":"06","cooperativeIdNumber":"0000","cornerCode":"NE",
+                            "crossStreetNamesFlagIn":"E","dcpCommercialStudyArea":"42004","dcpPreferredLgc":"01","dotStreetLightContractorArea":"4","dynamicBlock":"902",
+                            "electionDistrict":"021","fireBattalion":"50","fireCompanyNumber":"151","fireCompanyType":"L","fireDivision":"13","firstBoroughName":"QUEENS",
+                            "firstStreetCode":"45999001010","firstStreetNameNormalized":"QUEENS BOULEVARD","fromLionNodeId":"0054662","fromPreferredLgcsFirstSetOf5":"01",
+                            "genericId":"0010202","geosupportFunctionCode":"1B","geosupportReturnCode":"00","geosupportReturnCode2":"01","gi5DigitStreetCode1":"59990",
+                            "gi5DigitStreetCode2":"16190","giBoroughCode1":"4","giBoroughCode2":"4","giBuildingIdentificationNumber1":"4052806","giBuildingIdentificationNumber2":"4052806",
+                            "giDcpPreferredLgc1":"01","giDcpPreferredLgc2":"01","giHighHouseNumber1":"116-65","giHighHouseNumber2":"112-51","giLowHouseNumber1":"116-29","giLowHouseNumber2":"112-51",
+                            "giSideOfStreetIndicator1":"L","giSideOfStreetIndicator2":"L","giStreetCode1":"45999001","giStreetCode2":"41619001","giStreetName1":"QUEENS BOULEVARD",
+                            "giStreetName2":"78 AVENUE","healthArea":"1920","healthCenterDistrict":"46","highBblOfThisBuildingsCondominiumUnits":"4022680023","highCrossStreetB5SC1":"416190",
+                            "highCrossStreetCode1":"41619001","highCrossStreetName1":"78 AVENUE","highHouseNumberOfBlockfaceSortFormat":"100117099AA","houseNumber":"116-55","houseNumberIn":"11655",
+                            "houseNumberSortFormat":"100116055AA","hurricaneEvacuationZone":"X","instructionalRegion":"QN","interimAssistanceEligibilityIndicator":"I","internalLabelXCoordinate":"1030749",
+                            "internalLabelYCoordinate":"0200078","latitude":40.715959972068973,"latitudeInternalLabel":40.715722393200821,"legacySegmentId":"0089770","lionBoroughCode":"4",
+                            "lionBoroughCodeForVanityAddress":"4","lionFaceCode":"3894","lionFaceCodeForVanityAddress":"3894","lionKey":"4389404160","lionKeyForVanityAddress":"4389404160",
+                            "lionSequenceNumber":"04160","lionSequenceNumberForVanityAddress":"04160","listOf4Lgcs":"01","longitude":-73.833316667910822,"longitudeInternalLabel":-73.832263927733138,
+                            "lowBblOfThisBuildingsCondominiumUnits":"4022680023","lowCrossStreetB5SC1":"416040","lowCrossStreetCode1":"41604001","lowCrossStreetName1":"77 AVENUE",
+                            "lowHouseNumberOfBlockfaceSortFormat":"100116001AA","lowHouseNumberOfDefiningAddressRange":"100116029AA","message2":"ADDR NUMBER ALTERED: HYPHEN INSERTED","nta":"QN17",
+                            "ntaName":"Forest Hills","numberOfCrossStreetB5SCsHighAddressEnd":"1","numberOfCrossStreetB5SCsLowAddressEnd":"1","numberOfCrossStreetsHighAddressEnd":"1",
+                            "numberOfCrossStreetsLowAddressEnd":"1","numberOfEntriesInListOfGeographicIdentifiers":"0002","numberOfExistingStructuresOnLot":"0001","numberOfStreetFrontagesOfLot":"02",
+                            "policePatrolBoroughCommand":"6","policePrecinct":"112","reasonCode1a":"2","reasonCode2":"2","returnCode1a":"01","returnCode1e":"00","roadwayType":"1","rpadBuildingClassificationCode":"K2",
+                            "rpadSelfCheckCodeForBbl":"3","sanbornBoroughCode":"4","sanbornPageNumber":"090","sanbornVolumeNumber":"19","sanitationCollectionSchedulingSectionAndSubsection":"1E",
+                            "sanitationDistrict":"406","sanitationRecyclingCollectionSchedule":"EW","sanitationRegularCollectionSchedule":"WS","sanitationSnowPriorityCode":"P","segmentAzimuth":"314",
+                            "segmentIdentifier":"0089770","segmentLengthInFeet":"00525","segmentOrientation":"4","segmentTypeCode":"G","sideOfStreetIndicator":"L","sideOfStreetOfVanityAddress":"L",
+                            "splitLowHouseNumber":"100116001AA","stateSenatorialDistrict":"14","streetName1In":"QUEENS BLVD","streetStatus":"2","taxMapNumberSectionAndVolume":"41204","toLionNodeId":"0034479",
+                            "toPreferredLgcsFirstSetOf5":"01","trafficDirection":"T","underlyingStreetCode":"45999001","uspsPreferredCityName":"FOREST HILLS","workAreaFormatIndicatorIn":"C",
+                            "xCoordinate":"1030457","xCoordinateHighAddressEnd":"1030758","xCoordinateLowAddressEnd":"1030387","xCoordinateOfCenterofCurvature":"0000000","yCoordinate":"0200164",
+                            "yCoordinateHighAddressEnd":"0199858","yCoordinateLowAddressEnd":"0200230","yCoordinateOfCenterofCurvature":"0000000","zipCode":"11375"}}
+            
+                Below is an example of where an exact address match was not found (note attributes message and message2). Also note that there is no
+                bbl attribute since the exact address was not located
+                {"address":{"assemblyDistrict":"28","boardOfElectionsPreferredLgc":"1","boePreferredStreetName":"QUEENS BOULEVARD","boePreferredstreetCode":"45999001",
+                            "boroughCode1In":"4","censusBlock2000":"1001","censusBlock2010":"1002","censusTract1990":" 76902","censusTract2000":" 76902",
+                            "censusTract2010":" 76902","cityCouncilDistrict":"29","civilCourtDistrict":"04","coincidentSegmentCount":"1","communityDistrict":"406",
+                            "communityDistrictBoroughCode":"4","communityDistrictNumber":"06","communitySchoolDistrict":"28","congressionalDistrict":"06",
+                            "crossStreetNamesFlagIn":"E","dcpPreferredLgc":"01","dotStreetLightContractorArea":"4","dynamicBlock":"112","electionDistrict":"020",
+                            "fireBattalion":"50","fireCompanyNumber":"305","fireCompanyType":"E","fireDivision":"13","firstBoroughName":"QUEENS","firstStreetCode":
+                            "45999001010","firstStreetNameNormalized":"QUEENS BOULEVARD","fromLionNodeId":"0054662","fromPreferredLgcsFirstSetOf5":"01","genericId":"0010202",
+                            "geosupportFunctionCode":"1B","geosupportReturnCode":"01","geosupportReturnCode2":"42","healthArea":"1920","healthCenterDistrict":"46",
+                            "highCrossStreetB5SC1":"416190","highCrossStreetCode1":"41619001","highCrossStreetName1":"78 AVENUE","highHouseNumberOfBlockfaceSortFormat":
+                            "100117098AA","houseNumber":"116-50","houseNumberIn":"11650","houseNumberSortFormat":"100116050AA","hurricaneEvacuationZone":"X",
+                            "instructionalRegion":"QN","interimAssistanceEligibilityIndicator":"I","latitude":40.715949019159176,"legacySegmentId":"0089770",
+                            "lionBoroughCode":"4","lionBoroughCodeForVanityAddress":"4","lionFaceCode":"3894","lionFaceCodeForVanityAddress":"3894","lionKey":"4389404160",
+                            "lionKeyForVanityAddress":"4389404160","lionSequenceNumber":"04160","lionSequenceNumberForVanityAddress":"04160","listOf4Lgcs":"01",
+                            "longitude":-73.833334731909687,"lowCrossStreetB5SC1":"416040","lowCrossStreetCode1":"41604001","lowCrossStreetName1":"77 AVENUE",
+                            "lowHouseNumberOfBlockfaceSortFormat":"100116000AA","message":"ADDR NUMBER ALTERED: HYPHEN INSERTED","message2":"ADDRESS NUMBER OUT OF RANGE",
+                            "nta":"QN17","ntaName":"Forest Hills","numberOfCrossStreetB5SCsHighAddressEnd":"1","numberOfCrossStreetB5SCsLowAddressEnd":"1",
+                            "numberOfCrossStreetsHighAddressEnd":"1","numberOfCrossStreetsLowAddressEnd":"1","numberOfStreetCodesAndNamesInList":"02","policePatrolBoroughCommand":"6",
+                            "policePrecinct":"112","reasonCode":"2","reasonCode1e":"2","returnCode1a":"42","returnCode1e":"01","roadwayType":"1",
+                            "sanitationCollectionSchedulingSectionAndSubsection":"2C","sanitationDistrict":"406","sanitationRecyclingCollectionSchedule":"ETH",
+                            "sanitationRegularCollectionSchedule":"MTH","sanitationSnowPriorityCode":"P","segmentAzimuth":"314","segmentIdentifier":"0089770","segmentLengthInFeet":"00525",
+                            "segmentOrientation":"4","segmentTypeCode":"G","sideOfStreetIndicator":"R","sideOfStreetOfVanityAddress":"R","splitLowHouseNumber":"100116000AA",
+                            "stateSenatorialDistrict":"15","streetCode1":"41604001","streetCode6":"41619001","streetName1":"77 AVENUE","streetName1In":"QUEENS BLVD","streetName6":"78 AVENUE",
+                            "streetStatus":"2","toLionNodeId":"0034479","toPreferredLgcsFirstSetOf5":"01","trafficDirection":"T","underlyingStreetCode":"45999001",
+                            "uspsPreferredCityName":"FOREST HILLS","workAreaFormatIndicatorIn":"C","xCoordinate":"1030452","xCoordinateHighAddressEnd":"1030758","xCoordinateLowAddressEnd":"1030387",
+                            "xCoordinateOfCenterofCurvature":"0000000","yCoordinate":"0200160","yCoordinateHighAddressEnd":"0199858","yCoordinateLowAddressEnd":"0200230",
+                            "yCoordinateOfCenterofCurvature":"0000000","zipCode":"11375"}}
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCBBLDetails(System.String)">
+            <summary>  
+                Use this method to get property address and physical data associated with a property in NYC
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>   
+            <returns>
+                Returns a Json Object. 
+                
+                Below is an example of return value
+                {"bbl":{"bbl":"2032560199","bblBoroughCode":"2","bblBoroughCodeIn":"2","bblTaxBlock":"03256","bblTaxBlockIn":"03256","bblTaxLot":"0199","bblTaxLotIn":"0199",
+                        "buildingIdentificationNumber":"2015741","condominiumBillingBbl":"0000000000","cooperativeIdNumber":"0000","firstBoroughName":"BRONX","geosupportFunctionCode":"BL",
+                        "geosupportReturnCode":"00","gi5DigitStreetCode1":"44020","giBoroughCode1":"2","giBuildingIdentificationNumber1":"2015741","giDcpPreferredLgc1":"01","giHighHouseNumber1":"3015",
+                        "giLowHouseNumber1":"3015","giSideOfStreetIndicator1":"L","giStreetCode1":"24402001","giStreetName1":"KINGSBRIDGE TERRACE","highBblOfThisBuildingsCondominiumUnits":"2032560199",
+                        "internalLabelXCoordinate":"1011291","internalLabelYCoordinate":"0258468","latitudeInternalLabel":40.876067820909981,"longitudeInternalLabel":-73.902219672060454,
+                        "lowBblOfThisBuildingsCondominiumUnits":"2032560199","lowHouseNumberOfDefiningAddressRange":"003015000AA","modeSwitchIn":"X","numberOfEntriesInListOfGeographicIdentifiers":"0001",
+                        "numberOfExistingStructuresOnLot":"0001","numberOfStreetFrontagesOfLot":"01","returnCode1a":"00","rpadBuildingClassificationCode":"B1","rpadSelfCheckCodeForBbl":"5",
+                        "sanbornBoroughCode":"2","sanbornPageNumber":"016","sanbornVolumeNumber":"13","taxMapNumberSectionAndVolume":"21201","workAreaFormatIndicatorIn":"C"}}
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCBIN(System.String)">
+            <summary>  
+                Use this method to get property address and physical data associated with a property in NYC
+            </summary>  
+            <param name="buildingIdentificationNumber">
+                BIN or Building Identification Number. 
+            </param>   
+            <returns>
+                Returns a Json Object. 
+                
+                Below is an example of return value
+                {"bin":{"bbl":"2032560199","bblBoroughCode":"2","bblTaxBlock":"03256","bblTaxLot":"0199","buildingIdentificationNumber":"2015741","buildingIdentificationNumberIn":"2015741",
+                        "condominiumBillingBbl":"0000000000","cooperativeIdNumber":"0000","firstBoroughName":"BRONX","geosupportFunctionCode":"BN","geosupportReturnCode":"00","gi5DigitStreetCode1":"44020",
+                        "giBoroughCode1":"2","giBuildingIdentificationNumber1":"2015741","giDcpPreferredLgc1":"01","giHighHouseNumber1":"3015","giLowHouseNumber1":"3015","giSideOfStreetIndicator1":"L",
+                        "giStreetCode1":"24402001","giStreetName1":"KINGSBRIDGE TERRACE","highBblOfThisBuildingsCondominiumUnits":"2032560199","internalLabelXCoordinate":"1011291",
+                        "internalLabelYCoordinate":"0258468","latitudeInternalLabel":40.876067820909981,"longitudeInternalLabel":-73.902219672060454,"lowBblOfThisBuildingsCondominiumUnits":"2032560199",
+                        "lowHouseNumberOfDefiningAddressRange":"003015000AA","modeSwitchIn":"X","numberOfEntriesInListOfGeographicIdentifiers":"0001","numberOfExistingStructuresOnLot":"0001",
+                        "numberOfStreetFrontagesOfLot":"01","returnCode1a":"00","rpadBuildingClassificationCode":"B1","rpadSelfCheckCodeForBbl":"5","sanbornBoroughCode":"2","sanbornPageNumber":"016",
+                        "sanbornVolumeNumber":"13","taxMapNumberSectionAndVolume":"21201","workAreaFormatIndicatorIn":"C"}}
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCPropertyDetails(System.String,System.String)">
+            <summary>  
+                Use this method to get property address and physical data associated with a property in NYC
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>   
+            <param name="addresscleanup">
+                Set to N if no address cleanup is required, default value is Y
+            </param>
+            <returns>
+                Returns an object of contain cleaned property address and general information about the property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PhysicalDataController.GetNYCPropertyDetails(System.String,System.String,System.String)">
+            <summary>  
+                Use this method to get property address and physical data associated with a property in NYC
+            </summary>  
+            <param name="streetNumber">
+                Street Number of the property without or without hyphens
+            </param>  
+            <param name="streetName">
+                Name of the street where property is located 
+            </param>
+            <param name="borough">
+                Borough in which property is located. Valid values are Manhattan, Bronx, Brooklyn, Queens and Staten Island
+            </param>   
+            <returns>
+                Returns an object of contain cleaned property address and general information about the property
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.Violations">
+            <summary>
+                This class is designed to capture all violations associated with a property. Currently, it only captures
+                DOB Civil Penalties and DOB ECB Violations Summary (total amounts)
+            </summary>
+            
+        </member>
+        <member name="F:PropertyWebAPI.Controllers.Violations.dobPenaltiesAndViolations">
+            <summary>
+                Captures sum of all DOB Civil Penalties and sum of all ECB Violations
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.ViolationsController">
+            <summary>  
+            This controller handles all api requests associated with property violations
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetViolations(System.String,System.String,System.String)">
+            <summary>  
+                Use this method to get a total of all violations/civil penalty amounts etc. associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="externalReferenceId">
+                This is an optional parameter. The user of the API can provide their own reference number for a request. This reference number is sent 
+                back along with results to the caller when their request is furnished asynchronously.
+            </param>
+            <param name="dobPenaltiesAndViolationsSummary">
+                Set this optional parameter to N if you do not want the DOB Civil Penalties. The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns totals for all violation/Penalties amounts associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBViolations(System.String,System.String)">
+            <summary>  
+                Use this method to get a list of all (active,closed or both) DOB Violations associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="active">
+                Set this optional parameter to N if you want the all closed DOB Violations or set the parameter to ignore if you want all violations.
+                The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns a list of DOB Violations associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBViolationsSummary(System.String)">
+            <summary>  
+                Use this method to get a summary of DOB Violations associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of DOB Violations associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetECBViolations(System.String,System.String)">
+            <summary>  
+                Use this method to get a list of all (active, closed or both) ECB Violations associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="active">
+                Set this optional parameter to N if you want the all closed ECB Violations or set the parameter to ignore if you want all violations.
+                The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns a list of ECB Violations associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetECBViolationsSummary(System.String)">
+            <summary>  
+                Use this method to get a summary of ECB Violations (across multiple agencies) associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of ECB Violations (across multiple agencies) associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetECBViolationsSummaryByAgency(System.String)">
+            <summary>  
+                Use this method to get a summary of ECB Violations by agency associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of ECB Violations by agency associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBCompliants(System.String,System.String)">
+            <summary>  
+                Use this method to get a list of all active DOB Complaints associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <param name="active">
+                Set this optional parameter to N if you want the all closed DOB Complaints or set the parameter to ignore if you want all violations.
+                The default value for this parameter is Y
+            </param>
+            <returns>
+                Returns a list of DOB Complaints associated with a property
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ViolationsController.GetDOBComplaintsSummary(System.String)">
+            <summary>  
+                Use this method to get a summary of DOB Complaints associated with a property
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number
+            </param>  
+            <returns>
+                Returns summary of DOB Complaints associated with a property
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.WebDataController">
+            <summary>
+                This controller handles callbacks from Web Scrapping Job Managers when requests are processed. It also provides
+                current state of the request
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.PostProcessRequestResult(System.Int64)">
+            <summary>  
+            The DJM uses this API to inform WebData service that the given request has been processed
+            </summary>  
+            <param name="requestId">
+                Id of the request whose results need to be processed 
+            </param>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.GetRequest(System.Int64)">
+            <summary>  
+                Use this method to get tax bill for a property
+            </summary>  
+            <param name="requestId">
+                requestId sent back in the response when request was made for a specific data.
+            </param>  
+            <returns>
+                Returns data associated with the requestId
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.GetRequestByExternalReferenceId(System.String)">
+            <summary>  
+                Use this method to get tax bill for a property
+            </summary>  
+            <param name="externalReferenceId">
+                The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+            </param>
+            <returns>
+                Returns data associated with the requestId
+            </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.CheckIfRequestsProcessed">
+            <summary>  
+                Use this method after the service comes up to process any requests that may be processed by DJM but not data services. This would 
+                happen in situations when the data services are down and the DJM is processing requests 
+            </summary>  
+            <returns>
+                void
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.ZillowController">
+            <summary>  
+                This controller handles all api requests associated with Zillow website
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.ZillowController.Get(System.String,System.String)">
+            <summary>  
+                Use this method to get property information from Zillow
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block and Lot. The first character is a number between 1-5 indicating the borough associated with the property, 
+                followed by 0 padded 5 digit block number and followed by 0 padded 4 digit lot number.
+            </param>  
+            <param name="externalReferenceId">
+                This is a optional parameter. The user of the API can provide their own reference number for a request. This reference number is sent 
+                back along with results to the caller when their request is furnished asynchronously.
+            </param>
+            <returns>
+                Returns zEstimate of the property
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.eCourts">
+            <summary>
+                All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.DataRequestLog">
+            <summary>
+                This class abstracts all detailed level operations associated with finding, inserting and updating records in the DataRequestLog table in WebData DB.
+                In essence it abstracts semantic level operations for the table in the context of the API 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetPendingRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
+            <summary>
+                Gets a DataRequestLog object(row) from the DataRequestLog table for a given BBL and type of request with Pending status 
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="RequestTypeId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetFirst(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets a DataRequestLog object(row) from the DataRequestLog table for a given RequestId
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAll(WebDataDB.WebDataEntities,System.String)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given externalReferenceId
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="externalRefereceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.GetAllUnprocessed(WebDataDB.WebDataEntities)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table that have a pending status but have a 
+                corresponding Request Object that is in error or completed successfully. This may happen when DJM is in session processing requests
+                and Data Services is down
+            </summary>
+            <param name="webDBEntities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsError(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.SetAsSuccess(WebDataDB.WebDataEntities,System.Int64)">
+            <summary>
+                Gets all DataRequestLog objects(rows) from the DataRequestLog table for a given RequestId and sets their status to Error
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String)">
+            <summary>
+                Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="propertyBBL"></param>
+            <param name="requestTypeId"></param>
+            <param name="requestId"></param>
+            <param name="externalReferenceId"></param>
+            <param name="requestParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.DAL.Request">
+            <summary>
+                This class abstracts all detailed level operations associated with finding, inserting and reading records in the Request table in WebData DB.
+                In essence it abstracts symantic level operations for the table in the context of the API 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
+            <summary>
+                Inserts a Request object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestStr">
+                Depending on the Request Type a helper class will be provided to convert business level variables into a string (in a specific format)
+                such that it is readable by the web scarpping service. 
+            </param>
+            <param name="requestTypeId"></param>
+            <param name="jobId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PropertyWebAPI.RequestStatus">
+            <summary>
+            Types of Request Status 
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.Success">
+            <summary>
+            For requests completed successfully
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.Error">
+            <summary>
+            For request that end up in error
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.Pending">
+            <summary>
+            For requesting waiting to be processed
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestStatus.SendForProcessing">
+            <summary>
+            For Requests send for Processing
+            </summary>
+        </member>
+        <member name="T:PropertyWebAPI.RequestTypes">
+            <summary>
+            Types of Requests
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.NYCTaxBill">
+            <summary>
+            Request for Tax bill
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.NYCDOBPenaltiesAndViolations">
+            <summary>
+            Request for DOB total Penalties and Violations amount due
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.NYCMortgageServicer">
+            <summary>
+            Request for name of the mortgage servicer
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.Zillow">
+            <summary>
+            Request for zEstimate value
+            </summary>
+        </member>
+        <member name="F:PropertyWebAPI.RequestTypes.NYCWaterBill">
+            <summary>
+            Request for Water bill
+            </summary>
+        </member>
+    </members>
+</doc>

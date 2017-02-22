@@ -92,7 +92,7 @@ namespace PropertyWebAPI.BAL
                 resultObj.taxBill.requestId = rec.RequestId;
                 resultObj.taxBill.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.taxBill.externalReferenceId = rec.ExternalReferenceId;
-                Portal.PostCallBack(resultObj);
+                CallingSystem.PostCallBack(resultObj);
             }
         }
 

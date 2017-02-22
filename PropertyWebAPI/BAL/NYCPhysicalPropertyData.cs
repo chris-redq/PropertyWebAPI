@@ -18,6 +18,7 @@ namespace PropertyWebAPI.BAL
     using Newtonsoft.Json.Linq;
     using NYCDOF;
     using AutoMapper;
+    using RequestResponseBuilder;
 
     #region Local Helper Classes
     /// <summary>  
@@ -112,7 +113,7 @@ namespace PropertyWebAPI.BAL
 
                 return JObject.Parse(response.Content.ReadAsStringAsync().Result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Common.Logs.log().Error(string.Format("Geoclient API call failed{0}", Common.Utilities.FormatException(e)));
                 return null;
@@ -199,19 +200,19 @@ namespace PropertyWebAPI.BAL
                             propertyInfo[0].StreetName = lotObj.StreetName;
                             propertyInfo[0].StreetNumber = lotObj.StreetNumber;
                             propertyInfo[0].UnitNumber = lotObj.UnitNumber;
-                       }
+                        }
                     }
 
                     if (propertyInfo == null || propertyInfo.Count <= 0)
                         return null;    //BBL not found 
-                    
+
                     GeneralAddress address = null;
                     GeneralPropertyInformation propertyDetails = new GeneralPropertyInformation();
 
                     //Clean address using GeoClinet API
                     JObject jsonObj = null;
                     if (addresscleanup)
-                        jsonObj=GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
+                        jsonObj = GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
 
                     if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address"))
                     {
@@ -231,7 +232,7 @@ namespace PropertyWebAPI.BAL
                             address.addressLine2 = "Unit #" + propertyInfo[0].UnitNumber;
                         address.city = StringUtilities.ToTitleCase(BAL.BBL.GetBoroughName(propertyBBL));
                         address.state = "NY";
-                        if (propertyInfo[0].ZipCode!=null)
+                        if (propertyInfo[0].ZipCode != null)
                             address.zip = propertyInfo[0].ZipCode;
                     }
                     propertyDetails.address = address;
@@ -288,7 +289,7 @@ namespace PropertyWebAPI.BAL
                         Common.Logs.log().Error(string.Format("Error finding record for BBLE {0} in Assessment", (string)jsonObj.SelectToken("address.bbl")));
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Common.Logs.log().Error(string.Format("Error reading data from NYCDOF{0}", Common.Utilities.FormatException(e)));
                 return null;
@@ -309,3 +310,4 @@ namespace PropertyWebAPI.BAL
         }
     }
 }
+    

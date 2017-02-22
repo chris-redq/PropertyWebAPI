@@ -25,9 +25,9 @@ namespace NYCDOB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Complaint> Complaints { get; set; }
         public virtual DbSet<Violation> Violations { get; set; }
-        public virtual DbSet<vwComplaintsSummary> vwComplaintsSummaries { get; set; }
         public virtual DbSet<vwViolationSummary> vwViolationSummaries { get; set; }
+        public virtual DbSet<Complaint> Complaints { get; set; }
+        public virtual DbSet<vwComplaintsSummary> vwComplaintsSummaries { get; set; }
     }
 }

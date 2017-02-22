@@ -109,7 +109,10 @@ namespace PropertyWebAPI.Controllers
                         result.dobPenaltiesAndViolationsSummary = BAL.DOBPenaltiesAndViolationsSummary.ReRun(requestLogObj);
                         return Ok(result);
                     case (int)RequestTypes.Zillow:
-                        result.zillowPorperty = BAL.Zillow.ReRun(requestLogObj);
+                        result.zillowProperty = BAL.Zillow.ReRun(requestLogObj);
+                        return Ok(result);
+                    case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                        result.noticeOfPropertyValueResult = BAL.NoticeOfPropertyValueService.ReRun(requestLogObj);
                         return Ok(result);
                     default:
                         return BadRequest("Bad Request - Incorrect Request Type");
@@ -154,7 +157,10 @@ namespace PropertyWebAPI.Controllers
                             result.dobPenaltiesAndViolationsSummary = BAL.DOBPenaltiesAndViolationsSummary.ReRun(requestLogObj);
                             break;
                         case (int)RequestTypes.Zillow:
-                            result.zillowPorperty = BAL.Zillow.ReRun(requestLogObj);
+                            result.zillowProperty = BAL.Zillow.ReRun(requestLogObj);
+                            break;
+                        case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                            result.noticeOfPropertyValueResult = BAL.NoticeOfPropertyValueService.ReRun(requestLogObj);
                             break;
                         default:
                             break;
@@ -215,6 +221,12 @@ namespace PropertyWebAPI.Controllers
                                 break;
                             case (int)RequestTypes.Zillow:
                                 if (BAL.Zillow.UpdateData(requestObj))
+                                {
+
+                                }
+                                break;
+                            case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                                if (BAL.NoticeOfPropertyValueService.UpdateData(requestObj))
                                 {
 
                                 }

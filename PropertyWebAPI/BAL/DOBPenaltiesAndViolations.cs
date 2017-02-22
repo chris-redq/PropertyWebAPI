@@ -98,7 +98,7 @@ namespace PropertyWebAPI.BAL
                 resultObj.dobPenaltiesAndViolationsSummary.requestId = rec.RequestId;
                 resultObj.dobPenaltiesAndViolationsSummary.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.dobPenaltiesAndViolationsSummary.externalReferenceId = rec.ExternalReferenceId;
-                Portal.PostCallBack(resultObj);
+                CallingSystem.PostCallBack(resultObj);
             }
         }
 
@@ -264,12 +264,12 @@ namespace PropertyWebAPI.BAL
                                     {
                                         decimal dobTotalPenaltyAmount = 0;
                                         decimal dobTotalViolationAmount = 0;
-                                        
-                                        foreach (var row in ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData))
-                                        {
+
+                                        foreach (var row in ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData).DOBCivilPenalties)
                                             dobTotalPenaltyAmount += row.DOBCivilPenaltyAmount.GetValueOrDefault();
+
+                                        foreach (var row in ResponseData.ParseECBviolationAndDOBCivilPenalty(requestObj.ResponseData).ECBViolations)
                                             dobTotalViolationAmount += row.ECBPenaltyDue.GetValueOrDefault();
-                                        }
 
                                         penaltyAmount = dobTotalPenaltyAmount;
                                         violationAmount = dobTotalViolationAmount;

@@ -35,8 +35,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="BoroughName" Type="varchar" MaxLength="13" />
           <Property Name="Block" Type="float" />
           <Property Name="Lot" Type="float" />
-          <Property Name="StreetNumber" Type="varchar" MaxLength="12" />
-          <Property Name="StreetName" Type="nvarchar" MaxLength="20" />
+          <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
+          <Property Name="StreetName" Type="varchar(max)" />
           <Property Name="ZipCode" Type="varchar" MaxLength="30" />
           <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
           <Property Name="NTACode" Type="varchar" MaxLength="4" />
@@ -93,6 +93,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="IsSRORestricted" Type="int" />
           <Property Name="IsLandmark" Type="int" />
           <Property Name="ServicerName" Type="varchar" MaxLength="250" />
+          <Property Name="AVGLowPrice" Type="float" />
+          <Property Name="AVGLowPriceNoLP" Type="float" />
+          <Property Name="MedianPrice" Type="float" />
+          <Property Name="AVGHighPice" Type="float" />
         </EntityType>
         <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
           <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
@@ -194,7 +198,11 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     [vwGeneralLeadInfomation].[Grade] AS [Grade], 
     [vwGeneralLeadInfomation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralLeadInfomation].[ServicerName] AS [ServicerName]
+    [vwGeneralLeadInfomation].[ServicerName] AS [ServicerName], 
+    [vwGeneralLeadInfomation].[AVGLowPrice] AS [AVGLowPrice], 
+    [vwGeneralLeadInfomation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
+    [vwGeneralLeadInfomation].[MedianPrice] AS [MedianPrice], 
+    [vwGeneralLeadInfomation].[AVGHighPice] AS [AVGHighPice]
     FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -273,8 +281,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="BoroughName" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="Block" Type="Double" />
           <Property Name="Lot" Type="Double" />
-          <Property Name="StreetNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
@@ -331,6 +339,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="IsSRORestricted" Type="Int32" />
           <Property Name="IsLandmark" Type="Int32" />
           <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AVGLowPrice" Type="Double" />
+          <Property Name="AVGLowPriceNoLP" Type="Double" />
+          <Property Name="MedianPrice" Type="Double" />
+          <Property Name="AVGHighPice" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -341,6 +353,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <EntitySetMapping Name="vwGeneralLeadInfomations">
             <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInfomation">
               <MappingFragment StoreEntitySet="vwGeneralLeadInfomation">
+                <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
+                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+                <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
+                <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
                 <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
                 <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
                 <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
@@ -424,7 +440,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
           <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -104,6 +104,9 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RequestResponseBuilder">
+      <HintPath>..\..\WebdataJobManager\WebDataJobManager\RequestResponseBuilder\bin\Release\RequestResponseBuilder.dll</HintPath>
+    </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.5.3\lib\net40\Swashbuckle.Core.dll</HintPath>
       <Private>True</Private>
@@ -216,6 +219,7 @@
     <Compile Include="BAL\BBL.cs" />
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
     <Compile Include="BAL\Lead.cs" />
+    <Compile Include="BAL\NoticeOfPropertyValue.cs" />
     <Compile Include="BAL\Portal.cs" />
     <Compile Include="BAL\Results.cs" />
     <Compile Include="Controllers\CMAController.cs" />

@@ -717,5 +717,196 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetDocumentExtractForCase" FunctionName="NYCOURTSModel.Store.tfnGetDocumentExtractForCase">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetDocumentExtractForCase_Result">
+          <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+          <ScalarProperty Name="CaseIndexNumberExternal" ColumnName="CaseIndexNumberExternal" />
+          <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentDescription" ColumnName="DocumentDescription" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="DocumentStatus" ColumnName="DocumentStatus" />
+          <ScalarProperty Name="CaseCaption" ColumnName="CaseCaption" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="vwCaseByJudgeReliefSoughts">
+      <EntityTypeMapping TypeName="NYCOURTSModel.vwCaseByJudgeReliefSought">
+        <MappingFragment StoreEntitySet="vwCaseByJudgeReliefSought">
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="DateForeclosureSettelementConfHeld" ColumnName="DateForeclosureSettelementConfHeld" />
+          <ScalarProperty Name="DateForeclosureSettelementConfScheduled" ColumnName="DateForeclosureSettelementConfScheduled" />
+          <ScalarProperty Name="DateOfGoodService" ColumnName="DateOfGoodService" />
+          <ScalarProperty Name="IsEfiled" ColumnName="IsEfiled" />
+          <ScalarProperty Name="PrivateCaseIndicator" ColumnName="PrivateCaseIndicator" />
+          <ScalarProperty Name="LastComplianceConferenceDate" ColumnName="LastComplianceConferenceDate" />
+          <ScalarProperty Name="ComplianceConferenceHeldDate" ColumnName="ComplianceConferenceHeldDate" />
+          <ScalarProperty Name="ComplianceConferenceSchdDate" ColumnName="ComplianceConferenceSchdDate" />
+          <ScalarProperty Name="PreliminaryConferenceHeldDate" ColumnName="PreliminaryConferenceHeldDate" />
+          <ScalarProperty Name="LatestPreliminaryConferenceSchdDate" ColumnName="LatestPreliminaryConferenceSchdDate" />
+          <ScalarProperty Name="LatestPreliminaryConferenceReqDate" ColumnName="LatestPreliminaryConferenceReqDate" />
+          <ScalarProperty Name="LatestPreTrialConferenceHeldDate" ColumnName="LatestPreTrialConferenceHeldDate" />
+          <ScalarProperty Name="LatestPreTrialConfSchdDate" ColumnName="LatestPreTrialConfSchdDate" />
+          <ScalarProperty Name="LatestStatusConferenceHeldDate" ColumnName="LatestStatusConferenceHeldDate" />
+          <ScalarProperty Name="LatestStatusConferenceSchdDate" ColumnName="LatestStatusConferenceSchdDate" />
+          <ScalarProperty Name="NOIDueDate" ColumnName="NOIDueDate" />
+          <ScalarProperty Name="CertOfReadinessDueDate" ColumnName="CertOfReadinessDueDate" />
+          <ScalarProperty Name="DateCertOfReadinessFiled" ColumnName="DateCertOfReadinessFiled" />
+          <ScalarProperty Name="DateRJIEntered" ColumnName="DateRJIEntered" />
+          <ScalarProperty Name="NumberOfCarrierRecords" ColumnName="NumberOfCarrierRecords" />
+          <ScalarProperty Name="NumberOfAttorneyRecords" ColumnName="NumberOfAttorneyRecords" />
+          <ScalarProperty Name="NumberOfTitleRecords" ColumnName="NumberOfTitleRecords" />
+          <ScalarProperty Name="BillOfParticularServed" ColumnName="BillOfParticularServed" />
+          <ScalarProperty Name="AmountSuedFor" ColumnName="AmountSuedFor" />
+          <ScalarProperty Name="PROSEIndicator" ColumnName="PROSEIndicator" />
+          <ScalarProperty Name="PostDispositionActionJudgeName" ColumnName="PostDispositionActionJudgeName" />
+          <ScalarProperty Name="PostDispositionActionJudgeId" ColumnName="PostDispositionActionJudgeId" />
+          <ScalarProperty Name="TimeStampLastIASInformationEntered" ColumnName="TimeStampLastIASInformationEntered" />
+          <ScalarProperty Name="IASAssignmentDate" ColumnName="IASAssignmentDate" />
+          <ScalarProperty Name="IASJudgeName" ColumnName="IASJudgeName" />
+          <ScalarProperty Name="IASJudgeId" ColumnName="IASJudgeId" />
+          <ScalarProperty Name="IASCategory" ColumnName="IASCategory" />
+          <ScalarProperty Name="IASCategoryId" ColumnName="IASCategoryId" />
+          <ScalarProperty Name="PreliminaryCalendarNumber" ColumnName="PreliminaryCalendarNumber" />
+          <ScalarProperty Name="LandUse" ColumnName="LandUse" />
+          <ScalarProperty Name="AmountAwarded" ColumnName="AmountAwarded" />
+          <ScalarProperty Name="AssessmentAmount" ColumnName="AssessmentAmount" />
+          <ScalarProperty Name="PropertySchoolDistrict" ColumnName="PropertySchoolDistrict" />
+          <ScalarProperty Name="PropertyLot" ColumnName="PropertyLot" />
+          <ScalarProperty Name="PropertyBlock" ColumnName="PropertyBlock" />
+          <ScalarProperty Name="PropertySection" ColumnName="PropertySection" />
+          <ScalarProperty Name="ActualTrialTime" ColumnName="ActualTrialTime" />
+          <ScalarProperty Name="EstimatedTrialTime" ColumnName="EstimatedTrialTime" />
+          <ScalarProperty Name="CommentForOtherRJIType" ColumnName="CommentForOtherRJIType" />
+          <ScalarProperty Name="RJICourtPart" ColumnName="RJICourtPart" />
+          <ScalarProperty Name="RJICourtPartId" ColumnName="RJICourtPartId" />
+          <ScalarProperty Name="DateOfRJI" ColumnName="DateOfRJI" />
+          <ScalarProperty Name="TypeOfRJI" ColumnName="TypeOfRJI" />
+          <ScalarProperty Name="RJITypeCode" ColumnName="RJITypeCode" />
+          <ScalarProperty Name="JoinedCaseNextIndex" ColumnName="JoinedCaseNextIndex" />
+          <ScalarProperty Name="JoinedCasePreviousIndex" ColumnName="JoinedCasePreviousIndex" />
+          <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+          <ScalarProperty Name="SpecialPreference" ColumnName="SpecialPreference" />
+          <ScalarProperty Name="GeneralPreference" ColumnName="GeneralPreference" />
+          <ScalarProperty Name="DamagesSought" ColumnName="DamagesSought" />
+          <ScalarProperty Name="ActionOrCaseTypeDescription" ColumnName="ActionOrCaseTypeDescription" />
+          <ScalarProperty Name="ActionOrCaseType" ColumnName="ActionOrCaseType" />
+          <ScalarProperty Name="ActionOrCaseTypeId" ColumnName="ActionOrCaseTypeId" />
+          <ScalarProperty Name="JuryStatusRequestDate3" ColumnName="JuryStatusRequestDate3" />
+          <ScalarProperty Name="JuryStatus3" ColumnName="JuryStatus3" />
+          <ScalarProperty Name="JuryStatusRequestDate2" ColumnName="JuryStatusRequestDate2" />
+          <ScalarProperty Name="JuryStatus2" ColumnName="JuryStatus2" />
+          <ScalarProperty Name="JuryStatusRequestDate1" ColumnName="JuryStatusRequestDate1" />
+          <ScalarProperty Name="JuryStatus1" ColumnName="JuryStatus1" />
+          <ScalarProperty Name="DateIssueJoined" ColumnName="DateIssueJoined" />
+          <ScalarProperty Name="TimeStampNOIEntered" ColumnName="TimeStampNOIEntered" />
+          <ScalarProperty Name="DateNOIFiled" ColumnName="DateNOIFiled" />
+          <ScalarProperty Name="DateRJIFiled" ColumnName="DateRJIFiled" />
+          <ScalarProperty Name="PostNOIDispositionDeadlineDate" ColumnName="PostNOIDispositionDeadlineDate" />
+          <ScalarProperty Name="RJIPreNOIDeadlineDate" ColumnName="RJIPreNOIDeadlineDate" />
+          <ScalarProperty Name="RJIDispositionDeadlineDate" ColumnName="RJIDispositionDeadlineDate" />
+          <ScalarProperty Name="CaseComplexity" ColumnName="CaseComplexity" />
+          <ScalarProperty Name="MunicipalityInvolvement" ColumnName="MunicipalityInvolvement" />
+          <ScalarProperty Name="DefendantName" ColumnName="DefendantName" />
+          <ScalarProperty Name="PlaintiffName" ColumnName="PlaintiffName" />
+          <ScalarProperty Name="PreIASTAPName" ColumnName="PreIASTAPName" />
+          <ScalarProperty Name="PreIASTAPId" ColumnName="PreIASTAPId" />
+          <ScalarProperty Name="PreIASJHOName" ColumnName="PreIASJHOName" />
+          <ScalarProperty Name="PreIASJHOId" ColumnName="PreIASJHOId" />
+          <ScalarProperty Name="NumberOfComments" ColumnName="NumberOfComments" />
+          <ScalarProperty Name="PremliminaryConferenceIndicator" ColumnName="PremliminaryConferenceIndicator" />
+          <ScalarProperty Name="CourtCalendarNumber" ColumnName="CourtCalendarNumber" />
+          <ScalarProperty Name="PostDispositionIndicator" ColumnName="PostDispositionIndicator" />
+          <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+          <ScalarProperty Name="CourtType" ColumnName="CourtType" />
+          <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+          <ScalarProperty Name="CaseIndexNumberExternal" ColumnName="CaseIndexNumberExternal" />
+          <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="ReliefSought" ColumnName="ReliefSought" />
+          <ScalarProperty Name="Judge" ColumnName="Judge" />
+          <ScalarProperty Name="JudgeId" ColumnName="JudgeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwJudgeReliefSought5NumberSummary">
+      <EntityTypeMapping TypeName="NYCOURTSModel.vwJudgeReliefSought5NumberSummary">
+        <MappingFragment StoreEntitySet="vwJudgeReliefSought5NumberSummary">
+          <ScalarProperty Name="MaxDays" ColumnName="MaxDays" />
+          <ScalarProperty Name="DaysWithin75Percentile" ColumnName="DaysWithin75Percentile" />
+          <ScalarProperty Name="AvgDays" ColumnName="AvgDays" />
+          <ScalarProperty Name="MedianDays" ColumnName="MedianDays" />
+          <ScalarProperty Name="DaysWithin25Percentile" ColumnName="DaysWithin25Percentile" />
+          <ScalarProperty Name="MinDays" ColumnName="MinDays" />
+          <ScalarProperty Name="Instances" ColumnName="Instances" />
+          <ScalarProperty Name="ReliefSought" ColumnName="ReliefSought" />
+          <ScalarProperty Name="Judge" ColumnName="Judge" />
+          <ScalarProperty Name="JudgeId" ColumnName="JudgeId" />
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwMotionSummaryByJudgeReliefSoughts">
+      <EntityTypeMapping TypeName="NYCOURTSModel.vwMotionSummaryByJudgeReliefSought">
+        <MappingFragment StoreEntitySet="vwMotionSummaryByJudgeReliefSought">
+          <ScalarProperty Name="TotalInstances" ColumnName="TotalInstances" />
+          <ScalarProperty Name="Other" ColumnName="Other" />
+          <ScalarProperty Name="Withdrawn" ColumnName="Withdrawn" />
+          <ScalarProperty Name="Granted" ColumnName="Granted" />
+          <ScalarProperty Name="Denied" ColumnName="Denied" />
+          <ScalarProperty Name="ReliefSought" ColumnName="ReliefSought" />
+          <ScalarProperty Name="Judge" ColumnName="Judge" />
+          <ScalarProperty Name="JudgeId" ColumnName="JudgeId" />
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwMotionSummaryByReliefSoughts">
+      <EntityTypeMapping TypeName="NYCOURTSModel.vwMotionSummaryByReliefSought">
+        <MappingFragment StoreEntitySet="vwMotionSummaryByReliefSought">
+          <ScalarProperty Name="TotalInstances" ColumnName="TotalInstances" />
+          <ScalarProperty Name="Other" ColumnName="Other" />
+          <ScalarProperty Name="Withdrawn" ColumnName="Withdrawn" />
+          <ScalarProperty Name="Granted" ColumnName="Granted" />
+          <ScalarProperty Name="Denied" ColumnName="Denied" />
+          <ScalarProperty Name="ReliefSought" ColumnName="ReliefSought" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="tfnActiveLPsForaProperty" FunctionName="NYCOURTSModel.Store.tfnActiveLPsForaProperty">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnActiveLPsForaProperty_Result">
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+          <ScalarProperty Name="JDLSCountyId" ColumnName="JDLSCountyId" />
+          <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+          <ScalarProperty Name="Seq" ColumnName="Seq" />
+          <ScalarProperty Name="SourceDocument" ColumnName="SourceDocument" />
+          <ScalarProperty Name="SourceDocumentIndexNumber" ColumnName="SourceDocumentIndexNumber" />
+          <ScalarProperty Name="Debtor" ColumnName="Debtor" />
+          <ScalarProperty Name="Creditor" ColumnName="Creditor" />
+          <ScalarProperty Name="DataEntryDateTime" ColumnName="DataEntryDateTime" />
+          <ScalarProperty Name="EffectiveDateTime" ColumnName="EffectiveDateTime" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <ScalarProperty Name="SatisfactionDate" ColumnName="SatisfactionDate" />
+          <ScalarProperty Name="SatisfactionType" ColumnName="SatisfactionType" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="CCISLookupCaseIndexNumber" ColumnName="CCISLookupCaseIndexNumber" />
+          <ScalarProperty Name="ActiveCase" ColumnName="ActiveCase" />
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+          <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+          <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+          <ScalarProperty Name="CaseType" ColumnName="CaseType" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="LienType" ColumnName="LienType" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

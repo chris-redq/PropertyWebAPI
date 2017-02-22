@@ -14,7 +14,6 @@ namespace NYCDOB
     
     public partial class Complaint
     {
-        public long ComplaintId { get; set; }
         public string BIN { get; set; }
         public string BBL { get; set; }
         public string ComplaintNumber { get; set; }
@@ -32,7 +31,5 @@ namespace NYCDOB
         public string DispositionCode { get; set; }
         public Nullable<System.DateTime> InspectionDate { get; set; }
         public string InvalidInspectionDate { get; set; }
-        public Nullable<System.DateTime> DOBRunDate { get; set; }
-        public string InvalidDOBRunDate { get; set; }
     }
 }

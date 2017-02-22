@@ -1,0 +1,9 @@
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\NYCMADB.dll.config
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\NYCMADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\NYCMADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\EntityFramework.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\EntityFramework.SqlServer.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\EntityFramework.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\EntityFramework.SqlServer.xml
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\obj\Release\NYCMADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\obj\Release\NYCMADB.pdb

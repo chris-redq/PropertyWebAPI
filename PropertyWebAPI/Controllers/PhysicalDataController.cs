@@ -293,6 +293,37 @@ namespace PropertyWebAPI.Controllers
                 return NotFound();
             return Ok(propertyDetails);
         }
+
+        // ../api/api/physicaldata/nyc/NoticeOfPropertyValue?externalReferenceId=135
+        /// <summary>  
+        ///     Use this api to get property information from the latest Notice of Property Value (NOPV) 
+        /// </summary>  
+        /// <param name="propertyBBL">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+        /// </param>  
+        /// <param name="externalReferenceId">
+        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+        /// </param>
+        /// <returns>
+        ///     Returns property information from the latest Notice of Property Value (NOPV)
+        /// </returns>
+        [Route("api/api/physicaldata/nyc/{propertyBBL}/NoticeOfPropertyValue")]
+        [ResponseType(typeof(BAL.NoticeOfPropertyValueResult))]
+        public IHttpActionResult GetNoticeOfPropertyValue(string propertyBBL, string externalReferenceId = null)
+        {
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+            
+            if (!BAL.BBL.IsValid(propertyBBL))
+                return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
+
+            var resultObj = BAL.NoticeOfPropertyValueService.Get(propertyBBL, externalReferenceId);
+            if (resultObj == null)
+                return Common.HttpResponse.InternalError(Request, "Internal Server Error");
+            // return final result
+            return Ok(resultObj);
+        }
         #endregion
     }
 }

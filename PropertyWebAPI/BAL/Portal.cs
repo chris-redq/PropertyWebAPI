@@ -19,7 +19,7 @@ namespace PropertyWebAPI.BAL
     using AutoMapper;
     using System.Net.Http.Headers;
 
-    public class Portal
+    public class CallingSystem
     {
         /// <summary>  
         ///     Helper class for relevant api information to connect and  
@@ -31,8 +31,11 @@ namespace PropertyWebAPI.BAL
             public string callbackapi;
         }
 
-        private static ApiDetails GetApiDetails()
+        private static ApiDetails GetApiDetails(string username)
         {
+            if (username.ToLower() != "portal")
+                return null;
+
             ApiDetails apiDetails = new ApiDetails();
 
             apiDetails.baseURL = AppSettings.Get(AppSettings.PORTAL_BASE_URL);
@@ -47,15 +50,19 @@ namespace PropertyWebAPI.BAL
         /// </summary>  
         public static void PostCallBack(BAL.Results result)
         {
-            ApiDetails apiDetails = GetApiDetails();
+            string username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
-            PostCallBack(apiDetails.baseURL, apiDetails.callbackapi, apiDetails.apiKey, result);
+            ApiDetails apiDetails = GetApiDetails(username);
+            if (apiDetails == null)
+                return;
+
+            PostCallBack(apiDetails.baseURL, apiDetails.callbackapi, apiDetails.apiKey, username, result);
         }
 
         /// <summary>  
         ///     Method returns address corrections and details based on street number, street address and borough for NYC properties
         /// </summary>  
-        public static void PostCallBack(string baseURL, string api, string apiKey, BAL.Results result)
+        public static void PostCallBack(string baseURL, string api, string apiKey, string username, BAL.Results result)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri(baseURL);
@@ -68,12 +75,12 @@ namespace PropertyWebAPI.BAL
                 HttpResponseMessage response = client.PostAsJsonAsync(api, result).Result;
                 if (!response.IsSuccessStatusCode)
                 {
-                    Common.Logs.log().Error(string.Format("Portal API callback failed with status code", response.StatusCode));
+                    Common.Logs.log().Error(string.Format("{0} API callback failed with status code {1}", username, response.StatusCode));
                 }
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Portal API callback failed{0}", Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("{0} API callback failed{1}", username, Common.Utilities.FormatException(e)));
             }
         }
     }
