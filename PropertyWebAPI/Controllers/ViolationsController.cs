@@ -114,7 +114,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -147,7 +147,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -187,7 +187,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -220,7 +220,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -253,7 +253,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -292,7 +292,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -326,7 +326,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }

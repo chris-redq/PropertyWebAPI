@@ -138,6 +138,10 @@
       <EntityTypeMapping TypeName="WebDataModel.NoticeOfProperyValue">
         <MappingFragment StoreEntitySet="NoticeOfProperyValue">
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="ResidentialLots" ColumnName="ResidentialLots" />
+          <ScalarProperty Name="NetSqFtOfLotFromCondoDeclaration" ColumnName="NetSqFtOfLotFromCondoDeclaration" />
+          <ScalarProperty Name="LandFactorperSquareFoot" ColumnName="LandFactorperSquareFoot" />
+          <ScalarProperty Name="CommercialLots" ColumnName="CommercialLots" />
           <ScalarProperty Name="GrossSquareFootageOfTheSuffix" ColumnName="GrossSquareFootageOfTheSuffix" />
           <ScalarProperty Name="NumberOfCommercialLots" ColumnName="NumberOfCommercialLots" />
           <ScalarProperty Name="NumberOfResidentialLots" ColumnName="NumberOfResidentialLots" />
@@ -177,7 +181,18 @@
           <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
           <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
           <ScalarProperty Name="PrimaryZoning" ColumnName="PrimaryZoning" />
-          <ScalarProperty Name="BuildingClassCode" ColumnName="BuildingClassCode" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mortgages">
+      <EntityTypeMapping TypeName="WebDataModel.Mortgage">
+        <MappingFragment StoreEntitySet="Mortgage">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="MortgageAmounts" ColumnName="MortgageAmounts" />
+          <ScalarProperty Name="FHACaseNumber" ColumnName="FHACaseNumber" />
+          <ScalarProperty Name="MortgageDocumentURI" ColumnName="MortgageDocumentURI" />
           <ScalarProperty Name="BBL" ColumnName="BBL" />
         </MappingFragment>
       </EntityTypeMapping>

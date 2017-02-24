@@ -162,7 +162,7 @@ namespace PropertyWebAPI.DAL
                 }
                 catch(Exception e)
                 {   Common.Logs.log().Error(string.Format("Exception encountered request for BBL {0} for Request Type {1} with externalRefId {2}{3}", propertyBBL, 
-                                                          ((RequestStatus)requestTypeId).ToString(), externalReferenceId, Common.Utilities.FormatException(e)));
+                                                          ((RequestStatus)requestTypeId).ToString(), externalReferenceId, Common.Logs.FormatException(e)));
                     return null;
                 }
             }

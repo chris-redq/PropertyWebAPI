@@ -15,7 +15,7 @@ namespace WebDataDB
     public partial class NoticeOfProperyValue
     {
         public string BBL { get; set; }
-        public string BuildingClassCode { get; set; }
+        public string BuildingClass { get; set; }
         public string PrimaryZoning { get; set; }
         public Nullable<decimal> LotFrontage { get; set; }
         public Nullable<decimal> LotDepth { get; set; }
@@ -55,6 +55,10 @@ namespace WebDataDB
         public Nullable<int> NumberOfResidentialLots { get; set; }
         public Nullable<int> NumberOfCommercialLots { get; set; }
         public Nullable<decimal> GrossSquareFootageOfTheSuffix { get; set; }
+        public Nullable<int> CommercialLots { get; set; }
+        public Nullable<decimal> LandFactorperSquareFoot { get; set; }
+        public Nullable<decimal> NetSqFtOfLotFromCondoDeclaration { get; set; }
+        public Nullable<int> ResidentialLots { get; set; }
         public System.DateTime LastUpdated { get; set; }
     }
 }

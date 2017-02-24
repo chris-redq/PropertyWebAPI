@@ -69,6 +69,9 @@
     <Compile Include="FreddieMortgage.cs">
       <DependentUpon>WebDataDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Mortgage.cs">
+      <DependentUpon>WebDataDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MortgageServicer.cs">
       <DependentUpon>WebDataDBModel.tt</DependentUpon>
     </Compile>

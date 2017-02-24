@@ -33,7 +33,7 @@ namespace PropertyWebAPI.BAL
 
         private static ApiDetails GetApiDetails(string username)
         {
-            if (username.ToLower() != "portal")
+            if (username != "portal")
                 return null;
 
             ApiDetails apiDetails = new ApiDetails();
@@ -48,9 +48,9 @@ namespace PropertyWebAPI.BAL
         /// <summary>  
         ///     Method returns address corrections and details based on street number, street address and borough for NYC properties
         /// </summary>  
-        public static void PostCallBack(BAL.Results result)
+        public static void PostCallBack(Common.Context appContext, BAL.Results result)
         {
-            string username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            string username = appContext.getUserName().ToLower();
 
             ApiDetails apiDetails = GetApiDetails(username);
             if (apiDetails == null)
@@ -80,7 +80,18 @@ namespace PropertyWebAPI.BAL
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("{0} API callback failed{1}", username, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("{0} API callback failed{1}", username, Common.Logs.FormatException(e)));
+            }
+        }
+
+        public static bool isAnyCallBack(Common.Context appContext)
+        {
+            switch (appContext.getUserName().ToLower())
+            {
+                case "portal":
+                    return true;
+                default:
+                    return false;
             }
         }
     }

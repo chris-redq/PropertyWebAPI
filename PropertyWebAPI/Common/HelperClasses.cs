@@ -13,6 +13,7 @@ using NYCVNL;
 using log4net;
 using AutoMapper;
 using System.Text.RegularExpressions;
+using System.Web.Http.Controllers;
 
 namespace PropertyWebAPI.Common
 {
@@ -55,6 +56,8 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
                 cfg.CreateMap<ShowCMASubject_Result, DAL.SubjectDetails>();
                 cfg.CreateMap<tfnActiveLPsForaProperty_Result, DAL.LPDetail>();
+                cfg.CreateMap<RequestResponseBuilder.ResponseObjects.NoticeOfPropertyValue, WebDataDB.NoticeOfProperyValue>();
+               
             });
         }
     }
@@ -67,6 +70,43 @@ namespace PropertyWebAPI.Common
         }
     }
 
+    public class Context
+    {
+        private const string HttpContext = "MS_HttpContext";
+        private const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
+
+        private string userName;
+        private string userIPAddress;
+
+        public Context(HttpRequestContext requestContext, HttpRequestMessage request)
+        {
+            userName = requestContext.Principal.Identity.Name;
+
+            if (request.Properties.ContainsKey(HttpContext))
+            {
+                dynamic ctx = request.Properties[HttpContext];
+                if (ctx != null)
+                {
+                    userIPAddress=ctx.Request.UserHostAddress;
+                }
+            }
+            else if (request.Properties.ContainsKey(RemoteEndpointMessage))
+            {
+                dynamic remoteEndpoint = request.Properties[RemoteEndpointMessage];
+                if (remoteEndpoint != null)
+                {
+                    userIPAddress=remoteEndpoint.Address;
+                }
+            }
+        }
+
+        public string getUserName()
+        {
+            return userName;
+        }
+    } 
+
+    #region Logs Class
     public static class Logs
     {
         public static void Init()
@@ -93,13 +133,93 @@ namespace PropertyWebAPI.Common
             return LogManager.GetLogger(str);
         }
 
-    }
-
-    public static class Utilities
-    {
         public static string FormatException(Exception e)
         {
             return "\r\n\r\n" + e.ToString() + "\r\n";
         }
     }
+    #endregion
+
+    #region Conversions Class
+    public static class Conversions
+    {
+        public static string FilterNumericOnly(string val)
+        {
+            string outstr = "";
+            if (val == null)
+                return null;
+            foreach(var p in val)
+            {
+                if ((p>='0' && p<='9') || p=='.')
+                    outstr += p;
+            }
+            return outstr;
+        }
+
+        public static Decimal? ToDecimalorNull(IList<string> lst)
+        {
+            return ToDecimalorNull(GetSingleValue(lst));
+        }
+
+        public static Decimal? ToDecimalorNull(string val)
+        {
+            if (val == null)
+                return null;
+            val = FilterNumericOnly(val);
+            if (!string.IsNullOrWhiteSpace(val))
+                return Convert.ToDecimal(val);
+            return null;
+        }
+
+        public static int? ToIntorNull(IList<string> lst)
+        {
+            return ToIntorNull(GetSingleValue(lst));
+        }
+
+        public static int? ToIntorNull(string val)
+        {
+            if (val == null)
+                return null;
+            val = FilterNumericOnly(val);
+            if (!string.IsNullOrWhiteSpace(val))
+                return Convert.ToInt32(val);
+            return null;
+        }
+
+        public static string GetSingleValue(IList<string> lst)
+        {
+            if (lst == null)
+                return null;
+
+            foreach (var p in lst)
+            {
+                if (!string.IsNullOrWhiteSpace(p))
+                    return p.Trim();
+            }
+            return null;    
+        }
+
+        public static string Concat(IList<string> lst)
+        {
+
+            if (lst == null)
+                return null;
+
+            string outstr = "";
+
+            foreach (var p in lst)
+            {
+                if (!string.IsNullOrWhiteSpace(p))
+                {   if (outstr == "")
+                        outstr = p.Trim();
+                    else
+                        outstr = "~~~" + p.Trim();
+                }
+            }
+            if (outstr == "")
+               return null;
+            return outstr;
+        }
+    }
+    #endregion
 }

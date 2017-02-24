@@ -219,7 +219,8 @@
     <Compile Include="BAL\BBL.cs" />
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
     <Compile Include="BAL\Lead.cs" />
-    <Compile Include="BAL\NoticeOfPropertyValue.cs" />
+    <Compile Include="BAL\MortgageDocument.cs" />
+    <Compile Include="BAL\NoticeOfPropertyValueDocument.cs" />
     <Compile Include="BAL\Portal.cs" />
     <Compile Include="BAL\Results.cs" />
     <Compile Include="Controllers\CMAController.cs" />

@@ -59,12 +59,18 @@ namespace PropertyWebAPI
         /// <summary>
         /// Request for Water bill
         /// </summary>
-        NYCWaterBill = 1005,
+        NYCWaterBill = 2000,
 
         /// <summary>
         /// Request for Notice Of Property Value
         /// </summary>
-        NYCNoticeOfPropertyValue = 1007
+        NYCNoticeOfPropertyValue = 1006,
+
+        /// <summary>
+        /// Request for Mortgage Document Details
+        /// </summary>
+        NYCMortgageDocumentDetails = 1005
+
 
 
     }

@@ -96,8 +96,11 @@ namespace PropertyWebAPI.BAL
         /// </summary>
         /// <param name="zEstimate"></param>
         /// <param name="logs">List or Request Log Records</param>
-        private static void MakePortalCallBacks(List<DataRequestLog> logs, Decimal? zEstimate)
+        private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, Decimal? zEstimate)
         {
+            if (!CallingSystem.isAnyCallBack(appContext))
+                return;
+
             var resultObj = new BAL.Results();
             resultObj.zillowProperty = new ZillowPropertyDetails();
             resultObj.zillowProperty.zEstimate = zEstimate;
@@ -108,7 +111,7 @@ namespace PropertyWebAPI.BAL
                 resultObj.zillowProperty.requestId = rec.RequestId;
                 resultObj.zillowProperty.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.zillowProperty.externalReferenceId = rec.ExternalReferenceId;
-                CallingSystem.PostCallBack(resultObj);
+                CallingSystem.PostCallBack(appContext, resultObj);
             }
         }
 
@@ -181,7 +184,7 @@ namespace PropertyWebAPI.BAL
                         webDBEntitiestransaction.Rollback();
                         zPropertyDetails.status = RequestStatus.Error.ToString();
                         DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
-                        Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
+                        Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
                 }
             }
@@ -221,7 +224,7 @@ namespace PropertyWebAPI.BAL
             }
             catch (Exception e)
             {   Common.Logs.log().Error(string.Format("Exception encountered processing request log for {0} with externalRefId {1}{2}", 
-                                        dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, Common.Utilities.FormatException(e)));
+                                        dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, Common.Logs.FormatException(e)));
                 return null;
             }
         }
@@ -231,7 +234,7 @@ namespace PropertyWebAPI.BAL
         /// </summary>
         /// <param name="requestObj"></param>
         /// <returns>True if successful else false</returns>
-        public static bool UpdateData(Request requestObj)
+        public static bool UpdateData(Common.Context appContext, Request requestObj)
         {
             using (WebDataEntities webDBEntities = new WebDataEntities())
             {
@@ -259,7 +262,7 @@ namespace PropertyWebAPI.BAL
                                         }
                                         catch(Exception e)
                                         {
-                                            Common.Logs.log().Error(string.Format("Cannot parse the response data {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
+                                            Common.Logs.log().Error(string.Format("Cannot parse the response data {0}{1}", requestObj.RequestId, Common.Logs.FormatException(e)));
                                         }
 
                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
@@ -295,13 +298,13 @@ namespace PropertyWebAPI.BAL
 
                         webDBEntitiestransaction.Commit();
                         if (logs != null)
-                            MakePortalCallBacks(logs, zEstimate);
+                            MakeCallBacks(appContext, logs, zEstimate);
                         return true;
                     }
                     catch (Exception e)
                     {
                         webDBEntitiestransaction.Rollback();
-                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
+                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Logs.FormatException(e)));
                         return false;
                     }
                 }

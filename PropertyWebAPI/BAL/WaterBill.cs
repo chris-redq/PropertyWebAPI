@@ -136,7 +136,7 @@ namespace PropertyWebAPI.BAL
                         webDBEntitiestransaction.Rollback();
                         waterBill.status = RequestStatus.Error.ToString();
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}: {2}", 
-                                                propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
+                                                propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
                 }
             }
@@ -180,7 +180,7 @@ namespace PropertyWebAPI.BAL
         /// </summary>
         /// <param name="requestObj"></param>
         /// <returns>True if successful else false</returns>
-        public static bool UpdateData(Request requestObj)
+        public static bool UpdateData(Common.Context appContext, Request requestObj)
         {
             using (WebDataEntities webDBEntities = new WebDataEntities())
             {
@@ -234,7 +234,7 @@ namespace PropertyWebAPI.BAL
                     catch (Exception e)
                     {
                         webDBEntitiestransaction.Rollback();
-                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
+                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Logs.FormatException(e)));
                         return false;
                     }
                 }

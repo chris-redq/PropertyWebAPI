@@ -35,6 +35,8 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(Boolean))]
         public IHttpActionResult PostProcessRequestResult(long requestId)
         {
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             using (WebDataEntities webDataE = new WebDataEntities())
             {
                 Request requestObj = webDataE.Requests.Find(requestId);
@@ -43,23 +45,31 @@ namespace PropertyWebAPI.Controllers
                     switch (requestObj.RequestTypeId)
                     {
                         case (int)RequestTypes.NYCTaxBill:
-                            if (!BAL.TaxBill.UpdateData(requestObj))
+                            if (!BAL.TaxBill.UpdateData(appContext, requestObj))
                                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.NYCWaterBill:
-                            if (!BAL.WaterBill.UpdateData(requestObj))
+                            if (!BAL.WaterBill.UpdateData(appContext, requestObj))
                                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
-                            if (!BAL.DOBPenaltiesAndViolationsSummary.UpdateData(requestObj))
+                            if (!BAL.DOBPenaltiesAndViolationsSummary.UpdateData(appContext, requestObj))
                                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.NYCMortgageServicer:
-                            if (!BAL.MortgageServicer.UpdateData(requestObj))
+                            if (!BAL.MortgageServicer.UpdateData(appContext, requestObj))
                                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         case (int)RequestTypes.Zillow:
-                            if (!BAL.Zillow.UpdateData(requestObj))
+                            if (!BAL.Zillow.UpdateData(appContext, requestObj))
+                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+                            break;
+                        case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                            if (!BAL.NoticeOfPropertyValueDocument.UpdateData(appContext, requestObj))
+                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+                            break;
+                        case (int)RequestTypes.NYCMortgageDocumentDetails:
+                            if (!BAL.MortgageDocument.UpdateData(appContext, requestObj))
                                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
                             break;
                         default:
@@ -112,7 +122,10 @@ namespace PropertyWebAPI.Controllers
                         result.zillowProperty = BAL.Zillow.ReRun(requestLogObj);
                         return Ok(result);
                     case (int)RequestTypes.NYCNoticeOfPropertyValue:
-                        result.noticeOfPropertyValueResult = BAL.NoticeOfPropertyValueService.ReRun(requestLogObj);
+                        result.noticeOfPropertyValueResult = BAL.NoticeOfPropertyValueDocument.ReRun(requestLogObj);
+                        return Ok(result);
+                    case (int)RequestTypes.NYCMortgageDocumentDetails:
+                        result.mortgageDocumentResult = BAL.MortgageDocument.ReRun(requestLogObj);
                         return Ok(result);
                     default:
                         return BadRequest("Bad Request - Incorrect Request Type");
@@ -160,7 +173,10 @@ namespace PropertyWebAPI.Controllers
                             result.zillowProperty = BAL.Zillow.ReRun(requestLogObj);
                             break;
                         case (int)RequestTypes.NYCNoticeOfPropertyValue:
-                            result.noticeOfPropertyValueResult = BAL.NoticeOfPropertyValueService.ReRun(requestLogObj);
+                            result.noticeOfPropertyValueResult = BAL.NoticeOfPropertyValueDocument.ReRun(requestLogObj);
+                            break;
+                        case (int)RequestTypes.NYCMortgageDocumentDetails:
+                            result.mortgageDocumentResult = BAL.MortgageDocument.ReRun(requestLogObj);
                             break;
                         default:
                             break;
@@ -182,6 +198,8 @@ namespace PropertyWebAPI.Controllers
         [HttpPost]
         public void CheckIfRequestsProcessed()
         {
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             using (WebDataEntities webDataE = new WebDataEntities())
             {
                 List<DataRequestLog> requestLogList = DAL.DataRequestLog.GetAllUnprocessed(webDataE);
@@ -197,38 +215,38 @@ namespace PropertyWebAPI.Controllers
                         switch (requestObj.RequestTypeId)
                         {
                             case (int)RequestTypes.NYCTaxBill:
-                                if (BAL.TaxBill.UpdateData(requestObj))
+                                if (BAL.TaxBill.UpdateData(appContext, requestObj))
                                 {
-
                                 }
                                 break;
                             case (int)RequestTypes.NYCWaterBill:
-                                if (BAL.WaterBill.UpdateData(requestObj))
+                                if (BAL.WaterBill.UpdateData(appContext, requestObj))
                                 {
-
                                 }
                                 break;
                             case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
-                                if (BAL.DOBPenaltiesAndViolationsSummary.UpdateData(requestObj))
+                                if (BAL.DOBPenaltiesAndViolationsSummary.UpdateData(appContext, requestObj))
                                 {
-
                                 }
                                 break;
                             case (int)RequestTypes.NYCMortgageServicer:
-                                if (BAL.MortgageServicer.UpdateData(requestObj))
+                                if (BAL.MortgageServicer.UpdateData(appContext, requestObj))
                                 {
                                 }
                                 break;
                             case (int)RequestTypes.Zillow:
-                                if (BAL.Zillow.UpdateData(requestObj))
+                                if (BAL.Zillow.UpdateData(appContext, requestObj))
                                 {
-
                                 }
                                 break;
                             case (int)RequestTypes.NYCNoticeOfPropertyValue:
-                                if (BAL.NoticeOfPropertyValueService.UpdateData(requestObj))
+                                if (BAL.NoticeOfPropertyValueDocument.UpdateData(appContext, requestObj))
                                 {
-
+                                }
+                                break;
+                            case (int)RequestTypes.NYCMortgageDocumentDetails:
+                                if (BAL.MortgageDocument.UpdateData(appContext, requestObj))
+                                {
                                 }
                                 break;
                             default:
@@ -239,6 +257,5 @@ namespace PropertyWebAPI.Controllers
                 }
             }
         }
-
     }
 }

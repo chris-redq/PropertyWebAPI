@@ -90,8 +90,11 @@ namespace PropertyWebAPI.BAL
         /// </summary>
         /// <param name="servicerName"></param>
         /// <param name="logs">List or Request Log Records</param>
-        private static void MakePortalCallBacks(List<DataRequestLog> logs, string servicerName)
+        private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, string servicerName)
         {
+            if (!CallingSystem.isAnyCallBack(appContext))
+                return;
+
             var resultObj = new BAL.Results();
             resultObj.mortgageServicer = new MortgageServicerDetails();
             resultObj.mortgageServicer.servicerName = servicerName;
@@ -102,7 +105,7 @@ namespace PropertyWebAPI.BAL
                 resultObj.mortgageServicer.requestId = rec.RequestId;
                 resultObj.mortgageServicer.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.mortgageServicer.externalReferenceId = rec.ExternalReferenceId;
-                CallingSystem.PostCallBack(resultObj);
+                CallingSystem.PostCallBack(appContext, resultObj);
             }
         }
         /// <summary>
@@ -173,7 +176,7 @@ namespace PropertyWebAPI.BAL
                         mServicerDetails.status = RequestStatus.Error.ToString();
                         DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", 
-                                                propertyBBL, externalReferenceId, Common.Utilities.FormatException(e)));
+                                                propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
                 }
             }
@@ -214,7 +217,7 @@ namespace PropertyWebAPI.BAL
             catch (Exception e)
             {
                 Common.Logs.log().Error(string.Format("Exception encountered processing request log for {0} with externalRefId {1}{2}", 
-                                                       dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, Common.Utilities.FormatException(e)));
+                                                       dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, Common.Logs.FormatException(e)));
                 return null;
             }
         }
@@ -224,7 +227,7 @@ namespace PropertyWebAPI.BAL
         /// </summary>
         /// <param name="requestObj"></param>
         /// <returns>True if successful else false</returns>
-        public static bool UpdateData(Request requestObj)
+        public static bool UpdateData(Common.Context appContext, Request requestObj)
         {
             using (WebDataEntities webDBEntities = new WebDataEntities())
             {
@@ -281,13 +284,13 @@ namespace PropertyWebAPI.BAL
 
                         webDBEntitiestransaction.Commit();
                         if (logs != null)
-                            MakePortalCallBacks(logs, servicerName);
+                            MakeCallBacks(appContext, logs, servicerName);
                         return true;
                     }
                     catch (Exception e)
                     {
                         webDBEntitiestransaction.Rollback();
-                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Utilities.FormatException(e)));
+                        Common.Logs.log().Error(string.Format("Exception encountered updating request with id {0}{1}", requestObj.RequestId, Common.Logs.FormatException(e)));
                         return false;
                     }
                 }

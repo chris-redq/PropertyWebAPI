@@ -43,6 +43,7 @@
     </AssociationSet>
     <EntitySet Name="Zillows" EntityType="WebDataModel.Zillow" />
     <EntitySet Name="NoticeOfProperyValues" EntityType="WebDataModel.NoticeOfProperyValue" />
+    <EntitySet Name="Mortgages" EntityType="WebDataModel.Mortgage" />
   </EntityContainer>
   <EntityType Name="DataRequestLog">
     <Key>
@@ -269,7 +270,7 @@
       <PropertyRef Name="BBL" />
     </Key>
     <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="BuildingClassCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PrimaryZoning" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="LotFrontage" Type="Decimal" Precision="7" Scale="2" />
     <Property Name="LotDepth" Type="Decimal" Precision="7" Scale="2" />
@@ -309,6 +310,21 @@
     <Property Name="NumberOfResidentialLots" Type="Int32" />
     <Property Name="NumberOfCommercialLots" Type="Int32" />
     <Property Name="GrossSquareFootageOfTheSuffix" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialLots" Type="Int32" />
+    <Property Name="LandFactorperSquareFoot" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="ResidentialLots" Type="Int32" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Mortgage">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="MortgageDocumentURI" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="MortgageDocumentURI" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FHACaseNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="MortgageAmounts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
 </Schema>

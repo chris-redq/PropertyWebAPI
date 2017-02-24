@@ -56,7 +56,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -93,7 +93,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -178,7 +178,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch(Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -216,8 +216,56 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+        // ./api/MortgagesDeeds/3001670091/FHAMortgage
+        /// <summary>  
+        ///     Use this api to get mortgage document details for all unsatisfied mortgages associated with the property
+        /// </summary>  
+        /// <param name="propertyBBLE">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+        /// </param>  
+        /// <param name="externalReferenceId">
+        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+        /// </param>
+        /// <returns>
+        ///     Returns mortgage document details for all unsatisfied mortgages associated with the property
+        /// </returns>
+        [Route("api/mortgagesdeeds/{propertyBBLE}/MortgageDocumentDetails")]
+        [ResponseType(typeof(BAL.MortgageDocumentResult))]
+        public IHttpActionResult GetNoticeOfPropertyValue(string propertyBBLE, string externalReferenceId = null)
+        {
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+
+            if (!BAL.BBL.IsValid(propertyBBLE))
+                return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
+
+            using (ACRISEntities acrisDBEntities = new ACRISEntities())
+            {
+                List<tfnGetUnsatisfiedMortgages_Result> mortgagesList = acrisDBEntities.tfnGetUnsatisfiedMortgages(propertyBBLE).ToList();
+
+                if (mortgagesList == null || mortgagesList.Count <= 0)
+                    return NotFound();
+
+                List<BAL.MortgageDocumentResult> resultList = new List<BAL.MortgageDocumentResult>();
+
+                foreach (var v in mortgagesList)
+                {
+                    var resultObj = BAL.MortgageDocument.GetDetails(propertyBBLE, v.URL, externalReferenceId);
+                    if (resultObj == null)
+                        return Common.HttpResponse.InternalError(Request, "Internal Server Error");
+                    resultList.Add(resultObj);
+                }
+
+                if (resultList == null || resultList.Count <= 0)
+                    return NotFound();
+
+                return Ok(resultList);
             }
         }
     }

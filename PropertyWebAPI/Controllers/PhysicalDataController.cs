@@ -308,7 +308,7 @@ namespace PropertyWebAPI.Controllers
         /// <returns>
         ///     Returns property information from the latest Notice of Property Value (NOPV)
         /// </returns>
-        [Route("api/api/physicaldata/nyc/{propertyBBL}/NoticeOfPropertyValue")]
+        [Route("api/physicaldata/nyc/{propertyBBL}/NoticeOfPropertyValue")]
         [ResponseType(typeof(BAL.NoticeOfPropertyValueResult))]
         public IHttpActionResult GetNoticeOfPropertyValue(string propertyBBL, string externalReferenceId = null)
         {
@@ -318,7 +318,7 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValid(propertyBBL))
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
 
-            var resultObj = BAL.NoticeOfPropertyValueService.Get(propertyBBL, externalReferenceId);
+            var resultObj = BAL.NoticeOfPropertyValueDocument.GetDetails(propertyBBL, externalReferenceId);
             if (resultObj == null)
                 return Common.HttpResponse.InternalError(Request, "Internal Server Error");
             // return final result

@@ -45,7 +45,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} CaseIndexNumber: {1}{2}", countyId, caseIndexNumber, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} CaseIndexNumber: {1}{2}", countyId, caseIndexNumber, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -70,7 +70,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} CaseIndexNumber: {1}{2}", countyId, caseIndexNumber, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} CaseIndexNumber: {1}{2}", countyId, caseIndexNumber, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -211,7 +211,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch(Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
 
@@ -257,7 +257,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0} with effectiveDate{1}{2}", propertyBBL, effectiveAsOfDate, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0} with effectiveDate{1}{2}", propertyBBL, effectiveAsOfDate, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -306,7 +306,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -348,7 +348,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for Start Date: {0} End Date:{1}{2}", startDate, endDate, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for Start Date: {0} End Date:{1}{2}", startDate, endDate, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -396,7 +396,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for Start Date: {0} End Date:{1}{2}", startDate, endDate, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for Start Date: {0} End Date:{1}{2}", startDate, endDate, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -432,7 +432,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1} ReliefSought: {2}{3}", countyId, judgeId, reliefSought, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1} ReliefSought: {2}{3}", countyId, judgeId, reliefSought, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -460,7 +460,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for ReliefSought: {0}{1}", reliefSought, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for ReliefSought: {0}{1}", reliefSought, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -490,7 +490,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1}{2}", countyId, judgeId, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1}{2}", countyId, judgeId, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
 
@@ -524,7 +524,7 @@ namespace PropertyWebAPI.Controllers
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1} ReliefSought: {2}{3}", countyId, judgeId, reliefSought, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered for CountyId: {0} JudgeId: {1} ReliefSought: {2}{3}", countyId, judgeId, reliefSought, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         } 

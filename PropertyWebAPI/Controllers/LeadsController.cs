@@ -42,7 +42,7 @@
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Lead for {0}{1}", propertybbl, Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Lead for {0}{1}", propertybbl, Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -97,7 +97,7 @@
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Leads{0}", Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Leads{0}", Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
@@ -138,7 +138,7 @@
             }
             catch (Exception e)
             {
-                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Leads{0}",Common.Utilities.FormatException(e)));
+                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Leads{0}",Common.Logs.FormatException(e)));
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }

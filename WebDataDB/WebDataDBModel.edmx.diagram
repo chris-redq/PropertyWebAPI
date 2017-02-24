@@ -26,6 +26,7 @@
         <AssociationConnector Association="WebDataModel.RequestStatus" />
         <EntityTypeShape EntityType="WebDataModel.Zillow" Width="1.5" PointX="10.375" PointY="3.75" />
         <EntityTypeShape EntityType="WebDataModel.NoticeOfProperyValue" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="WebDataModel.Mortgage" Width="1.5" PointX="11.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

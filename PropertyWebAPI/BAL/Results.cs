@@ -23,5 +23,7 @@ namespace PropertyWebAPI.BAL
         public BAL.ZillowPropertyDetails zillowProperty;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public BAL.NoticeOfPropertyValueResult noticeOfPropertyValueResult;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public BAL.MortgageDocumentResult mortgageDocumentResult;
     }
 }

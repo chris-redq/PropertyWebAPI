@@ -42,6 +42,17 @@
     <Property Name="IsFreddie" Type="bit" Nullable="false" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Mortgage">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="MortgageDocumentURI" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MortgageDocumentURI" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="FHACaseNumber" Type="varchar" MaxLength="100" />
+    <Property Name="MortgageAmounts" Type="varchar" MaxLength="50" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="MortgageServicer">
     <Key>
       <PropertyRef Name="BBL" />
@@ -55,7 +66,7 @@
       <PropertyRef Name="BBL" />
     </Key>
     <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
-    <Property Name="BuildingClassCode" Type="varchar" MaxLength="2" />
+    <Property Name="BuildingClass" Type="varchar" MaxLength="50" />
     <Property Name="PrimaryZoning" Type="varchar" MaxLength="50" />
     <Property Name="LotFrontage" Type="decimal" Precision="7" Scale="2" />
     <Property Name="LotDepth" Type="decimal" Precision="7" Scale="2" />
@@ -95,6 +106,10 @@
     <Property Name="NumberOfResidentialLots" Type="int" />
     <Property Name="NumberOfCommercialLots" Type="int" />
     <Property Name="GrossSquareFootageOfTheSuffix" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialLots" Type="int" />
+    <Property Name="LandFactorperSquareFoot" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="ResidentialLots" Type="int" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="TaxBill">
@@ -258,6 +273,7 @@
     <EntitySet Name="DOBViolation" EntityType="Self.DOBViolation" Schema="data" store:Type="Tables" />
     <EntitySet Name="FannieMortgage" EntityType="Self.FannieMortgage" Schema="data" store:Type="Tables" />
     <EntitySet Name="FreddieMortgage" EntityType="Self.FreddieMortgage" Schema="data" store:Type="Tables" />
+    <EntitySet Name="Mortgage" EntityType="Self.Mortgage" Schema="data" store:Type="Tables" />
     <EntitySet Name="MortgageServicer" EntityType="Self.MortgageServicer" Schema="data" store:Type="Tables" />
     <EntitySet Name="NoticeOfProperyValue" EntityType="Self.NoticeOfProperyValue" Schema="data" store:Type="Tables" />
     <EntitySet Name="TaxBill" EntityType="Self.TaxBill" Schema="data" store:Type="Tables" />
