@@ -25,6 +25,8 @@ namespace WebAPISecurityDB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<APIKeyUser> APIKeyUsers { get; set; }
+        public virtual DbSet<APIUser> APIUsers { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<vwAPIUser> vwAPIUsers { get; set; }
     }
 }

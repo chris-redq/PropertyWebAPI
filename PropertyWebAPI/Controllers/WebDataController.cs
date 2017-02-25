@@ -17,7 +17,7 @@ namespace PropertyWebAPI.Controllers
     using Newtonsoft.Json;
     using WebDataDB;
 
-  
+
     /// <summary>
     ///     This controller handles callbacks from Web Scrapping Job Managers when requests are processed. It also provides
     ///     current state of the request
@@ -31,6 +31,8 @@ namespace PropertyWebAPI.Controllers
         /// <param name="requestId">
         ///     Id of the request whose results need to be processed 
         /// </param>  
+        /// 
+        [Security.APIAuthorize(Roles = Security.Roles.CALLBACK)]
         [Route("api/webdata/djm/request/{requestId}/processresult")]
         [ResponseType(typeof(Boolean))]
         public IHttpActionResult PostProcessRequestResult(long requestId)
@@ -40,47 +42,44 @@ namespace PropertyWebAPI.Controllers
             using (WebDataEntities webDataE = new WebDataEntities())
             {
                 Request requestObj = webDataE.Requests.Find(requestId);
-                if (requestObj != null)
+                if (requestObj == null)
+                    return NotFound();
+                
+                bool success = false;
+
+                switch (requestObj.RequestTypeId)
                 {
-                    switch (requestObj.RequestTypeId)
-                    {
-                        case (int)RequestTypes.NYCTaxBill:
-                            if (!BAL.TaxBill.UpdateData(appContext, requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-                            break;
-                        case (int)RequestTypes.NYCWaterBill:
-                            if (!BAL.WaterBill.UpdateData(appContext, requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-                            break;
-                        case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
-                            if (!BAL.DOBPenaltiesAndViolationsSummary.UpdateData(appContext, requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-                            break;
-                        case (int)RequestTypes.NYCMortgageServicer:
-                            if (!BAL.MortgageServicer.UpdateData(appContext, requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-                            break;
-                        case (int)RequestTypes.Zillow:
-                            if (!BAL.Zillow.UpdateData(appContext, requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-                            break;
-                        case (int)RequestTypes.NYCNoticeOfPropertyValue:
-                            if (!BAL.NoticeOfPropertyValueDocument.UpdateData(appContext, requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-                            break;
-                        case (int)RequestTypes.NYCMortgageDocumentDetails:
-                            if (!BAL.MortgageDocument.UpdateData(appContext, requestObj))
-                                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-                            break;
-                        default:
-                            String msg = String.Format("Cannot process request - Invalid Request Type: {0} for Request Id {1}", requestObj.RequestTypeId, requestObj.RequestId);
-                            Common.Logs.log().Warn(msg);
-                            return Common.HttpResponse.InternalError(Request, msg);
-                    }
-                    return Ok(true);
+                    case (int)RequestTypes.NYCTaxBill:
+                        success = BAL.TaxBill.UpdateData(appContext, requestObj);
+                        break;
+                    case (int)RequestTypes.NYCWaterBill:
+                        success = BAL.WaterBill.UpdateData(appContext, requestObj);
+                        break;
+                    case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
+                        success = BAL.DOBPenaltiesAndViolationsSummary.UpdateData(appContext, requestObj);
+                        break;
+                    case (int)RequestTypes.NYCMortgageServicer:
+                        success = BAL.MortgageServicer.UpdateData(appContext, requestObj);
+                        break;
+                    case (int)RequestTypes.Zillow:
+                        success = BAL.Zillow.UpdateData(appContext, requestObj);
+                        break;
+                    case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                        success = BAL.NoticeOfPropertyValueDocument.UpdateData(appContext, requestObj);
+                        break;
+                    case (int)RequestTypes.NYCMortgageDocumentDetails:
+                        success = BAL.MortgageDocument.UpdateData(appContext, requestObj);
+                        break;
+                    default:
+                        String msg = String.Format("Cannot process request - Invalid Request Type: {0} for Request Id {1}", requestObj.RequestTypeId, requestObj.RequestId);
+                        Common.Logs.log().Warn(msg);
+                        return Common.HttpResponse.InternalError(Request, msg);
                 }
 
-                return NotFound();                
+                if (!success)
+                    return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+
+                return Ok(true);
             }
         }
 
@@ -94,6 +93,7 @@ namespace PropertyWebAPI.Controllers
         /// <returns>
         ///     Returns data associated with the requestId
         /// </returns>
+        [Security.APIAuthorize(Roles = Security.Roles.DATAREQUEST)]
         [Route("api/webdata/request/{requestId}")]
         [ResponseType(typeof(BAL.Results))]
         public IHttpActionResult GetRequest(long requestId)
@@ -143,6 +143,7 @@ namespace PropertyWebAPI.Controllers
         /// <returns>
         ///     Returns data associated with the requestId
         /// </returns>
+        [Security.APIAuthorize(Roles = Security.Roles.DATAREQUEST)]
         [Route("api/webdata/request/externalreference/{externalReferenceId}")]
         [ResponseType(typeof(BAL.Results))]
         public IHttpActionResult GetRequestByExternalReferenceId(string externalReferenceId)
@@ -194,6 +195,7 @@ namespace PropertyWebAPI.Controllers
         /// <returns>
         ///     void
         /// </returns>
+        [Security.APIAuthorize(Roles = Security.Roles.DATAREQUEST)]
         [Route("api/webdata/request/checkprocessed")]
         [HttpPost]
         public void CheckIfRequestsProcessed()
@@ -206,54 +208,161 @@ namespace PropertyWebAPI.Controllers
                 if (requestLogList == null)
                     return;
 
-                var result = new BAL.Results();
                 foreach (var requestLogObj in requestLogList)
                 {
                     Request requestObj = webDataE.Requests.Find(requestLogObj.RequestId);
-                    if (requestObj != null)
+
+                    if (requestObj == null)
+                        continue;
+
+                    switch (requestObj.RequestTypeId)
                     {
-                        switch (requestObj.RequestTypeId)
-                        {
-                            case (int)RequestTypes.NYCTaxBill:
-                                if (BAL.TaxBill.UpdateData(appContext, requestObj))
-                                {
-                                }
-                                break;
-                            case (int)RequestTypes.NYCWaterBill:
-                                if (BAL.WaterBill.UpdateData(appContext, requestObj))
-                                {
-                                }
-                                break;
-                            case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
-                                if (BAL.DOBPenaltiesAndViolationsSummary.UpdateData(appContext, requestObj))
-                                {
-                                }
-                                break;
-                            case (int)RequestTypes.NYCMortgageServicer:
-                                if (BAL.MortgageServicer.UpdateData(appContext, requestObj))
-                                {
-                                }
-                                break;
-                            case (int)RequestTypes.Zillow:
-                                if (BAL.Zillow.UpdateData(appContext, requestObj))
-                                {
-                                }
-                                break;
-                            case (int)RequestTypes.NYCNoticeOfPropertyValue:
-                                if (BAL.NoticeOfPropertyValueDocument.UpdateData(appContext, requestObj))
-                                {
-                                }
-                                break;
-                            case (int)RequestTypes.NYCMortgageDocumentDetails:
-                                if (BAL.MortgageDocument.UpdateData(appContext, requestObj))
-                                {
-                                }
-                                break;
-                            default:
-                                Common.Logs.log().Warn(string.Format("Cannot process request - Invalid Request Type: {0} for Request Id {1}", requestObj.RequestTypeId, requestObj.RequestId));
-                                break;
-                        }
+                        case (int)RequestTypes.NYCTaxBill:
+                            BAL.TaxBill.UpdateData(appContext, requestObj);
+                            break;
+                        case (int)RequestTypes.NYCWaterBill:
+                            BAL.WaterBill.UpdateData(appContext, requestObj);
+                            break;
+                        case (int)RequestTypes.NYCDOBPenaltiesAndViolations:
+                            BAL.DOBPenaltiesAndViolationsSummary.UpdateData(appContext, requestObj);
+                            break;
+                        case (int)RequestTypes.NYCMortgageServicer:
+                            BAL.MortgageServicer.UpdateData(appContext, requestObj);
+                            break;
+                        case (int)RequestTypes.Zillow:
+                            BAL.Zillow.UpdateData(appContext, requestObj);
+                            break;
+                        case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                            BAL.NoticeOfPropertyValueDocument.UpdateData(appContext, requestObj);
+                            break;
+                        case (int)RequestTypes.NYCMortgageDocumentDetails:
+                            BAL.MortgageDocument.UpdateData(appContext, requestObj);
+                            break;
+                        default:
+                            Common.Logs.log().Warn(string.Format("Cannot process request - Invalid Request Type: {0} for Request Id {1}", requestObj.RequestTypeId, requestObj.RequestId));
+                            break;
                     }
+                }
+            }
+        }
+
+        /// <summary>  
+        /// Uses this API to start data updates for all data that is stale. This api requires specific authorization
+        /// </summary>  
+        [Security.APIAuthorize(Roles = Security.Roles.SCHEDULING)]
+        [Route("api/webdata/updatestaledata")]
+        [HttpPost]
+        public void UpdateStaleData()
+        {
+            string externalReferenceId = "SCH-"+ DateTime.UtcNow.ToString() + " UTC" ;
+
+            List<WebDataDB.vwStaleDataBBL> bblList = null;
+
+            using (WebDataEntities webDBE = new WebDataEntities())
+            {
+                bblList = webDBE.vwStaleDataBBLs.OrderBy(m => m.BBL).ToList();
+            }
+            if (bblList == null || bblList.Count < 0)
+                return;
+
+            foreach (var bbl in bblList)
+            {
+                switch (bbl.RequestTypeId)
+                {
+                    case (int)RequestTypes.NYCTaxBill:
+                        BAL.TaxBill.Get(bbl.BBL, externalReferenceId);
+                        break;
+                    case (int)RequestTypes.NYCMortgageServicer:
+                        BAL.MortgageServicer.Get(bbl.BBL, externalReferenceId);
+                        break;
+                    case (int)RequestTypes.Zillow:
+                        var propInfo = BAL.NYCPhysicalPropertyData.Get(bbl.BBL, true);
+                        if (propInfo != null)
+                            BAL.Zillow.LogFailure(bbl.BBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                        else
+                            BAL.Zillow.Get(bbl.BBL, propInfo.address.ToString(), externalReferenceId);
+                        break;
+                    case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                        BAL.NoticeOfPropertyValueDocument.GetDetails(bbl.BBL, externalReferenceId);
+                        break;
+                    case (int)RequestTypes.NYCMortgageDocumentDetails:
+                        BAL.MortgageDocument.GetDetails(bbl.BBL, "", externalReferenceId);
+                        break;
+                    default:
+                        String msg = String.Format("Cannot process request - Invalid Request Type: {0} for BBL {1}", bbl.RequestTypeId, bbl.BBL);
+                        Common.Logs.log().Warn(msg);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>  
+        /// Uses this API to do bulk load
+        /// Requires specific authorization to use this api
+        /// </summary>  
+        [Security.APIAuthorize(Roles = Security.Roles.DATAREQUEST)]
+        [Route("api/webdata/bulkretrieve")]
+        public void PostBulkRetrieve([FromBody]List<string> bblList, int requestTypeId = 0)
+        {
+            string externalReferenceId = "SCH-" + DateTime.UtcNow.ToString() + " UTC";
+
+            if (bblList == null || bblList.Count <= 0)
+                return;
+            
+            foreach (var bbl in bblList)
+            {
+                if (!BAL.BBL.IsValidFormat(bbl))
+                {                
+                    Common.Logs.log().Warn(string.Format("Incorrect BBL {0} in Bulk Retrieve with ReferenceId {1}", bbl, externalReferenceId));
+                    continue;
+                }
+
+                if (!BAL.BBL.IsValid(bbl))
+                {
+                    Common.Logs.log().Warn(string.Format("Incorrect BBL {0} in Bulk Retrieve with ReferenceId {1}", bbl, externalReferenceId));
+                    continue;
+                }
+
+                switch (requestTypeId)
+                {
+                    case (int)RequestTypes.NYCTaxBill:
+                        BAL.TaxBill.Get(bbl, externalReferenceId);
+                        break;
+                    case (int)RequestTypes.NYCMortgageServicer:
+                        BAL.MortgageServicer.Get(bbl, externalReferenceId);
+                        break;
+                    case (int)RequestTypes.Zillow:
+                        {
+                            var propInfo = BAL.NYCPhysicalPropertyData.Get(bbl, true);
+                            if (propInfo != null)
+                                BAL.Zillow.LogFailure(bbl, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                            else
+                                BAL.Zillow.Get(bbl, propInfo.address.ToString(), externalReferenceId);
+                            break;
+                        }
+                    case (int)RequestTypes.NYCNoticeOfPropertyValue:
+                        BAL.NoticeOfPropertyValueDocument.GetDetails(bbl, externalReferenceId);
+                        break;
+                    case (int)RequestTypes.NYCMortgageDocumentDetails:
+                        BAL.MortgageDocument.GetDetails(bbl, "", externalReferenceId);
+                        break;
+                    case 0:
+                        {
+                            BAL.TaxBill.Get(bbl, externalReferenceId);
+                            BAL.MortgageServicer.Get(bbl, externalReferenceId);
+                            var propInfo = BAL.NYCPhysicalPropertyData.Get(bbl, true);
+                            if (propInfo != null)
+                                BAL.Zillow.LogFailure(bbl, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                            else
+                                BAL.Zillow.Get(bbl, propInfo.address.ToString(), externalReferenceId);
+                            BAL.NoticeOfPropertyValueDocument.GetDetails(bbl, externalReferenceId);
+                            BAL.MortgageDocument.GetDetails(bbl, "", externalReferenceId);
+                            break;
+                        }
+                    default:
+                        String msg = String.Format("Cannot process request - Invalid Request Type: {0}", requestTypeId);
+                        Common.Logs.log().Warn(msg);
+                        return;
                 }
             }
         }

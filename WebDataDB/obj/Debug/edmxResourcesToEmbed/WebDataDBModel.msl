@@ -118,6 +118,8 @@
     <EntitySetMapping Name="RequestTypes">
       <EntityTypeMapping TypeName="WebDataModel.RequestType">
         <MappingFragment StoreEntitySet="RequestType">
+          <ScalarProperty Name="PriorityDaysToRefresh" ColumnName="PriorityDaysToRefresh" />
+          <ScalarProperty Name="DaysToRefresh" ColumnName="DaysToRefresh" />
           <ScalarProperty Name="TimeDelayInMinute" ColumnName="TimeDelayInMinute" />
           <ScalarProperty Name="MaxAttempts" ColumnName="MaxAttempts" />
           <ScalarProperty Name="RequestTypeName" ColumnName="RequestTypeName" />
@@ -193,6 +195,14 @@
           <ScalarProperty Name="MortgageAmounts" ColumnName="MortgageAmounts" />
           <ScalarProperty Name="FHACaseNumber" ColumnName="FHACaseNumber" />
           <ScalarProperty Name="MortgageDocumentURI" ColumnName="MortgageDocumentURI" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwStaleDataBBLs">
+      <EntityTypeMapping TypeName="WebDataModel.vwStaleDataBBL">
+        <MappingFragment StoreEntitySet="vwStaleDataBBL">
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
           <ScalarProperty Name="BBL" ColumnName="BBL" />
         </MappingFragment>
       </EntityTypeMapping>

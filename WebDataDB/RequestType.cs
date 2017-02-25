@@ -25,6 +25,8 @@ namespace WebDataDB
         public string RequestTypeName { get; set; }
         public int MaxAttempts { get; set; }
         public int TimeDelayInMinute { get; set; }
+        public Nullable<int> DaysToRefresh { get; set; }
+        public Nullable<int> PriorityDaysToRefresh { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DataRequestLog> DataRequestLogs { get; set; }

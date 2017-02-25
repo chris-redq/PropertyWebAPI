@@ -183,6 +183,18 @@
     <Property Name="RequestTypeName" Type="varchar" MaxLength="50" />
     <Property Name="MaxAttempts" Type="int" Nullable="false" />
     <Property Name="TimeDelayInMinute" Type="int" Nullable="false" />
+    <Property Name="DaysToRefresh" Type="int" />
+    <Property Name="PriorityDaysToRefresh" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WebData.data.vwStaleDataBBL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwStaleDataBBL">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="RequestTypeId" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="RequestTypeId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="Dexi Details">
     <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
@@ -284,6 +296,12 @@
     <EntitySet Name="Request" EntityType="Self.Request" Schema="jm" store:Type="Tables" />
     <EntitySet Name="RequestStatusType" EntityType="Self.RequestStatusType" Schema="jm" store:Type="Tables" />
     <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="jm" store:Type="Tables" />
+    <EntitySet Name="vwStaleDataBBL" EntityType="Self.vwStaleDataBBL" store:Type="Views" store:Schema="data">
+      <DefiningQuery>SELECT 
+    [vwStaleDataBBL].[BBL] AS [BBL], 
+    [vwStaleDataBBL].[RequestTypeId] AS [RequestTypeId]
+    FROM [data].[vwStaleDataBBL] AS [vwStaleDataBBL]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="Dexi Details" Association="Self.Dexi Details">
       <End Role="RequestType" EntitySet="RequestType" />
       <End Role="DexiRequestType" EntitySet="DexiRequestType" />

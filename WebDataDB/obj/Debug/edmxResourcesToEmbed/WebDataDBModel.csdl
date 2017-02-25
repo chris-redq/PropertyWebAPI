@@ -44,6 +44,7 @@
     <EntitySet Name="Zillows" EntityType="WebDataModel.Zillow" />
     <EntitySet Name="NoticeOfProperyValues" EntityType="WebDataModel.NoticeOfProperyValue" />
     <EntitySet Name="Mortgages" EntityType="WebDataModel.Mortgage" />
+    <EntitySet Name="vwStaleDataBBLs" EntityType="WebDataModel.vwStaleDataBBL" />
   </EntityContainer>
   <EntityType Name="DataRequestLog">
     <Key>
@@ -172,6 +173,8 @@
     <NavigationProperty Name="DexiRequestType" Relationship="WebDataModel.Dexi_Details" FromRole="RequestType" ToRole="DexiRequestType" />
     <NavigationProperty Name="Requests" Relationship="WebDataModel.Types_of_Request" FromRole="RequestType" ToRole="Request" />
     <Property Name="TimeDelayInMinute" Type="Int32" Nullable="false" />
+    <Property Name="DaysToRefresh" Type="Int32" />
+    <Property Name="PriorityDaysToRefresh" Type="Int32" />
   </EntityType>
   <Association Name="Request1">
     <End Type="WebDataModel.Request" Role="Request" Multiplicity="0..1" />
@@ -326,5 +329,13 @@
     <Property Name="FHACaseNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="MortgageAmounts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="vwStaleDataBBL">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="RequestTypeId" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
   </EntityType>
 </Schema>

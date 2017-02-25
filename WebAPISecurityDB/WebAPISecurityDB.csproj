@@ -51,10 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIKeyUser.cs">
+    <Compile Include="APIUser.cs">
       <DependentUpon>WebAPISecurityDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>WebAPISecurityDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwAPIUser.cs">
+      <DependentUpon>WebAPISecurityDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="WebAPISecurityDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

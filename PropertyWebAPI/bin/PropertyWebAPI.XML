@@ -1878,6 +1878,7 @@
             <param name="requestId">
                 Id of the request whose results need to be processed 
             </param>  
+            
         </member>
         <member name="M:PropertyWebAPI.Controllers.WebDataController.GetRequest(System.Int64)">
             <summary>  
@@ -1909,6 +1910,17 @@
             <returns>
                 void
             </returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.UpdateStaleData">
+            <summary>  
+            Uses this API to start data updates for all data that is stale. This api requires specific authorization
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.WebDataController.PostBulkRetrieve(System.Collections.Generic.List{System.String},System.Int32)">
+            <summary>  
+            Uses this API to do bulk load
+            Requires specific authorization to use this api
+            </summary>  
         </member>
         <member name="T:PropertyWebAPI.Controllers.ZillowController">
             <summary>  
@@ -2029,7 +2041,7 @@
         <member name="T:PropertyWebAPI.DAL.Request">
             <summary>
                 This class abstracts all detailed level operations associated with finding, inserting and reading records in the Request table in WebData DB.
-                In essence it abstracts symantic level operations for the table in the context of the API 
+                In essence it abstracts semantic level operations for the table in the context of the API 
             </summary>
         </member>
         <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
@@ -2039,9 +2051,23 @@
             <param name="webDBEntities"></param>
             <param name="requestStr">
                 Depending on the Request Type a helper class will be provided to convert business level variables into a string (in a specific format)
-                such that it is readable by the web scarpping service. 
+                such that it is readable by the web scarping service. 
             </param>
             <param name="requestTypeId"></param>
+            <param name="jobId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+                Inserts a Request object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
+            </summary>
+            <param name="webDBEntities"></param>
+            <param name="requestStr">
+                Depending on the Request Type a helper class will be provided to convert business level variables into a string (in a specific format)
+                such that it is readable by the web scarping service. 
+            </param>
+            <param name="requestTypeId"></param>
+            <param name="priority"></param>
             <param name="jobId"></param>
             <returns></returns>
         </member>

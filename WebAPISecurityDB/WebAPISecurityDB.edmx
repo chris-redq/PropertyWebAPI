@@ -4,49 +4,175 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WebAPISecurityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="APIKeyUser">
+    <Schema Namespace="WebAPISecurityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APIUsers">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="APIKey" Type="char" MaxLength="128" Nullable="false" />
+          <Property Name="APIKey" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="255" />
+          <Property Name="AccountId" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WebAPISecurity.dbo.vwAPIUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwAPIUser">
+          <Key>
+            <PropertyRef Name="AccountId" />
+            <PropertyRef Name="APIKey" />
+          </Key>
+          <Property Name="AccountId" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="255" />
+          <Property Name="APIKey" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="Roles" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="Relationship1">
+          <End Role="APIUsers" Type="Self.APIUsers" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APIUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Relationship2">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="WebAPISecurityModelStoreContainer">
-          <EntitySet Name="APIKeyUser" EntityType="Self.APIKeyUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APIUsers" EntityType="Self.APIUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwAPIUser" EntityType="Self.vwAPIUser" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwAPIUser].[AccountId] AS [AccountId], 
+    [vwAPIUser].[UserName] AS [UserName], 
+    [vwAPIUser].[APIKey] AS [APIKey], 
+    [vwAPIUser].[Roles] AS [Roles]
+    FROM [dbo].[vwAPIUser] AS [vwAPIUser]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="Relationship1" Association="Self.Relationship1">
+            <End Role="APIUsers" EntitySet="APIUsers" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="Relationship2" Association="Self.Relationship2">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WebAPISecurityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="APIKeyUser">
+        <EntityContainer Name="WebAPISecurityEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APIUsers" EntityType="WebAPISecurityModel.APIUser" />
+          <EntitySet Name="Roles" EntityType="WebAPISecurityModel.Role" />
+          <EntitySet Name="vwAPIUsers" EntityType="WebAPISecurityModel.vwAPIUser" />
+          <AssociationSet Name="UserRole" Association="WebAPISecurityModel.UserRole">
+            <End Role="APIUser" EntitySet="APIUsers" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="APIUser">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="APIKey" Type="String" MaxLength="128" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="APIKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AccountId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Roles" Relationship="WebAPISecurityModel.UserRole" FromRole="APIUser" ToRole="Role" />
         </EntityType>
-        <EntityContainer Name="WebAPISecurityEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="APIKeyUsers" EntityType="Self.APIKeyUser" />
-        </EntityContainer>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="APIUsers" Relationship="WebAPISecurityModel.UserRole" FromRole="Role" ToRole="APIUser" />
+        </EntityType>
+        <EntityType Name="vwAPIUser">
+          <Key>
+            <PropertyRef Name="AccountId" />
+            <PropertyRef Name="APIKey" />
+          </Key>
+          <Property Name="AccountId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="APIKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Roles" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="UserRole">
+          <End Type="WebAPISecurityModel.APIUser" Role="APIUser" Multiplicity="*" />
+          <End Type="WebAPISecurityModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="WebAPISecurityModelStoreContainer" CdmEntityContainer="WebAPISecurityEntities">
-          <EntitySetMapping Name="APIKeyUsers">
-            <EntityTypeMapping TypeName="WebAPISecurityModel.APIKeyUser">
-              <MappingFragment StoreEntitySet="APIKeyUser">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+          <EntitySetMapping Name="APIUsers">
+            <EntityTypeMapping TypeName="WebAPISecurityModel.APIUser">
+              <MappingFragment StoreEntitySet="APIUsers">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="WebAPISecurityModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAPIUsers">
+            <EntityTypeMapping TypeName="WebAPISecurityModel.vwAPIUser">
+              <MappingFragment StoreEntitySet="vwAPIUser">
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserRole" TypeName="WebAPISecurityModel.UserRole" StoreEntitySet="UserRole">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="APIUser">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

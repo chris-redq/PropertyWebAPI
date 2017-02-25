@@ -12,10 +12,20 @@ namespace WebAPISecurityDB
     using System;
     using System.Collections.Generic;
     
-    public partial class APIKeyUser
+    public partial class APIUser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public APIUser()
+        {
+            this.Roles = new HashSet<Role>();
+        }
+    
         public long UserId { get; set; }
         public string APIKey { get; set; }
         public string UserName { get; set; }
+        public string AccountId { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

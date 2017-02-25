@@ -10,6 +10,7 @@ using GPADB;
 using NYCDOB;
 using NYCMADB;
 using NYCVNL;
+using WebAPISecurityDB;
 using log4net;
 using AutoMapper;
 using System.Text.RegularExpressions;
@@ -56,8 +57,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
                 cfg.CreateMap<ShowCMASubject_Result, DAL.SubjectDetails>();
                 cfg.CreateMap<tfnActiveLPsForaProperty_Result, DAL.LPDetail>();
-                cfg.CreateMap<RequestResponseBuilder.ResponseObjects.NoticeOfPropertyValue, WebDataDB.NoticeOfProperyValue>();
-               
+                cfg.CreateMap<WebAPISecurityDB.vwAPIUser, Security.User>();
             });
         }
     }

@@ -91,6 +91,9 @@
     <Compile Include="TaxBill.cs">
       <DependentUpon>WebDataDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwStaleDataBBL.cs">
+      <DependentUpon>WebDataDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="WaterBill.cs">
       <DependentUpon>WebDataDBModel.tt</DependentUpon>
     </Compile>

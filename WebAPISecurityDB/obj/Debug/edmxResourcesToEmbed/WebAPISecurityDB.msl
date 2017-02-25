@@ -1,14 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="WebAPISecurityModelStoreContainer" CdmEntityContainer="WebAPISecurityEntities">
-    <EntitySetMapping Name="APIKeyUsers">
-      <EntityTypeMapping TypeName="WebAPISecurityModel.APIKeyUser">
-        <MappingFragment StoreEntitySet="APIKeyUser">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+    <EntitySetMapping Name="APIUsers">
+      <EntityTypeMapping TypeName="WebAPISecurityModel.APIUser">
+        <MappingFragment StoreEntitySet="APIUsers">
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="WebAPISecurityModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwAPIUsers">
+      <EntityTypeMapping TypeName="WebAPISecurityModel.vwAPIUser">
+        <MappingFragment StoreEntitySet="vwAPIUser">
+          <ScalarProperty Name="Roles" ColumnName="Roles" />
+          <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserRole" TypeName="WebAPISecurityModel.UserRole" StoreEntitySet="UserRole">
+      <EndProperty Name="Role">
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="APIUser">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>
