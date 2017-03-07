@@ -1157,6 +1157,37 @@
                 Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
             </returns>
         </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetManualComparables(System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Double},System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>  
+                Use this api to get a list of comparables for the given property and associated parameters
+            </summary>  
+            <param name="propertyBBL">
+                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+            </param>
+            <param name="maxRecords"></param>
+            <param name="monthOffset"></param>
+            <param name="classMatchType"></param>
+            <param name="sameNeighboorhood"></param>
+            <param name="sameSchoolDistrict"></param>
+            <param name="sameZip"></param>
+            <param name="sameBlock"></param>
+            <param name="sameStreetName"></param>
+            <param name="minSalePrice"></param>
+            <param name="maxSalePrice"></param>
+            <param name="isNotIntraFamily"></param>
+            <param name="isBuyeraCompany"></param>
+            <param name="isSelleraCompany"></param>
+            <param name="distanceInMiles"></param>
+            <param name="gLARange"></param>
+            <param name="lARange"></param>
+            <param name="buildingFrontageRange"></param>
+            <param name="buildingDepthRange"></param>
+            <param name="lotFrontageRange"></param>
+            <param name="lotDepthRange"></param>
+            <returns>
+                Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
+            </returns>
+        </member>
         <member name="M:PropertyWebAPI.Controllers.CMAController.GetSubjectDetails(System.String)">
             <summary>  
                 Use this api to get a subject property's details

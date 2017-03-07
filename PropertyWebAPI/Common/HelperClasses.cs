@@ -56,6 +56,8 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<SalePriceStatisticsByMonthByNTAMeanSmoothing, DAL.PriceDetailsByMonth>();
                 cfg.CreateMap<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
                 cfg.CreateMap<ShowCMASubject_Result, DAL.SubjectDetails>();
+                cfg.CreateMap<tfnGetManualCMA_Result, DAL.CMAManualResult>();
+                cfg.CreateMap<tfnGetCMA_Result, DAL.CMAResult>();
                 cfg.CreateMap<tfnActiveLPsForaProperty_Result, DAL.LPDetail>();
                 cfg.CreateMap<WebAPISecurityDB.vwAPIUser, Security.User>();
             });
@@ -219,6 +221,24 @@ namespace PropertyWebAPI.Common
             if (outstr == "")
                return null;
             return outstr;
+        }
+
+        public static string[] ParseCSV(string instr)
+        {
+            if (string.IsNullOrEmpty(instr))
+                return null;
+
+            string[] strList;
+            strList = instr.Split(',');
+            for (int i=0; i<strList.Length; i++)
+            {
+                string cleanStr = FilterNumericOnly(strList[i]);
+                if (string.IsNullOrEmpty(cleanStr))
+                    strList[i] = null;
+                else
+                    strList[i] = cleanStr;
+            }
+            return strList;
         }
     }
     #endregion

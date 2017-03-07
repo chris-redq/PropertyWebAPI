@@ -215,8 +215,71 @@ namespace PropertyWebAPI.Controllers
 
             try
             {
-                var result = DAL.CMA.GetComaparables(algorithmType, propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict, sameZip, sameBlock, sameStreetName, monthOffset,
+                var result = DAL.CMA.GetComparables(algorithmType, propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict, sameZip, sameBlock, sameStreetName, monthOffset,
                                                      minSalePrice, maxSalePrice, classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany);
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL: {0}{1}", propertyBBL, Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+        /// <summary>  
+        ///     Use this api to get a list of comparables for the given property and associated parameters
+        /// </summary>  
+        /// <param name="propertyBBL">
+        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
+        /// </param>
+        /// <param name="maxRecords"></param>
+        /// <param name="monthOffset"></param>
+        /// <param name="classMatchType"></param>
+        /// <param name="sameNeighboorhood"></param>
+        /// <param name="sameSchoolDistrict"></param>
+        /// <param name="sameZip"></param>
+        /// <param name="sameBlock"></param>
+        /// <param name="sameStreetName"></param>
+        /// <param name="minSalePrice"></param>
+        /// <param name="maxSalePrice"></param>
+        /// <param name="isNotIntraFamily"></param>
+        /// <param name="isBuyeraCompany"></param>
+        /// <param name="isSelleraCompany"></param>
+        /// <param name="distanceInMiles"></param>
+        /// <param name="gLARange"></param>
+        /// <param name="lARange"></param>
+        /// <param name="buildingFrontageRange"></param>
+        /// <param name="buildingDepthRange"></param>
+        /// <param name="lotFrontageRange"></param>
+        /// <param name="lotDepthRange"></param>
+        /// <returns>
+        ///     Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
+        /// </returns>
+        [Route("api/cma/{propertyBBL}/manualcomparables")]
+        [ResponseType(typeof(List<DAL.CMAManualResult>))]
+        public IHttpActionResult GetManualComparables(string propertyBBL, int? maxRecords = null, bool? sameNeighboorhood = null, bool? sameSchoolDistrict = null,
+                                                      bool? sameZip = null, bool? sameBlock = null, bool? sameStreetName = null, int? monthOffset = null, double? minSalePrice = null,
+                                                      double? maxSalePrice = null, int? classMatchType = null, bool? isNotIntraFamily = null, bool? isSelleraCompany = null, bool? isBuyeraCompany = null,
+                                                      double? distanceInMiles = null, string gLARange = null, string lARange = null, string buildingFrontageRange = null, string buildingDepthRange = null, 
+                                                      string lotFrontageRange = null, string lotDepthRange = null)
+        {
+            int? gLAHiRange = null, gLALoRange = null, lAHiRange = null, lALoRange = null;
+            int? buildingFrontageHiRange = null, buildingFrontageLoRange = null, buildingDepthHiRange = null, buildingDepthLoRange = null;
+            int? lotFrontageHiRange = null, lotFrontageLoRange = null, lotDepthHiRange = null, lotDepthLoRange = null;
+
+            if (!BAL.BBL.IsValidFormat(propertyBBL))
+                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
+
+
+            try
+            {
+                var result = DAL.CMA.GetManualComparables(propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict, sameZip, sameBlock, sameStreetName, monthOffset,
+                                                          minSalePrice, maxSalePrice, classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany, distanceInMiles, gLAHiRange,
+                                                          gLALoRange, lAHiRange, lALoRange, buildingFrontageHiRange, buildingFrontageLoRange, buildingDepthHiRange, buildingDepthLoRange,
+                                                          lotFrontageHiRange, lotFrontageLoRange, lotDepthHiRange, lotDepthLoRange);
                 if (result == null)
                     return NotFound();
                 return Ok(result);

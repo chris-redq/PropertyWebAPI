@@ -17,4 +17,3 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\Entit
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Release\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.pdb
-C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Release\WebAPISecurityDB.csprojResolveAssemblyReference.cache

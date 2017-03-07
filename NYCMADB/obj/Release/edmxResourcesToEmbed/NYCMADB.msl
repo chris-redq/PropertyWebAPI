@@ -125,34 +125,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothings">
-      <EntityTypeMapping TypeName="NYCMAModel.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
-        <MappingFragment StoreEntitySet="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
-          <ScalarProperty Name="MaxPricePerSqft" ColumnName="MaxPricePerSqft" />
-          <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
-          <ScalarProperty Name="MedianPricePerSqft" ColumnName="MedianPricePerSqft" />
-          <ScalarProperty Name="Q1PricePerSqft" ColumnName="Q1PricePerSqft" />
-          <ScalarProperty Name="MinPricePerSqft" ColumnName="MinPricePerSqft" />
-          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
-          <ScalarProperty Name="PKID" ColumnName="PKID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SalePriceStatisticsByMonthByNTAMeanSmoothings">
-      <EntityTypeMapping TypeName="NYCMAModel.SalePriceStatisticsByMonthByNTAMeanSmoothing">
-        <MappingFragment StoreEntitySet="SalePriceStatisticsByMonthByNTAMeanSmoothing">
-          <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
-          <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
-          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-          <ScalarProperty Name="Q1Price" ColumnName="Q1Price" />
-          <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
-          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
-          <ScalarProperty Name="PKID" ColumnName="PKID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="ShowCMASubject" FunctionName="NYCMAModel.Store.ShowCMASubject">
       <ResultMapping>
         <ComplexTypeMapping TypeName="NYCMAModel.ShowCMASubject_Result">
@@ -214,5 +186,44 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetManualCMA" FunctionName="NYCMAModel.Store.tfnGetManualCMA">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCMAModel.tfnGetManualCMA_Result">
+          <ScalarProperty Name="AlgorithmType" ColumnName="AlgorithmType" />
+          <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="StreetNumberLow" ColumnName="StreetNumberLow" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="DeedAmount" ColumnName="DeedAmount" />
+          <ScalarProperty Name="DeedDate" ColumnName="DeedDate" />
+          <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+          <ScalarProperty Name="GLA" ColumnName="GLA" />
+          <ScalarProperty Name="CalcGLA" ColumnName="CalcGLA" />
+          <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+          <ScalarProperty Name="LAPercent" ColumnName="LAPercent" />
+          <ScalarProperty Name="GLAPercent" ColumnName="GLAPercent" />
+          <ScalarProperty Name="AgeDiff" ColumnName="AgeDiff" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Block" ColumnName="Block" />
+          <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+          <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+          <ScalarProperty Name="IsBuildingIrregularShaped" ColumnName="IsBuildingIrregularShaped" />
+          <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+          <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+          <ScalarProperty Name="IsIrregularLot" ColumnName="IsIrregularLot" />
+          <ScalarProperty Name="TotalUnits" ColumnName="TotalUnits" />
+          <ScalarProperty Name="Stories" ColumnName="Stories" />
+          <ScalarProperty Name="ZoningCode" ColumnName="ZoningCode" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
