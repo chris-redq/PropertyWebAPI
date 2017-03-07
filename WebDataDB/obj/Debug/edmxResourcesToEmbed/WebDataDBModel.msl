@@ -1,21 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="WebDataModelStoreContainer" CdmEntityContainer="WebDataEntities">
-    <EntitySetMapping Name="DataRequestLogs">
-      <EntityTypeMapping TypeName="WebDataModel.DataRequestLog">
-        <MappingFragment StoreEntitySet="DataRequestLog">
-          <ScalarProperty Name="ExternalReferenceId" ColumnName="ExternalReferenceId" />
-          <ScalarProperty Name="RequestParameters" ColumnName="RequestParameters" />
-          <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="WebDataRequestMade" ColumnName="WebDataRequestMade" />
-          <ScalarProperty Name="ServedFromCache" ColumnName="ServedFromCache" />
-          <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
-          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
-          <ScalarProperty Name="BBL" ColumnName="BBL" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="DOBViolations">
       <EntityTypeMapping TypeName="WebDataModel.DOBViolation">
         <MappingFragment StoreEntitySet="DOBViolation">
@@ -202,6 +187,22 @@
     <EntitySetMapping Name="vwStaleDataBBLs">
       <EntityTypeMapping TypeName="WebDataModel.vwStaleDataBBL">
         <MappingFragment StoreEntitySet="vwStaleDataBBL">
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataRequestLogs">
+      <EntityTypeMapping TypeName="WebDataModel.DataRequestLog">
+        <MappingFragment StoreEntitySet="DataRequestLog">
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="RequestParameters" ColumnName="RequestParameters" />
+          <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="WebDataRequestMade" ColumnName="WebDataRequestMade" />
+          <ScalarProperty Name="ServedFromCache" ColumnName="ServedFromCache" />
+          <ScalarProperty Name="ExternalReferenceId" ColumnName="ExternalReferenceId" />
+          <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
           <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
           <ScalarProperty Name="BBL" ColumnName="BBL" />
         </MappingFragment>

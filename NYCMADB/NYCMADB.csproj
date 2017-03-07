@@ -85,6 +85,9 @@
     <Compile Include="tfnGetCMA_Result.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnGetManualCMA_Result.cs">
+      <DependentUpon>NYCMADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwSalesByMonthByNTA.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>

@@ -16,6 +16,8 @@ namespace PropertyWebAPI.BAL
     using DexiRobotRequestResponseBuilder.Response;
     using DexiRobotRequestResponseBuilder.Request;
     using System.Collections.Generic;
+    using System.Data.Entity.Validation;
+    using System.Data.Entity;
 
     #region Local Helper Classes
     /// <summary>
@@ -79,17 +81,15 @@ namespace PropertyWebAPI.BAL
         /// <param name="externalReferenceId"></param>
         /// <param name="httpErrorCode"></param>
         /// <returns></returns>
-        public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
+        public static void LogFailure(string propertyBBL, string externalReferenceId, string jobId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
 
 
         /// <summary>
         ///     This method calls back portal for every log record in the list
         /// </summary>
-        /// <param name="servicerName"></param>
-        /// <param name="logs">List or Request Log Records</param>
         private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, string servicerName)
         {
             if (!CallingSystem.isAnyCallBack(appContext))
@@ -108,14 +108,21 @@ namespace PropertyWebAPI.BAL
                 CallingSystem.PostCallBack(appContext, resultObj);
             }
         }
+
         /// <summary>
         ///     This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
         ///     request for getting it scrapped from the web 
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <returns></returns>
         public static MortgageServicerDetails Get(string propertyBBL, string externalReferenceId)
+        {
+            return Get(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+        }
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
+        ///     request for getting it scrapped from the web 
+        /// </summary>
+        public static MortgageServicerDetails Get(string propertyBBL, string externalReferenceId, int priority, string jobId)
         {
             MortgageServicerDetails mServicerDetails = new MortgageServicerDetails();
             mServicerDetails.BBL = propertyBBL;
@@ -141,7 +148,7 @@ namespace PropertyWebAPI.BAL
                             mServicerDetails.servicerName = mortgageServicerObj.Name;
                             mServicerDetails.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jobId, jsonBillParams);
                         }
                         else
                         {   //check if pending request in queue
@@ -151,10 +158,10 @@ namespace PropertyWebAPI.BAL
                             {
                                 string requestStr = RequestData.ServicerWebsite(propertyBBL);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, jsonBillParams);
 
                                 mServicerDetails.status = RequestStatus.Pending.ToString();
                                 mServicerDetails.requestId = requestObj.RequestId;
@@ -165,7 +172,7 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 mServicerDetails.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -174,7 +181,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         mServicerDetails.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId,  parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", 
                                                 propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
@@ -246,11 +253,15 @@ namespace PropertyWebAPI.BAL
                             case (int)RequestStatus.Success:
                                 {
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
-                                    if (dataRequestLogObj != null)
+                                    if (dataRequestLogObj == null)
+                                        throw (new Exception("Cannot locate Request Log Record(s)"));
+                                    
+                                    var resultObj = (ResponseData.ParseServicer(requestObj.ResponseData))[0];
+                                    servicerName = resultObj.ServicerName;
+                                    if (servicerName == null)
+                                        logs = DAL.DataRequestLog.SetAsError(webDBEntities, requestObj.RequestId);
+                                    else
                                     {
-                                        var resultObj = (ResponseData.ParseServicer(requestObj.ResponseData))[0];
-                                        servicerName = resultObj.ServicerName;
-
                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
                                         WebDataDB.MortgageServicer mortgageServicerObj = webDBEntities.MortgageServicers.FirstOrDefault(i => i.BBL == parameters.BBL);
@@ -258,6 +269,7 @@ namespace PropertyWebAPI.BAL
                                         {   //Update data with new results
                                             mortgageServicerObj.Name = resultObj.ServicerName;
                                             mortgageServicerObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
+                                            webDBEntities.Entry(mortgageServicerObj).State = EntityState.Modified;
                                         }
                                         else
                                         {   // add an entry into cache or DB
@@ -271,10 +283,8 @@ namespace PropertyWebAPI.BAL
 
                                         webDBEntities.SaveChanges();
 
-                                        logs=DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
+                                        logs = DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
-                                    else
-                                        throw (new Exception("Cannot locate Request Log Record(s)"));
                                     break;
                                 }
                             default:
@@ -286,6 +296,17 @@ namespace PropertyWebAPI.BAL
                         if (logs != null)
                             MakeCallBacks(appContext, logs, servicerName);
                         return true;
+                    }
+                    catch (DbEntityValidationException dbEx)
+                    {
+                        foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        {
+                            foreach (var validationError in validationErrors.ValidationErrors)
+                            {
+                                Common.Logs.log().Error(string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage));
+                            }
+                        }
+                        return false;
                     }
                     catch (Exception e)
                     {

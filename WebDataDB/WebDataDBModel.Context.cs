@@ -25,7 +25,6 @@ namespace WebDataDB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DataRequestLog> DataRequestLogs { get; set; }
         public virtual DbSet<DOBViolation> DOBViolations { get; set; }
         public virtual DbSet<FannieMortgage> FannieMortgages { get; set; }
         public virtual DbSet<FreddieMortgage> FreddieMortgages { get; set; }
@@ -41,5 +40,6 @@ namespace WebDataDB
         public virtual DbSet<NoticeOfProperyValue> NoticeOfProperyValues { get; set; }
         public virtual DbSet<Mortgage> Mortgages { get; set; }
         public virtual DbSet<vwStaleDataBBL> vwStaleDataBBLs { get; set; }
+        public virtual DbSet<DataRequestLog> DataRequestLogs { get; set; }
     }
 }

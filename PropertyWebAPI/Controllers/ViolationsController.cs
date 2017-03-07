@@ -63,13 +63,13 @@ namespace PropertyWebAPI.Controllers
         {
             if (!BAL.BBL.IsValidFormat(propertyBBL))
             {
-                BAL.DOBPenaltiesAndViolationsSummary.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                BAL.DOBPenaltiesAndViolationsSummary.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             }
 
             if (!BAL.BBL.IsValid(propertyBBL))
             {
-                BAL.DOBPenaltiesAndViolationsSummary.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                BAL.DOBPenaltiesAndViolationsSummary.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
             }
 

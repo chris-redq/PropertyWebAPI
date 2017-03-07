@@ -61,14 +61,14 @@ namespace PropertyWebAPI.Controllers
 
             if (!BAL.BBL.IsValidFormat(propertyBBL))
             {   if (needTaxBill == "Y")
-                    BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                    BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             }
 
             if (!BAL.BBL.IsValid(propertyBBL))
             {
                 if (needTaxBill == "Y")
-                    BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                    BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
             }
 

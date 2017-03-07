@@ -17,8 +17,8 @@ namespace WebDataDB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RequestType()
         {
-            this.DataRequestLogs = new HashSet<DataRequestLog>();
             this.Requests = new HashSet<Request>();
+            this.DataRequestLogs = new HashSet<DataRequestLog>();
         }
     
         public int RequestTypeId { get; set; }
@@ -28,10 +28,10 @@ namespace WebDataDB
         public Nullable<int> DaysToRefresh { get; set; }
         public Nullable<int> PriorityDaysToRefresh { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DataRequestLog> DataRequestLogs { get; set; }
         public virtual DexiRequestType DexiRequestType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request> Requests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DataRequestLog> DataRequestLogs { get; set; }
     }
 }

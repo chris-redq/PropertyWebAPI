@@ -15,6 +15,7 @@
     <Property Name="RequestId" Type="bigint" />
     <Property Name="RequestStatusTypeId" Type="int" />
     <Property Name="RequestParameters" Type="varchar(max)" />
+    <Property Name="JobId" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="DOBViolation">
     <Key>
@@ -42,12 +43,74 @@
     <Property Name="IsFreddie" Type="bit" Nullable="false" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Mortgage">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="MortgageDocumentURI" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="MortgageDocumentURI" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="FHACaseNumber" Type="varchar" MaxLength="100" />
+    <Property Name="MortgageAmounts" Type="varchar" MaxLength="50" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="MortgageServicer">
     <Key>
       <PropertyRef Name="BBL" />
     </Key>
     <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NoticeOfProperyValue">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="BuildingClass" Type="varchar" MaxLength="50" />
+    <Property Name="PrimaryZoning" Type="varchar" MaxLength="50" />
+    <Property Name="LotFrontage" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="LotDepth" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="LotSquareFootage" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="LotShape" Type="varchar" MaxLength="50" />
+    <Property Name="LotType" Type="varchar" MaxLength="50" />
+    <Property Name="Proximity" Type="varchar" MaxLength="50" />
+    <Property Name="BuildingFrontage" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="BuildingDepth" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="NumberOfBuildings" Type="int" />
+    <Property Name="Style" Type="varchar" MaxLength="50" />
+    <Property Name="YearBuilt" Type="varchar" MaxLength="4" />
+    <Property Name="ExteriorCondition" Type="varchar" MaxLength="50" />
+    <Property Name="FinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="UnfinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialUnits" Type="int" />
+    <Property Name="CommercialSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="ResidentialUnits" Type="int" />
+    <Property Name="GarageType" Type="varchar" MaxLength="50" />
+    <Property Name="GarageSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="BasementGrade" Type="varchar" MaxLength="50" />
+    <Property Name="BasementSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="BasementType" Type="varchar" MaxLength="50" />
+    <Property Name="ConstructionType" Type="varchar" MaxLength="50" />
+    <Property Name="ExteriorWall" Type="varchar" MaxLength="50" />
+    <Property Name="NumberOfStories" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="StructureType" Type="varchar" MaxLength="50" />
+    <Property Name="Grade" Type="varchar" MaxLength="50" />
+    <Property Name="GrossSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialOverlay" Type="varchar" MaxLength="50" />
+    <Property Name="LandFactorPerSqFtinDollars" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="GrossResidentialSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="LandType1" Type="varchar" MaxLength="50" />
+    <Property Name="LandSize1" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="NumberOfRooms" Type="int" />
+    <Property Name="HotelClass" Type="varchar" MaxLength="50" />
+    <Property Name="NumberOfResidentialLots" Type="int" />
+    <Property Name="NumberOfCommercialLots" Type="int" />
+    <Property Name="GrossSquareFootageOfTheSuffix" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialLots" Type="int" />
+    <Property Name="LandFactorperSquareFoot" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="ResidentialLots" Type="int" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="TaxBill">
@@ -104,6 +167,7 @@
     <Property Name="RequestStatusTypeId" Type="int" Nullable="false" />
     <Property Name="RequestData" Type="varchar(max)" />
     <Property Name="ResponseData" Type="varchar(max)" />
+    <Property Name="NextAttemptTime" Type="datetime" />
   </EntityType>
   <EntityType Name="RequestStatusType">
     <Key>
@@ -119,6 +183,19 @@
     <Property Name="RequestTypeId" Type="int" Nullable="false" />
     <Property Name="RequestTypeName" Type="varchar" MaxLength="50" />
     <Property Name="MaxAttempts" Type="int" Nullable="false" />
+    <Property Name="TimeDelayInMinute" Type="int" Nullable="false" />
+    <Property Name="DaysToRefresh" Type="int" />
+    <Property Name="PriorityDaysToRefresh" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WebData.data.vwStaleDataBBL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwStaleDataBBL">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="RequestTypeId" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="RequestTypeId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="Dexi Details">
     <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
@@ -209,7 +286,9 @@
     <EntitySet Name="DOBViolation" EntityType="Self.DOBViolation" Schema="data" store:Type="Tables" />
     <EntitySet Name="FannieMortgage" EntityType="Self.FannieMortgage" Schema="data" store:Type="Tables" />
     <EntitySet Name="FreddieMortgage" EntityType="Self.FreddieMortgage" Schema="data" store:Type="Tables" />
+    <EntitySet Name="Mortgage" EntityType="Self.Mortgage" Schema="data" store:Type="Tables" />
     <EntitySet Name="MortgageServicer" EntityType="Self.MortgageServicer" Schema="data" store:Type="Tables" />
+    <EntitySet Name="NoticeOfProperyValue" EntityType="Self.NoticeOfProperyValue" Schema="data" store:Type="Tables" />
     <EntitySet Name="TaxBill" EntityType="Self.TaxBill" Schema="data" store:Type="Tables" />
     <EntitySet Name="WaterBill" EntityType="Self.WaterBill" Schema="data" store:Type="Tables" />
     <EntitySet Name="Zillow" EntityType="Self.Zillow" Schema="data" store:Type="Tables" />
@@ -218,6 +297,12 @@
     <EntitySet Name="Request" EntityType="Self.Request" Schema="jm" store:Type="Tables" />
     <EntitySet Name="RequestStatusType" EntityType="Self.RequestStatusType" Schema="jm" store:Type="Tables" />
     <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="jm" store:Type="Tables" />
+    <EntitySet Name="vwStaleDataBBL" EntityType="Self.vwStaleDataBBL" store:Type="Views" store:Schema="data">
+      <DefiningQuery>SELECT 
+    [vwStaleDataBBL].[BBL] AS [BBL], 
+    [vwStaleDataBBL].[RequestTypeId] AS [RequestTypeId]
+    FROM [data].[vwStaleDataBBL] AS [vwStaleDataBBL]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="Dexi Details" Association="Self.Dexi Details">
       <End Role="RequestType" EntitySet="RequestType" />
       <End Role="DexiRequestType" EntitySet="DexiRequestType" />

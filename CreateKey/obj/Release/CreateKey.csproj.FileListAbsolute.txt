@@ -3,4 +3,3 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\bin\Release\CreateKey.ex
 C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\bin\Release\CreateKey.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\obj\Release\CreateKey.exe
 C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\obj\Release\CreateKey.pdb
-C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\obj\Release\CreateKey.csprojResolveAssemblyReference.cache

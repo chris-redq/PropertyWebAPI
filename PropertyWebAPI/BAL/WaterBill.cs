@@ -69,14 +69,21 @@ namespace PropertyWebAPI.BAL
         {
             return JsonConvert.DeserializeObject<Parameters>(jsonParameters);
         }
+
         /// <summary>
         ///     This method deals with all the details associated with either returning the water bill details or creating the 
         ///     request for getting is scrapped from the web 
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <returns></returns>
         public static WaterBillDetails Get(string propertyBBL, string externalReferenceId)
+        {
+            return Get(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+        }
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the water bill details or creating the 
+        ///     request for getting is scrapped from the web 
+        /// </summary>
+        public static WaterBillDetails Get(string propertyBBL, string externalReferenceId, int priority, string jobId)
         {
             WaterBillDetails waterBill = new WaterBillDetails();
             waterBill.externalReferenceId = externalReferenceId;
@@ -101,7 +108,7 @@ namespace PropertyWebAPI.BAL
                             waterBill.billAmount = waterBillObj.BillAmount;
                             waterBill.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, externalReferenceId, jobId, jsonBillParams);
                         }
                         else
                         {
@@ -112,10 +119,10 @@ namespace PropertyWebAPI.BAL
                             {
                                 string requestStr = propertyBBL; // we need a helper class to convert propertyBBL into a correct format so that the web scrapping service can read
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.NYCWaterBill, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.NYCWaterBill, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, requestObj.RequestId,
-                                                                                               externalReferenceId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, jsonBillParams);
 
                                 waterBill.status = RequestStatus.Pending.ToString();
                                 waterBill.requestId = requestObj.RequestId;
@@ -126,7 +133,7 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 waterBill.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -178,8 +185,6 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method updates the WaterBill table based on the information received from the Request Object
         /// </summary>
-        /// <param name="requestObj"></param>
-        /// <returns>True if successful else false</returns>
         public static bool UpdateData(Common.Context appContext, Request requestObj)
         {
             using (WebDataEntities webDBEntities = new WebDataEntities())

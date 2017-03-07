@@ -107,14 +107,8 @@ namespace PropertyWebAPI.DAL
         /// <summary>
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
         /// </summary>
-        /// <param name="webDBEntities"></param>
-        /// <param name="propertyBBL"></param>
-        /// <param name="requestTypeId"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="requestParameters"></param>
-        /// <returns></returns>
         public static WebDataDB.DataRequestLog InsertForCacheAccess(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, 
-                                                                    string externalReferenceId, string requestParameters)
+                                                                    string externalReferenceId, string jobId, string requestParameters)
         {
             WebDataDB.DataRequestLog dataRequestLogObj = new WebDataDB.DataRequestLog();
             dataRequestLogObj.BBL = propertyBBL;
@@ -122,6 +116,7 @@ namespace PropertyWebAPI.DAL
             dataRequestLogObj.RequestTypeId = requestTypeId;
             dataRequestLogObj.RequestDateTime = DateTime.UtcNow;
             dataRequestLogObj.ExternalReferenceId = externalReferenceId;
+            dataRequestLogObj.JobId = jobId;
             dataRequestLogObj.ServedFromCache = true;
             dataRequestLogObj.WebDataRequestMade = false;
             dataRequestLogObj.RequestParameters = requestParameters;
@@ -135,12 +130,7 @@ namespace PropertyWebAPI.DAL
         /// <summary>
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="requestTypeId"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="requestParameters"></param>
-        /// <returns></returns>
-        public static WebDataDB.DataRequestLog InsertForFailure(string propertyBBL, int requestTypeId, string externalReferenceId, string requestParameters)
+        public static WebDataDB.DataRequestLog InsertForFailure(string propertyBBL, int requestTypeId, string externalReferenceId, string jobId, string requestParameters)
         {
             WebDataDB.DataRequestLog dataRequestLogObj = new WebDataDB.DataRequestLog();
 
@@ -152,6 +142,7 @@ namespace PropertyWebAPI.DAL
                     dataRequestLogObj.RequestTypeId = requestTypeId;
                     dataRequestLogObj.RequestDateTime = DateTime.UtcNow;
                     dataRequestLogObj.ExternalReferenceId = externalReferenceId;
+                    dataRequestLogObj.JobId = jobId;
                     dataRequestLogObj.ServedFromCache = false;
                     dataRequestLogObj.WebDataRequestMade = false;
                     dataRequestLogObj.RequestParameters = requestParameters;
@@ -171,15 +162,8 @@ namespace PropertyWebAPI.DAL
         /// <summary>
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
         /// </summary>
-        /// <param name="webDBEntities"></param>
-        /// <param name="propertyBBL"></param>
-        /// <param name="requestTypeId"></param>
-        /// <param name="requestId"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="requestParameters"></param>
-        /// <returns></returns>
         public static WebDataDB.DataRequestLog InsertForWebDataRequest(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, long requestId, 
-                                                                       string externalReferenceId, string requestParameters)
+                                                                       string externalReferenceId, string jobId, string requestParameters)
         {
             WebDataDB.DataRequestLog dataRequestLogObj = new WebDataDB.DataRequestLog();
 
@@ -188,6 +172,7 @@ namespace PropertyWebAPI.DAL
             dataRequestLogObj.RequestTypeId = requestTypeId;
             dataRequestLogObj.RequestDateTime = DateTime.UtcNow;
             dataRequestLogObj.ExternalReferenceId = externalReferenceId;
+            dataRequestLogObj.JobId = jobId;
             dataRequestLogObj.ServedFromCache = false;
             dataRequestLogObj.WebDataRequestMade = true;
             dataRequestLogObj.RequestId = requestId;

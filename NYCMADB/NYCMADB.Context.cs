@@ -177,5 +177,119 @@ namespace NYCMADB
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowCMASubject_Result>("ShowCMASubject", sbjBBLEParameter);
         }
+    
+        [DbFunction("NYCMAEntities", "tfnGetManualCMA")]
+        public virtual IQueryable<tfnGetManualCMA_Result> tfnGetManualCMA(string sbjBBLE, Nullable<int> maxRecords, Nullable<bool> sameNeighborhood, Nullable<bool> sameSchoolDistrict, Nullable<bool> sameZip, Nullable<bool> sameBlock, Nullable<bool> sameStreetName, Nullable<int> monthOffset, Nullable<double> minSalePrice, Nullable<double> maxSalePrice, Nullable<int> classMatchType, Nullable<bool> isNotIntraFamily, Nullable<bool> isSelleraCompany, Nullable<bool> isBuyeraCompany, Nullable<double> distanceInMiles, Nullable<int> gLAHiRange, Nullable<int> gLALoRange, Nullable<int> lAHiRange, Nullable<int> lALoRange, Nullable<int> buildingFrontageHiRange, Nullable<int> buildingFrontageLoRange, Nullable<int> buildingDepthHiRange, Nullable<int> buildingDepthLoRange, Nullable<int> lotFrontageHiRange, Nullable<int> lotFrontageLoRange, Nullable<int> lotDepthHiRange, Nullable<int> lotDepthLoRange)
+        {
+            var sbjBBLEParameter = sbjBBLE != null ?
+                new ObjectParameter("sbjBBLE", sbjBBLE) :
+                new ObjectParameter("sbjBBLE", typeof(string));
+    
+            var maxRecordsParameter = maxRecords.HasValue ?
+                new ObjectParameter("MaxRecords", maxRecords) :
+                new ObjectParameter("MaxRecords", typeof(int));
+    
+            var sameNeighborhoodParameter = sameNeighborhood.HasValue ?
+                new ObjectParameter("SameNeighborhood", sameNeighborhood) :
+                new ObjectParameter("SameNeighborhood", typeof(bool));
+    
+            var sameSchoolDistrictParameter = sameSchoolDistrict.HasValue ?
+                new ObjectParameter("SameSchoolDistrict", sameSchoolDistrict) :
+                new ObjectParameter("SameSchoolDistrict", typeof(bool));
+    
+            var sameZipParameter = sameZip.HasValue ?
+                new ObjectParameter("SameZip", sameZip) :
+                new ObjectParameter("SameZip", typeof(bool));
+    
+            var sameBlockParameter = sameBlock.HasValue ?
+                new ObjectParameter("SameBlock", sameBlock) :
+                new ObjectParameter("SameBlock", typeof(bool));
+    
+            var sameStreetNameParameter = sameStreetName.HasValue ?
+                new ObjectParameter("SameStreetName", sameStreetName) :
+                new ObjectParameter("SameStreetName", typeof(bool));
+    
+            var monthOffsetParameter = monthOffset.HasValue ?
+                new ObjectParameter("MonthOffset", monthOffset) :
+                new ObjectParameter("MonthOffset", typeof(int));
+    
+            var minSalePriceParameter = minSalePrice.HasValue ?
+                new ObjectParameter("MinSalePrice", minSalePrice) :
+                new ObjectParameter("MinSalePrice", typeof(double));
+    
+            var maxSalePriceParameter = maxSalePrice.HasValue ?
+                new ObjectParameter("MaxSalePrice", maxSalePrice) :
+                new ObjectParameter("MaxSalePrice", typeof(double));
+    
+            var classMatchTypeParameter = classMatchType.HasValue ?
+                new ObjectParameter("ClassMatchType", classMatchType) :
+                new ObjectParameter("ClassMatchType", typeof(int));
+    
+            var isNotIntraFamilyParameter = isNotIntraFamily.HasValue ?
+                new ObjectParameter("IsNotIntraFamily", isNotIntraFamily) :
+                new ObjectParameter("IsNotIntraFamily", typeof(bool));
+    
+            var isSelleraCompanyParameter = isSelleraCompany.HasValue ?
+                new ObjectParameter("IsSelleraCompany", isSelleraCompany) :
+                new ObjectParameter("IsSelleraCompany", typeof(bool));
+    
+            var isBuyeraCompanyParameter = isBuyeraCompany.HasValue ?
+                new ObjectParameter("IsBuyeraCompany", isBuyeraCompany) :
+                new ObjectParameter("IsBuyeraCompany", typeof(bool));
+    
+            var distanceInMilesParameter = distanceInMiles.HasValue ?
+                new ObjectParameter("DistanceInMiles", distanceInMiles) :
+                new ObjectParameter("DistanceInMiles", typeof(double));
+    
+            var gLAHiRangeParameter = gLAHiRange.HasValue ?
+                new ObjectParameter("GLAHiRange", gLAHiRange) :
+                new ObjectParameter("GLAHiRange", typeof(int));
+    
+            var gLALoRangeParameter = gLALoRange.HasValue ?
+                new ObjectParameter("GLALoRange", gLALoRange) :
+                new ObjectParameter("GLALoRange", typeof(int));
+    
+            var lAHiRangeParameter = lAHiRange.HasValue ?
+                new ObjectParameter("LAHiRange", lAHiRange) :
+                new ObjectParameter("LAHiRange", typeof(int));
+    
+            var lALoRangeParameter = lALoRange.HasValue ?
+                new ObjectParameter("LALoRange", lALoRange) :
+                new ObjectParameter("LALoRange", typeof(int));
+    
+            var buildingFrontageHiRangeParameter = buildingFrontageHiRange.HasValue ?
+                new ObjectParameter("BuildingFrontageHiRange", buildingFrontageHiRange) :
+                new ObjectParameter("BuildingFrontageHiRange", typeof(int));
+    
+            var buildingFrontageLoRangeParameter = buildingFrontageLoRange.HasValue ?
+                new ObjectParameter("BuildingFrontageLoRange", buildingFrontageLoRange) :
+                new ObjectParameter("BuildingFrontageLoRange", typeof(int));
+    
+            var buildingDepthHiRangeParameter = buildingDepthHiRange.HasValue ?
+                new ObjectParameter("BuildingDepthHiRange", buildingDepthHiRange) :
+                new ObjectParameter("BuildingDepthHiRange", typeof(int));
+    
+            var buildingDepthLoRangeParameter = buildingDepthLoRange.HasValue ?
+                new ObjectParameter("BuildingDepthLoRange", buildingDepthLoRange) :
+                new ObjectParameter("BuildingDepthLoRange", typeof(int));
+    
+            var lotFrontageHiRangeParameter = lotFrontageHiRange.HasValue ?
+                new ObjectParameter("LotFrontageHiRange", lotFrontageHiRange) :
+                new ObjectParameter("LotFrontageHiRange", typeof(int));
+    
+            var lotFrontageLoRangeParameter = lotFrontageLoRange.HasValue ?
+                new ObjectParameter("LotFrontageLoRange", lotFrontageLoRange) :
+                new ObjectParameter("LotFrontageLoRange", typeof(int));
+    
+            var lotDepthHiRangeParameter = lotDepthHiRange.HasValue ?
+                new ObjectParameter("LotDepthHiRange", lotDepthHiRange) :
+                new ObjectParameter("LotDepthHiRange", typeof(int));
+    
+            var lotDepthLoRangeParameter = lotDepthLoRange.HasValue ?
+                new ObjectParameter("LotDepthLoRange", lotDepthLoRange) :
+                new ObjectParameter("LotDepthLoRange", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetManualCMA_Result>("[NYCMAEntities].[tfnGetManualCMA](@sbjBBLE, @MaxRecords, @SameNeighborhood, @SameSchoolDistrict, @SameZip, @SameBlock, @SameStreetName, @MonthOffset, @MinSalePrice, @MaxSalePrice, @ClassMatchType, @IsNotIntraFamily, @IsSelleraCompany, @IsBuyeraCompany, @DistanceInMiles, @GLAHiRange, @GLALoRange, @LAHiRange, @LALoRange, @BuildingFrontageHiRange, @BuildingFrontageLoRange, @BuildingDepthHiRange, @BuildingDepthLoRange, @LotFrontageHiRange, @LotFrontageLoRange, @LotDepthHiRange, @LotDepthLoRange)", sbjBBLEParameter, maxRecordsParameter, sameNeighborhoodParameter, sameSchoolDistrictParameter, sameZipParameter, sameBlockParameter, sameStreetNameParameter, monthOffsetParameter, minSalePriceParameter, maxSalePriceParameter, classMatchTypeParameter, isNotIntraFamilyParameter, isSelleraCompanyParameter, isBuyeraCompanyParameter, distanceInMilesParameter, gLAHiRangeParameter, gLALoRangeParameter, lAHiRangeParameter, lALoRangeParameter, buildingFrontageHiRangeParameter, buildingFrontageLoRangeParameter, buildingDepthHiRangeParameter, buildingDepthLoRangeParameter, lotFrontageHiRangeParameter, lotFrontageLoRangeParameter, lotDepthHiRangeParameter, lotDepthLoRangeParameter);
+        }
     }
 }

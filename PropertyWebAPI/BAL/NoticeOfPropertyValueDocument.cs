@@ -61,18 +61,15 @@ namespace PropertyWebAPI.BAL
         ///     Use this method in the controller to log failures that are processed before calling any 
         ///     other business methods of this class
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="httpErrorCode"></param>
-        /// <returns></returns>
-        public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
+        public static void LogFailure(string propertyBBL, string externalReferenceId, string jobId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
 
-        private static WebDataDB.NoticeOfProperyValue CopyData(RequestResponseBuilder.ResponseObjects.NoticeOfPropertyValue valObj)
+        private static WebDataDB.NoticeOfProperyValue CopyData(WebDataDB.NoticeOfProperyValue resultObj, RequestResponseBuilder.ResponseObjects.NoticeOfPropertyValue valObj)
         {
-            WebDataDB.NoticeOfProperyValue resultObj = new WebDataDB.NoticeOfProperyValue();
+            if (resultObj== null)
+                resultObj = new WebDataDB.NoticeOfProperyValue();
             
             resultObj.BuildingClass = Conversions.GetSingleValue(valObj.BuildingClass);
             resultObj.PrimaryZoning = Conversions.Concat(valObj.PrimaryZoning);
@@ -152,6 +149,20 @@ namespace PropertyWebAPI.BAL
         /// <returns></returns>
         public static NoticeOfPropertyValueResult GetDetails(string propertyBBL, string externalReferenceId)
         {
+            return GetDetails(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+        }
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the Notice Of Property Value details or creating the 
+        ///     request for getting the data from the web 
+        /// </summary>
+        /// <param name="propertyBBL"></param>
+        /// <param name="externalReferenceId"></param>
+        /// <param name="jobId"></param>
+        /// <param name="priority"></param>
+        /// <returns></returns>
+        public static NoticeOfPropertyValueResult GetDetails(string propertyBBL, string externalReferenceId, int priority, string jobId)
+        {
             NoticeOfPropertyValueResult NPOVResultObj = new NoticeOfPropertyValueResult();
             NPOVResultObj.BBL = propertyBBL;
             NPOVResultObj.externalReferenceId = externalReferenceId;
@@ -176,7 +187,7 @@ namespace PropertyWebAPI.BAL
                             NPOVResultObj.noticeOfPropertyValue = noticeOfPropertyValueObj;
                             NPOVResultObj.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jobId,  jsonBillParams);
                         }
                         else
                         {   //check if pending request in queue
@@ -186,21 +197,24 @@ namespace PropertyWebAPI.BAL
                             {
                                 string requestStr = RequestResponseBuilder.RequestObjects.RequestData.NoticeOfPropertyValue(propertyBBL);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, jsonBillParams);
 
                                 NPOVResultObj.status = RequestStatus.Pending.ToString();
                                 NPOVResultObj.requestId = requestObj.RequestId;
                             }
                             else //Pending request in queue
                             {
+                                //Update Priority if need
+                                Request requestObj = DAL.Request.Update(webDBEntities, dataRequestLogObj.RequestId.GetValueOrDefault(), priority, jobId);
+
                                 NPOVResultObj.status = RequestStatus.Pending.ToString();
                                 //Send the RequestId for the pending request back
                                 NPOVResultObj.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -209,7 +223,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         NPOVResultObj.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}",
                                                 propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
@@ -292,15 +306,14 @@ namespace PropertyWebAPI.BAL
 
                                         if (noticeOfPropertyValueObj != null)
                                         {   //Update data with new results
-                                            noticeOfPropertyValueObj = CopyData(resultObj);
+                                            noticeOfPropertyValueObj = CopyData(noticeOfPropertyValueObj, resultObj);
                                             noticeOfPropertyValueObj.BBL = parameters.BBL;
                                             noticeOfPropertyValueObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
-                                            webDBEntities.NoticeOfProperyValues.Attach(noticeOfPropertyValueObj);
                                             webDBEntities.Entry(noticeOfPropertyValueObj).State = EntityState.Modified;
                                         }
                                         else
                                         {   // add an entry into cache or DB
-                                            noticeOfPropertyValueObj = CopyData(resultObj);
+                                            noticeOfPropertyValueObj = CopyData(null, resultObj);
                                             noticeOfPropertyValueObj.BBL = parameters.BBL;
                                             noticeOfPropertyValueObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                             webDBEntities.NoticeOfProperyValues.Add(noticeOfPropertyValueObj);

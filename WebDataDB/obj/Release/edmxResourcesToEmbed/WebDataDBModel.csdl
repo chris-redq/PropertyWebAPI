@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="WebDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="WebDataEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="DataRequestLogs" EntityType="WebDataModel.DataRequestLog" />
     <EntitySet Name="DOBViolations" EntityType="WebDataModel.DOBViolation" />
     <EntitySet Name="FannieMortgages" EntityType="WebDataModel.FannieMortgage" />
     <EntitySet Name="FreddieMortgages" EntityType="WebDataModel.FreddieMortgage" />
@@ -13,14 +12,6 @@
     <EntitySet Name="Requests" EntityType="WebDataModel.Request" />
     <EntitySet Name="RequestStatusTypes" EntityType="WebDataModel.RequestStatusType" />
     <EntitySet Name="RequestTypes" EntityType="WebDataModel.RequestType" />
-    <AssociationSet Name="Request1" Association="WebDataModel.Request1">
-      <End Role="Request" EntitySet="Requests" />
-      <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
-    </AssociationSet>
-    <AssociationSet Name="RequestType1" Association="WebDataModel.RequestType1">
-      <End Role="RequestType" EntitySet="RequestTypes" />
-      <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
-    </AssociationSet>
     <AssociationSet Name="Dexi_Request_Details" Association="WebDataModel.Dexi_Request_Details">
       <End Role="Request" EntitySet="Requests" />
       <End Role="DexiRequest" EntitySet="DexiRequests" />
@@ -37,31 +28,24 @@
       <End Role="RequestType" EntitySet="RequestTypes" />
       <End Role="Request" EntitySet="Requests" />
     </AssociationSet>
+    <EntitySet Name="Zillows" EntityType="WebDataModel.Zillow" />
+    <EntitySet Name="NoticeOfProperyValues" EntityType="WebDataModel.NoticeOfProperyValue" />
+    <EntitySet Name="Mortgages" EntityType="WebDataModel.Mortgage" />
+    <EntitySet Name="vwStaleDataBBLs" EntityType="WebDataModel.vwStaleDataBBL" />
+    <EntitySet Name="DataRequestLogs" EntityType="WebDataModel.DataRequestLog" />
+    <AssociationSet Name="Request1" Association="WebDataModel.Request1">
+      <End Role="Request" EntitySet="Requests" />
+      <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
+    </AssociationSet>
     <AssociationSet Name="RequestStatus" Association="WebDataModel.RequestStatus">
       <End Role="RequestStatusType" EntitySet="RequestStatusTypes" />
       <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
     </AssociationSet>
-    <EntitySet Name="Zillows" EntityType="WebDataModel.Zillow" />
+    <AssociationSet Name="RequestType1" Association="WebDataModel.RequestType1">
+      <End Role="RequestType" EntitySet="RequestTypes" />
+      <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="DataRequestLog">
-    <Key>
-      <PropertyRef Name="BBL" />
-      <PropertyRef Name="RequestTypeId" />
-      <PropertyRef Name="RequestDateTime" />
-    </Key>
-    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
-    <Property Name="RequestDateTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="ServedFromCache" Type="Boolean" />
-    <Property Name="WebDataRequestMade" Type="Boolean" />
-    <Property Name="RequestId" Type="Int64" />
-    <NavigationProperty Name="Request" Relationship="WebDataModel.Request1" FromRole="DataRequestLog" ToRole="Request" />
-    <NavigationProperty Name="RequestType" Relationship="WebDataModel.RequestType1" FromRole="DataRequestLog" ToRole="RequestType" />
-    <Property Name="RequestStatusTypeId" Type="Int32" />
-    <NavigationProperty Name="RequestStatusType" Relationship="WebDataModel.RequestStatus" FromRole="DataRequestLog" ToRole="RequestStatusType" />
-    <Property Name="RequestParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="ExternalReferenceId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="DOBViolation">
     <Key>
       <PropertyRef Name="BBL" />
@@ -144,10 +128,11 @@
     <Property Name="RequestStatusTypeId" Type="Int32" Nullable="false" />
     <Property Name="RequestData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ResponseData" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="DataRequestLogs" Relationship="WebDataModel.Request1" FromRole="Request" ToRole="DataRequestLog" />
     <NavigationProperty Name="DexiRequest" Relationship="WebDataModel.Dexi_Request_Details" FromRole="Request" ToRole="DexiRequest" />
     <NavigationProperty Name="RequestStatusType" Relationship="WebDataModel.Request_Status" FromRole="Request" ToRole="RequestStatusType" />
     <NavigationProperty Name="RequestType" Relationship="WebDataModel.Types_of_Request" FromRole="Request" ToRole="RequestType" />
+    <Property Name="NextAttemptTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DataRequestLogs" Relationship="WebDataModel.Request1" FromRole="Request" ToRole="DataRequestLog" />
   </EntityType>
   <EntityType Name="RequestStatusType">
     <Key>
@@ -165,34 +150,13 @@
     <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
     <Property Name="RequestTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="MaxAttempts" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="DataRequestLogs" Relationship="WebDataModel.RequestType1" FromRole="RequestType" ToRole="DataRequestLog" />
     <NavigationProperty Name="DexiRequestType" Relationship="WebDataModel.Dexi_Details" FromRole="RequestType" ToRole="DexiRequestType" />
     <NavigationProperty Name="Requests" Relationship="WebDataModel.Types_of_Request" FromRole="RequestType" ToRole="Request" />
+    <Property Name="TimeDelayInMinute" Type="Int32" Nullable="false" />
+    <Property Name="DaysToRefresh" Type="Int32" />
+    <Property Name="PriorityDaysToRefresh" Type="Int32" />
+    <NavigationProperty Name="DataRequestLogs" Relationship="WebDataModel.RequestType1" FromRole="RequestType" ToRole="DataRequestLog" />
   </EntityType>
-  <Association Name="Request1">
-    <End Type="WebDataModel.Request" Role="Request" Multiplicity="0..1" />
-    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Request">
-        <PropertyRef Name="RequestId" />
-      </Principal>
-      <Dependent Role="DataRequestLog">
-        <PropertyRef Name="RequestId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="RequestType1">
-    <End Type="WebDataModel.RequestType" Role="RequestType" Multiplicity="1" />
-    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RequestType">
-        <PropertyRef Name="RequestTypeId" />
-      </Principal>
-      <Dependent Role="DataRequestLog">
-        <PropertyRef Name="RequestTypeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="Dexi_Request_Details">
     <End Type="WebDataModel.Request" Role="Request" Multiplicity="1" />
     <End Type="WebDataModel.DexiRequest" Role="DexiRequest" Multiplicity="0..1" />
@@ -241,6 +205,116 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Zillow">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="zEstimate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="NoticeOfProperyValue">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PrimaryZoning" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LotFrontage" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="LotDepth" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="LotSquareFootage" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="LotShape" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LotType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Proximity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingFrontage" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="BuildingDepth" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="NumberOfBuildings" Type="Int32" />
+    <Property Name="Style" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="YearBuilt" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ExteriorCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="UnfinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialUnits" Type="Int32" />
+    <Property Name="CommercialSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="ResidentialUnits" Type="Int32" />
+    <Property Name="GarageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GarageSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="BasementGrade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BasementSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="BasementType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConstructionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ExteriorWall" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NumberOfStories" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="StructureType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GrossSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialOverlay" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LandFactorPerSqFtinDollars" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="GrossResidentialSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="LandType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LandSize1" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="NumberOfRooms" Type="Int32" />
+    <Property Name="HotelClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NumberOfResidentialLots" Type="Int32" />
+    <Property Name="NumberOfCommercialLots" Type="Int32" />
+    <Property Name="GrossSquareFootageOfTheSuffix" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialLots" Type="Int32" />
+    <Property Name="LandFactorperSquareFoot" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="ResidentialLots" Type="Int32" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Mortgage">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="MortgageDocumentURI" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="MortgageDocumentURI" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FHACaseNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="MortgageAmounts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="vwStaleDataBBL">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="RequestTypeId" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DataRequestLog">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="RequestTypeId" />
+      <PropertyRef Name="RequestDateTime" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="RequestDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExternalReferenceId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ServedFromCache" Type="Boolean" />
+    <Property Name="WebDataRequestMade" Type="Boolean" />
+    <Property Name="RequestId" Type="Int64" />
+    <Property Name="RequestStatusTypeId" Type="Int32" />
+    <Property Name="RequestParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Request" Relationship="WebDataModel.Request1" FromRole="DataRequestLog" ToRole="Request" />
+    <NavigationProperty Name="RequestStatusType" Relationship="WebDataModel.RequestStatus" FromRole="DataRequestLog" ToRole="RequestStatusType" />
+    <NavigationProperty Name="RequestType" Relationship="WebDataModel.RequestType1" FromRole="DataRequestLog" ToRole="RequestType" />
+  </EntityType>
+  <Association Name="Request1">
+    <End Type="WebDataModel.Request" Role="Request" Multiplicity="0..1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="RequestStatus">
     <End Type="WebDataModel.RequestStatusType" Role="RequestStatusType" Multiplicity="0..1" />
     <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
@@ -253,12 +327,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Zillow">
-    <Key>
-      <PropertyRef Name="BBL" />
-    </Key>
-    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="zEstimate" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
+  <Association Name="RequestType1">
+    <End Type="WebDataModel.RequestType" Role="RequestType" Multiplicity="1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="RequestTypeId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

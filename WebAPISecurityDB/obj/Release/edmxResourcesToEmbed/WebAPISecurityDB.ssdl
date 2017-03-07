@@ -1,14 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="WebAPISecurityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="APIKeyUser">
+  <EntityType Name="APIUsers">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
     <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="APIKey" Type="char" MaxLength="128" Nullable="false" />
+    <Property Name="APIKey" Type="varchar" MaxLength="128" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="255" />
+    <Property Name="AccountId" Type="varchar" MaxLength="16" Nullable="false" />
   </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="bigint" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WebAPISecurity.dbo.vwAPIUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwAPIUser">
+    <Key>
+      <PropertyRef Name="AccountId" />
+      <PropertyRef Name="APIKey" />
+    </Key>
+    <Property Name="AccountId" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="255" />
+    <Property Name="APIKey" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="Roles" Type="varchar(max)" />
+  </EntityType>
+  <Association Name="Relationship1">
+    <End Role="APIUsers" Type="Self.APIUsers" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="APIUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Relationship2">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="WebAPISecurityModelStoreContainer">
-    <EntitySet Name="APIKeyUser" EntityType="Self.APIKeyUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="APIUsers" EntityType="Self.APIUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vwAPIUser" EntityType="Self.vwAPIUser" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vwAPIUser].[AccountId] AS [AccountId], 
+    [vwAPIUser].[UserName] AS [UserName], 
+    [vwAPIUser].[APIKey] AS [APIKey], 
+    [vwAPIUser].[Roles] AS [Roles]
+    FROM [dbo].[vwAPIUser] AS [vwAPIUser]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="Relationship1" Association="Self.Relationship1">
+      <End Role="APIUsers" EntitySet="APIUsers" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="Relationship2" Association="Self.Relationship2">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -4,6 +4,7 @@ namespace PropertyWebAPI.BAL
     using System;
     using System.Linq;
     using Newtonsoft.Json;
+    using ACRISDB;
     using WebDataDB;
     using System.Net;
     using System.Runtime.Serialization;
@@ -50,7 +51,7 @@ namespace PropertyWebAPI.BAL
         {
             Parameters parameters = new Parameters();
             parameters.URI = URI;
-            parameters.BBL= propertyBBL;
+            parameters.BBL = propertyBBL;
             return JsonConvert.SerializeObject(parameters);
         }
 
@@ -68,23 +69,20 @@ namespace PropertyWebAPI.BAL
         ///     Use this method in the controller to log failures that are processed before calling any 
         ///     other business methods of this class
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="httpErrorCode"></param>
-        /// <returns></returns>
-        public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
+        public static void LogFailure(string propertyBBL, string externalReferenceId, string jobId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
 
-        private static WebDataDB.Mortgage CopyData(RequestResponseBuilder.ResponseObjects.Mortgage valObj)
+        private static WebDataDB.Mortgage CopyData(WebDataDB.Mortgage resultObj, RequestResponseBuilder.ResponseObjects.Mortgage valObj)
         {
-            
-            WebDataDB.Mortgage resultObj = new WebDataDB.Mortgage();
-            
+
+            if (resultObj == null)
+                resultObj = new WebDataDB.Mortgage();
+
             resultObj.FHACaseNumber = Conversions.GetSingleValue(valObj.FHACaseNo);
             resultObj.MortgageAmounts = Conversions.Concat(valObj.MortgageAmount);
-           
+
             return resultObj;
         }
 
@@ -109,15 +107,27 @@ namespace PropertyWebAPI.BAL
                 CallingSystem.PostCallBack(appContext, resultObj);
             }
         }
+
         /// <summary>
-        ///     This method deals with all the details associated with either returning the Notice Of Property Value details or creating the 
+        ///     This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
+        ///     request for getting the data from the web 
+        /// </summary>
+        public static MortgageDocumentResult GetDetails(string propertyBBL, string documentURI, string externalReferenceId)
+        {
+            return GetDetails(propertyBBL, documentURI, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+        }
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
         ///     request for getting the data from the web 
         /// </summary>
         /// <param name="propertyBBL"></param>
         /// <param name="externalReferenceId"></param>
         /// <param name="documentURI"></param>
+        /// <param name="jobId"></param>
+        /// <param name="priority"></param>
         /// <returns></returns>
-        public static MortgageDocumentResult GetDetails(string propertyBBL, string documentURI, string externalReferenceId)
+        public static MortgageDocumentResult GetDetails(string propertyBBL, string documentURI, string externalReferenceId, int priority, string jobId)
         {
             MortgageDocumentResult mortgageDocumentResultObj = new MortgageDocumentResult();
             mortgageDocumentResultObj.BBL = propertyBBL;
@@ -134,7 +144,7 @@ namespace PropertyWebAPI.BAL
                     try
                     {
                         //check if data available
-                        var mortgageDocumentObj = webDBEntities.Mortgages.FirstOrDefault(i => i.BBL==propertyBBL && i.MortgageDocumentURI==documentURI);
+                        var mortgageDocumentObj = webDBEntities.Mortgages.FirstOrDefault(i => i.BBL == propertyBBL && i.MortgageDocumentURI == documentURI);
 
                         // record in database and data is not stale
                         if (mortgageDocumentObj != null && DateTime.UtcNow.Subtract(mortgageDocumentObj.LastUpdated).Days <= 30)
@@ -142,7 +152,7 @@ namespace PropertyWebAPI.BAL
                             mortgageDocumentResultObj.mortgageDetails = mortgageDocumentObj;
                             mortgageDocumentResultObj.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jobId, jsonBillParams);
                         }
                         else
                         {   //check if pending request in queue
@@ -152,10 +162,10 @@ namespace PropertyWebAPI.BAL
                             {
                                 string requestStr = RequestResponseBuilder.RequestObjects.RequestData.CreateRequestDataForMortgage(documentURI);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, jsonBillParams);
 
                                 mortgageDocumentResultObj.status = RequestStatus.Pending.ToString();
                                 mortgageDocumentResultObj.requestId = requestObj.RequestId;
@@ -166,7 +176,7 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 mortgageDocumentResultObj.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -175,7 +185,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         mortgageDocumentResultObj.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jsonBillParams);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, jsonBillParams);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}",
                                                 propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
@@ -252,22 +262,21 @@ namespace PropertyWebAPI.BAL
                                     {
                                         var resultObj = ResponseData.ParseMortgage(requestObj.ResponseData);
 
-                                         Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
+                                        Parameters parameters = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if old data in the DB
-                                        mortgageDocumentObj = webDBEntities.Mortgages.FirstOrDefault(i => i.BBL == parameters.BBL && i.MortgageDocumentURI==parameters.URI);
+                                        mortgageDocumentObj = webDBEntities.Mortgages.FirstOrDefault(i => i.BBL == parameters.BBL && i.MortgageDocumentURI == parameters.URI);
 
                                         if (mortgageDocumentObj != null)
                                         {   //Update data with new results
-                                            mortgageDocumentObj = CopyData(resultObj);
+                                            mortgageDocumentObj = CopyData(mortgageDocumentObj, resultObj);
                                             mortgageDocumentObj.BBL = parameters.BBL;
                                             mortgageDocumentObj.MortgageDocumentURI = parameters.URI;
                                             mortgageDocumentObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
-                                            webDBEntities.Mortgages.Attach(mortgageDocumentObj);
                                             webDBEntities.Entry(mortgageDocumentObj).State = EntityState.Modified;
                                         }
                                         else
                                         {   // add an entry into cache or DB
-                                            mortgageDocumentObj = CopyData(resultObj);
+                                            mortgageDocumentObj = CopyData(null, resultObj);
                                             mortgageDocumentObj.BBL = parameters.BBL;
                                             mortgageDocumentObj.MortgageDocumentURI = parameters.URI;
                                             mortgageDocumentObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
@@ -311,6 +320,79 @@ namespace PropertyWebAPI.BAL
                     }
                 }
             }
+        }
+
+        /// <summary>
+        ///    This function returns a list of unsatisfied mortgages and deletes any mortgage data stored for a mortgaged that is satisfied 
+        /// </summary>
+        public static List<tfnGetUnsatisfiedMortgages_Result> GetSynchronizedData(string propertyBBL)
+        {
+            List<tfnGetUnsatisfiedMortgages_Result> uMortgagesList = null;
+            //get all unsatisfied mortgage document records 
+            using (ACRISEntities acrisDBEntities = new ACRISEntities())
+            {
+                uMortgagesList = acrisDBEntities.tfnGetUnsatisfiedMortgages(propertyBBL).ToList();
+            }
+
+            //get all mortgage document records stored in webdata locally 
+            using (WebDataEntities wDBEntities = new WebDataEntities())
+            {
+                if (uMortgagesList == null || uMortgagesList.Count <= 0)
+                    wDBEntities.Mortgages.RemoveRange(wDBEntities.Mortgages.Where(x => x.BBL == propertyBBL));
+                else
+                {
+                    List<WebDataDB.Mortgage> webDataMortgageList = wDBEntities.Mortgages.Where(x => x.BBL == propertyBBL).ToList();
+                    foreach (var wDBMortgage in webDataMortgageList)
+                    {
+                        bool found = false;
+                        foreach (var uMortgage in uMortgagesList)
+                        {
+                            if (uMortgage.URL == wDBMortgage.MortgageDocumentURI)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found)
+                            wDBEntities.Mortgages.Remove(wDBMortgage);
+                    }
+                }
+                wDBEntities.SaveChanges();
+            }
+
+            return uMortgagesList;
+        }
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
+        ///     request for getting the data from the web for all relevant mortgage documents
+        /// </summary>
+        public static List<MortgageDocumentResult> GetDetailsAllUnstaisfiedMortgages(string propertyBBL, string externalReferenceId)
+        {
+            return GetDetailsAllUnstaisfiedMortgages(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+        }
+
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
+        ///     request for getting the data from the web for all relevant mortgage documents
+        /// </summary>
+        public static List<MortgageDocumentResult> GetDetailsAllUnstaisfiedMortgages(string propertyBBL, string externalReferenceId, int priority, string jobId)
+        {
+            var mortgagesList = BAL.MortgageDocument.GetSynchronizedData(propertyBBL);
+
+            List<BAL.MortgageDocumentResult> resultList = new List<BAL.MortgageDocumentResult>();
+
+            if (mortgagesList == null || mortgagesList.Count <= 0)
+                return resultList;
+
+            foreach (var v in mortgagesList)
+            {
+                var resultObj = BAL.MortgageDocument.GetDetails(propertyBBL, v.URL, externalReferenceId, priority, jobId);
+                resultList.Add(resultObj);
+            }
+            return resultList;
         }
     }
 }

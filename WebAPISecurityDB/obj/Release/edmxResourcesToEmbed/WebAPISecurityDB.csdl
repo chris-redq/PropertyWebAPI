@@ -1,14 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="WebAPISecurityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="APIKeyUser">
+  <EntityContainer Name="WebAPISecurityEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="APIUsers" EntityType="WebAPISecurityModel.APIUser" />
+    <EntitySet Name="Roles" EntityType="WebAPISecurityModel.Role" />
+    <EntitySet Name="vwAPIUsers" EntityType="WebAPISecurityModel.vwAPIUser" />
+    <AssociationSet Name="UserRole" Association="WebAPISecurityModel.UserRole">
+      <End Role="APIUser" EntitySet="APIUsers" />
+      <End Role="Role" EntitySet="Roles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="APIUser">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
     <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="APIKey" Type="String" MaxLength="128" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="APIKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AccountId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Roles" Relationship="WebAPISecurityModel.UserRole" FromRole="APIUser" ToRole="Role" />
   </EntityType>
-  <EntityContainer Name="WebAPISecurityEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="APIKeyUsers" EntityType="Self.APIKeyUser" />
-  </EntityContainer>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="APIUsers" Relationship="WebAPISecurityModel.UserRole" FromRole="Role" ToRole="APIUser" />
+  </EntityType>
+  <EntityType Name="vwAPIUser">
+    <Key>
+      <PropertyRef Name="AccountId" />
+      <PropertyRef Name="APIKey" />
+    </Key>
+    <Property Name="AccountId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="APIKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="Roles" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="UserRole">
+    <End Type="WebAPISecurityModel.APIUser" Role="APIUser" Multiplicity="*" />
+    <End Type="WebAPISecurityModel.Role" Role="Role" Multiplicity="*" />
+  </Association>
 </Schema>

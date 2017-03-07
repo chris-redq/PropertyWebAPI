@@ -560,28 +560,24 @@
             <summary>
                 This method calls back portal for every log record in the list
             </summary>
-            <param name="penaltyAmount"></param>
-            <param name="violationAmount"></param>
-            <param name="logs">List or Request Log Records</param>
         </member>
-        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.LogFailure(System.String,System.String,System.Int32)">
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.LogFailure(System.String,System.String,System.String,System.Int32)">
             <summary>
                 Use this method in the controller to log failures that are processed before calling any 
                 other business methods of this class
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <param name="httpErrorCode"></param>
-            <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.Get(System.String,System.String)">
             <summary>
                 This method deals with all the details associated with either returning the DOB Penalties and Violations details or creating the 
                 request for getting it scrapped from the web 
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.Get(System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the DOB Penalties and Violations details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummary.ReRun(WebDataDB.DataRequestLog)">
             <summary>
@@ -594,8 +590,6 @@
             <summary>
                 This method updates the dCivilPenalties table based on the information received from the Request Object
             </summary>
-            <param name="requestObj"></param>
-            <returns>True if successful else false</returns>
         </member>
         <member name="T:PropertyWebAPI.BAL.MortgageDocument.Parameters">
             <summary>
@@ -617,15 +611,11 @@
             <param name="jsonParameters"></param>
             <returns>Parameters</returns>
         </member>
-        <member name="M:PropertyWebAPI.BAL.MortgageDocument.LogFailure(System.String,System.String,System.Int32)">
+        <member name="M:PropertyWebAPI.BAL.MortgageDocument.LogFailure(System.String,System.String,System.String,System.Int32)">
             <summary>
                 Use this method in the controller to log failures that are processed before calling any 
                 other business methods of this class
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <param name="httpErrorCode"></param>
-            <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageDocument.MakeCallBacks(PropertyWebAPI.Common.Context,System.Collections.Generic.List{WebDataDB.DataRequestLog},WebDataDB.Mortgage)">
             <summary>
@@ -634,12 +624,20 @@
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageDocument.GetDetails(System.String,System.String,System.String)">
             <summary>
-                This method deals with all the details associated with either returning the Notice Of Property Value details or creating the 
+                This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
+                request for getting the data from the web 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageDocument.GetDetails(System.String,System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
                 request for getting the data from the web 
             </summary>
             <param name="propertyBBL"></param>
             <param name="externalReferenceId"></param>
             <param name="documentURI"></param>
+            <param name="jobId"></param>
+            <param name="priority"></param>
             <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageDocument.ReRun(WebDataDB.DataRequestLog)">
@@ -656,6 +654,23 @@
             <param name="requestObj"></param>
             <param name="appContext"></param>
             <returns>True if successful else false</returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageDocument.GetSynchronizedData(System.String)">
+            <summary>
+               This function returns a list of unsatisfied mortgages and deletes any mortgage data stored for a mortgaged that is satisfied 
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(System.String,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
+                request for getting the data from the web for all relevant mortgage documents
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
+                request for getting the data from the web for all relevant mortgage documents
+            </summary>
         </member>
         <member name="T:PropertyWebAPI.BAL.NoticeOfPropertyValueDocument.Parameters">
             <summary>
@@ -676,15 +691,11 @@
             <param name="jsonParameters"></param>
             <returns>Parameters</returns>
         </member>
-        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueDocument.LogFailure(System.String,System.String,System.Int32)">
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueDocument.LogFailure(System.String,System.String,System.String,System.Int32)">
             <summary>
                 Use this method in the controller to log failures that are processed before calling any 
                 other business methods of this class
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <param name="httpErrorCode"></param>
-            <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueDocument.MakeCallBacks(PropertyWebAPI.Common.Context,System.Collections.Generic.List{WebDataDB.DataRequestLog},WebDataDB.NoticeOfProperyValue)">
             <summary>
@@ -698,6 +709,17 @@
             </summary>
             <param name="propertyBBL"></param>
             <param name="externalReferenceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueDocument.GetDetails(System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the Notice Of Property Value details or creating the 
+                request for getting the data from the web 
+            </summary>
+            <param name="propertyBBL"></param>
+            <param name="externalReferenceId"></param>
+            <param name="jobId"></param>
+            <param name="priority"></param>
             <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.NoticeOfPropertyValueDocument.ReRun(WebDataDB.DataRequestLog)">
@@ -765,7 +787,7 @@
             <param name="jsonParameters"></param>
             <returns>Parameters</returns>
         </member>
-        <member name="M:PropertyWebAPI.BAL.MortgageServicer.LogFailure(System.String,System.String,System.Int32)">
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.LogFailure(System.String,System.String,System.String,System.Int32)">
             <summary>
                 Use this method in the controller to log failures that are processed before calling any 
                 other business methods of this class
@@ -779,17 +801,18 @@
             <summary>
                 This method calls back portal for every log record in the list
             </summary>
-            <param name="servicerName"></param>
-            <param name="logs">List or Request Log Records</param>
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.Get(System.String,System.String)">
             <summary>
                 This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
                 request for getting it scrapped from the web 
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.MortgageServicer.Get(System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.MortgageServicer.ReRun(WebDataDB.DataRequestLog)">
             <summary>
@@ -887,27 +910,24 @@
             <summary>
                 This method calls back portal for every log record in the list
             </summary>
-            <param name="billAmount">Bill Amount</param>
-            <param name="logs">List or Request Log Records</param>
         </member>
-        <member name="M:PropertyWebAPI.BAL.TaxBill.LogFailure(System.String,System.String,System.Int32)">
+        <member name="M:PropertyWebAPI.BAL.TaxBill.LogFailure(System.String,System.String,System.String,System.Int32)">
             <summary>
                 Use this method in the controller to log failures that are processed before calling any 
                 other business methods of this class
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <param name="httpErrorCode"></param>
-            <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.TaxBill.Get(System.String,System.String)">
             <summary>
                 This method deals with all the details associated with either returning the tax bill details or creating the 
                 request for getting it scrapped from the web 
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.TaxBill.Get(System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the tax bill details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.TaxBill.ReRun(WebDataDB.DataRequestLog)">
             <summary>
@@ -920,7 +940,6 @@
             <summary>
                 This method updates the TaxBill table based on the information received from the Request Object
             </summary>
-            <param name="requestObj"></param>
             <returns>True if successful else false</returns>
         </member>
         <member name="T:PropertyWebAPI.BAL.WaterBillDetails">
@@ -963,9 +982,12 @@
                 This method deals with all the details associated with either returning the water bill details or creating the 
                 request for getting is scrapped from the web 
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.WaterBill.Get(System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the water bill details or creating the 
+                request for getting is scrapped from the web 
+            </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.WaterBill.ReRun(WebDataDB.DataRequestLog)">
             <summary>
@@ -978,8 +1000,6 @@
             <summary>
                 This method updates the WaterBill table based on the information received from the Request Object
             </summary>
-            <param name="requestObj"></param>
-            <returns>True if successful else false</returns>
         </member>
         <member name="T:PropertyWebAPI.BAL.ZillowPropertyDetails">
             <summary>
@@ -1017,15 +1037,11 @@
             <param name="jsonParameters"></param>
             <returns>Parameters</returns>
         </member>
-        <member name="M:PropertyWebAPI.BAL.Zillow.LogFailure(System.String,System.String,System.Int32)">
+        <member name="M:PropertyWebAPI.BAL.Zillow.LogFailure(System.String,System.String,System.String,System.Int32)">
             <summary>
                 Use this method in the controller to log failures that are processed before calling any 
                 other business methods of this class
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="externalReferenceId"></param>
-            <param name="httpErrorCode"></param>
-            <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.MakeCallBacks(PropertyWebAPI.Common.Context,System.Collections.Generic.List{WebDataDB.DataRequestLog},System.Nullable{System.Decimal})">
             <summary>
@@ -1039,10 +1055,12 @@
                 This method deals with all the details associated with either returning the Zillow details or creating the 
                 request for getting it scrapped from the web 
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="address"></param>
-            <param name="externalReferenceId"></param>
-            <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.BAL.Zillow.Get(System.String,System.String,System.String,System.Int32,System.String)">
+            <summary>
+                This method deals with all the details associated with either returning the Zillow details or creating the 
+                request for getting it scrapped from the web 
+            </summary>
         </member>
         <member name="M:PropertyWebAPI.BAL.Zillow.ReRun(WebDataDB.DataRequestLog)">
             <summary>
@@ -1055,8 +1073,6 @@
             <summary>
                 This method updates the Zillow table based on the information received from the Request Object
             </summary>
-            <param name="requestObj"></param>
-            <returns>True if successful else false</returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.CMAController">
             <summary>  
@@ -1530,7 +1546,7 @@
                 BBLE - Borough Block Lot and Easement Number.
             </returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetNoticeOfPropertyValue(System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetUnsatisfiedMortgageDocumentDetails(System.String,System.String)">
             <summary>  
                 Use this api to get mortgage document details for all unsatisfied mortgages associated with the property
             </summary>  
@@ -2005,57 +2021,26 @@
             <param name="requestId"></param>
             <returns></returns>
         </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String)">
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForCacheAccess(WebDataDB.WebDataEntities,System.String,System.Int32,System.String,System.String,System.String)">
             <summary>
                 Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
             </summary>
-            <param name="webDBEntities"></param>
-            <param name="propertyBBL"></param>
-            <param name="requestTypeId"></param>
-            <param name="externalReferenceId"></param>
-            <param name="requestParameters"></param>
-            <returns></returns>
         </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String)">
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForFailure(System.String,System.Int32,System.String,System.String,System.String)">
             <summary>
                 Inserts a DataRequestLog object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
             </summary>
-            <param name="propertyBBL"></param>
-            <param name="requestTypeId"></param>
-            <param name="externalReferenceId"></param>
-            <param name="requestParameters"></param>
-            <returns></returns>
         </member>
-        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String)">
+        <member name="M:PropertyWebAPI.DAL.DataRequestLog.InsertForWebDataRequest(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int64,System.String,System.String,System.String)">
             <summary>
                 Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
             </summary>
-            <param name="webDBEntities"></param>
-            <param name="propertyBBL"></param>
-            <param name="requestTypeId"></param>
-            <param name="requestId"></param>
-            <param name="externalReferenceId"></param>
-            <param name="requestParameters"></param>
-            <returns></returns>
         </member>
         <member name="T:PropertyWebAPI.DAL.Request">
             <summary>
                 This class abstracts all detailed level operations associated with finding, inserting and reading records in the Request table in WebData DB.
                 In essence it abstracts semantic level operations for the table in the context of the API 
             </summary>
-        </member>
-        <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.String)">
-            <summary>
-                Inserts a Request object(row) for a given BBL and type of request when data (not stale) is found in WebData DB
-            </summary>
-            <param name="webDBEntities"></param>
-            <param name="requestStr">
-                Depending on the Request Type a helper class will be provided to convert business level variables into a string (in a specific format)
-                such that it is readable by the web scarping service. 
-            </param>
-            <param name="requestTypeId"></param>
-            <param name="jobId"></param>
-            <returns></returns>
         </member>
         <member name="M:PropertyWebAPI.DAL.Request.Insert(WebDataDB.WebDataEntities,System.String,System.Int32,System.Int32,System.String)">
             <summary>
@@ -2070,6 +2055,11 @@
             <param name="priority"></param>
             <param name="jobId"></param>
             <returns></returns>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.Request.Update(WebDataDB.WebDataEntities,System.Int64,System.Int32,System.String)">
+            <summary>
+                Update Request object with higher priority and Job Id
+            </summary>
         </member>
         <member name="T:PropertyWebAPI.RequestStatus">
             <summary>

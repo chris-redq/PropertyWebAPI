@@ -33,10 +33,10 @@ namespace WebDataDB
         public string ResponseData { get; set; }
         public Nullable<System.DateTime> NextAttemptTime { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DataRequestLog> DataRequestLogs { get; set; }
         public virtual DexiRequest DexiRequest { get; set; }
         public virtual RequestStatusType RequestStatusType { get; set; }
         public virtual RequestType RequestType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DataRequestLog> DataRequestLogs { get; set; }
     }
 }

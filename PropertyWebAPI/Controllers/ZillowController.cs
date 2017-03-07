@@ -40,7 +40,7 @@ namespace PropertyWebAPI.Controllers
         {
             if (!BAL.BBL.IsValidFormat(propertyBBL))
             {
-                BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             }
 
@@ -48,7 +48,7 @@ namespace PropertyWebAPI.Controllers
             var propInfo = BAL.NYCPhysicalPropertyData.Get(propertyBBL,true);
             if (propInfo == null)
             {
-                BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, (int)HttpStatusCode.BadRequest);
+                BAL.Zillow.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number, not found");
             }
 

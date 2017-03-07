@@ -82,13 +82,9 @@ namespace PropertyWebAPI.BAL
         ///     Use this method in the controller to log failures that are processed before calling any 
         ///     other business methods of this class
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="httpErrorCode"></param>
-        /// <returns></returns>
-        public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
+        public static void LogFailure(string propertyBBL, string externalReferenceId, string jobId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: "+((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId,  "Error Code: "+((HttpStatusCode)httpErrorCode).ToString());
         }
 
         /// <summary>
@@ -119,11 +115,16 @@ namespace PropertyWebAPI.BAL
         ///     This method deals with all the details associated with either returning the Zillow details or creating the 
         ///     request for getting it scrapped from the web 
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="address"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <returns></returns>
         public static ZillowPropertyDetails Get(string propertyBBL, string address, string externalReferenceId)
+        {
+            return Get(propertyBBL, address, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+        }
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the Zillow details or creating the 
+        ///     request for getting it scrapped from the web 
+        /// </summary>
+        public static ZillowPropertyDetails Get(string propertyBBL, string address, string externalReferenceId, int priority, string jobId)
         {
             ZillowPropertyDetails zPropertyDetails = new ZillowPropertyDetails();
             zPropertyDetails.BBL = propertyBBL;
@@ -150,7 +151,7 @@ namespace PropertyWebAPI.BAL
                             zPropertyDetails.zEstimate = zillowObj.zEstimate;
                             zPropertyDetails.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jobId, jsonBillParams);
                         }
                         else
                         {   //check if pending request in queue
@@ -160,10 +161,10 @@ namespace PropertyWebAPI.BAL
                             {
                                 string requestStr = RequestData.ZillowZEstimate(address);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, jsonBillParams);
 
                                 zPropertyDetails.status = RequestStatus.Pending.ToString();
                                 zPropertyDetails.requestId = requestObj.RequestId;
@@ -174,7 +175,7 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 zPropertyDetails.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -183,7 +184,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         zPropertyDetails.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
                 }
@@ -232,8 +233,6 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method updates the Zillow table based on the information received from the Request Object
         /// </summary>
-        /// <param name="requestObj"></param>
-        /// <returns>True if successful else false</returns>
         public static bool UpdateData(Common.Context appContext, Request requestObj)
         {
             using (WebDataEntities webDBEntities = new WebDataEntities())

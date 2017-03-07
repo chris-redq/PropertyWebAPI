@@ -70,9 +70,6 @@ namespace PropertyWebAPI
         /// Request for Mortgage Document Details
         /// </summary>
         NYCMortgageDocumentDetails = 1005
-
-
-
     }
 
 }

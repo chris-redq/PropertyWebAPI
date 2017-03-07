@@ -42,6 +42,10 @@ namespace PropertyWebAPI.DAL
     {
 
     }
+    public class CMAManualResult : tfnGetManualCMA_Result
+    {
+
+    }
 
     public class CMA
     {
@@ -107,7 +111,7 @@ namespace PropertyWebAPI.DAL
         }
 
 
-        public static List<CMAResult> GetComaparables(string algorithmType, string propertyBBL, int? maxRecords, bool? sameNeighboorhood, bool? sameSchoolDistrict,
+        public static List<CMAResult> GetComparables(string algorithmType, string propertyBBL, int? maxRecords, bool? sameNeighboorhood, bool? sameSchoolDistrict,
                                                          bool? sameZip, bool? sameBlock, bool? sameStreetName, int? monthOffset, double? minSalePrice, double? maxSalePrice,
                                                          int? classMatchType, bool? isNotIntraFamily, bool? isSelleraCompany, bool? isBuyeraCompany)
         {
@@ -119,6 +123,22 @@ namespace PropertyWebAPI.DAL
             }
         }
 
+
+        public static List<CMAManualResult> GetManualComparables(string propertyBBL, int? maxRecords, bool? sameNeighboorhood, bool? sameSchoolDistrict,
+                                                        bool? sameZip, bool? sameBlock, bool? sameStreetName, int? monthOffset, double? minSalePrice, double? maxSalePrice,
+                                                        int? classMatchType, bool? isNotIntraFamily, bool? isSelleraCompany, bool? isBuyeraCompany, double? distanceInMiles, int? gLAHiRange,
+                                                        int? gLALoRange, int? lAHiRange, int? lALoRange, int? buildingFrontageHiRange, int? buildingFrontageLoRange, int? buildingDepthHiRange,
+                                                        int? buildingDepthLoRange, int? lotFrontageHiRange, int? lotFrontageLoRange, int? lotDepthHiRange, int? lotDepthLoRange)
+        {
+            using (NYCMAEntities nycmaE = new NYCMAEntities())
+            {
+                return Mapper.Map<List<tfnGetManualCMA_Result>, List<CMAManualResult>>(nycmaE.tfnGetManualCMA(propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict,
+                                                                                       sameZip, sameBlock, sameStreetName, monthOffset, minSalePrice, maxSalePrice,
+                                                                                       classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany, distanceInMiles, gLAHiRange,
+                                                                                       gLALoRange, lAHiRange, lALoRange, buildingFrontageHiRange, buildingFrontageLoRange, buildingDepthHiRange,
+                                                                                       buildingDepthLoRange, lotFrontageHiRange, lotFrontageLoRange, lotDepthHiRange, lotDepthLoRange).ToList());
+            }
+        }
 
         public static SubjectDetails GetSubject(string propertyBBL)
         {

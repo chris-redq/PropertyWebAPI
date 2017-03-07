@@ -60,3 +60,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\obj\R
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\UnitTestPropertyDataServices.dll.config
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\WebActivatorEx.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\Swashbuckle.Core.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCMADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\GPADB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCDOB.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCVNL.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\RequestResponseBuilder.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCMADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\GPADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCDOB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCVNL.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\RequestResponseBuilder.pdb

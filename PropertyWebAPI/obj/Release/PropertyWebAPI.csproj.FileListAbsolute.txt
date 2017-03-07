@@ -83,3 +83,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\GPADB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCDOB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCMADB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCVNL.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\RequestResponseBuilder.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\RequestResponseBuilder.pdb

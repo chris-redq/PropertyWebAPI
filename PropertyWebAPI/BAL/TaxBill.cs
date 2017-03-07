@@ -78,8 +78,6 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method calls back portal for every log record in the list
         /// </summary>
-        /// <param name="billAmount">Bill Amount</param>
-        /// <param name="logs">List or Request Log Records</param>
         private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, Decimal? billAmount)
         {
             if (!CallingSystem.isAnyCallBack(appContext))
@@ -103,22 +101,25 @@ namespace PropertyWebAPI.BAL
         ///     Use this method in the controller to log failures that are processed before calling any 
         ///     other business methods of this class
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="httpErrorCode"></param>
-        /// <returns></returns>
-        public static void LogFailure(string propertyBBL, string externalReferenceId, int httpErrorCode)
+        public static void LogFailure(string propertyBBL, string externalReferenceId, string jobId, int httpErrorCode)
         {
-            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
         }
+
         /// <summary>
         ///     This method deals with all the details associated with either returning the tax bill details or creating the 
         ///     request for getting it scrapped from the web 
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <returns></returns>
         public static TaxBillDetails Get(string propertyBBL, string externalReferenceId)
+        {
+            return Get(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+        }    
+
+        /// <summary>
+        ///     This method deals with all the details associated with either returning the tax bill details or creating the 
+        ///     request for getting it scrapped from the web 
+        /// </summary>
+        public static TaxBillDetails Get(string propertyBBL, string externalReferenceId, int priority, string jobId)
         {
             TaxBillDetails taxBill = new TaxBillDetails();
             taxBill.BBL = propertyBBL;
@@ -143,7 +144,7 @@ namespace PropertyWebAPI.BAL
                             taxBill.billAmount = taxBillObj.BillAmount;
                             taxBill.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, parameters);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jobId, parameters);
                         }
                         else
                         {   //check if pending request in queue
@@ -153,10 +154,10 @@ namespace PropertyWebAPI.BAL
                             {
                                 string requestStr = RequestData.PropertyTaxesNYC(propertyBBL);
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, null);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId, 
-                                                                                               externalReferenceId, parameters);
+                                                                                               externalReferenceId, jobId, parameters);
 
                                 taxBill.status = RequestStatus.Pending.ToString();
                                 taxBill.requestId = requestObj.RequestId;
@@ -167,7 +168,7 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 taxBill.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, 
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, parameters);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, parameters);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -176,7 +177,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         taxBill.status = RequestStatus.Error.ToString();
-                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, parameters);
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}{2}", propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
                 }
@@ -228,7 +229,6 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method updates the TaxBill table based on the information received from the Request Object
         /// </summary>
-        /// <param name="requestObj"></param>
         /// <returns>True if successful else false</returns>
         public static bool UpdateData(Common.Context appContext, Request requestObj)
         {

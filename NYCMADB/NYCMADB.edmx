@@ -71,27 +71,13 @@
           <Property Name="CommunityDistrict" Type="numeric" Precision="4" Scale="0" />
           <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
           <Property Name="NTACode" Type="varchar" MaxLength="4" />
-          <Property Name="East" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="North" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="East" Type="decimal" Precision="28" Scale="15" />
+          <Property Name="North" Type="decimal" Precision="28" Scale="15" />
+          <Property Name="Longitude" Type="decimal" Precision="28" Scale="15" />
+          <Property Name="Latitude" Type="decimal" Precision="28" Scale="15" />
           <Property Name="CoordinatesSource" Type="varchar" MaxLength="50" />
           <Property Name="BuildingGrossAreaCalculated" Type="float" />
           <Property Name="GarageArea" Type="numeric" Precision="9" Scale="0" />
-        </EntityType>
-        <EntityType Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
-          <Key>
-            <PropertyRef Name="NTACode" />
-            <PropertyRef Name="YearMonth" />
-          </Key>
-          <Property Name="PKID" Type="int" Nullable="false" />
-          <Property Name="NTACode" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="YearMonth" Type="date" Nullable="false" />
-          <Property Name="MinPricePerSqft" Type="float" />
-          <Property Name="Q1PricePerSqft" Type="float" />
-          <Property Name="MedianPricePerSqft" Type="float" />
-          <Property Name="Q3Price" Type="float" />
-          <Property Name="MaxPricePerSqft" Type="float" />
         </EntityType>
         <EntityType Name="SaleParty">
           <Key>
@@ -110,20 +96,6 @@
           <Property Name="Zip" Type="varchar" MaxLength="9" />
           <Property Name="Country" Type="varchar" MaxLength="2" />
           <Property Name="PartyType" Type="varchar" MaxLength="6" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SalePriceStatisticsByMonthByNTAMeanSmoothing">
-          <Key>
-            <PropertyRef Name="NTACode" />
-            <PropertyRef Name="YearMonth" />
-          </Key>
-          <Property Name="PKID" Type="int" Nullable="false" />
-          <Property Name="NTACode" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="YearMonth" Type="date" Nullable="false" />
-          <Property Name="MinPrice" Type="numeric" Precision="38" Scale="6" />
-          <Property Name="Q1Price" Type="numeric" Precision="38" Scale="6" />
-          <Property Name="MedianPrice" Type="numeric" Precision="38" Scale="6" />
-          <Property Name="Q3Price" Type="numeric" Precision="38" Scale="6" />
-          <Property Name="MaxPrice" Type="numeric" Precision="38" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -182,7 +154,75 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
                 <Property Name="GLAPercent" Type="float" />
                 <Property Name="AgeDiff" Type="int" />
                 <Property Name="Distance" Type="float" />
-                <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+                <Property Name="NeighborhoodName" Type="varchar" MaxLength="260" />
+                <Property Name="NTACode" Type="varchar" MaxLength="4" />
+                <Property Name="Zip" Type="float" />
+                <Property Name="Block" Type="float" />
+                <Property Name="BuildingFrontage" Type="float" />
+                <Property Name="BuildingDepth" Type="float" />
+                <Property Name="IsBuildingIrregularShaped" Type="varchar" MaxLength="1" />
+                <Property Name="LotFrontage" Type="float" />
+                <Property Name="LotDepth" Type="float" />
+                <Property Name="IsIrregularLot" Type="varchar" MaxLength="1" />
+                <Property Name="TotalUnits" Type="float" />
+                <Property Name="Stories" Type="float" />
+                <Property Name="ZoningCode" Type="varchar" MaxLength="9" />
+                <Property Name="BuildingClass" Type="varchar" MaxLength="2" />
+                <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+                <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+                <Property Name="Cost" Type="float" />
+                <Property Name="SortOrder" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="tfnGetManualCMA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="App">
+          <Parameter Name="sbjBBLE" Type="varchar" Mode="In" />
+          <Parameter Name="MaxRecords" Type="int" Mode="In" />
+          <Parameter Name="SameNeighborhood" Type="bit" Mode="In" />
+          <Parameter Name="SameSchoolDistrict" Type="bit" Mode="In" />
+          <Parameter Name="SameZip" Type="bit" Mode="In" />
+          <Parameter Name="SameBlock" Type="bit" Mode="In" />
+          <Parameter Name="SameStreetName" Type="bit" Mode="In" />
+          <Parameter Name="MonthOffset" Type="int" Mode="In" />
+          <Parameter Name="MinSalePrice" Type="float" Mode="In" />
+          <Parameter Name="MaxSalePrice" Type="float" Mode="In" />
+          <Parameter Name="ClassMatchType" Type="int" Mode="In" />
+          <Parameter Name="IsNotIntraFamily" Type="bit" Mode="In" />
+          <Parameter Name="IsSelleraCompany" Type="bit" Mode="In" />
+          <Parameter Name="IsBuyeraCompany" Type="bit" Mode="In" />
+          <Parameter Name="DistanceInMiles" Type="float" Mode="In" />
+          <Parameter Name="GLAHiRange" Type="int" Mode="In" />
+          <Parameter Name="GLALoRange" Type="int" Mode="In" />
+          <Parameter Name="LAHiRange" Type="int" Mode="In" />
+          <Parameter Name="LALoRange" Type="int" Mode="In" />
+          <Parameter Name="BuildingFrontageHiRange" Type="int" Mode="In" />
+          <Parameter Name="BuildingFrontageLoRange" Type="int" Mode="In" />
+          <Parameter Name="BuildingDepthHiRange" Type="int" Mode="In" />
+          <Parameter Name="BuildingDepthLoRange" Type="int" Mode="In" />
+          <Parameter Name="LotFrontageHiRange" Type="int" Mode="In" />
+          <Parameter Name="LotFrontageLoRange" Type="int" Mode="In" />
+          <Parameter Name="LotDepthHiRange" Type="int" Mode="In" />
+          <Parameter Name="LotDepthLoRange" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="AlgorithmType" Type="varchar" MaxLength="25" />
+                <Property Name="DeedUniqueKey" Type="varchar" MaxLength="16" />
+                <Property Name="BBLE" Type="varchar" MaxLength="11" />
+                <Property Name="StreetNumberLow" Type="varchar" MaxLength="12" />
+                <Property Name="StreetName" Type="varchar" MaxLength="20" />
+                <Property Name="DeedAmount" Type="float" />
+                <Property Name="DeedDate" Type="date" />
+                <Property Name="LotArea" Type="int" />
+                <Property Name="GLA" Type="int" />
+                <Property Name="CalcGLA" Type="int" />
+                <Property Name="YearBuilt" Type="int" />
+                <Property Name="LAPercent" Type="float" />
+                <Property Name="GLAPercent" Type="float" />
+                <Property Name="AgeDiff" Type="int" />
+                <Property Name="Distance" Type="float" />
+                <Property Name="NeighborhoodName" Type="varchar" MaxLength="260" />
                 <Property Name="NTACode" Type="varchar" MaxLength="4" />
                 <Property Name="Zip" Type="float" />
                 <Property Name="Block" Type="float" />
@@ -209,9 +249,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
         </Function>
         <EntityContainer Name="NYCMAModelStoreContainer">
           <EntitySet Name="Assessment" EntityType="Self.Assessment" Schema="exdata" store:Type="Tables" />
-          <EntitySet Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing" EntityType="Self.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing" Schema="exdata" store:Type="Tables" />
           <EntitySet Name="SaleParty" EntityType="Self.SaleParty" Schema="exdata" store:Type="Tables" />
-          <EntitySet Name="SalePriceStatisticsByMonthByNTAMeanSmoothing" EntityType="Self.SalePriceStatisticsByMonthByNTAMeanSmoothing" Schema="exdata" store:Type="Tables" />
           <EntitySet Name="vwSalesByMonthByNTA" EntityType="Self.vwSalesByMonthByNTA" store:Type="Views" store:Schema="App">
             <DefiningQuery>SELECT 
     [vwSalesByMonthByNTA].[PKID] AS [PKID], 
@@ -279,6 +317,35 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           </FunctionImport>
           <EntitySet Name="SaleParties" EntityType="NYCMAModel.SaleParty" />
           <EntitySet Name="vwSuggestedSubjectPrices" EntityType="NYCMAModel.vwSuggestedSubjectPrice" />
+          <FunctionImport Name="tfnGetManualCMA" IsComposable="true" ReturnType="Collection(NYCMAModel.tfnGetManualCMA_Result)">
+            <Parameter Name="sbjBBLE" Mode="In" Type="String" />
+            <Parameter Name="MaxRecords" Mode="In" Type="Int32" />
+            <Parameter Name="SameNeighborhood" Mode="In" Type="Boolean" />
+            <Parameter Name="SameSchoolDistrict" Mode="In" Type="Boolean" />
+            <Parameter Name="SameZip" Mode="In" Type="Boolean" />
+            <Parameter Name="SameBlock" Mode="In" Type="Boolean" />
+            <Parameter Name="SameStreetName" Mode="In" Type="Boolean" />
+            <Parameter Name="MonthOffset" Mode="In" Type="Int32" />
+            <Parameter Name="MinSalePrice" Mode="In" Type="Double" />
+            <Parameter Name="MaxSalePrice" Mode="In" Type="Double" />
+            <Parameter Name="ClassMatchType" Mode="In" Type="Int32" />
+            <Parameter Name="IsNotIntraFamily" Mode="In" Type="Boolean" />
+            <Parameter Name="IsSelleraCompany" Mode="In" Type="Boolean" />
+            <Parameter Name="IsBuyeraCompany" Mode="In" Type="Boolean" />
+            <Parameter Name="DistanceInMiles" Mode="In" Type="Double" />
+            <Parameter Name="GLAHiRange" Mode="In" Type="Int32" />
+            <Parameter Name="GLALoRange" Mode="In" Type="Int32" />
+            <Parameter Name="LAHiRange" Mode="In" Type="Int32" />
+            <Parameter Name="LALoRange" Mode="In" Type="Int32" />
+            <Parameter Name="BuildingFrontageHiRange" Mode="In" Type="Int32" />
+            <Parameter Name="BuildingFrontageLoRange" Mode="In" Type="Int32" />
+            <Parameter Name="BuildingDepthHiRange" Mode="In" Type="Int32" />
+            <Parameter Name="BuildingDepthLoRange" Mode="In" Type="Int32" />
+            <Parameter Name="LotFrontageHiRange" Mode="In" Type="Int32" />
+            <Parameter Name="LotFrontageLoRange" Mode="In" Type="Int32" />
+            <Parameter Name="LotDepthHiRange" Mode="In" Type="Int32" />
+            <Parameter Name="LotDepthLoRange" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="tfnGetCMA_Result">
           <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
@@ -390,10 +457,10 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="CommunityDistrict" Type="Decimal" Precision="4" Scale="0" />
           <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
-          <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
-          <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
-          <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="East" Type="Decimal" Precision="28" Scale="15" />
+          <Property Name="North" Type="Decimal" Precision="28" Scale="15" />
+          <Property Name="Longitude" Type="Decimal" Precision="28" Scale="15" />
+          <Property Name="Latitude" Type="Decimal" Precision="28" Scale="15" />
           <Property Name="CoordinatesSource" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BuildingGrossAreaCalculated" Type="Double" />
           <Property Name="GarageArea" Type="Decimal" Precision="9" Scale="0" />
@@ -484,6 +551,41 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="MedianPrice" Type="Double" />
           <Property Name="AVGHighPice" Type="Double" />
         </EntityType>
+        <ComplexType Name="tfnGetManualCMA_Result">
+          <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="DeedUniqueKey" Nullable="true" MaxLength="16" />
+          <Property Type="String" Name="BBLE" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="StreetNumberLow" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="StreetName" Nullable="true" MaxLength="20" />
+          <Property Type="Double" Name="DeedAmount" Nullable="true" />
+          <Property Type="DateTime" Name="DeedDate" Nullable="true" Precision="10" />
+          <Property Type="Int32" Name="LotArea" Nullable="true" />
+          <Property Type="Int32" Name="GLA" Nullable="true" />
+          <Property Type="Int32" Name="CalcGLA" Nullable="true" />
+          <Property Type="Int32" Name="YearBuilt" Nullable="true" />
+          <Property Type="Double" Name="LAPercent" Nullable="true" />
+          <Property Type="Double" Name="GLAPercent" Nullable="true" />
+          <Property Type="Int32" Name="AgeDiff" Nullable="true" />
+          <Property Type="Double" Name="Distance" Nullable="true" />
+          <Property Type="String" Name="NeighborhoodName" Nullable="true" MaxLength="260" />
+          <Property Type="String" Name="NTACode" Nullable="true" MaxLength="4" />
+          <Property Type="Double" Name="Zip" Nullable="true" />
+          <Property Type="Double" Name="Block" Nullable="true" />
+          <Property Type="Double" Name="BuildingFrontage" Nullable="true" />
+          <Property Type="Double" Name="BuildingDepth" Nullable="true" />
+          <Property Type="String" Name="IsBuildingIrregularShaped" Nullable="true" MaxLength="1" />
+          <Property Type="Double" Name="LotFrontage" Nullable="true" />
+          <Property Type="Double" Name="LotDepth" Nullable="true" />
+          <Property Type="String" Name="IsIrregularLot" Nullable="true" MaxLength="1" />
+          <Property Type="Double" Name="TotalUnits" Nullable="true" />
+          <Property Type="Double" Name="Stories" Nullable="true" />
+          <Property Type="String" Name="ZoningCode" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="BuildingClass" Nullable="true" MaxLength="2" />
+          <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="28" Scale="4" />
+          <Property Type="Decimal" Name="Latitude" Nullable="true" Precision="28" Scale="4" />
+          <Property Type="Double" Name="Cost" Nullable="true" />
+          <Property Type="Int32" Name="SortOrder" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -614,34 +716,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothings">
-            <EntityTypeMapping TypeName="NYCMAModel.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
-              <MappingFragment StoreEntitySet="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
-                <ScalarProperty Name="MaxPricePerSqft" ColumnName="MaxPricePerSqft" />
-                <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
-                <ScalarProperty Name="MedianPricePerSqft" ColumnName="MedianPricePerSqft" />
-                <ScalarProperty Name="Q1PricePerSqft" ColumnName="Q1PricePerSqft" />
-                <ScalarProperty Name="MinPricePerSqft" ColumnName="MinPricePerSqft" />
-                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-                <ScalarProperty Name="NTACode" ColumnName="NTACode" />
-                <ScalarProperty Name="PKID" ColumnName="PKID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SalePriceStatisticsByMonthByNTAMeanSmoothings">
-            <EntityTypeMapping TypeName="NYCMAModel.SalePriceStatisticsByMonthByNTAMeanSmoothing">
-              <MappingFragment StoreEntitySet="SalePriceStatisticsByMonthByNTAMeanSmoothing">
-                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
-                <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
-                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-                <ScalarProperty Name="Q1Price" ColumnName="Q1Price" />
-                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
-                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-                <ScalarProperty Name="NTACode" ColumnName="NTACode" />
-                <ScalarProperty Name="PKID" ColumnName="PKID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ShowCMASubject" FunctionName="NYCMAModel.Store.ShowCMASubject">
             <ResultMapping>
               <ComplexTypeMapping TypeName="NYCMAModel.ShowCMASubject_Result">
@@ -703,6 +777,45 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetManualCMA" FunctionName="NYCMAModel.Store.tfnGetManualCMA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCMAModel.tfnGetManualCMA_Result">
+                <ScalarProperty Name="AlgorithmType" ColumnName="AlgorithmType" />
+                <ScalarProperty Name="DeedUniqueKey" ColumnName="DeedUniqueKey" />
+                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+                <ScalarProperty Name="StreetNumberLow" ColumnName="StreetNumberLow" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="DeedAmount" ColumnName="DeedAmount" />
+                <ScalarProperty Name="DeedDate" ColumnName="DeedDate" />
+                <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+                <ScalarProperty Name="GLA" ColumnName="GLA" />
+                <ScalarProperty Name="CalcGLA" ColumnName="CalcGLA" />
+                <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+                <ScalarProperty Name="LAPercent" ColumnName="LAPercent" />
+                <ScalarProperty Name="GLAPercent" ColumnName="GLAPercent" />
+                <ScalarProperty Name="AgeDiff" ColumnName="AgeDiff" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+                <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="BuildingFrontage" ColumnName="BuildingFrontage" />
+                <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+                <ScalarProperty Name="IsBuildingIrregularShaped" ColumnName="IsBuildingIrregularShaped" />
+                <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+                <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+                <ScalarProperty Name="IsIrregularLot" ColumnName="IsIrregularLot" />
+                <ScalarProperty Name="TotalUnits" ColumnName="TotalUnits" />
+                <ScalarProperty Name="Stories" ColumnName="Stories" />
+                <ScalarProperty Name="ZoningCode" ColumnName="ZoningCode" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
