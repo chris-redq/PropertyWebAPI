@@ -74,6 +74,22 @@
     <Property Name="BuildingGrossAreaCalculated" Type="float" />
     <Property Name="GarageArea" Type="numeric" Precision="9" Scale="0" />
   </EntityType>
+  <EntityType Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+    <Key>
+      <PropertyRef Name="NeighborhoodName" />
+      <PropertyRef Name="BuildingClass" />
+      <PropertyRef Name="YearMonth" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="260" Nullable="false" />
+    <Property Name="BuildingClass" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="YearMonth" Type="date" Nullable="false" />
+    <Property Name="MinPricePerSqft" Type="float" />
+    <Property Name="Q1PricePerSqft" Type="float" />
+    <Property Name="MedianPricePerSqft" Type="float" />
+    <Property Name="Q3Price" Type="float" />
+    <Property Name="MaxPricePerSqft" Type="float" />
+  </EntityType>
   <EntityType Name="SaleParty">
     <Key>
       <PropertyRef Name="BBLE" />
@@ -92,14 +108,30 @@
     <Property Name="Country" Type="varchar" MaxLength="2" />
     <Property Name="PartyType" Type="varchar" MaxLength="6" Nullable="false" />
   </EntityType>
+  <EntityType Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+    <Key>
+      <PropertyRef Name="NeighborhoodName" />
+      <PropertyRef Name="BuildingClass" />
+      <PropertyRef Name="YearMonth" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="260" Nullable="false" />
+    <Property Name="BuildingClass" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="YearMonth" Type="date" Nullable="false" />
+    <Property Name="MinPrice" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="Q1Price" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="MedianPrice" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="Q3Price" Type="numeric" Precision="38" Scale="6" />
+    <Property Name="MaxPrice" Type="numeric" Precision="38" Scale="6" />
+  </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="vwSalesByMonthByNTA">
+warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNeighborhood' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwSalesByMonthByNeighborhood">
     <Key>
       <PropertyRef Name="PKID" />
     </Key>
     <Property Name="PKID" Type="int" Nullable="false" />
-    <Property Name="NTACode" Type="varchar" MaxLength="5" />
+    <Property Name="Neighborhood" Type="varchar" MaxLength="260" />
     <Property Name="YearMonth" Type="date" />
     <Property Name="NumberofSales" Type="int" />
   </EntityType>
@@ -244,14 +276,16 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
   </Function>
   <EntityContainer Name="NYCMAModelStoreContainer">
     <EntitySet Name="Assessment" EntityType="Self.Assessment" Schema="exdata" store:Type="Tables" />
+    <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
     <EntitySet Name="SaleParty" EntityType="Self.SaleParty" Schema="exdata" store:Type="Tables" />
-    <EntitySet Name="vwSalesByMonthByNTA" EntityType="Self.vwSalesByMonthByNTA" store:Type="Views" store:Schema="App">
+    <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
+    <EntitySet Name="vwSalesByMonthByNeighborhood" EntityType="Self.vwSalesByMonthByNeighborhood" store:Type="Views" store:Schema="App">
       <DefiningQuery>SELECT 
-    [vwSalesByMonthByNTA].[PKID] AS [PKID], 
-    [vwSalesByMonthByNTA].[NTACode] AS [NTACode], 
-    [vwSalesByMonthByNTA].[YearMonth] AS [YearMonth], 
-    [vwSalesByMonthByNTA].[NumberofSales] AS [NumberofSales]
-    FROM [App].[vwSalesByMonthByNTA] AS [vwSalesByMonthByNTA]</DefiningQuery>
+    [vwSalesByMonthByNeighborhood].[PKID] AS [PKID], 
+    [vwSalesByMonthByNeighborhood].[Neighborhood] AS [Neighborhood], 
+    [vwSalesByMonthByNeighborhood].[YearMonth] AS [YearMonth], 
+    [vwSalesByMonthByNeighborhood].[NumberofSales] AS [NumberofSales]
+    FROM [App].[vwSalesByMonthByNeighborhood] AS [vwSalesByMonthByNeighborhood]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrices" store:Type="Views" store:Schema="App">
       <DefiningQuery>SELECT 

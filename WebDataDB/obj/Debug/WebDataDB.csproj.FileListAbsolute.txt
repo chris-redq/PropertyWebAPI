@@ -7,4 +7,3 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Debug\EntityFramewor
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Debug\WebDataDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Debug\WebDataDB.pdb
-C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Debug\WebDataDB.csprojResolveAssemblyReference.cache

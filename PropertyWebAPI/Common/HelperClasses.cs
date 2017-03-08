@@ -52,9 +52,9 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<MultiAgencyViolation, DAL.ECBViolationDetail>();
                 cfg.CreateMap<vwTaxLien, DAL.LocalTaxLienDetails>();
                 cfg.CreateMap<vwSuggestedSubjectPrice, DAL.SuggestPropertPrices>();
-                cfg.CreateMap<vwSalesByMonthByNTA, DAL.SalesDataDetailsByMonth>();
-                cfg.CreateMap<SalePriceStatisticsByMonthByNTAMeanSmoothing, DAL.PriceDetailsByMonth>();
-                cfg.CreateMap<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
+                cfg.CreateMap<vwSalesByMonthByNeighborhood, DAL.SalesDataDetailsByMonth>();
+                cfg.CreateMap<SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing, DAL.PriceDetailsByMonth>();
+                cfg.CreateMap<PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
                 cfg.CreateMap<ShowCMASubject_Result, DAL.SubjectDetails>();
                 cfg.CreateMap<tfnGetManualCMA_Result, DAL.CMAManualResult>();
                 cfg.CreateMap<tfnGetCMA_Result, DAL.CMAResult>();

@@ -19,16 +19,16 @@ namespace PropertyWebAPI.DAL
 
     }
 
-    public class SalesDataDetailsByMonth: vwSalesByMonthByNTA
+    public class SalesDataDetailsByMonth: vwSalesByMonthByNeighborhood
     {
 
     }
-    public class PricePerSqftDetailsByMonth: PricePerSqFtStatisticsByMonthByNTAMeanSmoothing
+    public class PricePerSqftDetailsByMonth: PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing
     {
 
     }
 
-    public class PriceDetailsByMonth : SalePriceStatisticsByMonthByNTAMeanSmoothing
+    public class PriceDetailsByMonth : SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing
     {
 
     }
@@ -66,7 +66,7 @@ namespace PropertyWebAPI.DAL
             }
         }
 
-        public static List<SalesDataDetailsByMonth> GetSalesTrend(string ntaCode, int timeSpanInYears)
+        public static List<SalesDataDetailsByMonth> GetSalesTrend(string neighborhood, int timeSpanInYears)
         {
             DateTime eDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1,0,0,0);
             DateTime sDate = new DateTime(DateTime.Today.Year- timeSpanInYears, DateTime.Today.Month, 1, 0, 0, 0);
@@ -74,11 +74,14 @@ namespace PropertyWebAPI.DAL
 
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<List<vwSalesByMonthByNTA>,List<SalesDataDetailsByMonth>>(nycmaE.vwSalesByMonthByNTAs.Where(i => i.YearMonth >= sDate && i.YearMonth <= eDate && i.NTACode==ntaCode).ToList());
+                return Mapper.Map<List<vwSalesByMonthByNeighborhood>,List<SalesDataDetailsByMonth>>(nycmaE.vwSalesByMonthByNeighborhoods
+                                                                                                          .Where(i => i.YearMonth >= sDate 
+                                                                                                                 && i.YearMonth <= eDate 
+                                                                                                                 && i.Neighborhood== neighborhood).ToList());
             }
         }
 
-        public static List<PricePerSqftDetailsByMonth> GetPricePerSqftTrend(string ntaCode, int timeSpanInYears)
+        public static List<PricePerSqftDetailsByMonth> GetPricePerSqftTrend(string neighborhood, string buildingClass, int timeSpanInYears)
         {
             DateTime eDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
             DateTime sDate = new DateTime(DateTime.Today.Year - timeSpanInYears, DateTime.Today.Month, 1, 0, 0, 0);
@@ -86,15 +89,16 @@ namespace PropertyWebAPI.DAL
 
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<List<PricePerSqFtStatisticsByMonthByNTAMeanSmoothing>, List<PricePerSqftDetailsByMonth>>(nycmaE.PricePerSqFtStatisticsByMonthByNTAMeanSmoothings
-                                                                                                                                   .Where(i => i.YearMonth >= sDate && 
-                                                                                                                                               i.YearMonth <= eDate && 
-                                                                                                                                               i.NTACode == ntaCode)
-                                                                                                                                               .OrderBy(i => i.YearMonth).ToList());
+                return Mapper.Map<List<PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing>, 
+                                  List<PricePerSqftDetailsByMonth>>(nycmaE.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings
+                                                                          .Where(i => i.YearMonth >= sDate && i.YearMonth <= eDate 
+                                                                                 && i.NeighborhoodName == neighborhood
+                                                                                 && i.BuildingClass == buildingClass)
+                                                                          .OrderBy(i => i.YearMonth).ToList());
             }
         }
 
-        public static List<PriceDetailsByMonth> GetSalesPriceTrend(string ntaCode, int timeSpanInYears)
+        public static List<PriceDetailsByMonth> GetSalesPriceTrend(string neighborhood, string buildingClass, int timeSpanInYears)
         {
             DateTime eDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
             DateTime sDate = new DateTime(DateTime.Today.Year - timeSpanInYears, DateTime.Today.Month, 1, 0, 0, 0);
@@ -102,11 +106,12 @@ namespace PropertyWebAPI.DAL
 
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<List<SalePriceStatisticsByMonthByNTAMeanSmoothing>, List<PriceDetailsByMonth>>(nycmaE.SalePriceStatisticsByMonthByNTAMeanSmoothings
-                                                                                                                         .Where(i => i.YearMonth >= sDate &&
-                                                                                                                                     i.YearMonth <= eDate &&
-                                                                                                                                     i.NTACode == ntaCode)
-                                                                                                                         .OrderBy(i => i.YearMonth).ToList());
+                return Mapper.Map<List<SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing>, 
+                                  List<PriceDetailsByMonth>>(nycmaE.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings
+                                                                   .Where(i => i.YearMonth >= sDate && i.YearMonth <= eDate
+                                                                          && i.NeighborhoodName == neighborhood
+                                                                          && i.BuildingClass == buildingClass)
+                                                                   .OrderBy(i => i.YearMonth).ToList());
             }
         }
 

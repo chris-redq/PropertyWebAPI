@@ -12,15 +12,16 @@ namespace NYCMADB
     using System;
     using System.Collections.Generic;
     
-    public partial class PricePerSqFtStatisticsByMonthByNTAMeanSmoothing
+    public partial class SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing
     {
         public int PKID { get; set; }
-        public string NTACode { get; set; }
+        public string NeighborhoodName { get; set; }
+        public string BuildingClass { get; set; }
         public System.DateTime YearMonth { get; set; }
-        public Nullable<double> MinPricePerSqft { get; set; }
-        public Nullable<double> Q1PricePerSqft { get; set; }
-        public Nullable<double> MedianPricePerSqft { get; set; }
-        public Nullable<double> Q3Price { get; set; }
-        public Nullable<double> MaxPricePerSqft { get; set; }
+        public Nullable<decimal> MinPrice { get; set; }
+        public Nullable<decimal> Q1Price { get; set; }
+        public Nullable<decimal> MedianPrice { get; set; }
+        public Nullable<decimal> Q3Price { get; set; }
+        public Nullable<decimal> MaxPrice { get; set; }
     }
 }

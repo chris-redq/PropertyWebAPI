@@ -40,16 +40,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <EntitySetMapping Name="vwSalesByMonthByNTAs">
-      <EntityTypeMapping TypeName="NYCMAModel.vwSalesByMonthByNTA">
-        <MappingFragment StoreEntitySet="vwSalesByMonthByNTA">
-          <ScalarProperty Name="NumberofSales" ColumnName="NumberofSales" />
-          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-          <ScalarProperty Name="NTACode" ColumnName="NTACode" />
-          <ScalarProperty Name="PKID" ColumnName="PKID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Assessments">
       <EntityTypeMapping TypeName="NYCMAModel.Assessment">
         <MappingFragment StoreEntitySet="Assessment">
@@ -225,5 +215,45 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings">
+      <EntityTypeMapping TypeName="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+        <MappingFragment StoreEntitySet="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+          <ScalarProperty Name="MaxPricePerSqft" ColumnName="MaxPricePerSqft" />
+          <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
+          <ScalarProperty Name="MedianPricePerSqft" ColumnName="MedianPricePerSqft" />
+          <ScalarProperty Name="Q1PricePerSqft" ColumnName="Q1PricePerSqft" />
+          <ScalarProperty Name="MinPricePerSqft" ColumnName="MinPricePerSqft" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings">
+      <EntityTypeMapping TypeName="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+        <MappingFragment StoreEntitySet="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+          <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+          <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
+          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+          <ScalarProperty Name="Q1Price" ColumnName="Q1Price" />
+          <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwSalesByMonthByNeighborhoods">
+      <EntityTypeMapping TypeName="NYCMAModel.vwSalesByMonthByNeighborhood">
+        <MappingFragment StoreEntitySet="vwSalesByMonthByNeighborhood">
+          <ScalarProperty Name="NumberofSales" ColumnName="NumberofSales" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

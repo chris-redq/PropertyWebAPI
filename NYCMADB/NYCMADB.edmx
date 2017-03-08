@@ -79,6 +79,22 @@
           <Property Name="BuildingGrossAreaCalculated" Type="float" />
           <Property Name="GarageArea" Type="numeric" Precision="9" Scale="0" />
         </EntityType>
+        <EntityType Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+          <Key>
+            <PropertyRef Name="NeighborhoodName" />
+            <PropertyRef Name="BuildingClass" />
+            <PropertyRef Name="YearMonth" />
+          </Key>
+          <Property Name="PKID" Type="int" Nullable="false" />
+          <Property Name="NeighborhoodName" Type="varchar" MaxLength="260" Nullable="false" />
+          <Property Name="BuildingClass" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="YearMonth" Type="date" Nullable="false" />
+          <Property Name="MinPricePerSqft" Type="float" />
+          <Property Name="Q1PricePerSqft" Type="float" />
+          <Property Name="MedianPricePerSqft" Type="float" />
+          <Property Name="Q3Price" Type="float" />
+          <Property Name="MaxPricePerSqft" Type="float" />
+        </EntityType>
         <EntityType Name="SaleParty">
           <Key>
             <PropertyRef Name="BBLE" />
@@ -97,14 +113,30 @@
           <Property Name="Country" Type="varchar" MaxLength="2" />
           <Property Name="PartyType" Type="varchar" MaxLength="6" Nullable="false" />
         </EntityType>
+        <EntityType Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+          <Key>
+            <PropertyRef Name="NeighborhoodName" />
+            <PropertyRef Name="BuildingClass" />
+            <PropertyRef Name="YearMonth" />
+          </Key>
+          <Property Name="PKID" Type="int" Nullable="false" />
+          <Property Name="NeighborhoodName" Type="varchar" MaxLength="260" Nullable="false" />
+          <Property Name="BuildingClass" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="YearMonth" Type="date" Nullable="false" />
+          <Property Name="MinPrice" Type="numeric" Precision="38" Scale="6" />
+          <Property Name="Q1Price" Type="numeric" Precision="38" Scale="6" />
+          <Property Name="MedianPrice" Type="numeric" Precision="38" Scale="6" />
+          <Property Name="Q3Price" Type="numeric" Precision="38" Scale="6" />
+          <Property Name="MaxPrice" Type="numeric" Precision="38" Scale="6" />
+        </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNTA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vwSalesByMonthByNTA">
+warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNeighborhood' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwSalesByMonthByNeighborhood">
           <Key>
             <PropertyRef Name="PKID" />
           </Key>
           <Property Name="PKID" Type="int" Nullable="false" />
-          <Property Name="NTACode" Type="varchar" MaxLength="5" />
+          <Property Name="Neighborhood" Type="varchar" MaxLength="260" />
           <Property Name="YearMonth" Type="date" />
           <Property Name="NumberofSales" Type="int" />
         </EntityType>
@@ -249,14 +281,16 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
         </Function>
         <EntityContainer Name="NYCMAModelStoreContainer">
           <EntitySet Name="Assessment" EntityType="Self.Assessment" Schema="exdata" store:Type="Tables" />
+          <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
           <EntitySet Name="SaleParty" EntityType="Self.SaleParty" Schema="exdata" store:Type="Tables" />
-          <EntitySet Name="vwSalesByMonthByNTA" EntityType="Self.vwSalesByMonthByNTA" store:Type="Views" store:Schema="App">
+          <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
+          <EntitySet Name="vwSalesByMonthByNeighborhood" EntityType="Self.vwSalesByMonthByNeighborhood" store:Type="Views" store:Schema="App">
             <DefiningQuery>SELECT 
-    [vwSalesByMonthByNTA].[PKID] AS [PKID], 
-    [vwSalesByMonthByNTA].[NTACode] AS [NTACode], 
-    [vwSalesByMonthByNTA].[YearMonth] AS [YearMonth], 
-    [vwSalesByMonthByNTA].[NumberofSales] AS [NumberofSales]
-    FROM [App].[vwSalesByMonthByNTA] AS [vwSalesByMonthByNTA]</DefiningQuery>
+    [vwSalesByMonthByNeighborhood].[PKID] AS [PKID], 
+    [vwSalesByMonthByNeighborhood].[Neighborhood] AS [Neighborhood], 
+    [vwSalesByMonthByNeighborhood].[YearMonth] AS [YearMonth], 
+    [vwSalesByMonthByNeighborhood].[NumberofSales] AS [NumberofSales]
+    FROM [App].[vwSalesByMonthByNeighborhood] AS [vwSalesByMonthByNeighborhood]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrices" store:Type="Views" store:Schema="App">
             <DefiningQuery>SELECT 
@@ -308,10 +342,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
             <Parameter Name="IsSelleraCompany" Mode="In" Type="Boolean" />
             <Parameter Name="IsBuyeraCompany" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="vwSalesByMonthByNTAs" EntityType="NYCMAModel.vwSalesByMonthByNTA" />
           <EntitySet Name="Assessments" EntityType="NYCMAModel.Assessment" />
-          <EntitySet Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothings" EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing" />
-          <EntitySet Name="SalePriceStatisticsByMonthByNTAMeanSmoothings" EntityType="NYCMAModel.SalePriceStatisticsByMonthByNTAMeanSmoothing" />
           <FunctionImport Name="ShowCMASubject" ReturnType="Collection(NYCMAModel.ShowCMASubject_Result)">
           <Parameter Name="sbjBBLE" Mode="In" Type="String" />
           </FunctionImport>
@@ -346,6 +377,9 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
             <Parameter Name="LotDepthHiRange" Mode="In" Type="Int32" />
             <Parameter Name="LotDepthLoRange" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" />
+          <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" />
+          <EntitySet Name="vwSalesByMonthByNeighborhoods" EntityType="NYCMAModel.vwSalesByMonthByNeighborhood" />
         </EntityContainer>
         <ComplexType Name="tfnGetCMA_Result">
           <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
@@ -382,15 +416,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Type="Double" Name="Cost" Nullable="true" />
           <Property Type="Int32" Name="SortOrder" Nullable="true" />
         </ComplexType>
-        <EntityType Name="vwSalesByMonthByNTA">
-          <Key>
-            <PropertyRef Name="PKID" />
-          </Key>
-          <Property Name="PKID" Type="Int32" Nullable="false" />
-          <Property Name="NTACode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="YearMonth" Type="DateTime" Precision="0" />
-          <Property Name="NumberofSales" Type="Int32" />
-        </EntityType>
         <EntityType Name="Assessment">
           <Key>
             <PropertyRef Name="BBLE" />
@@ -464,34 +489,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="CoordinatesSource" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BuildingGrossAreaCalculated" Type="Double" />
           <Property Name="GarageArea" Type="Decimal" Precision="9" Scale="0" />
-        </EntityType>
-        <EntityType Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
-          <Key>
-            <PropertyRef Name="NTACode" />
-            <PropertyRef Name="YearMonth" />
-          </Key>
-          <Property Name="PKID" Type="Int32" Nullable="false" />
-          <Property Name="NTACode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="MinPricePerSqft" Type="Double" />
-          <Property Name="Q1PricePerSqft" Type="Double" />
-          <Property Name="MedianPricePerSqft" Type="Double" />
-          <Property Name="Q3Price" Type="Double" />
-          <Property Name="MaxPricePerSqft" Type="Double" />
-        </EntityType>
-        <EntityType Name="SalePriceStatisticsByMonthByNTAMeanSmoothing">
-          <Key>
-            <PropertyRef Name="NTACode" />
-            <PropertyRef Name="YearMonth" />
-          </Key>
-          <Property Name="PKID" Type="Int32" Nullable="false" />
-          <Property Name="NTACode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="MinPrice" Type="Decimal" Precision="38" Scale="6" />
-          <Property Name="Q1Price" Type="Decimal" Precision="38" Scale="6" />
-          <Property Name="MedianPrice" Type="Decimal" Precision="38" Scale="6" />
-          <Property Name="Q3Price" Type="Decimal" Precision="38" Scale="6" />
-          <Property Name="MaxPrice" Type="Decimal" Precision="38" Scale="6" />
         </EntityType>
         <ComplexType Name="ShowCMASubject_Result">
           <Property Type="String" Name="Subject" Nullable="false" MaxLength="7" />
@@ -586,6 +583,47 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Type="Double" Name="Cost" Nullable="true" />
           <Property Type="Int32" Name="SortOrder" Nullable="true" />
         </ComplexType>
+        <EntityType Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+          <Key>
+            <PropertyRef Name="NeighborhoodName" />
+            <PropertyRef Name="BuildingClass" />
+            <PropertyRef Name="YearMonth" />
+          </Key>
+          <Property Name="PKID" Type="Int32" Nullable="false" />
+          <Property Name="NeighborhoodName" Type="String" Nullable="false" MaxLength="260" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingClass" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MinPricePerSqft" Type="Double" />
+          <Property Name="Q1PricePerSqft" Type="Double" />
+          <Property Name="MedianPricePerSqft" Type="Double" />
+          <Property Name="Q3Price" Type="Double" />
+          <Property Name="MaxPricePerSqft" Type="Double" />
+        </EntityType>
+        <EntityType Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+          <Key>
+            <PropertyRef Name="NeighborhoodName" />
+            <PropertyRef Name="BuildingClass" />
+            <PropertyRef Name="YearMonth" />
+          </Key>
+          <Property Name="PKID" Type="Int32" Nullable="false" />
+          <Property Name="NeighborhoodName" Type="String" Nullable="false" MaxLength="260" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingClass" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MinPrice" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="Q1Price" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="MedianPrice" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="Q3Price" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="MaxPrice" Type="Decimal" Precision="38" Scale="6" />
+        </EntityType>
+        <EntityType Name="vwSalesByMonthByNeighborhood">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="Int32" Nullable="false" />
+          <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+          <Property Name="YearMonth" Type="DateTime" Precision="0" />
+          <Property Name="NumberofSales" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -631,16 +669,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="vwSalesByMonthByNTAs">
-            <EntityTypeMapping TypeName="NYCMAModel.vwSalesByMonthByNTA">
-              <MappingFragment StoreEntitySet="vwSalesByMonthByNTA">
-                <ScalarProperty Name="NumberofSales" ColumnName="NumberofSales" />
-                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-                <ScalarProperty Name="NTACode" ColumnName="NTACode" />
-                <ScalarProperty Name="PKID" ColumnName="PKID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Assessments">
             <EntityTypeMapping TypeName="NYCMAModel.Assessment">
               <MappingFragment StoreEntitySet="Assessment">
@@ -816,6 +844,46 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings">
+            <EntityTypeMapping TypeName="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+              <MappingFragment StoreEntitySet="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+                <ScalarProperty Name="MaxPricePerSqft" ColumnName="MaxPricePerSqft" />
+                <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
+                <ScalarProperty Name="MedianPricePerSqft" ColumnName="MedianPricePerSqft" />
+                <ScalarProperty Name="Q1PricePerSqft" ColumnName="Q1PricePerSqft" />
+                <ScalarProperty Name="MinPricePerSqft" ColumnName="MinPricePerSqft" />
+                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+                <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings">
+            <EntityTypeMapping TypeName="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+              <MappingFragment StoreEntitySet="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="Q3Price" ColumnName="Q3Price" />
+                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+                <ScalarProperty Name="Q1Price" ColumnName="Q1Price" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+                <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwSalesByMonthByNeighborhoods">
+            <EntityTypeMapping TypeName="NYCMAModel.vwSalesByMonthByNeighborhood">
+              <MappingFragment StoreEntitySet="vwSalesByMonthByNeighborhood">
+                <ScalarProperty Name="NumberofSales" ColumnName="NumberofSales" />
+                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+                <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+                <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

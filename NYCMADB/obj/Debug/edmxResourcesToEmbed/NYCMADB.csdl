@@ -36,15 +36,44 @@
       <Parameter Name="IsSelleraCompany" Mode="In" Type="Boolean" />
       <Parameter Name="IsBuyeraCompany" Mode="In" Type="Boolean" />
     </FunctionImport>
-    <EntitySet Name="vwSalesByMonthByNTAs" EntityType="NYCMAModel.vwSalesByMonthByNTA" />
     <EntitySet Name="Assessments" EntityType="NYCMAModel.Assessment" />
-    <EntitySet Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothings" EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNTAMeanSmoothing" />
-    <EntitySet Name="SalePriceStatisticsByMonthByNTAMeanSmoothings" EntityType="NYCMAModel.SalePriceStatisticsByMonthByNTAMeanSmoothing" />
     <FunctionImport Name="ShowCMASubject" ReturnType="Collection(NYCMAModel.ShowCMASubject_Result)">
       <Parameter Name="sbjBBLE" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="SaleParties" EntityType="NYCMAModel.SaleParty" />
     <EntitySet Name="vwSuggestedSubjectPrices" EntityType="NYCMAModel.vwSuggestedSubjectPrice" />
+    <FunctionImport Name="tfnGetManualCMA" IsComposable="true" ReturnType="Collection(NYCMAModel.tfnGetManualCMA_Result)">
+      <Parameter Name="sbjBBLE" Mode="In" Type="String" />
+      <Parameter Name="MaxRecords" Mode="In" Type="Int32" />
+      <Parameter Name="SameNeighborhood" Mode="In" Type="Boolean" />
+      <Parameter Name="SameSchoolDistrict" Mode="In" Type="Boolean" />
+      <Parameter Name="SameZip" Mode="In" Type="Boolean" />
+      <Parameter Name="SameBlock" Mode="In" Type="Boolean" />
+      <Parameter Name="SameStreetName" Mode="In" Type="Boolean" />
+      <Parameter Name="MonthOffset" Mode="In" Type="Int32" />
+      <Parameter Name="MinSalePrice" Mode="In" Type="Double" />
+      <Parameter Name="MaxSalePrice" Mode="In" Type="Double" />
+      <Parameter Name="ClassMatchType" Mode="In" Type="Int32" />
+      <Parameter Name="IsNotIntraFamily" Mode="In" Type="Boolean" />
+      <Parameter Name="IsSelleraCompany" Mode="In" Type="Boolean" />
+      <Parameter Name="IsBuyeraCompany" Mode="In" Type="Boolean" />
+      <Parameter Name="DistanceInMiles" Mode="In" Type="Double" />
+      <Parameter Name="GLAHiRange" Mode="In" Type="Int32" />
+      <Parameter Name="GLALoRange" Mode="In" Type="Int32" />
+      <Parameter Name="LAHiRange" Mode="In" Type="Int32" />
+      <Parameter Name="LALoRange" Mode="In" Type="Int32" />
+      <Parameter Name="BuildingFrontageHiRange" Mode="In" Type="Int32" />
+      <Parameter Name="BuildingFrontageLoRange" Mode="In" Type="Int32" />
+      <Parameter Name="BuildingDepthHiRange" Mode="In" Type="Int32" />
+      <Parameter Name="BuildingDepthLoRange" Mode="In" Type="Int32" />
+      <Parameter Name="LotFrontageHiRange" Mode="In" Type="Int32" />
+      <Parameter Name="LotFrontageLoRange" Mode="In" Type="Int32" />
+      <Parameter Name="LotDepthHiRange" Mode="In" Type="Int32" />
+      <Parameter Name="LotDepthLoRange" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" />
+    <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" />
+    <EntitySet Name="vwSalesByMonthByNeighborhoods" EntityType="NYCMAModel.vwSalesByMonthByNeighborhood" />
   </EntityContainer>
   <ComplexType Name="tfnGetCMA_Result">
     <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
@@ -81,15 +110,6 @@
     <Property Type="Double" Name="Cost" Nullable="true" />
     <Property Type="Int32" Name="SortOrder" Nullable="true" />
   </ComplexType>
-  <EntityType Name="vwSalesByMonthByNTA">
-    <Key>
-      <PropertyRef Name="PKID" />
-    </Key>
-    <Property Name="PKID" Type="Int32" Nullable="false" />
-    <Property Name="NTACode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="YearMonth" Type="DateTime" Precision="0" />
-    <Property Name="NumberofSales" Type="Int32" />
-  </EntityType>
   <EntityType Name="Assessment">
     <Key>
       <PropertyRef Name="BBLE" />
@@ -156,41 +176,13 @@
     <Property Name="CommunityDistrict" Type="Decimal" Precision="4" Scale="0" />
     <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
     <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="Decimal" Precision="28" Scale="15" />
+    <Property Name="North" Type="Decimal" Precision="28" Scale="15" />
+    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="15" />
+    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="15" />
     <Property Name="CoordinatesSource" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="BuildingGrossAreaCalculated" Type="Double" />
     <Property Name="GarageArea" Type="Decimal" Precision="9" Scale="0" />
-  </EntityType>
-  <EntityType Name="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing">
-    <Key>
-      <PropertyRef Name="NTACode" />
-      <PropertyRef Name="YearMonth" />
-    </Key>
-    <Property Name="PKID" Type="Int32" Nullable="false" />
-    <Property Name="NTACode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="MinPricePerSqft" Type="Double" />
-    <Property Name="Q1PricePerSqft" Type="Double" />
-    <Property Name="MedianPricePerSqft" Type="Double" />
-    <Property Name="Q3Price" Type="Double" />
-    <Property Name="MaxPricePerSqft" Type="Double" />
-  </EntityType>
-  <EntityType Name="SalePriceStatisticsByMonthByNTAMeanSmoothing">
-    <Key>
-      <PropertyRef Name="NTACode" />
-      <PropertyRef Name="YearMonth" />
-    </Key>
-    <Property Name="PKID" Type="Int32" Nullable="false" />
-    <Property Name="NTACode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="MinPrice" Type="Decimal" Precision="38" Scale="6" />
-    <Property Name="Q1Price" Type="Decimal" Precision="38" Scale="6" />
-    <Property Name="MedianPrice" Type="Decimal" Precision="38" Scale="6" />
-    <Property Name="Q3Price" Type="Decimal" Precision="38" Scale="6" />
-    <Property Name="MaxPrice" Type="Decimal" Precision="38" Scale="6" />
   </EntityType>
   <ComplexType Name="ShowCMASubject_Result">
     <Property Type="String" Name="Subject" Nullable="false" MaxLength="7" />
@@ -249,5 +241,81 @@
     <Property Name="AVGLowPriceNoLP" Type="Double" />
     <Property Name="MedianPrice" Type="Double" />
     <Property Name="AVGHighPice" Type="Double" />
+  </EntityType>
+  <ComplexType Name="tfnGetManualCMA_Result">
+    <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="DeedUniqueKey" Nullable="true" MaxLength="16" />
+    <Property Type="String" Name="BBLE" Nullable="true" MaxLength="11" />
+    <Property Type="String" Name="StreetNumberLow" Nullable="true" MaxLength="12" />
+    <Property Type="String" Name="StreetName" Nullable="true" MaxLength="20" />
+    <Property Type="Double" Name="DeedAmount" Nullable="true" />
+    <Property Type="DateTime" Name="DeedDate" Nullable="true" Precision="10" />
+    <Property Type="Int32" Name="LotArea" Nullable="true" />
+    <Property Type="Int32" Name="GLA" Nullable="true" />
+    <Property Type="Int32" Name="CalcGLA" Nullable="true" />
+    <Property Type="Int32" Name="YearBuilt" Nullable="true" />
+    <Property Type="Double" Name="LAPercent" Nullable="true" />
+    <Property Type="Double" Name="GLAPercent" Nullable="true" />
+    <Property Type="Int32" Name="AgeDiff" Nullable="true" />
+    <Property Type="Double" Name="Distance" Nullable="true" />
+    <Property Type="String" Name="NeighborhoodName" Nullable="true" MaxLength="260" />
+    <Property Type="String" Name="NTACode" Nullable="true" MaxLength="4" />
+    <Property Type="Double" Name="Zip" Nullable="true" />
+    <Property Type="Double" Name="Block" Nullable="true" />
+    <Property Type="Double" Name="BuildingFrontage" Nullable="true" />
+    <Property Type="Double" Name="BuildingDepth" Nullable="true" />
+    <Property Type="String" Name="IsBuildingIrregularShaped" Nullable="true" MaxLength="1" />
+    <Property Type="Double" Name="LotFrontage" Nullable="true" />
+    <Property Type="Double" Name="LotDepth" Nullable="true" />
+    <Property Type="String" Name="IsIrregularLot" Nullable="true" MaxLength="1" />
+    <Property Type="Double" Name="TotalUnits" Nullable="true" />
+    <Property Type="Double" Name="Stories" Nullable="true" />
+    <Property Type="String" Name="ZoningCode" Nullable="true" MaxLength="9" />
+    <Property Type="String" Name="BuildingClass" Nullable="true" MaxLength="2" />
+    <Property Type="Decimal" Name="Longitude" Nullable="true" Precision="28" Scale="4" />
+    <Property Type="Decimal" Name="Latitude" Nullable="true" Precision="28" Scale="4" />
+    <Property Type="Double" Name="Cost" Nullable="true" />
+    <Property Type="Int32" Name="SortOrder" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing">
+    <Key>
+      <PropertyRef Name="NeighborhoodName" />
+      <PropertyRef Name="BuildingClass" />
+      <PropertyRef Name="YearMonth" />
+    </Key>
+    <Property Name="PKID" Type="Int32" Nullable="false" />
+    <Property Name="NeighborhoodName" Type="String" Nullable="false" MaxLength="260" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingClass" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="MinPricePerSqft" Type="Double" />
+    <Property Name="Q1PricePerSqft" Type="Double" />
+    <Property Name="MedianPricePerSqft" Type="Double" />
+    <Property Name="Q3Price" Type="Double" />
+    <Property Name="MaxPricePerSqft" Type="Double" />
+  </EntityType>
+  <EntityType Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing">
+    <Key>
+      <PropertyRef Name="NeighborhoodName" />
+      <PropertyRef Name="BuildingClass" />
+      <PropertyRef Name="YearMonth" />
+    </Key>
+    <Property Name="PKID" Type="Int32" Nullable="false" />
+    <Property Name="NeighborhoodName" Type="String" Nullable="false" MaxLength="260" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingClass" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="YearMonth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="MinPrice" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="Q1Price" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="MedianPrice" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="Q3Price" Type="Decimal" Precision="38" Scale="6" />
+    <Property Name="MaxPrice" Type="Decimal" Precision="38" Scale="6" />
+  </EntityType>
+  <EntityType Name="vwSalesByMonthByNeighborhood">
+    <Key>
+      <PropertyRef Name="PKID" />
+    </Key>
+    <Property Name="PKID" Type="Int32" Nullable="false" />
+    <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+    <Property Name="YearMonth" Type="DateTime" Precision="0" />
+    <Property Name="NumberofSales" Type="Int32" />
   </EntityType>
 </Schema>

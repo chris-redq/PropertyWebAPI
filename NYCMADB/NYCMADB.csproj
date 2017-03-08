@@ -69,14 +69,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NYCMADB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="PricePerSqFtStatisticsByMonthByNTAMeanSmoothing.cs">
+    <Compile Include="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleParty.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
-    <Compile Include="SalePriceStatisticsByMonthByNTAMeanSmoothing.cs">
+    <Compile Include="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
     <Compile Include="ShowCMASubject_Result.cs">
@@ -88,7 +88,7 @@
     <Compile Include="tfnGetManualCMA_Result.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwSalesByMonthByNTA.cs">
+    <Compile Include="vwSalesByMonthByNeighborhood.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
     <Compile Include="vwSuggestedSubjectPrice.cs">
