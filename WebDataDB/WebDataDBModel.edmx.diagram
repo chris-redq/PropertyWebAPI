@@ -11,23 +11,24 @@
         <EntityTypeShape EntityType="WebDataModel.MortgageServicer" Width="1.5" PointX="8.75" PointY="8.75" />
         <EntityTypeShape EntityType="WebDataModel.TaxBill" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="WebDataModel.WaterBill" Width="1.5" PointX="5.75" PointY="9.75" />
-        <EntityTypeShape EntityType="WebDataModel.DexiRequest" Width="1.5" PointX="8.25" PointY="5.25" />
+        <EntityTypeShape EntityType="WebDataModel.DexiRequest" Width="1.5" PointX="8.875" PointY="5.25" />
         <EntityTypeShape EntityType="WebDataModel.DexiRequestType" Width="1.5" PointX="3" PointY="8.875" />
-        <EntityTypeShape EntityType="WebDataModel.Request" Width="1.5" PointX="6" PointY="4.25" />
+        <EntityTypeShape EntityType="WebDataModel.Request" Width="1.75" PointX="6" PointY="4.375" />
         <EntityTypeShape EntityType="WebDataModel.RequestStatusType" Width="2.375" PointX="2.875" PointY="2" />
         <EntityTypeShape EntityType="WebDataModel.RequestType" Width="1.5" PointX="0.75" PointY="5.125" />
         <AssociationConnector Association="WebDataModel.Dexi_Request_Details" />
         <AssociationConnector Association="WebDataModel.Dexi_Details" />
-        <AssociationConnector Association="WebDataModel.Request_Status" />
+        <AssociationConnector Association="WebDataModel.Request_Status" ManuallyRouted="false" >
+        </AssociationConnector>
         <AssociationConnector Association="WebDataModel.Types_of_Request" />
-        <EntityTypeShape EntityType="WebDataModel.Zillow" Width="1.5" PointX="10.375" PointY="3.75" />
-        <EntityTypeShape EntityType="WebDataModel.NoticeOfProperyValue" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="WebDataModel.Zillow" Width="1.5" PointX="10.75" PointY="3.75" />
         <EntityTypeShape EntityType="WebDataModel.Mortgage" Width="1.5" PointX="11.375" PointY="6.75" />
-        <EntityTypeShape EntityType="WebDataModel.vwStaleDataBBL" Width="1.5" PointX="8.25" PointY="3.375" />
+        <EntityTypeShape EntityType="WebDataModel.vwStaleDataBBL" Width="1.5" PointX="8.625" PointY="3.375" />
         <EntityTypeShape EntityType="WebDataModel.DataRequestLog" Width="1.5" PointX="3.375" PointY="4.375" />
         <AssociationConnector Association="WebDataModel.Request1" />
         <AssociationConnector Association="WebDataModel.RequestStatus" />
         <AssociationConnector Association="WebDataModel.RequestType1" />
+        <EntityTypeShape EntityType="WebDataModel.NoticeOfProperyValue" Width="1.5" PointX="0.625" PointY="10.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

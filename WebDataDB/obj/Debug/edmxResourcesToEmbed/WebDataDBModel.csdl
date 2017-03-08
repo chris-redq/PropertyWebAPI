@@ -29,7 +29,6 @@
       <End Role="Request" EntitySet="Requests" />
     </AssociationSet>
     <EntitySet Name="Zillows" EntityType="WebDataModel.Zillow" />
-    <EntitySet Name="NoticeOfProperyValues" EntityType="WebDataModel.NoticeOfProperyValue" />
     <EntitySet Name="Mortgages" EntityType="WebDataModel.Mortgage" />
     <EntitySet Name="vwStaleDataBBLs" EntityType="WebDataModel.vwStaleDataBBL" />
     <EntitySet Name="DataRequestLogs" EntityType="WebDataModel.DataRequestLog" />
@@ -45,6 +44,7 @@
       <End Role="RequestType" EntitySet="RequestTypes" />
       <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
     </AssociationSet>
+    <EntitySet Name="NoticeOfProperyValues" EntityType="WebDataModel.NoticeOfProperyValue" />
   </EntityContainer>
   <EntityType Name="DOBViolation">
     <Key>
@@ -213,57 +213,6 @@
     <Property Name="zEstimate" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
-  <EntityType Name="NoticeOfProperyValue">
-    <Key>
-      <PropertyRef Name="BBL" />
-    </Key>
-    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="BuildingClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PrimaryZoning" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LotFrontage" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="LotDepth" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="LotSquareFootage" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="LotShape" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LotType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Proximity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="BuildingFrontage" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="BuildingDepth" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="NumberOfBuildings" Type="Int32" />
-    <Property Name="Style" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="YearBuilt" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="ExteriorCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="FinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="UnfinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="CommercialUnits" Type="Int32" />
-    <Property Name="CommercialSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="ResidentialUnits" Type="Int32" />
-    <Property Name="GarageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="GarageSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="BasementGrade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="BasementSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="BasementType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ConstructionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ExteriorWall" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="NumberOfStories" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="StructureType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="GrossSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="CommercialOverlay" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LandFactorPerSqFtinDollars" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="GrossResidentialSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="LandType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LandSize1" Type="Decimal" Precision="7" Scale="2" />
-    <Property Name="NumberOfRooms" Type="Int32" />
-    <Property Name="HotelClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="NumberOfResidentialLots" Type="Int32" />
-    <Property Name="NumberOfCommercialLots" Type="Int32" />
-    <Property Name="GrossSquareFootageOfTheSuffix" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="CommercialLots" Type="Int32" />
-    <Property Name="LandFactorperSquareFoot" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="ResidentialLots" Type="Int32" />
-    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
-  </EntityType>
   <EntityType Name="Mortgage">
     <Key>
       <PropertyRef Name="BBL" />
@@ -339,4 +288,55 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="NoticeOfProperyValue">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PrimaryZoning" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LotFrontage" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="LotDepth" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="LotSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="LotShape" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LotType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Proximity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingFrontage" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="BuildingDepth" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="NumberOfBuildings" Type="Int32" />
+    <Property Name="Style" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="YearBuilt" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ExteriorCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FinishedSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="UnfinishedSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CommercialUnits" Type="Int32" />
+    <Property Name="CommercialSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="ResidentialUnits" Type="Int32" />
+    <Property Name="GarageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GarageSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="BasementGrade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BasementSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="BasementType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConstructionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ExteriorWall" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NumberOfStories" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="StructureType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GrossSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CommercialOverlay" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LandFactorPerSqFtinDollars" Type="Decimal" Precision="7" Scale="2" />
+    <Property Name="GrossResidentialSquareFootage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="LandType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LandSize1" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="NumberOfRooms" Type="Int32" />
+    <Property Name="HotelClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NumberOfResidentialLots" Type="Int32" />
+    <Property Name="NumberOfCommercialLots" Type="Int32" />
+    <Property Name="GrossSquareFootageOfTheSuffix" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CommercialLots" Type="Int32" />
+    <Property Name="LandFactorperSquareFoot" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="ResidentialLots" Type="Int32" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
 </Schema>

@@ -187,3 +187,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCMADB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\NYCMADB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\RequestResponseBuilder.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\RequestResponseBuilder.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\MathNet.Numerics.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\PropertyWebAPI\bin\MathNet.Numerics.xml

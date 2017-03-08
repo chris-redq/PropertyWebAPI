@@ -71,7 +71,7 @@
     <Property Name="PrimaryZoning" Type="varchar" MaxLength="50" />
     <Property Name="LotFrontage" Type="decimal" Precision="7" Scale="2" />
     <Property Name="LotDepth" Type="decimal" Precision="7" Scale="2" />
-    <Property Name="LotSquareFootage" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="LotSquareFootage" Type="decimal" Precision="10" Scale="2" />
     <Property Name="LotShape" Type="varchar" MaxLength="50" />
     <Property Name="LotType" Type="varchar" MaxLength="50" />
     <Property Name="Proximity" Type="varchar" MaxLength="50" />
@@ -81,35 +81,35 @@
     <Property Name="Style" Type="varchar" MaxLength="50" />
     <Property Name="YearBuilt" Type="varchar" MaxLength="4" />
     <Property Name="ExteriorCondition" Type="varchar" MaxLength="50" />
-    <Property Name="FinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
-    <Property Name="UnfinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="FinishedSquareFootage" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="UnfinishedSquareFootage" Type="decimal" Precision="10" Scale="2" />
     <Property Name="CommercialUnits" Type="int" />
-    <Property Name="CommercialSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialSquareFootage" Type="decimal" Precision="10" Scale="2" />
     <Property Name="ResidentialUnits" Type="int" />
     <Property Name="GarageType" Type="varchar" MaxLength="50" />
-    <Property Name="GarageSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="GarageSquareFootage" Type="decimal" Precision="10" Scale="2" />
     <Property Name="BasementGrade" Type="varchar" MaxLength="50" />
-    <Property Name="BasementSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="BasementSquareFootage" Type="decimal" Precision="10" Scale="2" />
     <Property Name="BasementType" Type="varchar" MaxLength="50" />
     <Property Name="ConstructionType" Type="varchar" MaxLength="50" />
     <Property Name="ExteriorWall" Type="varchar" MaxLength="50" />
     <Property Name="NumberOfStories" Type="decimal" Precision="7" Scale="2" />
     <Property Name="StructureType" Type="varchar" MaxLength="50" />
     <Property Name="Grade" Type="varchar" MaxLength="50" />
-    <Property Name="GrossSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="GrossSquareFootage" Type="decimal" Precision="10" Scale="2" />
     <Property Name="CommercialOverlay" Type="varchar" MaxLength="50" />
     <Property Name="LandFactorPerSqFtinDollars" Type="decimal" Precision="7" Scale="2" />
-    <Property Name="GrossResidentialSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="GrossResidentialSquareFootage" Type="decimal" Precision="10" Scale="2" />
     <Property Name="LandType1" Type="varchar" MaxLength="50" />
-    <Property Name="LandSize1" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="LandSize1" Type="decimal" Precision="10" Scale="2" />
     <Property Name="NumberOfRooms" Type="int" />
     <Property Name="HotelClass" Type="varchar" MaxLength="50" />
     <Property Name="NumberOfResidentialLots" Type="int" />
     <Property Name="NumberOfCommercialLots" Type="int" />
-    <Property Name="GrossSquareFootageOfTheSuffix" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="GrossSquareFootageOfTheSuffix" Type="decimal" Precision="10" Scale="2" />
     <Property Name="CommercialLots" Type="int" />
-    <Property Name="LandFactorperSquareFoot" Type="decimal" Precision="9" Scale="2" />
-    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="LandFactorperSquareFoot" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="NetSqFtOfLotFromCondoDeclaration" Type="decimal" Precision="10" Scale="2" />
     <Property Name="ResidentialLots" Type="int" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>

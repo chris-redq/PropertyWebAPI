@@ -140,7 +140,7 @@ namespace PropertyWebAPI.Controllers
         }
 
         /// <summary>  
-        ///     Use this api to get price per sqft data by month for the neighborhood around a given property
+        ///     Use this api to get price per sq-ft data by month for the neighborhood around a given property
         /// </summary>  
         /// <param name="propertyBBL">
         ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
@@ -149,7 +149,7 @@ namespace PropertyWebAPI.Controllers
         ///     Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
         /// </param>
         /// <returns>
-        ///     Returns sales price per sqft data by month for the neighborhood around a given property
+        ///     Returns sales price per sq-ft data by month for the neighborhood around a given property
         /// </returns>
         [Route("api/cma/{propertyBBL}/salespricepersqfttrend")]
         [ResponseType(typeof(List<DAL.PricePerSqftDetailsByMonth>))]
@@ -187,20 +187,20 @@ namespace PropertyWebAPI.Controllers
         /// <param name="propertyBBL">
         ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
         /// </param>
-        /// <param name="algorithmType"></param>
-        /// <param name="maxRecords"></param>
-        /// <param name="monthOffset"></param>
-        /// <param name="classMatchType"></param>
-        /// <param name="sameNeighboorhood"></param>
-        /// <param name="sameSchoolDistrict"></param>
-        /// <param name="sameZip"></param>
-        /// <param name="sameBlock"></param>
-        /// <param name="sameStreetName"></param>
-        /// <param name="minSalePrice"></param>
-        /// <param name="maxSalePrice"></param>
-        /// <param name="isNotIntraFamily"></param>
-        /// <param name="isBuyeraCompany"></param>
-        /// <param name="isSelleraCompany"></param>
+        /// <param name="algorithmType">Valid Option are G, O and E. T returns all sales ordered by distance</param>
+        /// <param name="maxRecords">Total number of comps to be returned</param>
+        /// <param name="monthOffset">Month in past, always negative, default value is -12</param>
+        /// <param name="classMatchType">0 - For same BuildingClass, 1  - For Expanded Building Classes based on Subject Building Class, 2 - To ignore Building Class</param>
+        /// <param name="sameNeighboorhood">0 or 1. 0 means ignore neighborhood and 1 means search in same neighborhood</param>
+        /// <param name="sameSchoolDistrict">0 or 1. 0 means ignore school district and 1 means search in same school district. Default is 1</param>
+        /// <param name="sameZip">0 or 1. 0 means ignore zip code and 1 means search in same zip code. Default is 0</param>
+        /// <param name="sameBlock">0 or 1. 0 means ignore address block and 1 means search in same block. Default is 0</param>
+        /// <param name="sameStreetName">0 or 1. 0 means ignore street and 1 means search in same street. Default is 0</param>
+        /// <param name="minSalePrice">Minimum sale price for consideration. Default is 10000</param>
+        /// <param name="maxSalePrice">Maximum Sale price for consideration. Default is ignore max sale price</param>
+        /// <param name="isNotIntraFamily">Null or 1. 1 means only arm length sales are considered.</param>
+        /// <param name="isBuyeraCompany">Null or 1. 1 means buyer is company.</param>
+        /// <param name="isSelleraCompany">>Null or 1. 1 means seller is a company</param>
         /// <returns>
         ///     Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
         /// </returns>
@@ -236,7 +236,7 @@ namespace PropertyWebAPI.Controllers
         /// </param>
         /// <param name="maxRecs">Total number of comps to be returned.</param>
         /// <param name="monthOffset">Month in past, always negative, default value is -12</param>
-        /// <param name="classMatch">0 - same BuildingClass, 1 Expended BuildingClass, 2 Ignore BuildingClass</param>
+        /// <param name="classMatch">0 - For same BuildingClass, 1  - For Expanded Building Classes based on Subject Building Class, 2 - To ignore Building Class</param>
         /// <param name="smNeighborhood">0 or 1. 0 means ignore neighborhood and 1 means search in same neighborhood. Default is 0</param>
         /// <param name="smSchDist">0 or 1. 0 means ignore school district and 1 means search in same school district. Default is 1</param>
         /// <param name="smZip">0 or 1. 0 means ignore zip code and 1 means search in same zip code. Default is 0</param>
@@ -248,8 +248,8 @@ namespace PropertyWebAPI.Controllers
         /// <param name="BComp">Null or 1. 1 means buyer is company.</param>
         /// <param name="SComp">Null or 1. 1 means seller is a company</param>
         /// <param name="dist">Search distance in miles. Values can be decimals. Default is 1.0</param>
-        /// <param name="GLARng">Range of GLA Values for consideration in sqft. Format is CSV. Single values are considered as upper limit. Example: 3800 or Null,3800 or 3000,NULL or 3000,3800</param>
-        /// <param name="LARng">Range of LA Values for consideration in sqft. Format is CSV. Single values are considered as upper limit. Example: 1600 or Null,1600 or 1200,NULL or 1200,1600</param>
+        /// <param name="GLARng">Range of GLA Values for consideration based on percentage difference from subject. Format is CSV, only positive Values. Single values are considered as upper limit. Example: 10 or 10,20</param>
+        /// <param name="LARng">Range of LA Values for consideration based on percentage difference from subject. Format is CSV, only positive Values. Single values are considered as upper limit. Example: 15 or 15,25</param>
         /// <param name="BldgFrontRng">Range of Building Frontage Values for consideration in ft. Format is CSV. Single values are considered as upper limit. Example: 20 or Null,20 or 16,NULL or 16,20</param>
         /// <param name="BldgDepthRng">Range of Building Depth Values for consideration in ft. Format is CSV. Single values are considered as upper limit. Example: 45 or Null,45 or 30,NULL or 30,45</param>
         /// <param name="lotFrontRng">Range of Lot Frontage Values for consideration in ft. Format is CSV. Single values are considered as upper limit. Example: 25 or Null,25 or 20,NULL or 20,25</param>
@@ -271,11 +271,11 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
-            if (!InitializeRangeValues(GLARng, ref gLALoRange, ref gLAHiRange))
-                return this.BadRequest("Incorrect GLA Range. Correct format 9999 or Null, 9999 or 9999, NULL or 9999, 9999");
+            if (!InitializePercentageRangeValues(GLARng, ref gLALoRange, ref gLAHiRange))
+                return this.BadRequest("Incorrect GLA Range. Correct format 99, 99,99");
 
-            if (!InitializeRangeValues(LARng, ref lALoRange, ref lAHiRange))
-                return this.BadRequest("Incorrect LA Range. Correct format 9999 or Null, 9999 or 9999, NULL or 9999, 9999");
+            if (!InitializePercentageRangeValues(LARng, ref lALoRange, ref lAHiRange))
+                return this.BadRequest("Incorrect GLA Range. Correct format 99, 99,99");
 
             if (!InitializeRangeValues(BldgFrontRng, ref buildingFrontageLoRange, ref buildingFrontageHiRange))
                 return this.BadRequest("Incorrect Building Frontage Range. Correct format 9999 or Null, 9999 or 9999, NULL or 9999, 9999");
@@ -327,6 +327,39 @@ namespace PropertyWebAPI.Controllers
             }
             return true;
         }
+
+        private bool InitializePercentageRangeValues(string inStr, ref int? LoRangeValue, ref int? HiRangeValue)
+        {
+            string[] strVals = Common.Conversions.ParseCSV(inStr);
+            if (strVals != null)
+            {
+                switch (strVals.Length)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        HiRangeValue = Common.Conversions.ToIntorNull(strVals[0]);
+                        LoRangeValue = Common.Conversions.ToIntorNull(strVals[0]);
+                        if (HiRangeValue == null)
+                            return false;
+                        break;
+                    case 2:
+                        LoRangeValue = Common.Conversions.ToIntorNull(strVals[0]);
+                        HiRangeValue = Common.Conversions.ToIntorNull(strVals[1]);
+                        if (LoRangeValue == null)
+                            LoRangeValue = HiRangeValue;
+                        if (HiRangeValue == null)
+                            HiRangeValue = LoRangeValue;
+                        if ((LoRangeValue == null) || (LoRangeValue == null))
+                            return false;
+                        break;
+                    default:
+                        return false;
+                }
+            }
+            return true;
+        }
+
 
         /// <summary>  
         ///     Use this api to get a subject property's details

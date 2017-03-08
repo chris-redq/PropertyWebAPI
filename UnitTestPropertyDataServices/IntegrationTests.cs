@@ -25,5 +25,11 @@ namespace UnitTestPropertyDataServices
                                 "Portal", resultObj);
             return;
         }
+
+        [TestMethod]
+        public void TestToDecimalConversion()
+        {
+            decimal? resultObj = Conversions.ToDecimalorNull("192,000");
+        }
     }
 }
