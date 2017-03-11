@@ -60,6 +60,9 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetCMA_Result, DAL.CMAResult>();
                 cfg.CreateMap<tfnActiveLPsForaProperty_Result, DAL.LPDetail>();
                 cfg.CreateMap<WebAPISecurityDB.vwAPIUser, Security.User>();
+                cfg.CreateMap<tfnGetDocuments_Result, BAL.DocumentDetail>();
+                cfg.CreateMap<tfnGetMortgageChain_Result, BAL.MortgageDocumentDetail>();
+                cfg.CreateMap<tfnGetDocumentParties_Result , BAL.DocumentParty > ();
             });
         }
     }

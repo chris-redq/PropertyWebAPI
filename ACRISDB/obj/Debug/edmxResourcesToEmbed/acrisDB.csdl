@@ -224,6 +224,13 @@
       <Parameter Name="BBLE" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="PropertyNotInAssessments" EntityType="ACRISModel.PropertyNotInAssessment" />
+    <FunctionImport Name="tfnGetDocuments" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetDocuments_Result)">
+      <Parameter Name="BBLE" Mode="In" Type="String" />
+      <Parameter Name="DocumentType" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetMortgageChain" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetMortgageChain_Result)">
+      <Parameter Name="BBLE" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="PropertyNotInAssessment">
     <Key>
@@ -245,4 +252,52 @@
     <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
     <Property Name="RowNumber" Type="Int64" />
   </EntityType>
+  <ComplexType Name="tfnGetDocuments_Result">
+    <Property Type="Int32" Name="RowNo" Nullable="false" />
+    <Property Type="String" Name="BBLE" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="UniqueKey" Nullable="false" MaxLength="16" />
+    <Property Type="String" Name="CRFN" Nullable="true" MaxLength="13" />
+    <Property Type="String" Name="PropertyType" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="DocumentType" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="DocumentTypeDescription" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="DocumentClassCodeDescription" Nullable="true" MaxLength="27" />
+    <Property Type="DateTime" Name="DocumentDate" Nullable="true" Precision="10" />
+    <Property Type="Decimal" Name="DocumentAmount" Nullable="true" Precision="14" Scale="2" />
+    <Property Type="Decimal" Name="PercentageOfTransaction" Nullable="true" Precision="15" Scale="6" />
+    <Property Type="DateTime" Name="DateRecorded" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="DateModified" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RecordedBorough" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="Remarks" Nullable="true" />
+    <Property Type="DateTime" Name="DateLastUpdated" Nullable="true" Precision="23" />
+    <Property Type="String" Name="URL" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="ReelYear" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="ReelNumber" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="ReelPage" Nullable="true" MaxLength="5" />
+  </ComplexType>
+  <ComplexType Name="tfnGetMortgageChain_Result">
+    <Property Type="String" Name="BBLE" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="UniqueKey" Nullable="false" MaxLength="16" />
+    <Property Type="String" Name="CRFN" Nullable="true" MaxLength="13" />
+    <Property Type="String" Name="PropertyType" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="DocumentType" Nullable="true" MaxLength="8" />
+    <Property Type="String" Name="DocumentTypeDescription" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="DocumentClassCodeDescription" Nullable="true" MaxLength="27" />
+    <Property Type="DateTime" Name="DocumentDate" Nullable="true" Precision="10" />
+    <Property Type="Decimal" Name="DocumentAmount" Nullable="true" Precision="14" Scale="2" />
+    <Property Type="Decimal" Name="PercentageOfTransaction" Nullable="true" Precision="15" Scale="6" />
+    <Property Type="DateTime" Name="DateRecorded" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="DateModified" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RecordedBorough" Nullable="true" MaxLength="1" />
+    <Property Type="DateTime" Name="DateLastUpdated" Nullable="true" Precision="23" />
+    <Property Type="String" Name="ReelYear" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="ReelNumber" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="ReelPage" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="URL" Nullable="false" MaxLength="86" />
+    <Property Type="String" Name="RelatedDocumentType" Nullable="true" MaxLength="8" />
+    <Property Type="String" Name="RelatedDocumentTypeDescription" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="RelatedDocumentUniqueKey" Nullable="true" MaxLength="16" />
+    <Property Type="DateTime" Name="RelatedDocumentDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="RelatedDocumentRecordDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RelatedDocumentURL" Nullable="true" MaxLength="86" />
+  </ComplexType>
 </Schema>

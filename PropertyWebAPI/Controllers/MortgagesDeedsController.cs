@@ -25,7 +25,7 @@ namespace PropertyWebAPI.Controllers
     public class MortgagesDeedsController : ApiController
     {
 
-        // ../api/MortgagesDeeds/3001670091
+        // ../api/MortgagesDeeds/3001670091/documents
         /// <summary>  
         ///     Use this method to retrieve all Mortgage and Deed related documents for a property in NYC from the ACRIS system, in a reverse chronological order by recording date (document date is sometimes NULL). 
         /// </summary>  
@@ -36,7 +36,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of all Mortgage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/documents")]
-        [ResponseType(typeof(vwDocumentsByBBLE))]
+        [ResponseType(typeof(List<BAL.DocumentDetail>))]
         public IHttpActionResult Get(string propertyBBLE)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBLE))
@@ -44,15 +44,11 @@ namespace PropertyWebAPI.Controllers
 
             try
             {
-                using (ACRISEntities acrisDBEntities = new ACRISEntities())
-                {
-                    List<vwDocumentsByBBLE> documentsObj = acrisDBEntities.vwDocumentsByBBLEs
-                                                                            .Where(i => i.BBLE == propertyBBLE)
-                                                                            .OrderByDescending(m => m.DateRecorded).ToList();
-                    if (documentsObj == null || documentsObj.Count <= 0)
-                        return NotFound();
-                    return Ok(documentsObj);
-                }
+                var documentsObj = BAL.ACRIS.GetDocuments(propertyBBLE);
+                                                                            
+                 if (documentsObj == null || documentsObj.Count <= 0)
+                     return NotFound();
+                 return Ok(documentsObj);
             }
             catch (Exception e)
             {
@@ -60,6 +56,41 @@ namespace PropertyWebAPI.Controllers
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
+
+        // ../api/MortgagesDeeds/3001670091/mortgagechain
+        /// <summary>  
+        ///     Use this method to retrieve mortgage chain for a property in NYC. 
+        /// </summary>  
+        /// <param name="propertyBBLE">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+        /// <returns>
+        ///     Returns mortgage chain for a property in NYC.
+        /// </returns>
+        [Route("api/mortgagesdeeds/{propertyBBLE}/mortgagechain")]
+        [ResponseType(typeof(List<BAL.MortgageDocumentDetail>))]
+        public IHttpActionResult GetMortgageChain(string propertyBBLE)
+        {
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+
+            try
+            {
+                var documentsObj = BAL.ACRIS.GetMortgageChain(propertyBBLE);
+
+                if (documentsObj == null || documentsObj.Count <= 0)
+                    return NotFound();
+                return Ok(documentsObj);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error reading AreaAbstract DB{0}", Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+
+
 
         // ../api/MortgagesDeeds/3001670091/deeds
         /// <summary>  
@@ -73,7 +104,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of all deeds filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/deeds")]
-        [ResponseType(typeof(vwDocumentsByBBLE))]
+        [ResponseType(typeof(List<BAL.DocumentDetail>))]
         public IHttpActionResult GetAllDeeds(string propertyBBLE)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBLE))
@@ -81,15 +112,11 @@ namespace PropertyWebAPI.Controllers
 
             try
             {
-                using (ACRISEntities acrisDBEntities = new ACRISEntities())
-                {
-                    List<vwDocumentsByBBLE> documentsObj = acrisDBEntities.vwDocumentsByBBLEs
-                                                                            .Where(i => i.BBLE == propertyBBLE && (i.DocumentType == "DEED" || i.DocumentType == "DEEDO"))
-                                                                            .OrderByDescending(m => m.DocumentDate).ToList<vwDocumentsByBBLE>();
-                    if (documentsObj == null || documentsObj.Count <= 0)
-                        return NotFound();
-                    return Ok(documentsObj);
-                }
+                var documentsObj = BAL.ACRIS.GetDeeds(propertyBBLE);
+
+                if (documentsObj == null || documentsObj.Count <= 0)
+                    return NotFound();
+                return Ok(documentsObj);
             }
             catch (Exception e)
             {

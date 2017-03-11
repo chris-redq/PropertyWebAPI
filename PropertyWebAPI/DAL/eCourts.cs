@@ -85,7 +85,7 @@ namespace PropertyWebAPI.DAL
             return string.IsNullOrEmpty(caseIndexNumber) && caseIndexNumber.Length == 11 && ulong.TryParse(caseIndexNumber, out sLong);
         }
 
-        public static vwCaseExpanded GetCaseDetails(string countyId, string caseIndexNumber)
+        public static CaseDetails GetCaseDetails(string countyId, string caseIndexNumber)
         {
             using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
             {

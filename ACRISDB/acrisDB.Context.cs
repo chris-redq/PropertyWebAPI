@@ -74,5 +74,29 @@ namespace ACRISDB
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetUnsatisfiedMortgages_Result>("[ACRISEntities].[tfnGetUnsatisfiedMortgages](@BBLE)", bBLEParameter);
         }
+    
+        [DbFunction("ACRISEntities", "tfnGetDocuments")]
+        public virtual IQueryable<tfnGetDocuments_Result> tfnGetDocuments(string bBLE, string documentType)
+        {
+            var bBLEParameter = bBLE != null ?
+                new ObjectParameter("BBLE", bBLE) :
+                new ObjectParameter("BBLE", typeof(string));
+    
+            var documentTypeParameter = documentType != null ?
+                new ObjectParameter("DocumentType", documentType) :
+                new ObjectParameter("DocumentType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetDocuments_Result>("[ACRISEntities].[tfnGetDocuments](@BBLE, @DocumentType)", bBLEParameter, documentTypeParameter);
+        }
+    
+        [DbFunction("ACRISEntities", "tfnGetMortgageChain")]
+        public virtual IQueryable<tfnGetMortgageChain_Result> tfnGetMortgageChain(string bBLE)
+        {
+            var bBLEParameter = bBLE != null ?
+                new ObjectParameter("BBLE", bBLE) :
+                new ObjectParameter("BBLE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetMortgageChain_Result>("[ACRISEntities].[tfnGetMortgageChain](@BBLE)", bBLEParameter);
+        }
     }
 }

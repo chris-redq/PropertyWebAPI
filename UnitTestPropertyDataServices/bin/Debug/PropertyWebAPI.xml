@@ -1517,6 +1517,17 @@
                 Returns a list of all Mortgage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
             </returns>
         </member>
+        <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetMortgageChain(System.String)">
+            <summary>  
+                Use this method to retrieve mortgage chain for a property in NYC. 
+            </summary>  
+            <param name="propertyBBLE">
+                Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+                followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property</param>  
+            <returns>
+                Returns mortgage chain for a property in NYC.
+            </returns>
+        </member>
         <member name="M:PropertyWebAPI.Controllers.MortgagesDeedsController.GetAllDeeds(System.String)">
             <summary>  
                 Use this method to retrieve all deeds associated with a property in NYC from the ACRIS system, in a reverse chronological order.

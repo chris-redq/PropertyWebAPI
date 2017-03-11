@@ -82,6 +82,12 @@
     <Compile Include="tfnGetDocumentParties_Result.cs">
       <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnGetDocuments_Result.cs">
+      <DependentUpon>acrisDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tfnGetMortgageChain_Result.cs">
+      <DependentUpon>acrisDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="tfnGetUnsatisfiedMortgages_Result.cs">
       <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
