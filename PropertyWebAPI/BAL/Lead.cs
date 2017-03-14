@@ -29,5 +29,18 @@ namespace PropertyWebAPI.BAL
             }
             return leadDetailData;
         }
+
+        public static bool IsValidFilter(string zipcodes, string neighborhoods, string isvacant, string leadgrades, string buildingclasscodes, string counties,
+                                         string ismailingaddressactive, string lientypes, string ltv, string equity, string violations, string cities, string states,
+                                         string isfannie, string isfreddie, string unbuilt, string servicer, string landmark)
+        {
+            if (zipcodes == null && buildingclasscodes == null && counties == null &&
+                isvacant == null && violations == null && ismailingaddressactive == null &&
+                cities == null && neighborhoods == null && states == null && lientypes == null &&
+                leadgrades == null && ltv == null && equity == null && isfannie == null && isfreddie == null &&
+                unbuilt == null && servicer == null && landmark == null)
+                return false;
+            return true;
+        }
     }
 }

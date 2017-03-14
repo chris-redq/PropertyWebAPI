@@ -28,6 +28,7 @@ namespace GPADB
         }
     
         public virtual DbSet<vwGeneralLeadInfomation> vwGeneralLeadInfomations { get; set; }
+        public virtual DbSet<SavedScenario> SavedScenarios { get; set; }
     
         public virtual int GetPropertyLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string isFannie, string isFreddie, string unbuiltArea, string servicer, string landmark)
         {

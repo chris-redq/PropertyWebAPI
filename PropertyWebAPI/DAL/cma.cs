@@ -149,7 +149,7 @@ namespace PropertyWebAPI.DAL
         {
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<SubjectDetails>(nycmaE.ShowCMASubject(propertyBBL));
+                return Mapper.Map<SubjectDetails>(nycmaE.ShowCMASubject(propertyBBL).FirstOrDefault());
             }
         }
 

@@ -91,5 +91,34 @@
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
     <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+    <EntitySetMapping Name="SavedScenarios">
+      <EntityTypeMapping TypeName="GPADBModel.SavedScenario">
+        <MappingFragment StoreEntitySet="SavedScenario">
+          <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+          <ScalarProperty Name="Servicer" ColumnName="Servicer" />
+          <ScalarProperty Name="UnbuiltArea" ColumnName="UnbuiltArea" />
+          <ScalarProperty Name="IsFreddie" ColumnName="IsFreddie" />
+          <ScalarProperty Name="IsFannie" ColumnName="IsFannie" />
+          <ScalarProperty Name="Equity" ColumnName="Equity" />
+          <ScalarProperty Name="LTV" ColumnName="LTV" />
+          <ScalarProperty Name="LeadGrades" ColumnName="LeadGrades" />
+          <ScalarProperty Name="LienTypes" ColumnName="LienTypes" />
+          <ScalarProperty Name="States" ColumnName="States" />
+          <ScalarProperty Name="Neighborhoods" ColumnName="Neighborhoods" />
+          <ScalarProperty Name="Cities" ColumnName="Cities" />
+          <ScalarProperty Name="Violations" ColumnName="Violations" />
+          <ScalarProperty Name="MailingAddressActive" ColumnName="MailingAddressActive" />
+          <ScalarProperty Name="Vacant" ColumnName="Vacant" />
+          <ScalarProperty Name="Counties" ColumnName="Counties" />
+          <ScalarProperty Name="BuildingClassCodes" ColumnName="BuildingClassCodes" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateTimeSaved" ColumnName="DateTimeSaved" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ScenarioName" ColumnName="ScenarioName" />
+          <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -67,6 +67,9 @@
       <DependentUpon>GPADB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SavedScenario.cs">
+      <DependentUpon>GPADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwGeneralLeadInfomation.cs">
       <DependentUpon>GPADB.tt</DependentUpon>
     </Compile>

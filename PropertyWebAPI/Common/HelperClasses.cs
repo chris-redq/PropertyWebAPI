@@ -62,7 +62,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<WebAPISecurityDB.vwAPIUser, Security.User>();
                 cfg.CreateMap<tfnGetDocuments_Result, BAL.DocumentDetail>();
                 cfg.CreateMap<tfnGetMortgageChain_Result, BAL.MortgageDocumentDetail>();
-                cfg.CreateMap<tfnGetDocumentParties_Result , BAL.DocumentParty > ();
+                cfg.CreateMap<tfnGetDocumentParties_Result, BAL.DocumentParty>();
             });
         }
     }
