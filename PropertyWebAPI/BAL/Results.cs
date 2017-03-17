@@ -25,5 +25,9 @@ namespace PropertyWebAPI.BAL
         public BAL.NoticeOfPropertyValueResult noticeOfPropertyValueResult;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public BAL.MortgageDocumentResult mortgageDocumentResult;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public BAL.FreddieMortgageDetails freddieMacResult;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        internal FannieMortgageDetails fannieMaeResult;
     }
 }

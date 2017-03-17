@@ -242,7 +242,7 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwMortgageDeedMaster' does n
       </CollectionType>
     </ReturnType>
   </Function>
-  <Function Name="tfnGetMortgageChain" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Acris">
+  <Function Name="tfnGetMortgageChain" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
     <Parameter Name="BBLE" Type="varchar" Mode="In" />
     <ReturnType>
       <CollectionType>
@@ -275,7 +275,7 @@ warning 6002: The table/view 'AreaAbstractNew.Acris.vwMortgageDeedMaster' does n
       </CollectionType>
     </ReturnType>
   </Function>
-  <Function Name="tfnGetUnsatisfiedMortgages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Acris">
+  <Function Name="tfnGetUnsatisfiedMortgages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
     <Parameter Name="BBLE" Type="varchar" Mode="In" />
     <ReturnType>
       <CollectionType>

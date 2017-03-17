@@ -90,6 +90,7 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method calls back portal for every log record in the list
         /// </summary>
+        /// <param name="appContext"></param>
         /// <param name="zEstimate"></param>
         /// <param name="logs">List or Request Log Records</param>
         private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, Decimal? zEstimate)

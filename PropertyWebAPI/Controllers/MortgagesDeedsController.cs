@@ -287,5 +287,89 @@ namespace PropertyWebAPI.Controllers
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
+
+        // ./api/MortgagesDeeds/3001670091/CheckFreddieMacMortgage
+        /// <summary>  
+        ///     Use this api to check if borrower associated with a property has a Freddie Mac mortgage
+        /// </summary>  
+        /// <param name="propertyBBLE">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+        /// </param>  
+        /// <param name="externalReferenceId">
+        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+        /// </param>
+        /// <returns>
+        ///     Returns true if a borrower associated with a property has a Freddie Mac mortgage 
+        /// </returns>
+        [Route("api/mortgagesdeeds/{propertyBBLE}/CheckFreddieMacMortgage")]
+        [ResponseType(typeof(BAL.FreddieMortgageDetails))]
+        [HttpPost]
+        public IHttpActionResult CheckForFreddieMacMortgage(string propertyBBLE, string externalReferenceId = null)
+        {
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+
+            if (!BAL.BBL.IsValid(propertyBBLE))
+                return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
+
+            try
+            {
+                BAL.Freddie.Parameters inParameters = new BAL.Freddie.Parameters();
+                var resultObj = BAL.Freddie.Get(inParameters, externalReferenceId);
+
+                if (resultObj == null)
+                    return NotFound();
+
+                return Ok(resultObj);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error checking Freddie Mac Mortgage", Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+        // ./api/MortgagesDeeds/3001670091/CheckFannieMaeMortgage
+        /// <summary>  
+        ///     Use this api to check if borrower associated with a property has a Fannie Mae mortgage
+        /// </summary>  
+        /// <param name="propertyBBLE">
+        ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
+        ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
+        /// </param>  
+        /// <param name="externalReferenceId">
+        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
+        /// </param>
+        /// <returns>
+        ///     Returns true if a borrower associated with a property has a Fannie Mae mortgage 
+        /// </returns>
+        [Route("api/mortgagesdeeds/{propertyBBLE}/CheckFannieMaeMortgage")]
+        [ResponseType(typeof(BAL.FannieMortgageDetails))]
+        [HttpPost]
+        public IHttpActionResult CheckForFannieMaeMortgage(string propertyBBLE, string externalReferenceId = null)
+        {
+            if (!BAL.BBL.IsValidFormat(propertyBBLE))
+                return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
+
+            if (!BAL.BBL.IsValid(propertyBBLE))
+                return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
+
+            try
+            {
+                BAL.Fannie.Parameters inParameters = new BAL.Fannie.Parameters();
+                var resultObj = BAL.Fannie.Get(inParameters, externalReferenceId);
+
+                if (resultObj == null)
+                    return NotFound();
+
+                return Ok(resultObj);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error checking Fannie Mae Mortgage{0}", Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
     }
 }

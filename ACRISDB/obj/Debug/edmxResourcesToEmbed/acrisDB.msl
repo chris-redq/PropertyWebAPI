@@ -174,32 +174,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionName="ACRISModel.Store.tfnGetUnsatisfiedMortgages" FunctionImportName="tfnGetUnsatisfiedMortgages">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="ACRISModel.tfnGetUnsatisfiedMortgages_Result">
-          <ScalarProperty Name="RowNo" ColumnName="RowNo" />
-          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
-          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
-          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
-          <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
-          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
-          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
-          <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
-          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
-          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
-          <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
-          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
-          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-          <ScalarProperty Name="RecordedBorough" ColumnName="RecordedBorough" />
-          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
-          <ScalarProperty Name="URL" ColumnName="URL" />
-          <ScalarProperty Name="ReelYear" ColumnName="ReelYear" />
-          <ScalarProperty Name="ReelNumber" ColumnName="ReelNumber" />
-          <ScalarProperty Name="ReelPage" ColumnName="ReelPage" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <EntitySetMapping Name="PropertyNotInAssessments">
       <EntityTypeMapping TypeName="ACRISModel.PropertyNotInAssessment">
         <MappingFragment StoreEntitySet="PropertyNotInAssessment">
@@ -274,6 +248,32 @@
           <ScalarProperty Name="RelatedDocumentDate" ColumnName="RelatedDocumentDate" />
           <ScalarProperty Name="RelatedDocumentRecordDate" ColumnName="RelatedDocumentRecordDate" />
           <ScalarProperty Name="RelatedDocumentURL" ColumnName="RelatedDocumentURL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetUnsatisfiedMortgages" FunctionName="ACRISModel.Store.tfnGetUnsatisfiedMortgages">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ACRISModel.tfnGetUnsatisfiedMortgages_Result">
+          <ScalarProperty Name="RowNo" ColumnName="RowNo" />
+          <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+          <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+          <ScalarProperty Name="CRFN" ColumnName="CRFN" />
+          <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+          <ScalarProperty Name="DocumentTypeDescription" ColumnName="DocumentTypeDescription" />
+          <ScalarProperty Name="DocumentClassCodeDescription" ColumnName="DocumentClassCodeDescription" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+          <ScalarProperty Name="DocumentAmount" ColumnName="DocumentAmount" />
+          <ScalarProperty Name="PercentageOfTransaction" ColumnName="PercentageOfTransaction" />
+          <ScalarProperty Name="DateRecorded" ColumnName="DateRecorded" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="RecordedBorough" ColumnName="RecordedBorough" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="DateLastUpdated" ColumnName="DateLastUpdated" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="ReelYear" ColumnName="ReelYear" />
+          <ScalarProperty Name="ReelNumber" ColumnName="ReelNumber" />
+          <ScalarProperty Name="ReelPage" ColumnName="ReelPage" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

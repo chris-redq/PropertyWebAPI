@@ -34,7 +34,6 @@ namespace ACRISDB
         public virtual DbSet<vwDocumentPartiesByUniqueKey> vwDocumentPartiesByUniqueKeys { get; set; }
         public virtual DbSet<vwDocumentsByBBLE> vwDocumentsByBBLEs { get; set; }
         public virtual DbSet<vwMortgageDeedMaster> vwMortgageDeedMasters { get; set; }
-        public virtual DbSet<vwSatisfactionAndAssignmentCrossReeferenceRecord> vwSatisfactionAndAssignmentCrossReeferenceRecords { get; set; }
         public virtual DbSet<PropertyNotInAssessment> PropertyNotInAssessments { get; set; }
     
         [DbFunction("ACRISEntities", "tfnGetDocumentParties")]
@@ -65,16 +64,6 @@ namespace ACRISDB
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetDocumentPartiesByKey_Result>("[ACRISEntities].[tfnGetDocumentPartiesByKey](@Key, @PartyType)", keyParameter, partyTypeParameter);
         }
     
-        [DbFunction("ACRISEntities", "tfnGetUnsatisfiedMortgages")]
-        public virtual IQueryable<tfnGetUnsatisfiedMortgages_Result> tfnGetUnsatisfiedMortgages(string bBLE)
-        {
-            var bBLEParameter = bBLE != null ?
-                new ObjectParameter("BBLE", bBLE) :
-                new ObjectParameter("BBLE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetUnsatisfiedMortgages_Result>("[ACRISEntities].[tfnGetUnsatisfiedMortgages](@BBLE)", bBLEParameter);
-        }
-    
         [DbFunction("ACRISEntities", "tfnGetDocuments")]
         public virtual IQueryable<tfnGetDocuments_Result> tfnGetDocuments(string bBLE, string documentType)
         {
@@ -97,6 +86,16 @@ namespace ACRISDB
                 new ObjectParameter("BBLE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetMortgageChain_Result>("[ACRISEntities].[tfnGetMortgageChain](@BBLE)", bBLEParameter);
+        }
+    
+        [DbFunction("ACRISEntities", "tfnGetUnsatisfiedMortgages")]
+        public virtual IQueryable<tfnGetUnsatisfiedMortgages_Result> tfnGetUnsatisfiedMortgages(string bBLE)
+        {
+            var bBLEParameter = bBLE != null ?
+                new ObjectParameter("BBLE", bBLE) :
+                new ObjectParameter("BBLE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetUnsatisfiedMortgages_Result>("[ACRISEntities].[tfnGetUnsatisfiedMortgages](@BBLE)", bBLEParameter);
         }
     }
 }

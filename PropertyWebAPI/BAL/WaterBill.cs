@@ -15,7 +15,10 @@ namespace PropertyWebAPI.BAL
     using System.Text;
     using System.Runtime.Serialization.Json;
     using System.Runtime.Serialization;
-    
+    using RequestResponseBuilder.RequestObjects;
+    using RequestResponseBuilder.ResponseObjects;
+    using System.Collections.Generic;
+    using System.Net;
 
 
     #region Local Helper Classes
@@ -39,6 +42,8 @@ namespace PropertyWebAPI.BAL
     /// </summary>
     public static class WaterBill
     {
+        private const int RequestTypeId = (int)RequestTypes.NYCWaterBill;
+
         /// <summary>
         /// Helper class used for serialization and deserialization of parameters necessary to get Water bill 
         /// </summary>
@@ -71,6 +76,37 @@ namespace PropertyWebAPI.BAL
         }
 
         /// <summary>
+        ///     This method calls back portal for every log record in the list
+        /// </summary>
+        private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, Decimal? billAmount)
+        {
+            if (!CallingSystem.isAnyCallBack(appContext))
+                return;
+
+            var resultObj = new BAL.Results();
+            resultObj.waterBill = new WaterBillDetails();
+            resultObj.waterBill.billAmount = billAmount;
+
+            foreach (var rec in logs)
+            {
+                resultObj.waterBill.BBL = rec.BBL;
+                resultObj.waterBill.requestId = rec.RequestId;
+                resultObj.waterBill.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
+                resultObj.waterBill.externalReferenceId = rec.ExternalReferenceId;
+                CallingSystem.PostCallBack(appContext, resultObj);
+            }
+        }
+
+        /// <summary>
+        ///     Use this method in the controller to log failures that are processed before calling any 
+        ///     other business methods of this class
+        /// </summary>
+        public static void LogFailure(string propertyBBL, string externalReferenceId, string jobId, int httpErrorCode)
+        {
+            DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, "Error Code: " + ((HttpStatusCode)httpErrorCode).ToString());
+        }
+
+        /// <summary>
         ///     This method deals with all the details associated with either returning the water bill details or creating the 
         ///     request for getting is scrapped from the web 
         /// </summary>
@@ -95,10 +131,10 @@ namespace PropertyWebAPI.BAL
             {
                 using (var webDBEntitiestransaction = webDBEntities.Database.BeginTransaction())
                 {
+                    string parameters = ParametersToJSON(propertyBBL);
+
                     try
                     {
-                        string jsonBillParams = ParametersToJSON(propertyBBL);
-
                         //check if data available
                         WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == propertyBBL);
 
@@ -108,21 +144,20 @@ namespace PropertyWebAPI.BAL
                             waterBill.billAmount = waterBillObj.BillAmount;
                             waterBill.status = RequestStatus.Success.ToString();
 
-                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, externalReferenceId, jobId, jsonBillParams);
+                            DAL.DataRequestLog.InsertForCacheAccess(webDBEntities, propertyBBL, RequestTypeId, externalReferenceId, jobId, parameters);
                         }
                         else
-                        {
-                            //check if pending request in queue
-                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, jsonBillParams);
+                        {   //check if pending request in queue
+                            DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetPendingRequest(webDBEntities, propertyBBL, RequestTypeId, parameters);
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
-                                string requestStr = propertyBBL; // we need a helper class to convert propertyBBL into a correct format so that the web scrapping service can read
+                                string requestStr = RequestData.WaterBill(propertyBBL); 
 
-                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, (int)RequestTypes.NYCWaterBill, priority, jobId);
+                                Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill, requestObj.RequestId,
-                                                                                               externalReferenceId, jobId, jsonBillParams);
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
+                                                                                               externalReferenceId, jobId, parameters);
 
                                 waterBill.status = RequestStatus.Pending.ToString();
                                 waterBill.requestId = requestObj.RequestId;
@@ -132,8 +167,8 @@ namespace PropertyWebAPI.BAL
                                 waterBill.status = RequestStatus.Pending.ToString();
                                 //Send the RequestId for the pending request back
                                 waterBill.requestId = dataRequestLogObj.RequestId;
-                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, (int)RequestTypes.NYCWaterBill,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
+                                dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, dataRequestLogObj.RequestId.GetValueOrDefault(), 
+                                                                                               externalReferenceId, jobId, parameters);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -142,6 +177,7 @@ namespace PropertyWebAPI.BAL
                     {
                         webDBEntitiestransaction.Rollback();
                         waterBill.status = RequestStatus.Error.ToString();
+                        DAL.DataRequestLog.InsertForFailure(propertyBBL, RequestTypeId, externalReferenceId, jobId, parameters);
                         Common.Logs.log().Error(string.Format("Exception encountered processing {0} with externalRefId {1}: {2}", 
                                                 propertyBBL, externalReferenceId, Common.Logs.FormatException(e)));
                     }
@@ -164,22 +200,30 @@ namespace PropertyWebAPI.BAL
             waterBill.status = ((RequestStatus)dataRequestLogObj.RequestStatusTypeId).ToString();
             waterBill.billAmount = null;
 
-            Parameters waterParams = JSONToParameters(dataRequestLogObj.RequestParameters);
-
-            using (WebDataEntities webDBEntities = new WebDataEntities())
+            try
             {
-                if (dataRequestLogObj.RequestStatusTypeId == (int)RequestStatus.Success)
+                using (WebDataEntities webDBEntities = new WebDataEntities())
                 {
-                    //check if data available
-                    WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterParams.BBL);
+                    if (dataRequestLogObj.RequestStatusTypeId == (int)RequestStatus.Success)
+                    {
+                        Parameters waterParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+                        //check if data available
+                        WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterParams.BBL);
 
-                    if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= 30)
-                        waterBill.billAmount = waterBillObj.BillAmount;
-                    else
-                        waterBill.status = RequestStatus.Error.ToString();
+                        if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= 30)
+                            waterBill.billAmount = waterBillObj.BillAmount;
+                        else
+                            waterBill.status = RequestStatus.Error.ToString();
+                    }
                 }
+                return waterBill;
             }
-            return waterBill;
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered precessing request log for {0} with externalRefId {1}{2}",
+                                                       dataRequestLogObj.BBL, dataRequestLogObj.ExternalReferenceId, Common.Logs.FormatException(e)));
+                return null;
+            }
         }
      
         /// <summary>
@@ -193,6 +237,9 @@ namespace PropertyWebAPI.BAL
                 {
                     try
                     {
+                        List<DataRequestLog> logs = null;
+                        Decimal? billAmount = null;
+
                         switch (requestObj.RequestStatusTypeId)
                         {
                             case (int)RequestStatus.Error:
@@ -203,37 +250,43 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        Parameters waterBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
+                                        var resultObj = ResponseData.ParseWaterBill(requestObj.ResponseData);
 
+                                        billAmount = resultObj.Amount;
+
+                                        Parameters waterBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);
                                         //check if data available
                                         WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterBillParams.BBL);
                                         if (waterBillObj != null)
                                         {
-                                            waterBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
+                                            waterBillObj.BillAmount = resultObj.Amount;
                                             waterBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
                                         }
                                         else
                                         {
                                             waterBillObj = new WebDataDB.WaterBill();
                                             waterBillObj.BBL = waterBillParams.BBL;
-                                            waterBillObj.BillAmount = 100; //parse from Request requestObj.ResponseData with helper class
+                                            waterBillObj.BillAmount = resultObj.Amount;
                                             waterBillObj.LastUpdated = requestObj.DateTimeEnded.GetValueOrDefault();
 
                                             webDBEntities.WaterBills.Add(waterBillObj);
                                         }
 
                                         webDBEntities.SaveChanges();
-
-                                        DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
+                                        logs=DAL.DataRequestLog.SetAsSuccess(webDBEntities, requestObj.RequestId);
                                     }
+                                    else
+                                        throw (new Exception("Cannot locate Request Log Record(s)"));
+
                                     break;
                                 }
                             default:
                                 Common.Logs.log().Warn(String.Format("Update called for a Request Id {0} with incorrect Status Id {2}", requestObj.RequestId, requestObj.RequestStatusTypeId));
                                 break;
                         }
-
                         webDBEntitiestransaction.Commit();
+                        if (logs != null)
+                            MakeCallBacks(appContext, logs, billAmount);
                         return true;
                     }
                     catch (Exception e)

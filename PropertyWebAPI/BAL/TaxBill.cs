@@ -17,10 +17,8 @@ namespace PropertyWebAPI.BAL
     using WebDataDB;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using DexiRobotRequestResponseBuilder.Request;
-    using DexiRobotRequestResponseBuilder.Response;
-
-
+    using RequestResponseBuilder.RequestObjects;
+    using RequestResponseBuilder.ResponseObjects;
 
     #region Local Helper Classes
     /// <summary>
@@ -251,7 +249,8 @@ namespace PropertyWebAPI.BAL
                                     DataRequestLog dataRequestLogObj = DAL.DataRequestLog.GetFirst(webDBEntities, requestObj.RequestId);
                                     if (dataRequestLogObj != null)
                                     {
-                                        var resultObj = ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData)[0];
+                                        var resultObj = ResponseData.ParsePropertyTaxesNYC(requestObj.ResponseData).First();
+                                            
                                         billAmount = resultObj.TotalDueAmountToPay.GetValueOrDefault();
 
                                         Parameters taxBillParams = JSONToParameters(dataRequestLogObj.RequestParameters);

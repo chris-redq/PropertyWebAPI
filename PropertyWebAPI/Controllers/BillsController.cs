@@ -44,24 +44,21 @@ namespace PropertyWebAPI.Controllers
         ///     Borough Block Lot and Easement Number. The first character is a number between 1-5 indicating the borough associated with the property, followed by 0 padded 5 digit block number, 
         ///     followed by 0 padded 4 digit lot number and finally ending with optional alpha character indicating the easement associated with the property
         /// </param>  
-        /// <param name="externalReferenceId">
-        ///     The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.
-        /// </param>
-        /// <param name="needTaxBill">
-        ///     Set this optional parameter to N if you do not want the tax bill. The default value for this parameter is Y
-        /// </param>
-        /// <returns>
-        ///     Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored
-        /// </returns>
+        /// <param name="externalReferenceId">The user of the API can provide their own reference number for a request. This reference number is sent back along with results to the caller when their request is furnished later asynchronously.</param>
+        /// <param name="needTaxBill">Set this optional parameter to N if you do not want the tax bill. The default value for this parameter is Y</param>
+        /// <param name="needWaterBill">Set this optional parameter to N if you do not want the water bill. The default value for this parameter is Y</param>
+        /// <returns>Returns all the bills requested or the ones available along with a list of request ids for ones that are not available. Null values are ignored</returns>
         [Route("api/bills/{propertyBBL}")]
         [ResponseType(typeof(Bills))]
-        public IHttpActionResult GetBills(string propertyBBL, string externalReferenceId = null, string needTaxBill = "Y")
+        public IHttpActionResult GetBills(string propertyBBL, string externalReferenceId = null, string needTaxBill = "Y", string needWaterBill="Y")
         {                                                            
             Bills billsObj = new Bills();
 
             if (!BAL.BBL.IsValidFormat(propertyBBL))
             {   if (needTaxBill == "Y")
                     BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
+                if (needWaterBill == "Y")
+                    BAL.WaterBill.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             }
 
@@ -69,11 +66,13 @@ namespace PropertyWebAPI.Controllers
             {
                 if (needTaxBill == "Y")
                     BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
+                if (needTaxBill == "Y")
+                    BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
             }
 
-            //if (needWaterBill == "Y")
-            //    billsObj.waterBill = BAL.WaterBill.Get(propertyBBL, externalReferenceId);
+            if (needWaterBill == "Y")
+                billsObj.waterBill = BAL.WaterBill.Get(propertyBBL, externalReferenceId);
 
             if (needTaxBill == "Y")
                 billsObj.taxBill = BAL.TaxBill.Get(propertyBBL, externalReferenceId);

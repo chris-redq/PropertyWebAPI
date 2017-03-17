@@ -106,9 +106,6 @@
     <Compile Include="vwMortgageDeedMaster.cs">
       <DependentUpon>acrisDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwSatisfactionAndAssignmentCrossReeferenceRecord.cs">
-      <DependentUpon>acrisDB.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="acrisDB.edmx">

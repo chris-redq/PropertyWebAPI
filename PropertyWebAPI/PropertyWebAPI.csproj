@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\PropertyWebAPI.XML</DocumentationFile>
     <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -222,6 +223,8 @@
     <Compile Include="BAL\BaseResult.cs" />
     <Compile Include="BAL\BBL.cs" />
     <Compile Include="BAL\DOBPenaltiesAndViolations.cs" />
+    <Compile Include="BAL\Fannie.cs" />
+    <Compile Include="BAL\Freddie.cs" />
     <Compile Include="BAL\Lead.cs" />
     <Compile Include="BAL\MortgageDocument.cs" />
     <Compile Include="BAL\NoticeOfPropertyValueDocument.cs" />

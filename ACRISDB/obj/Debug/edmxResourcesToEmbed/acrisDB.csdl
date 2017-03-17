@@ -25,28 +25,6 @@
     <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PartyTypeCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
   </ComplexType>
-  <ComplexType Name="tfnGetUnsatisfiedMortgages_Result">
-    <Property Name="RowNo" Type="Int32" Nullable="false" />
-    <Property Name="BBLE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
-    <Property Name="PropertyType" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="DocumentType" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="DocumentTypeDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DocumentClassCodeDescription" Type="String" MaxLength="27" FixedLength="false" Unicode="false" />
-    <Property Name="DocumentDate" Type="DateTime" />
-    <Property Name="DocumentAmount" Type="Decimal" Precision="14" Scale="2" />
-    <Property Name="PercentageOfTransaction" Type="Decimal" Precision="15" Scale="6" />
-    <Property Name="DateRecorded" Type="DateTime" />
-    <Property Name="DateModified" Type="DateTime" />
-    <Property Name="RecordedBorough" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="DateLastUpdated" Type="DateTime" />
-    <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="ReelYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="ReelNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="ReelPage" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-  </ComplexType>
   <EntityType Name="LatestContractOfSaleorMemorandumofContract">
     <Key>
       <PropertyRef Name="BBLE" />
@@ -188,21 +166,6 @@
     <Property Name="PercentageOftransaction" Type="Decimal" Precision="15" Scale="6" />
     <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
   </EntityType>
-  <EntityType Name="vwSatisfactionAndAssignmentCrossReeferenceRecord">
-    <Key>
-      <PropertyRef Name="BBLE" />
-      <PropertyRef Name="UniqueKey" />
-    </Key>
-    <Property Name="BBLE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="UniqueKey" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CRFN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
-    <Property Name="DocumentIdReference" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <Property Name="ReelYear" Type="Int32" />
-    <Property Name="ReelBorough" Type="Int32" />
-    <Property Name="ReelNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="ReelPage" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-    <Property Name="DateLastUpdated" Type="DateTime" Precision="3" />
-  </EntityType>
   <EntityContainer Name="ACRISEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="LatestContractOfSaleorMemorandumofContracts" EntityType="Self.LatestContractOfSaleorMemorandumofContract" />
     <EntitySet Name="LatestDeedDocuments" EntityType="Self.LatestDeedDocument" />
@@ -211,7 +174,6 @@
     <EntitySet Name="vwDocumentPartiesByUniqueKeys" EntityType="Self.vwDocumentPartiesByUniqueKey" />
     <EntitySet Name="vwDocumentsByBBLEs" EntityType="Self.vwDocumentsByBBLE" />
     <EntitySet Name="vwMortgageDeedMasters" EntityType="Self.vwMortgageDeedMaster" />
-    <EntitySet Name="vwSatisfactionAndAssignmentCrossReeferenceRecords" EntityType="Self.vwSatisfactionAndAssignmentCrossReeferenceRecord" />
     <FunctionImport Name="tfnGetDocumentParties" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetDocumentParties_Result)">
       <Parameter Name="UniqueKey" Mode="In" Type="String" />
       <Parameter Name="PartyType" Mode="In" Type="String" />
@@ -220,15 +182,15 @@
       <Parameter Name="Key" Mode="In" Type="String" />
       <Parameter Name="PartyType" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="tfnGetUnsatisfiedMortgages" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetUnsatisfiedMortgages_Result)">
-      <Parameter Name="BBLE" Mode="In" Type="String" />
-    </FunctionImport>
     <EntitySet Name="PropertyNotInAssessments" EntityType="ACRISModel.PropertyNotInAssessment" />
     <FunctionImport Name="tfnGetDocuments" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetDocuments_Result)">
       <Parameter Name="BBLE" Mode="In" Type="String" />
       <Parameter Name="DocumentType" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="tfnGetMortgageChain" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetMortgageChain_Result)">
+      <Parameter Name="BBLE" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetUnsatisfiedMortgages" IsComposable="true" ReturnType="Collection(ACRISModel.tfnGetUnsatisfiedMortgages_Result)">
       <Parameter Name="BBLE" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
@@ -299,5 +261,27 @@
     <Property Type="DateTime" Name="RelatedDocumentDate" Nullable="true" Precision="10" />
     <Property Type="DateTime" Name="RelatedDocumentRecordDate" Nullable="true" Precision="10" />
     <Property Type="String" Name="RelatedDocumentURL" Nullable="true" MaxLength="86" />
+  </ComplexType>
+  <ComplexType Name="tfnGetUnsatisfiedMortgages_Result">
+    <Property Type="Int32" Name="RowNo" Nullable="false" />
+    <Property Type="String" Name="BBLE" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="UniqueKey" Nullable="false" MaxLength="16" />
+    <Property Type="String" Name="CRFN" Nullable="true" MaxLength="13" />
+    <Property Type="String" Name="PropertyType" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="DocumentType" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="DocumentTypeDescription" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="DocumentClassCodeDescription" Nullable="true" MaxLength="27" />
+    <Property Type="DateTime" Name="DocumentDate" Nullable="true" Precision="10" />
+    <Property Type="Decimal" Name="DocumentAmount" Nullable="true" Precision="14" Scale="2" />
+    <Property Type="Decimal" Name="PercentageOfTransaction" Nullable="true" Precision="15" Scale="6" />
+    <Property Type="DateTime" Name="DateRecorded" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="DateModified" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RecordedBorough" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="Remarks" Nullable="true" />
+    <Property Type="DateTime" Name="DateLastUpdated" Nullable="true" Precision="23" />
+    <Property Type="String" Name="URL" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="ReelYear" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="ReelNumber" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="ReelPage" Nullable="true" MaxLength="5" />
   </ComplexType>
 </Schema>

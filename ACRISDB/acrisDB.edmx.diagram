@@ -12,7 +12,6 @@
         <EntityTypeShape EntityType="ACRISModel.vwDocumentPartiesByUniqueKey" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ACRISModel.vwDocumentsByBBLE" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ACRISModel.vwMortgageDeedMaster" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ACRISModel.vwSatisfactionAndAssignmentCrossReeferenceRecord" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ACRISModel.PropertyNotInAssessment" Width="1.5" PointX="9.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
