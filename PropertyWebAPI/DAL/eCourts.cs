@@ -94,6 +94,11 @@ namespace PropertyWebAPI.DAL
 
     }
 
+    public class FirmCompletedCaseDetail : tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result
+    {
+
+    }
+
     /// <summary>
     ///     All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
     /// </summary>
@@ -193,6 +198,16 @@ namespace PropertyWebAPI.DAL
             {
                 return Mapper.Map<List<tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result>, List<FirmCaseDetail>>
                        (nycourtsE.tfnGetCasesForRelatedFirmsForAttorneyOfRecord(countyId, firmId, partyIndicator, withinSameCounty, judgeCountyId, judgeId)
+                                 .OrderByDescending(m => m.DateRJIFiled).ToList());
+            }
+        }
+
+        public static List<FirmCompletedCaseDetail> GetLawFirmCompletedCases(string countyId, string firmId, string partyIndicator, bool withinSameCounty, string judgeCountyId, string judgeId, string decision)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result>, List<FirmCompletedCaseDetail>>
+                       (nycourtsE.tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord(countyId, firmId, partyIndicator, withinSameCounty, judgeCountyId, judgeId, decision)
                                  .OrderByDescending(m => m.DateRJIFiled).ToList());
             }
         }

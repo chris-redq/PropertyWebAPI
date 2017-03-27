@@ -111,10 +111,46 @@ namespace PropertyWebAPI.Controllers
             }
         }
 
+        /// <summary>Use this api to get a list of completed cases, cases with a decision on Judgment of Foreclosure and Sale Motion, associated with a law firm and its related law firms</summary>  
+        /// <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
+        /// <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
+        /// <param name="decision">Valid Values are GRANTED, DENIED, WITHDRAWN and OTHER</param>
+        /// <param name="partyindicator">Valid Values are - Plaintiff and Defendant. Default is Plaintiff</param>
+        /// <param name="withinsamecounty">Default value is false</param>
+        /// <param name="judgecountyid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+        /// <param name="judgeid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+        /// <returns>Returns a list of completed cases in descending order of RJI filing date</returns>
+        [Route("api/courts/lawfirms/{countyId}/{firmid}/{decision}/completedcases")]
+        [ResponseType(typeof(List<DAL.FirmCompletedCaseDetail>))]
+        public IHttpActionResult GetLawFirmCompletedCases(string countyId, string firmid, string decision, string partyindicator = "Plaintiff", bool withinsamecounty = false,
+                                                          string judgecountyid = null, string judgeid = null)
+        {
+            if (judgecountyid == null && judgeid != null)
+                return BadRequest("judgecountyId is also required when judgeid is present");
+            if (judgecountyid != null && judgeid == null)
+                return BadRequest("judgeId is also required when judgecountyid is present");
+
+            if (judgecountyid != null)
+                withinsamecounty = (countyId == judgecountyid);
+
+            try
+            {
+                var result = DAL.eCourts.GetLawFirmCompletedCases(countyId, firmid, partyindicator, withinsamecounty, judgecountyid, judgeid, decision);
+                if (result == null || result.Count == 0)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered {0}", Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
         #endregion
 
         #region Statistics
-        
+
         #region Firm Statistics
         /// <summary>Use this api to get 5 number summary, instance count and average time taken to a decision, for various ReliefSought 
         /// and decision combinations, for a law firm and its related law firms</summary>  
@@ -153,8 +189,8 @@ namespace PropertyWebAPI.Controllers
             }
         }
 
-        /// <summary>Use this api to get 5 number summary, instance count and average time taken to a decision, for various ReliefSought 
-        /// and decision combinations, for a law firm and its related law firms</summary>  
+        /// <summary>Use this api to get 5 number summary, instance count and average time taken to a decision, for Judgment of Foreclosure and Sale
+        /// and decision type combinations, for a law firm and its related law firms</summary>  
         /// <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
         /// <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
         /// <param name="withinsamecounty">Default value is false</param>

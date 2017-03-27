@@ -286,5 +286,39 @@ namespace eCourtsDB
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result>("[NYCOURTSEntities].[tfnCaseCompletionDecision5NSForLawFirmAndJudge](@CountyId, @AttorneyOfRecordId, @SameCountyOnly, @JudgeCountyId, @JudgeId)", countyIdParameter, attorneyOfRecordIdParameter, sameCountyOnlyParameter, judgeCountyIdParameter, judgeIdParameter);
         }
+    
+        [DbFunction("NYCOURTSEntities", "tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord")]
+        public virtual IQueryable<tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result> tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord(string countyId, string attorneyOfRecordId, string partyIndicator, Nullable<bool> sameCountyOnly, string judgeCountyId, string judgeId, string decision)
+        {
+            var countyIdParameter = countyId != null ?
+                new ObjectParameter("CountyId", countyId) :
+                new ObjectParameter("CountyId", typeof(string));
+    
+            var attorneyOfRecordIdParameter = attorneyOfRecordId != null ?
+                new ObjectParameter("AttorneyOfRecordId", attorneyOfRecordId) :
+                new ObjectParameter("AttorneyOfRecordId", typeof(string));
+    
+            var partyIndicatorParameter = partyIndicator != null ?
+                new ObjectParameter("PartyIndicator", partyIndicator) :
+                new ObjectParameter("PartyIndicator", typeof(string));
+    
+            var sameCountyOnlyParameter = sameCountyOnly.HasValue ?
+                new ObjectParameter("SameCountyOnly", sameCountyOnly) :
+                new ObjectParameter("SameCountyOnly", typeof(bool));
+    
+            var judgeCountyIdParameter = judgeCountyId != null ?
+                new ObjectParameter("JudgeCountyId", judgeCountyId) :
+                new ObjectParameter("JudgeCountyId", typeof(string));
+    
+            var judgeIdParameter = judgeId != null ?
+                new ObjectParameter("JudgeId", judgeId) :
+                new ObjectParameter("JudgeId", typeof(string));
+    
+            var decisionParameter = decision != null ?
+                new ObjectParameter("Decision", decision) :
+                new ObjectParameter("Decision", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result>("[NYCOURTSEntities].[tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord](@CountyId, @AttorneyOfRecordId, @PartyIndicator, @SameCountyOnly, @JudgeCountyId, @JudgeId, @Decision)", countyIdParameter, attorneyOfRecordIdParameter, partyIndicatorParameter, sameCountyOnlyParameter, judgeCountyIdParameter, judgeIdParameter, decisionParameter);
+        }
     }
 }

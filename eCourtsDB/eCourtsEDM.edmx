@@ -884,6 +884,66 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+          <Parameter Name="CountyId" Type="varchar" Mode="In" />
+          <Parameter Name="AttorneyOfRecordId" Type="varchar" Mode="In" />
+          <Parameter Name="PartyIndicator" Type="varchar" Mode="In" />
+          <Parameter Name="SameCountyOnly" Type="bit" Mode="In" />
+          <Parameter Name="JudgeCountyId" Type="varchar" Mode="In" />
+          <Parameter Name="JudgeId" Type="varchar" Mode="In" />
+          <Parameter Name="Decision" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+                <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+                <Property Name="CaseIndexNumberExternal" Type="varchar" MaxLength="15" />
+                <Property Name="SeqNumber" Type="varchar" MaxLength="3" />
+                <Property Name="CourtType" Type="varchar" MaxLength="20" />
+                <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+                <Property Name="PostDispositionIndicator" Type="varchar" MaxLength="50" />
+                <Property Name="NumberOfComments" Type="int" />
+                <Property Name="PlaintiffName" Type="varchar" MaxLength="30" />
+                <Property Name="DefendantName" Type="varchar" MaxLength="30" />
+                <Property Name="MunicipalityInvolvement" Type="varchar" MaxLength="30" />
+                <Property Name="CaseComplexity" Type="varchar" MaxLength="50" />
+                <Property Name="RJIDispositionDeadlineDate" Type="date" />
+                <Property Name="RJIPreNOIDeadlineDate" Type="date" />
+                <Property Name="PostNOIDispositionDeadlineDate" Type="date" />
+                <Property Name="DateRJIFiled" Type="date" />
+                <Property Name="DateNOIFiled" Type="date" />
+                <Property Name="TimeStampNOIEntered" Type="datetime" />
+                <Property Name="DateIssueJoined" Type="date" />
+                <Property Name="ActionOrCaseTypeId" Type="varchar" MaxLength="5" />
+                <Property Name="ActionOrCaseType" Type="varchar" MaxLength="30" />
+                <Property Name="ActionOrCaseTypeDescription" Type="varchar" MaxLength="20" />
+                <Property Name="DamagesSought" Type="varchar" MaxLength="75" />
+                <Property Name="GeneralPreference" Type="varchar" MaxLength="75" />
+                <Property Name="SpecialPreference" Type="varchar" MaxLength="50" />
+                <Property Name="CaseDispositionDate" Type="date" />
+                <Property Name="RJITypeCode" Type="varchar" MaxLength="5" />
+                <Property Name="TypeOfRJI" Type="varchar" MaxLength="50" />
+                <Property Name="DateOfRJI" Type="date" />
+                <Property Name="RJICourtPartId" Type="varchar" MaxLength="5" />
+                <Property Name="RJICourtPart" Type="varchar" MaxLength="30" />
+                <Property Name="CommentForOtherRJIType" Type="varchar" MaxLength="20" />
+                <Property Name="IASCategoryId" Type="varchar" MaxLength="5" />
+                <Property Name="IASCategory" Type="varchar" MaxLength="30" />
+                <Property Name="IASJudgeId" Type="varchar" MaxLength="5" />
+                <Property Name="IASJudgeName" Type="varchar" MaxLength="30" />
+                <Property Name="IASAssignmentDate" Type="date" />
+                <Property Name="TimeStampLastIASInformationEntered" Type="datetime" />
+                <Property Name="PostDispositionActionJudgeId" Type="varchar" MaxLength="5" />
+                <Property Name="PostDispositionActionJudgeName" Type="varchar" MaxLength="30" />
+                <Property Name="PROSEIndicator" Type="varchar" MaxLength="1" />
+                <Property Name="DateRJIEntered" Type="date" />
+                <Property Name="PrivateCaseIndicator" Type="varchar" MaxLength="1" />
+                <Property Name="IsEfiled" Type="varchar" MaxLength="1" />
+                <Property Name="Comment" Type="varchar(max)" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="tfnGetJudgesForRelatedFirmsForAttorneyOfRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
           <Parameter Name="CountyId" Type="varchar" Mode="In" />
           <Parameter Name="AttorneyOfRecordId" Type="varchar" Mode="In" />
@@ -2367,6 +2427,15 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
             <Parameter Name="JudgeCountyId" Mode="In" Type="String" />
             <Parameter Name="JudgeId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result)">
+            <Parameter Name="CountyId" Mode="In" Type="String" />
+            <Parameter Name="AttorneyOfRecordId" Mode="In" Type="String" />
+            <Parameter Name="PartyIndicator" Mode="In" Type="String" />
+            <Parameter Name="SameCountyOnly" Mode="In" Type="Boolean" />
+            <Parameter Name="JudgeCountyId" Mode="In" Type="String" />
+            <Parameter Name="JudgeId" Mode="In" Type="String" />
+            <Parameter Name="Decision" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="tfnGetDocumentExtractForCase_Result">
           <Property Type="Int32" Name="DocumentId" Nullable="false" />
@@ -2638,6 +2707,53 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
           <Property Type="Int32" Name="AvgDays" Nullable="true" />
           <Property Type="Int32" Name="DaysWithin75Percentile" Nullable="true" />
           <Property Type="Int32" Name="MaxDays" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result">
+          <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="CaseIndexNumberExternal" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="SeqNumber" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="CourtType" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PostDispositionIndicator" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="NumberOfComments" Nullable="true" />
+          <Property Type="String" Name="PlaintiffName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="DefendantName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="MunicipalityInvolvement" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="CaseComplexity" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="RJIDispositionDeadlineDate" Nullable="true" Precision="10" />
+          <Property Type="DateTime" Name="RJIPreNOIDeadlineDate" Nullable="true" Precision="10" />
+          <Property Type="DateTime" Name="PostNOIDispositionDeadlineDate" Nullable="true" Precision="10" />
+          <Property Type="DateTime" Name="DateRJIFiled" Nullable="true" Precision="10" />
+          <Property Type="DateTime" Name="DateNOIFiled" Nullable="true" Precision="10" />
+          <Property Type="DateTime" Name="TimeStampNOIEntered" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DateIssueJoined" Nullable="true" Precision="10" />
+          <Property Type="String" Name="ActionOrCaseTypeId" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="ActionOrCaseType" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ActionOrCaseTypeDescription" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="DamagesSought" Nullable="true" MaxLength="75" />
+          <Property Type="String" Name="GeneralPreference" Nullable="true" MaxLength="75" />
+          <Property Type="String" Name="SpecialPreference" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+          <Property Type="String" Name="RJITypeCode" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="TypeOfRJI" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DateOfRJI" Nullable="true" Precision="10" />
+          <Property Type="String" Name="RJICourtPartId" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="RJICourtPart" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="CommentForOtherRJIType" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="IASCategoryId" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="IASCategory" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="IASJudgeId" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="IASJudgeName" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="IASAssignmentDate" Nullable="true" Precision="10" />
+          <Property Type="DateTime" Name="TimeStampLastIASInformationEntered" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PostDispositionActionJudgeId" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="PostDispositionActionJudgeName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="PROSEIndicator" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="DateRJIEntered" Nullable="true" Precision="10" />
+          <Property Type="String" Name="PrivateCaseIndicator" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="IsEfiled" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="Comment" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3659,6 +3775,57 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
                 <ScalarProperty Name="AvgDays" ColumnName="AvgDays" />
                 <ScalarProperty Name="DaysWithin75Percentile" ColumnName="DaysWithin75Percentile" />
                 <ScalarProperty Name="MaxDays" ColumnName="MaxDays" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord" FunctionName="NYCOURTSModel.Store.tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result">
+                <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+                <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+                <ScalarProperty Name="CaseIndexNumberExternal" ColumnName="CaseIndexNumberExternal" />
+                <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+                <ScalarProperty Name="CourtType" ColumnName="CourtType" />
+                <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+                <ScalarProperty Name="PostDispositionIndicator" ColumnName="PostDispositionIndicator" />
+                <ScalarProperty Name="NumberOfComments" ColumnName="NumberOfComments" />
+                <ScalarProperty Name="PlaintiffName" ColumnName="PlaintiffName" />
+                <ScalarProperty Name="DefendantName" ColumnName="DefendantName" />
+                <ScalarProperty Name="MunicipalityInvolvement" ColumnName="MunicipalityInvolvement" />
+                <ScalarProperty Name="CaseComplexity" ColumnName="CaseComplexity" />
+                <ScalarProperty Name="RJIDispositionDeadlineDate" ColumnName="RJIDispositionDeadlineDate" />
+                <ScalarProperty Name="RJIPreNOIDeadlineDate" ColumnName="RJIPreNOIDeadlineDate" />
+                <ScalarProperty Name="PostNOIDispositionDeadlineDate" ColumnName="PostNOIDispositionDeadlineDate" />
+                <ScalarProperty Name="DateRJIFiled" ColumnName="DateRJIFiled" />
+                <ScalarProperty Name="DateNOIFiled" ColumnName="DateNOIFiled" />
+                <ScalarProperty Name="TimeStampNOIEntered" ColumnName="TimeStampNOIEntered" />
+                <ScalarProperty Name="DateIssueJoined" ColumnName="DateIssueJoined" />
+                <ScalarProperty Name="ActionOrCaseTypeId" ColumnName="ActionOrCaseTypeId" />
+                <ScalarProperty Name="ActionOrCaseType" ColumnName="ActionOrCaseType" />
+                <ScalarProperty Name="ActionOrCaseTypeDescription" ColumnName="ActionOrCaseTypeDescription" />
+                <ScalarProperty Name="DamagesSought" ColumnName="DamagesSought" />
+                <ScalarProperty Name="GeneralPreference" ColumnName="GeneralPreference" />
+                <ScalarProperty Name="SpecialPreference" ColumnName="SpecialPreference" />
+                <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+                <ScalarProperty Name="RJITypeCode" ColumnName="RJITypeCode" />
+                <ScalarProperty Name="TypeOfRJI" ColumnName="TypeOfRJI" />
+                <ScalarProperty Name="DateOfRJI" ColumnName="DateOfRJI" />
+                <ScalarProperty Name="RJICourtPartId" ColumnName="RJICourtPartId" />
+                <ScalarProperty Name="RJICourtPart" ColumnName="RJICourtPart" />
+                <ScalarProperty Name="CommentForOtherRJIType" ColumnName="CommentForOtherRJIType" />
+                <ScalarProperty Name="IASCategoryId" ColumnName="IASCategoryId" />
+                <ScalarProperty Name="IASCategory" ColumnName="IASCategory" />
+                <ScalarProperty Name="IASJudgeId" ColumnName="IASJudgeId" />
+                <ScalarProperty Name="IASJudgeName" ColumnName="IASJudgeName" />
+                <ScalarProperty Name="IASAssignmentDate" ColumnName="IASAssignmentDate" />
+                <ScalarProperty Name="TimeStampLastIASInformationEntered" ColumnName="TimeStampLastIASInformationEntered" />
+                <ScalarProperty Name="PostDispositionActionJudgeId" ColumnName="PostDispositionActionJudgeId" />
+                <ScalarProperty Name="PostDispositionActionJudgeName" ColumnName="PostDispositionActionJudgeName" />
+                <ScalarProperty Name="PROSEIndicator" ColumnName="PROSEIndicator" />
+                <ScalarProperty Name="DateRJIEntered" ColumnName="DateRJIEntered" />
+                <ScalarProperty Name="PrivateCaseIndicator" ColumnName="PrivateCaseIndicator" />
+                <ScalarProperty Name="IsEfiled" ColumnName="IsEfiled" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
