@@ -5,6 +5,29 @@ using System.Web;
 
 namespace PropertyWebAPI
 {
+    /// <summary>Types of CMAs</summary>
+    public enum CMAType
+    {
+        Regular = 0,
+
+        ShortSale = 1,
+
+        Rehab = 2
+    }
+
+    /// <summary>Types of CMA Runs</summary>
+    public enum CMARunType
+    {
+        /// <summary>Run automatically on regular basis</summary>
+        BatchedRun = 0,
+
+        /// <summary>Automate CMA run at a users request</summary>
+        OnDemand = 1,
+
+        /// <summary>CMA computed manually with user input</summary>
+        Manual = 2
+    }
+
     /// <summary>Types of Request Status</summary>
     public enum RequestStatus
     {

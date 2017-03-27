@@ -272,6 +272,9 @@ namespace PropertyWebAPI.Controllers
                     case (int)RequestTypes.NYCTaxBill:
                         BAL.TaxBill.Get(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
+                    case (int)RequestTypes.NYCWaterBill:
+                        BAL.WaterBill.Get(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                        break;
                     case (int)RequestTypes.NYCMortgageServicer:
                         BAL.MortgageServicer.Get(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
@@ -328,6 +331,9 @@ namespace PropertyWebAPI.Controllers
                     case (int)RequestTypes.NYCTaxBill:
                         BAL.TaxBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
+                    case (int)RequestTypes.NYCWaterBill:
+                        BAL.WaterBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                        break;
                     case (int)RequestTypes.NYCMortgageServicer:
                         BAL.MortgageServicer.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
@@ -344,11 +350,12 @@ namespace PropertyWebAPI.Controllers
                         BAL.NoticeOfPropertyValueDocument.GetDetails(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCMortgageDocumentDetails:
-                        BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(bbl, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                        BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
                     case 0:
                         {
                             BAL.TaxBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                            BAL.WaterBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                             BAL.MortgageServicer.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                             var propInfo = BAL.NYCPhysicalPropertyData.Get(bbl, true);
                             if (propInfo != null)
@@ -356,7 +363,7 @@ namespace PropertyWebAPI.Controllers
                             else
                                 BAL.Zillow.Get(bbl, propInfo.address.ToString(), null, DAL.Request.BULKDATAPRIORITY, jobId);
                             BAL.NoticeOfPropertyValueDocument.GetDetails(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
-                            BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(bbl, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                            BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                             break;
                         }
                     default:

@@ -51,7 +51,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<vwComplaintsSummary, DAL.DOBComplaintsSummary>();
                 cfg.CreateMap<MultiAgencyViolation, DAL.ECBViolationDetail>();
                 cfg.CreateMap<vwTaxLien, DAL.LocalTaxLienDetails>();
-                cfg.CreateMap<vwSuggestedSubjectPrice, DAL.SuggestPropertPrices>();
+                cfg.CreateMap<vwSuggestedSubjectPrice, DAL.SuggestedPropertyPrices>();
                 cfg.CreateMap<vwSalesByMonthByNeighborhood, DAL.SalesDataDetailsByMonth>();
                 cfg.CreateMap<SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing, DAL.PriceDetailsByMonth>();
                 cfg.CreateMap<PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
@@ -63,6 +63,11 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetDocuments_Result, BAL.DocumentDetail>();
                 cfg.CreateMap<tfnGetMortgageChain_Result, BAL.MortgageDocumentDetail>();
                 cfg.CreateMap<tfnGetDocumentParties_Result, BAL.DocumentParty>();
+                cfg.CreateMap<tfnGetRelatedFirmsForAttorneyOfRecord_Result, DAL.FirmDetail>();
+                cfg.CreateMap<tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result, DAL.FirmCaseDetail>();
+                cfg.CreateMap<tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result, DAL.JudgeNameCount>();
+                cfg.CreateMap<tfnReliefSoughtDecision5NSForLawFirmAndJudge_Result, DAL.ReliefSoughtDecision5NumberSummaryPlus>();
+                cfg.CreateMap<tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result, DAL.CaseCompletionDecision5NumberSummaryPlus>();
             });
         }
     }

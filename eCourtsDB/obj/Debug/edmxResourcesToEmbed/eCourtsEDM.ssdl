@@ -798,6 +798,151 @@ warning 6002: The table/view 'NYCOURTS.jdls.vwGeneralDataExpanded' does not have
     <Property Name="SatifactionDataEntryOperator" Type="varchar" MaxLength="8" />
     <Property Name="Remarks" Type="varchar(max)" />
   </EntityType>
+  <Function Name="tfnCaseCompletionDecision5NSForLawFirmAndJudge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="CountyId" Type="varchar" Mode="In" />
+    <Parameter Name="AttorneyOfRecordId" Type="varchar" Mode="In" />
+    <Parameter Name="SameCountyOnly" Type="bit" Mode="In" />
+    <Parameter Name="JudgeCountyId" Type="varchar" Mode="In" />
+    <Parameter Name="JudgeId" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ReliefSought" Type="varchar" MaxLength="50" />
+          <Property Name="Result" Type="varchar" MaxLength="25" />
+          <Property Name="Instances" Type="int" />
+          <Property Name="MinDays" Type="int" />
+          <Property Name="DaysWithin25Percentile" Type="int" />
+          <Property Name="MedianDays" Type="int" />
+          <Property Name="AvgDays" Type="int" />
+          <Property Name="DaysWithin75Percentile" Type="int" />
+          <Property Name="MaxDays" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="tfnGetCasesForRelatedFirmsForAttorneyOfRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="CountyId" Type="varchar" Mode="In" />
+    <Parameter Name="AttorneyOfRecordId" Type="varchar" Mode="In" />
+    <Parameter Name="PartyIndicator" Type="varchar" Mode="In" />
+    <Parameter Name="SameCountyOnly" Type="bit" Mode="In" />
+    <Parameter Name="JudgeCountyId" Type="varchar" Mode="In" />
+    <Parameter Name="JudgeId" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="CaseIndexNumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="CaseIndexNumberExternal" Type="varchar" MaxLength="15" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="3" />
+          <Property Name="CourtType" Type="varchar" MaxLength="20" />
+          <Property Name="CaseStatus" Type="varchar" MaxLength="100" />
+          <Property Name="PostDispositionIndicator" Type="varchar" MaxLength="50" />
+          <Property Name="NumberOfComments" Type="int" />
+          <Property Name="PlaintiffName" Type="varchar" MaxLength="30" />
+          <Property Name="DefendantName" Type="varchar" MaxLength="30" />
+          <Property Name="MunicipalityInvolvement" Type="varchar" MaxLength="30" />
+          <Property Name="CaseComplexity" Type="varchar" MaxLength="50" />
+          <Property Name="RJIDispositionDeadlineDate" Type="date" />
+          <Property Name="RJIPreNOIDeadlineDate" Type="date" />
+          <Property Name="PostNOIDispositionDeadlineDate" Type="date" />
+          <Property Name="DateRJIFiled" Type="date" />
+          <Property Name="DateNOIFiled" Type="date" />
+          <Property Name="TimeStampNOIEntered" Type="datetime" />
+          <Property Name="DateIssueJoined" Type="date" />
+          <Property Name="ActionOrCaseTypeId" Type="varchar" MaxLength="5" />
+          <Property Name="ActionOrCaseType" Type="varchar" MaxLength="30" />
+          <Property Name="ActionOrCaseTypeDescription" Type="varchar" MaxLength="20" />
+          <Property Name="DamagesSought" Type="varchar" MaxLength="75" />
+          <Property Name="GeneralPreference" Type="varchar" MaxLength="75" />
+          <Property Name="SpecialPreference" Type="varchar" MaxLength="50" />
+          <Property Name="CaseDispositionDate" Type="date" />
+          <Property Name="RJITypeCode" Type="varchar" MaxLength="5" />
+          <Property Name="TypeOfRJI" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfRJI" Type="date" />
+          <Property Name="RJICourtPartId" Type="varchar" MaxLength="5" />
+          <Property Name="RJICourtPart" Type="varchar" MaxLength="30" />
+          <Property Name="CommentForOtherRJIType" Type="varchar" MaxLength="20" />
+          <Property Name="IASCategoryId" Type="varchar" MaxLength="5" />
+          <Property Name="IASCategory" Type="varchar" MaxLength="30" />
+          <Property Name="IASJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="IASJudgeName" Type="varchar" MaxLength="30" />
+          <Property Name="IASAssignmentDate" Type="date" />
+          <Property Name="TimeStampLastIASInformationEntered" Type="datetime" />
+          <Property Name="PostDispositionActionJudgeId" Type="varchar" MaxLength="5" />
+          <Property Name="PostDispositionActionJudgeName" Type="varchar" MaxLength="30" />
+          <Property Name="PROSEIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="DateRJIEntered" Type="date" />
+          <Property Name="PrivateCaseIndicator" Type="varchar" MaxLength="1" />
+          <Property Name="IsEfiled" Type="varchar" MaxLength="1" />
+          <Property Name="Comment" Type="varchar(max)" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="tfnGetJudgesForRelatedFirmsForAttorneyOfRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="CountyId" Type="varchar" Mode="In" />
+    <Parameter Name="AttorneyOfRecordId" Type="varchar" Mode="In" />
+    <Parameter Name="PartyIndicator" Type="varchar" Mode="In" />
+    <Parameter Name="SameCountyOnly" Type="bit" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="CountyName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Judge" Type="varchar" MaxLength="30" />
+          <Property Name="Motions" Type="int" />
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="JudgeId" Type="varchar" MaxLength="5" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="tfnGetRelatedFirmsForAttorneyOfRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="CountyId" Type="varchar" Mode="In" />
+    <Parameter Name="AttorneyOfRecordId" Type="varchar" Mode="In" />
+    <Parameter Name="PartyIndicator" Type="varchar" Mode="In" />
+    <Parameter Name="SameCountyOnly" Type="bit" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="CountyId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SeqNumber" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="FirmName" Type="varchar" MaxLength="30" />
+          <Property Name="FirmType" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Mnemonic" Type="varchar" MaxLength="10" />
+          <Property Name="Address1" Type="varchar" MaxLength="30" />
+          <Property Name="CityAndState" Type="varchar" MaxLength="20" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="5" />
+          <Property Name="ZipCodePlus" Type="varchar" MaxLength="4" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Count" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="tfnReliefSoughtDecision5NSForLawFirmAndJudge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
+    <Parameter Name="CountyId" Type="varchar" Mode="In" />
+    <Parameter Name="AttorneyOfRecordId" Type="varchar" Mode="In" />
+    <Parameter Name="PartyIndicator" Type="varchar" Mode="In" />
+    <Parameter Name="SameCountyOnly" Type="bit" Mode="In" />
+    <Parameter Name="JudgeCountyId" Type="varchar" Mode="In" />
+    <Parameter Name="JudgeId" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ReliefSought" Type="varchar" MaxLength="50" />
+          <Property Name="Result" Type="varchar" MaxLength="25" />
+          <Property Name="Instances" Type="int" />
+          <Property Name="MinDays" Type="int" />
+          <Property Name="DaysWithin25Percentile" Type="int" />
+          <Property Name="MedianDays" Type="int" />
+          <Property Name="AvgDays" Type="int" />
+          <Property Name="DaysWithin75Percentile" Type="int" />
+          <Property Name="MaxDays" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="tfnGetAllCasesForaProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="ccis">
     <Parameter Name="BBL" Type="varchar" Mode="In" />
     <ReturnType>

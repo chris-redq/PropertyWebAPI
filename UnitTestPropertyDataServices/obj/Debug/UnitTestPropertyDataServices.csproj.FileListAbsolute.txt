@@ -70,3 +70,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\D
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\NYCMADB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\RequestResponseBuilder.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\RequestResponseBuilder.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\MathNet.Numerics.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Debug\MathNet.Numerics.xml

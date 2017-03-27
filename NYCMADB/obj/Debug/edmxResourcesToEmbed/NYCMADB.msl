@@ -255,5 +255,52 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CMAComparables">
+      <EntityTypeMapping TypeName="NYCMAModel.CMAComparable">
+        <MappingFragment StoreEntitySet="CMAComparable">
+          <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+          <ScalarProperty Name="ComparableBBL" ColumnName="ComparableBBL" />
+          <ScalarProperty Name="CMARunId" ColumnName="CMARunId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CMARuns">
+      <EntityTypeMapping TypeName="NYCMAModel.CMARun">
+        <MappingFragment StoreEntitySet="CMARun">
+          <ScalarProperty Name="SellerIsCompany" ColumnName="SellerIsCompany" />
+          <ScalarProperty Name="BuyerIsCompany" ColumnName="BuyerIsCompany" />
+          <ScalarProperty Name="IsNotIntraFamily" ColumnName="IsNotIntraFamily" />
+          <ScalarProperty Name="SameBlock" ColumnName="SameBlock" />
+          <ScalarProperty Name="SameStreet" ColumnName="SameStreet" />
+          <ScalarProperty Name="SameZip" ColumnName="SameZip" />
+          <ScalarProperty Name="SameSchoolDistrict" ColumnName="SameSchoolDistrict" />
+          <ScalarProperty Name="SameNeighborhood" ColumnName="SameNeighborhood" />
+          <ScalarProperty Name="LotDepthLoRange" ColumnName="LotDepthLoRange" />
+          <ScalarProperty Name="LotDepthHiRange" ColumnName="LotDepthHiRange" />
+          <ScalarProperty Name="LotFrontageLoRange" ColumnName="LotFrontageLoRange" />
+          <ScalarProperty Name="LotFrontageHiRange" ColumnName="LotFrontageHiRange" />
+          <ScalarProperty Name="BuildingDepthLoiRange" ColumnName="BuildingDepthLoiRange" />
+          <ScalarProperty Name="BuildingDepthHiRange" ColumnName="BuildingDepthHiRange" />
+          <ScalarProperty Name="BuildingFrontageLoRange" ColumnName="BuildingFrontageLoRange" />
+          <ScalarProperty Name="BuildingFrontageHiRange" ColumnName="BuildingFrontageHiRange" />
+          <ScalarProperty Name="MaxSalePrice" ColumnName="MaxSalePrice" />
+          <ScalarProperty Name="MinSalePrice" ColumnName="MinSalePrice" />
+          <ScalarProperty Name="BuildingClassMatch" ColumnName="BuildingClassMatch" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="LALoPercentage" ColumnName="LALoPercentage" />
+          <ScalarProperty Name="LAHiPercentage" ColumnName="LAHiPercentage" />
+          <ScalarProperty Name="GLALoPercentage" ColumnName="GLALoPercentage" />
+          <ScalarProperty Name="GLAHiPercentage" ColumnName="GLAHiPercentage" />
+          <ScalarProperty Name="MonthsOffset" ColumnName="MonthsOffset" />
+          <ScalarProperty Name="RunType" ColumnName="RunType" />
+          <ScalarProperty Name="AlgorithmType" ColumnName="AlgorithmType" />
+          <ScalarProperty Name="CMAType" ColumnName="CMAType" />
+          <ScalarProperty Name="RunDateTime" ColumnName="RunDateTime" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CMARunId" ColumnName="CMARunId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

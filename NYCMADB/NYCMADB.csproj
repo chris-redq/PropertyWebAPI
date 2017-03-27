@@ -54,6 +54,12 @@
     <Compile Include="Assessment.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
+    <Compile Include="CMAComparable.cs">
+      <DependentUpon>NYCMADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CMARun.cs">
+      <DependentUpon>NYCMADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="NYCMADB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

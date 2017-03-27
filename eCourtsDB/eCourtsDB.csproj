@@ -91,16 +91,25 @@
     <Compile Include="tfnActiveLPsForaProperty_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="tfnGetAllCasesForaProperty_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetCaseColumnChanges_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="tfnGetCaseUpdates_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetDocumentExtractForCase_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetMortgageForeclosureCasesForaProperty_Result.cs">
@@ -110,6 +119,12 @@
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="tfnGetNewMortgageForeclosureCases_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tfnGetRelatedFirmsForAttorneyOfRecord_Result.cs">
+      <DependentUpon>eCourtsEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tfnReliefSoughtDecision5NSForLawFirmAndJudge_Result.cs">
       <DependentUpon>eCourtsEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Title.cs">

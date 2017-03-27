@@ -1,5 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GPADBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="SavedScenario">
+    <Key>
+      <PropertyRef Name="ScenarioId" />
+    </Key>
+    <Property Name="ScenarioId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ScenarioName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DateTimeSaved" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="1000" />
+    <Property Name="BuildingClassCodes" Type="varchar" MaxLength="1000" />
+    <Property Name="Counties" Type="varchar" MaxLength="1000" />
+    <Property Name="Vacant" Type="varchar" MaxLength="1000" />
+    <Property Name="MailingAddressActive" Type="varchar" MaxLength="1000" />
+    <Property Name="Violations" Type="varchar" MaxLength="1000" />
+    <Property Name="Cities" Type="varchar" MaxLength="1000" />
+    <Property Name="Neighborhoods" Type="varchar" MaxLength="1000" />
+    <Property Name="States" Type="varchar" MaxLength="1000" />
+    <Property Name="LienTypes" Type="varchar" MaxLength="1000" />
+    <Property Name="LeadGrades" Type="varchar" MaxLength="1000" />
+    <Property Name="LTV" Type="varchar" MaxLength="1000" />
+    <Property Name="Equity" Type="varchar" MaxLength="1000" />
+    <Property Name="IsFannie" Type="varchar" MaxLength="1000" />
+    <Property Name="IsFreddie" Type="varchar" MaxLength="1000" />
+    <Property Name="UnbuiltArea" Type="varchar" MaxLength="1000" />
+    <Property Name="Servicer" Type="varchar" MaxLength="1000" />
+    <Property Name="Landmark" Type="varchar" MaxLength="1000" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vwGeneralLeadInfomation">
@@ -114,6 +142,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Parameter Name="Landmark" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
+    <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
     <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
       <DefiningQuery>SELECT 
     [vwGeneralLeadInfomation].[BBLE] AS [BBLE], 

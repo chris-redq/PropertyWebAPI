@@ -69,6 +69,31 @@ namespace PropertyWebAPI.DAL
 
     }
 
+    public class FirmDetail: tfnGetRelatedFirmsForAttorneyOfRecord_Result
+    {
+
+    }
+
+    public class FirmCaseDetail: tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result
+    {
+
+    }
+
+    public class JudgeNameCount : tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result
+    {
+
+    }
+
+    public class ReliefSoughtDecision5NumberSummaryPlus: tfnReliefSoughtDecision5NSForLawFirmAndJudge_Result
+    {
+
+    }
+
+    public class CaseCompletionDecision5NumberSummaryPlus : tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result
+    {
+
+    }
+
     /// <summary>
     ///     All business level abstractions for both JDLS and CCIs systems from eCourts are defined in this class
     /// </summary>
@@ -142,6 +167,65 @@ namespace PropertyWebAPI.DAL
             }
         }
 
+
+        public static List<FirmDetail> GetRelatedLawFirms(string countyId, string firmId, string partyIndicator, bool withinSameCounty)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnGetRelatedFirmsForAttorneyOfRecord_Result>, List<FirmDetail>>(nycourtsE.tfnGetRelatedFirmsForAttorneyOfRecord(countyId, firmId, partyIndicator, withinSameCounty)
+                                                                                                                 .OrderByDescending(m=> m.Count).ToList());
+            }
+        }
+
+        
+        public static List<JudgeNameCount> GetJudgesPresidedOverRelatedLawFirmsCases(string countyId, string firmId, string partyIndicator, bool withinSameCounty)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result>, List<JudgeNameCount>>(nycourtsE.tfnGetJudgesForRelatedFirmsForAttorneyOfRecord(countyId, firmId, partyIndicator, withinSameCounty)
+                                                                                                                              .ToList());
+            }
+        }
+
+        public static List<FirmCaseDetail> GetLawFirmCases(string countyId, string firmId, string partyIndicator, bool withinSameCounty, string judgeCountyId, string judgeId)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result>, List<FirmCaseDetail>>
+                       (nycourtsE.tfnGetCasesForRelatedFirmsForAttorneyOfRecord(countyId, firmId, partyIndicator, withinSameCounty, judgeCountyId, judgeId)
+                                 .OrderByDescending(m => m.DateRJIFiled).ToList());
+            }
+        }
+
+        public static List<ReliefSoughtDecision5NumberSummaryPlus> GetReliefSoughtDecision5NumberSummary(string countyId, string firmId, string partyIndicator, bool withinSameCounty, string judgeCountyId, string judgeId)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnReliefSoughtDecision5NSForLawFirmAndJudge_Result>, List<ReliefSoughtDecision5NumberSummaryPlus>>
+                       (nycourtsE.tfnReliefSoughtDecision5NSForLawFirmAndJudge(countyId, firmId, partyIndicator, withinSameCounty, judgeCountyId, judgeId)
+                                 .OrderBy(m => m.ReliefSought).ToList());
+            }
+        }
+
+        public static List<CaseCompletionDecision5NumberSummaryPlus> GetCaseCompletionDecision5NumberSummary(string countyId, string firmId, bool withinSameCounty, string judgeCountyId, string judgeId)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result>, List<CaseCompletionDecision5NumberSummaryPlus>>
+                       (nycourtsE.tfnCaseCompletionDecision5NSForLawFirmAndJudge(countyId, firmId, withinSameCounty, judgeCountyId, judgeId).ToList());
+            }
+        }
+
+
+        public static List<LPDetail> GetAllActiveLPsForAProperty(string propertyBBL, DateTime? startdate)
+        {
+            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
+            {
+                return Mapper.Map<List<tfnActiveLPsForaProperty_Result>, List<LPDetail>>(nycourtsE.tfnActiveLPsForaProperty(propertyBBL, startdate).ToList());
+            }
+        }
+
+        #region statistics
         public static List<vwCaseByJudgeReliefSought> GetCasesByJudgeReliefSought(string countyId, string judgeId, string reliefSought)
         {
             using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
@@ -180,14 +264,8 @@ namespace PropertyWebAPI.DAL
                                                                                i.ReliefSought == reliefSought).FirstOrDefault());
             }
         }
-
-        public static List<LPDetail> GetAllActiveLPsForAProperty(string propertyBBL, DateTime? startdate)
-        {
-            using (NYCOURTSEntities nycourtsE = new NYCOURTSEntities())
-            {
-                return Mapper.Map<List<tfnActiveLPsForaProperty_Result>, List<LPDetail>>(nycourtsE.tfnActiveLPsForaProperty(propertyBBL, startdate).ToList());
-            }
-        }
+        #endregion
+        
     }
 
 }

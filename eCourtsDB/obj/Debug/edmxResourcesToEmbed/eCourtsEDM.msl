@@ -908,5 +908,115 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetRelatedFirmsForAttorneyOfRecord" FunctionName="NYCOURTSModel.Store.tfnGetRelatedFirmsForAttorneyOfRecord">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetRelatedFirmsForAttorneyOfRecord_Result">
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+          <ScalarProperty Name="FirmName" ColumnName="FirmName" />
+          <ScalarProperty Name="FirmType" ColumnName="FirmType" />
+          <ScalarProperty Name="Mnemonic" ColumnName="Mnemonic" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="CityAndState" ColumnName="CityAndState" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="ZipCodePlus" ColumnName="ZipCodePlus" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetJudgesForRelatedFirmsForAttorneyOfRecord" FunctionName="NYCOURTSModel.Store.tfnGetJudgesForRelatedFirmsForAttorneyOfRecord">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result">
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="Judge" ColumnName="Judge" />
+          <ScalarProperty Name="Motions" ColumnName="Motions" />
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="JudgeId" ColumnName="JudgeId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnGetCasesForRelatedFirmsForAttorneyOfRecord" FunctionName="NYCOURTSModel.Store.tfnGetCasesForRelatedFirmsForAttorneyOfRecord">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result">
+          <ScalarProperty Name="CountyId" ColumnName="CountyId" />
+          <ScalarProperty Name="CaseIndexNumber" ColumnName="CaseIndexNumber" />
+          <ScalarProperty Name="CaseIndexNumberExternal" ColumnName="CaseIndexNumberExternal" />
+          <ScalarProperty Name="SeqNumber" ColumnName="SeqNumber" />
+          <ScalarProperty Name="CourtType" ColumnName="CourtType" />
+          <ScalarProperty Name="CaseStatus" ColumnName="CaseStatus" />
+          <ScalarProperty Name="PostDispositionIndicator" ColumnName="PostDispositionIndicator" />
+          <ScalarProperty Name="NumberOfComments" ColumnName="NumberOfComments" />
+          <ScalarProperty Name="PlaintiffName" ColumnName="PlaintiffName" />
+          <ScalarProperty Name="DefendantName" ColumnName="DefendantName" />
+          <ScalarProperty Name="MunicipalityInvolvement" ColumnName="MunicipalityInvolvement" />
+          <ScalarProperty Name="CaseComplexity" ColumnName="CaseComplexity" />
+          <ScalarProperty Name="RJIDispositionDeadlineDate" ColumnName="RJIDispositionDeadlineDate" />
+          <ScalarProperty Name="RJIPreNOIDeadlineDate" ColumnName="RJIPreNOIDeadlineDate" />
+          <ScalarProperty Name="PostNOIDispositionDeadlineDate" ColumnName="PostNOIDispositionDeadlineDate" />
+          <ScalarProperty Name="DateRJIFiled" ColumnName="DateRJIFiled" />
+          <ScalarProperty Name="DateNOIFiled" ColumnName="DateNOIFiled" />
+          <ScalarProperty Name="TimeStampNOIEntered" ColumnName="TimeStampNOIEntered" />
+          <ScalarProperty Name="DateIssueJoined" ColumnName="DateIssueJoined" />
+          <ScalarProperty Name="ActionOrCaseTypeId" ColumnName="ActionOrCaseTypeId" />
+          <ScalarProperty Name="ActionOrCaseType" ColumnName="ActionOrCaseType" />
+          <ScalarProperty Name="ActionOrCaseTypeDescription" ColumnName="ActionOrCaseTypeDescription" />
+          <ScalarProperty Name="DamagesSought" ColumnName="DamagesSought" />
+          <ScalarProperty Name="GeneralPreference" ColumnName="GeneralPreference" />
+          <ScalarProperty Name="SpecialPreference" ColumnName="SpecialPreference" />
+          <ScalarProperty Name="CaseDispositionDate" ColumnName="CaseDispositionDate" />
+          <ScalarProperty Name="RJITypeCode" ColumnName="RJITypeCode" />
+          <ScalarProperty Name="TypeOfRJI" ColumnName="TypeOfRJI" />
+          <ScalarProperty Name="DateOfRJI" ColumnName="DateOfRJI" />
+          <ScalarProperty Name="RJICourtPartId" ColumnName="RJICourtPartId" />
+          <ScalarProperty Name="RJICourtPart" ColumnName="RJICourtPart" />
+          <ScalarProperty Name="CommentForOtherRJIType" ColumnName="CommentForOtherRJIType" />
+          <ScalarProperty Name="IASCategoryId" ColumnName="IASCategoryId" />
+          <ScalarProperty Name="IASCategory" ColumnName="IASCategory" />
+          <ScalarProperty Name="IASJudgeId" ColumnName="IASJudgeId" />
+          <ScalarProperty Name="IASJudgeName" ColumnName="IASJudgeName" />
+          <ScalarProperty Name="IASAssignmentDate" ColumnName="IASAssignmentDate" />
+          <ScalarProperty Name="TimeStampLastIASInformationEntered" ColumnName="TimeStampLastIASInformationEntered" />
+          <ScalarProperty Name="PostDispositionActionJudgeId" ColumnName="PostDispositionActionJudgeId" />
+          <ScalarProperty Name="PostDispositionActionJudgeName" ColumnName="PostDispositionActionJudgeName" />
+          <ScalarProperty Name="PROSEIndicator" ColumnName="PROSEIndicator" />
+          <ScalarProperty Name="DateRJIEntered" ColumnName="DateRJIEntered" />
+          <ScalarProperty Name="PrivateCaseIndicator" ColumnName="PrivateCaseIndicator" />
+          <ScalarProperty Name="IsEfiled" ColumnName="IsEfiled" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnReliefSoughtDecision5NSForLawFirmAndJudge" FunctionName="NYCOURTSModel.Store.tfnReliefSoughtDecision5NSForLawFirmAndJudge">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnReliefSoughtDecision5NSForLawFirmAndJudge_Result">
+          <ScalarProperty Name="ReliefSought" ColumnName="ReliefSought" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="Instances" ColumnName="Instances" />
+          <ScalarProperty Name="MinDays" ColumnName="MinDays" />
+          <ScalarProperty Name="DaysWithin25Percentile" ColumnName="DaysWithin25Percentile" />
+          <ScalarProperty Name="MedianDays" ColumnName="MedianDays" />
+          <ScalarProperty Name="AvgDays" ColumnName="AvgDays" />
+          <ScalarProperty Name="DaysWithin75Percentile" ColumnName="DaysWithin75Percentile" />
+          <ScalarProperty Name="MaxDays" ColumnName="MaxDays" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="tfnCaseCompletionDecision5NSForLawFirmAndJudge" FunctionName="NYCOURTSModel.Store.tfnCaseCompletionDecision5NSForLawFirmAndJudge">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NYCOURTSModel.tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result">
+          <ScalarProperty Name="ReliefSought" ColumnName="ReliefSought" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="Instances" ColumnName="Instances" />
+          <ScalarProperty Name="MinDays" ColumnName="MinDays" />
+          <ScalarProperty Name="DaysWithin25Percentile" ColumnName="DaysWithin25Percentile" />
+          <ScalarProperty Name="MedianDays" ColumnName="MedianDays" />
+          <ScalarProperty Name="AvgDays" ColumnName="AvgDays" />
+          <ScalarProperty Name="DaysWithin75Percentile" ColumnName="DaysWithin75Percentile" />
+          <ScalarProperty Name="MaxDays" ColumnName="MaxDays" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

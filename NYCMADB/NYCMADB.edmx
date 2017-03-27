@@ -5,6 +5,53 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NYCMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CMAComparable">
+          <Key>
+            <PropertyRef Name="CMARunId" />
+            <PropertyRef Name="ComparableBBL" />
+            <PropertyRef Name="SaleDate" />
+          </Key>
+          <Property Name="CMARunId" Type="bigint" Nullable="false" />
+          <Property Name="ComparableBBL" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SaleDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CMARun">
+          <Key>
+            <PropertyRef Name="CMARunId" />
+          </Key>
+          <Property Name="CMARunId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="70" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="RunDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CMAType" Type="int" Nullable="false" />
+          <Property Name="AlgorithmType" Type="char" MaxLength="1" />
+          <Property Name="RunType" Type="int" />
+          <Property Name="MonthsOffset" Type="int" />
+          <Property Name="GLAHiPercentage" Type="int" />
+          <Property Name="GLALoPercentage" Type="int" />
+          <Property Name="LAHiPercentage" Type="int" />
+          <Property Name="LALoPercentage" Type="int" />
+          <Property Name="Distance" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="BuildingClassMatch" Type="int" />
+          <Property Name="MinSalePrice" Type="decimal" Precision="13" Scale="2" />
+          <Property Name="MaxSalePrice" Type="decimal" Precision="13" Scale="2" />
+          <Property Name="BuildingFrontageHiRange" Type="int" />
+          <Property Name="BuildingFrontageLoRange" Type="int" />
+          <Property Name="BuildingDepthHiRange" Type="int" />
+          <Property Name="BuildingDepthLoiRange" Type="int" />
+          <Property Name="LotFrontageHiRange" Type="int" />
+          <Property Name="LotFrontageLoRange" Type="int" />
+          <Property Name="LotDepthHiRange" Type="int" />
+          <Property Name="LotDepthLoRange" Type="int" />
+          <Property Name="SameNeighborhood" Type="bit" />
+          <Property Name="SameSchoolDistrict" Type="bit" />
+          <Property Name="SameZip" Type="bit" />
+          <Property Name="SameStreet" Type="bit" />
+          <Property Name="SameBlock" Type="bit" />
+          <Property Name="IsNotIntraFamily" Type="bit" />
+          <Property Name="BuyerIsCompany" Type="bit" />
+          <Property Name="SellerIsCompany" Type="bit" />
+        </EntityType>
         <EntityType Name="Assessment">
           <Key>
             <PropertyRef Name="BBLE" />
@@ -152,6 +199,18 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="MedianPrice" Type="float" />
           <Property Name="AVGHighPice" Type="float" />
         </EntityType>
+        <Association Name="FK_CMAComparable_CMARunId">
+          <End Role="CMARun" Type="Self.CMARun" Multiplicity="1" />
+          <End Role="CMAComparable" Type="Self.CMAComparable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CMARun">
+              <PropertyRef Name="CMARunId" />
+            </Principal>
+            <Dependent Role="CMAComparable">
+              <PropertyRef Name="CMARunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="tfnGetCMA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="App">
           <Parameter Name="AlgorithmType" Type="char" Mode="In" />
           <Parameter Name="sbjBBLE" Type="varchar" Mode="In" />
@@ -280,6 +339,8 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Parameter Name="sbjBBLE" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="NYCMAModelStoreContainer">
+          <EntitySet Name="CMAComparable" EntityType="Self.CMAComparable" Schema="App" store:Type="Tables" />
+          <EntitySet Name="CMARun" EntityType="Self.CMARun" Schema="App" store:Type="Tables" />
           <EntitySet Name="Assessment" EntityType="Self.Assessment" Schema="exdata" store:Type="Tables" />
           <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
           <EntitySet Name="SaleParty" EntityType="Self.SaleParty" Schema="exdata" store:Type="Tables" />
@@ -301,6 +362,10 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
     [vwSuggestedSubjectPrices].[AVGHighPice] AS [AVGHighPice]
     FROM [App].[vwSuggestedSubjectPrices] AS [vwSuggestedSubjectPrices]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_CMAComparable_CMARunId" Association="Self.FK_CMAComparable_CMARunId">
+            <End Role="CMARun" EntitySet="CMARun" />
+            <End Role="CMAComparable" EntitySet="CMAComparable" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -380,6 +445,12 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" />
           <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" />
           <EntitySet Name="vwSalesByMonthByNeighborhoods" EntityType="NYCMAModel.vwSalesByMonthByNeighborhood" />
+          <EntitySet Name="CMAComparables" EntityType="NYCMAModel.CMAComparable" />
+          <EntitySet Name="CMARuns" EntityType="NYCMAModel.CMARun" />
+          <AssociationSet Name="FK_CMAComparable_CMARunId" Association="NYCMAModel.FK_CMAComparable_CMARunId">
+            <End Role="CMARun" EntitySet="CMARuns" />
+            <End Role="CMAComparable" EntitySet="CMAComparables" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="tfnGetCMA_Result">
           <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
@@ -624,6 +695,67 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="YearMonth" Type="DateTime" Precision="0" />
           <Property Name="NumberofSales" Type="Int32" />
         </EntityType>
+        <EntityType Name="CMAComparable">
+          <Key>
+            <PropertyRef Name="CMARunId" />
+            <PropertyRef Name="ComparableBBL" />
+            <PropertyRef Name="SaleDate" />
+          </Key>
+          <Property Name="CMARunId" Type="Int64" Nullable="false" />
+          <Property Name="ComparableBBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CMARun" Relationship="NYCMAModel.FK_CMAComparable_CMARunId" FromRole="CMAComparable" ToRole="CMARun" />
+        </EntityType>
+        <EntityType Name="CMARun">
+          <Key>
+            <PropertyRef Name="CMARunId" />
+          </Key>
+          <Property Name="CMARunId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RunDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CMAType" Type="Int32" Nullable="false" />
+          <Property Name="AlgorithmType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RunType" Type="Int32" />
+          <Property Name="MonthsOffset" Type="Int32" />
+          <Property Name="GLAHiPercentage" Type="Int32" />
+          <Property Name="GLALoPercentage" Type="Int32" />
+          <Property Name="LAHiPercentage" Type="Int32" />
+          <Property Name="LALoPercentage" Type="Int32" />
+          <Property Name="Distance" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="BuildingClassMatch" Type="Int32" />
+          <Property Name="MinSalePrice" Type="Decimal" Precision="13" Scale="2" />
+          <Property Name="MaxSalePrice" Type="Decimal" Precision="13" Scale="2" />
+          <Property Name="BuildingFrontageHiRange" Type="Int32" />
+          <Property Name="BuildingFrontageLoRange" Type="Int32" />
+          <Property Name="BuildingDepthHiRange" Type="Int32" />
+          <Property Name="BuildingDepthLoiRange" Type="Int32" />
+          <Property Name="LotFrontageHiRange" Type="Int32" />
+          <Property Name="LotFrontageLoRange" Type="Int32" />
+          <Property Name="LotDepthHiRange" Type="Int32" />
+          <Property Name="LotDepthLoRange" Type="Int32" />
+          <Property Name="SameNeighborhood" Type="Boolean" />
+          <Property Name="SameSchoolDistrict" Type="Boolean" />
+          <Property Name="SameZip" Type="Boolean" />
+          <Property Name="SameStreet" Type="Boolean" />
+          <Property Name="SameBlock" Type="Boolean" />
+          <Property Name="IsNotIntraFamily" Type="Boolean" />
+          <Property Name="BuyerIsCompany" Type="Boolean" />
+          <Property Name="SellerIsCompany" Type="Boolean" />
+          <NavigationProperty Name="CMAComparables" Relationship="NYCMAModel.FK_CMAComparable_CMARunId" FromRole="CMARun" ToRole="CMAComparable" />
+        </EntityType>
+        <Association Name="FK_CMAComparable_CMARunId">
+          <End Type="NYCMAModel.CMARun" Role="CMARun" Multiplicity="1" />
+          <End Type="NYCMAModel.CMAComparable" Role="CMAComparable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CMARun">
+              <PropertyRef Name="CMARunId" />
+            </Principal>
+            <Dependent Role="CMAComparable">
+              <PropertyRef Name="CMARunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -881,6 +1013,53 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
                 <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
                 <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
                 <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMAComparables">
+            <EntityTypeMapping TypeName="NYCMAModel.CMAComparable">
+              <MappingFragment StoreEntitySet="CMAComparable">
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="ComparableBBL" ColumnName="ComparableBBL" />
+                <ScalarProperty Name="CMARunId" ColumnName="CMARunId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMARuns">
+            <EntityTypeMapping TypeName="NYCMAModel.CMARun">
+              <MappingFragment StoreEntitySet="CMARun">
+                <ScalarProperty Name="SellerIsCompany" ColumnName="SellerIsCompany" />
+                <ScalarProperty Name="BuyerIsCompany" ColumnName="BuyerIsCompany" />
+                <ScalarProperty Name="IsNotIntraFamily" ColumnName="IsNotIntraFamily" />
+                <ScalarProperty Name="SameBlock" ColumnName="SameBlock" />
+                <ScalarProperty Name="SameStreet" ColumnName="SameStreet" />
+                <ScalarProperty Name="SameZip" ColumnName="SameZip" />
+                <ScalarProperty Name="SameSchoolDistrict" ColumnName="SameSchoolDistrict" />
+                <ScalarProperty Name="SameNeighborhood" ColumnName="SameNeighborhood" />
+                <ScalarProperty Name="LotDepthLoRange" ColumnName="LotDepthLoRange" />
+                <ScalarProperty Name="LotDepthHiRange" ColumnName="LotDepthHiRange" />
+                <ScalarProperty Name="LotFrontageLoRange" ColumnName="LotFrontageLoRange" />
+                <ScalarProperty Name="LotFrontageHiRange" ColumnName="LotFrontageHiRange" />
+                <ScalarProperty Name="BuildingDepthLoiRange" ColumnName="BuildingDepthLoiRange" />
+                <ScalarProperty Name="BuildingDepthHiRange" ColumnName="BuildingDepthHiRange" />
+                <ScalarProperty Name="BuildingFrontageLoRange" ColumnName="BuildingFrontageLoRange" />
+                <ScalarProperty Name="BuildingFrontageHiRange" ColumnName="BuildingFrontageHiRange" />
+                <ScalarProperty Name="MaxSalePrice" ColumnName="MaxSalePrice" />
+                <ScalarProperty Name="MinSalePrice" ColumnName="MinSalePrice" />
+                <ScalarProperty Name="BuildingClassMatch" ColumnName="BuildingClassMatch" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="LALoPercentage" ColumnName="LALoPercentage" />
+                <ScalarProperty Name="LAHiPercentage" ColumnName="LAHiPercentage" />
+                <ScalarProperty Name="GLALoPercentage" ColumnName="GLALoPercentage" />
+                <ScalarProperty Name="GLAHiPercentage" ColumnName="GLAHiPercentage" />
+                <ScalarProperty Name="MonthsOffset" ColumnName="MonthsOffset" />
+                <ScalarProperty Name="RunType" ColumnName="RunType" />
+                <ScalarProperty Name="AlgorithmType" ColumnName="AlgorithmType" />
+                <ScalarProperty Name="CMAType" ColumnName="CMAType" />
+                <ScalarProperty Name="RunDateTime" ColumnName="RunDateTime" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="CMARunId" ColumnName="CMARunId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -31,5 +31,18 @@ namespace UnitTestPropertyDataServices
         {
             decimal? resultObj = Conversions.ToDecimalorNull("192,000");
         }
+
+
+        [TestMethod]
+        public void TestStatistics()
+        {
+            DoubleList values = new DoubleList { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+            double a = 4.0, b = 8.0;
+
+            double val = values.Average(x => x >= a && x <= b);
+
+            return;
+        }
     }
 }

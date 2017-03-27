@@ -18,102 +18,7 @@ namespace PropertyWebAPI.Controllers
     using NYCMADB;
     using AutoMapper;
 
-    public class BasicCMAFilter
-    {
-        /// <summary>Maximum number of comparables to be returned</summary>
-        public int? maxRecords { get; set; }
-        /// <summary>Valid values are 0, 1 or NULL. 0 means ignore neighborhood and 1 means search in same neighborhood. Default is 0</summary>
-        public bool? sameNeighborhood { get; set; }
-        /// <summary>Valid values are 0, 1 or NULL. 0 means ignore school district and 1 means search in same school district. Default is 1</summary>
-        public bool? sameSchoolDistrict { get; set; }
-        /// <summary>Valid values are 0, 1 or NULL. 0 means ignore zip code and 1 means search in same zip code. Default is 0</summary>
-        public bool? sameZip { get; set; }
-        /// <summary>Valid values are 0, 1 or NULL. 0 means ignore address block and 1 means search in same block. Default is 0</summary>
-        public bool? sameBlock { get; set; }
-        /// <summary>Valid values are 0, 1 or NULL. 0 means ignore street and 1 means search in same street. Default is 0</summary>
-        public bool? sameStreet { get; set; }
-        /// <summary>Month in past to inspect for comparables, always negative, default value is -12 (1 Year)</summary>
-        public int? monthOffset { get; set; }
-        /// <summary>Minimum sale price for consideration. Default is 10000</summary>
-        public double? minSalePrice { get; set; }
-        /// <summary>Maximum Sale price for consideration. Default is ignore max sale price</summary>
-        public double? maxSalePrice { get; set; }
-        /// <summary>0 - For same BuildingClass, 1  - For Expanded Building Classes based on Subject Building Class, 2 - To ignore Building Class</summary>
-        public int? classMatchType { get; set; }
-        /// <summary>Null or 1. 1 - means only arm length sales are considered.</summary>
-        public bool? isNotIntraFamily { get; set; }
-        /// <summary>Null or 1. 1 - means seller is a company</summary>
-        public bool? isSelleraCompany { get; set; }
-        /// <summary>Null or 1. 1 - means buyer is a company.</summary>
-        public bool? isBuyeraCompany { get; set; }
-    }
-
-    public class AdditionalCMAFilter
-    {
-        /// <summary>Search distance in miles. Values can be decimals. Default is 1.0</summary>
-        public double distance { get; set; }
-        /// <summary>Percentage difference in GLA for properties smaller than subject</summary>
-        public int? gLAMin { get; set; }
-        /// <summary>Percentage difference in GLA for properties larger than subject</summary>
-        public int? gLAMax { get; set; }
-        /// <summary>Percentage difference in Lot Area for properties smaller than subject</summary>
-        public int? lotAreaMin { get; set; }
-        /// <summary>Percentage difference in Lot Area for properties larger than subject</summary>
-        public int? lotAreaMax { get; set; }
-        /// <summary>Minimum Building Frontage in ft for consideration</summary>
-        public int? buildingFrontageMin { get; set; }
-        /// <summary>Maximum Building Frontage in ft for consideration</summary>
-        public int? buildingFrontageMax { get; set; }
-        /// <summary>Minimum Building Depth in ft for consideration</summary>
-        public int? buildingDepthMin { get; set; }
-        /// <summary>Maximum Building Depth in ft for consideration</summary>
-        public int? buildingDepthMax { get; set; }
-        /// <summary>Minimum Lot Frontage in ft for consideration</summary>
-        public int? lotFrontageMin { get; set; }
-        /// <summary>Maximum Lot Frontage in ft for consideration</summary>
-        public int? lotFrontageMax { get; set; }
-        /// <summary>Minimum Lot Depth in ft for consideration</summary>
-        public int? lotDepthMin { get; set; }
-        /// <summary>Maximum Lot Depth in ft for consideration</summary>
-        public int? lotDepthMax { get; set; }
-    }
-
-    public class ManualCMASelection
-    {   
-        /// <summary>Filters associated with result set size, ownership, location,price etc.</summary>
-        public BasicCMAFilter basicFilter;
-        /// <summary>Filters associated with distance, building and lot dimensions</summary>
-        public AdditionalCMAFilter  additionalFilter;
-        /// <summary>List of comparables selected</summary>
-        public List<DAL.CMAManualResult> comparables;
-        /// <summary>Valid values are 1 - Regular CMA, 2 - Short Sale, 3 - Rehab</summary>
-        public int intent;
-    }
-
-    public class ManualCMAResult
-    {
-        public long minValue;
-        public long maxValue;
-        public long averageValue;
-    }
-
-    public class ManualCMAFilters
-    {   
-        /// <summary>Filters associated with result set size, ownership, location,price etc.</summary>
-        public BasicCMAFilter basicFilter;
-        /// <summary>Filters associated with distance, building and lot dimensions</summary>
-        public AdditionalCMAFilter additionalFilter;
-    }
-
-    public class AutomatedCMAFilters
-    {   
-        /// <summary>Valid values are 1 - Regular CMA, 2 - Short Sale, 3 - Rehab</summary>
-        public int intent;
-        /// <summary>Valid values are G - Farther th property tighter the constraints, O - Iterative constraint relaxation with fixed upper bounds, E - Euclidean distance based ranking within set constraints</summary>
-        public string algorithmType = "O";
-        /// <summary>Filters associated with result set size, ownership, location,price etc.</summary>
-        public BasicCMAFilter basicFilter;
-    }
+  
 
     /// <summary>  
     /// This controller handles all api requests associated with CMA related information
@@ -133,7 +38,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns Average Low, Median and Avg High Price for a property in NYC
         /// </returns>
         [Route("api/cma/{propertyBBL}/SuggestedPrices")]
-        [ResponseType(typeof(DAL.SuggestPropertPrices))]
+        [ResponseType(typeof(DAL.SuggestedPropertyPrices))]
         public IHttpActionResult GetSuggestedPrices(string propertyBBL)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBL))
@@ -181,7 +86,7 @@ namespace PropertyWebAPI.Controllers
                 if (assessment==null)
                     return this.BadRequest("Incorrect BBL - Borough Block Lot number not found");
 
-                var result = DAL.CMA.GetSalesTrend(assessment.NTACode, timeSpanInYears);
+                var result = DAL.CMA.GetSalesTrend(assessment.NeighborhoodName, timeSpanInYears);
                 if (result == null)
                     return NotFound();
                 return Ok(result);
@@ -456,8 +361,32 @@ namespace PropertyWebAPI.Controllers
         #endregion
 
         #region New Comparable Methods
+        /// <summary>Use this api to get a subject property's details</summary>  
+        /// <param name="subjectBBL">Borough Block Lot Number of the subject property. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+        /// <returns>Returns subject property's details</returns>
+        [Route("api/cma/{subjectBBL}")]
+        [ResponseType(typeof(ShowCMASubject_Result))]
+        public IHttpActionResult GetSubjectDetails(string subjectBBL)
+        {
+            if (!BAL.BBL.IsValidFormat(subjectBBL))
+                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
+            try
+            {
+                var result = DAL.CMA.GetSubject(subjectBBL);
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered for BBL: {0}{1}", subjectBBL, Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
         /// <summary>  
-        ///     Use this api to get a list of comparables for the given property and associated parameters
+        ///     Deprecated - Use this api to get a list of comparables for the given property and associated parameters
         /// </summary>  
         /// <param name="subjectBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
         /// <param name="filters">Filters to refine comparable</param>
@@ -465,7 +394,7 @@ namespace PropertyWebAPI.Controllers
         [Route("api/cma/{subjectBBL}/comparables")]
         [ResponseType(typeof(List<DAL.CMAResult>))]
         [HttpPost]
-        public IHttpActionResult GetComparables(string subjectBBL, AutomatedCMAFilters filters)
+        public IHttpActionResult GetComparables(string subjectBBL, BAL.AutomatedCMAFilters filters)
         {
             if (!BAL.BBL.IsValidFormat(subjectBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
@@ -487,6 +416,37 @@ namespace PropertyWebAPI.Controllers
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
+        /// <summary>  
+        ///     Use this api to get an automated CMA for a given property and associated parameters
+        /// </summary>  
+        /// <param name="subjectBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+        /// <param name="filters">Filters to refine comparables</param>
+        /// <returns>Returns a list of comparables and price range for the subject property</returns>
+        [Route("api/cma/{subjectBBL}/automatedCMA")]
+        [ResponseType(typeof(BAL.AutomatedCMAResults))]
+        [HttpPost]
+        public IHttpActionResult RunAutomatedCMA(string subjectBBL, BAL.AutomatedCMAFilters filters)
+        {
+            if (!BAL.BBL.IsValidFormat(subjectBBL))
+                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
+            try
+            {
+                var result = BAL.CMA.GetAutomatedCMA(filters.algorithmType, subjectBBL, filters.basicFilter.maxRecords, filters.basicFilter.sameNeighborhood,
+                                                     filters.basicFilter.sameSchoolDistrict, filters.basicFilter.sameZip, filters.basicFilter.sameBlock,
+                                                     filters.basicFilter.sameStreet, filters.basicFilter.monthOffset, filters.basicFilter.minSalePrice,
+                                                     filters.basicFilter.maxSalePrice, filters.basicFilter.classMatchType, filters.basicFilter.isNotIntraFamily,
+                                                     filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany);
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered while running automated for BBL: {0}{1}", subjectBBL, Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
 
         /// <summary>
         /// Use this api to get a list of sales comparables for the given property and associated filters
@@ -497,7 +457,7 @@ namespace PropertyWebAPI.Controllers
         [Route("api/cma/{subjectBBL}/comparablesales")]
         [ResponseType(typeof(List<DAL.CMAManualResult>))]
         [HttpPost]
-        public IHttpActionResult GetManualComparables(string subjectBBL, [FromBody] ManualCMAFilters filters)
+        public IHttpActionResult GetManualComparables(string subjectBBL, [FromBody] BAL.ManualCMAFilters filters)
         {
             if (!BAL.BBL.IsValidFormat(subjectBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
@@ -539,51 +499,43 @@ namespace PropertyWebAPI.Controllers
         /// <param name="manualCMA">Filters used for initial comparable sales</param>
         /// <returns>Estimated price for the subject property based on comparables selected</returns>
         [Route("api/cma/{subjectBBL}/estimatedpropertyprice")]
-        [ResponseType(typeof(ManualCMAResult))]
-        public IHttpActionResult PostManualComparables(string subjectBBL, [FromBody] ManualCMASelection manualCMA)
+        [ResponseType(typeof(BAL.ManualCMAResult))]
+        public IHttpActionResult PostManualComparables(string subjectBBL, [FromBody] BAL.ManualCMASelection manualCMA)
         {
+            if (manualCMA==null)
+                return this.BadRequest("Malformed body");
+
+            if (String.IsNullOrEmpty(manualCMA.username))
+                return this.BadRequest("Username cannot be null or empty");
+
             if (!BAL.BBL.IsValidFormat(subjectBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+            if (manualCMA.comparables==null || manualCMA.comparables.Count==0)
+                return this.BadRequest("No sales selected. Please select one or more sales");
 
-            if ((manualCMA.additionalFilter.gLAMin == null) && (manualCMA.additionalFilter.gLAMax != null))
-                manualCMA.additionalFilter.gLAMin = manualCMA.additionalFilter.gLAMax;
-            if ((manualCMA.additionalFilter.gLAMin != null) && (manualCMA.additionalFilter.gLAMax == null))
-                manualCMA.additionalFilter.gLAMax = manualCMA.additionalFilter.gLAMin;
+            if (manualCMA.additionalFilter != null)
+            {
+                if ((manualCMA.additionalFilter.gLAMin == null) && (manualCMA.additionalFilter.gLAMax != null))
+                    manualCMA.additionalFilter.gLAMin = manualCMA.additionalFilter.gLAMax;
+                if ((manualCMA.additionalFilter.gLAMin != null) && (manualCMA.additionalFilter.gLAMax == null))
+                    manualCMA.additionalFilter.gLAMax = manualCMA.additionalFilter.gLAMin;
 
-            if ((manualCMA.additionalFilter.lotAreaMin == null) && (manualCMA.additionalFilter.lotAreaMax != null))
-                manualCMA.additionalFilter.lotAreaMin = manualCMA.additionalFilter.lotAreaMax;
-            if ((manualCMA.additionalFilter.lotAreaMin != null) && (manualCMA.additionalFilter.lotAreaMax == null))
-                manualCMA.additionalFilter.lotAreaMax = manualCMA.additionalFilter.lotAreaMin;
+                if ((manualCMA.additionalFilter.lotAreaMin == null) && (manualCMA.additionalFilter.lotAreaMax != null))
+                    manualCMA.additionalFilter.lotAreaMin = manualCMA.additionalFilter.lotAreaMax;
+                if ((manualCMA.additionalFilter.lotAreaMin != null) && (manualCMA.additionalFilter.lotAreaMax == null))
+                    manualCMA.additionalFilter.lotAreaMax = manualCMA.additionalFilter.lotAreaMin;
+            }
+            else
+               Common.Logs.log().Warn(string.Format("Additional Filter for Manual CMA for {0} by {1} is NULL", subjectBBL, manualCMA.username));
+
+            if (manualCMA.basicFilter == null)
+                Common.Logs.log().Warn(string.Format("Basic Filter for Manual CMA for {0} by {1} is NULL", subjectBBL, manualCMA.username));
 
             try
             {   
-                //var result = DAL.CMA.SaveManualComparables(propertyBBL, manualCMA);
-                //if (result == null)
-                  //  return NotFound();
-                return Ok(new ManualCMAResult());
-            }
-            catch (Exception e)
-            {
-                Common.Logs.log().Error(string.Format("Exception encountered for BBL: {0}{1}", subjectBBL, Common.Logs.FormatException(e)));
-                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-            }
-        }
-
-        /// <summary>Use this api to get a subject property's details</summary>  
-        /// <param name="subjectBBL">Borough Block Lot Number of the subject property. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
-        /// <returns>Returns subject property's details</returns>
-        [Route("api/cma/{subjectBBL}")]
-        [ResponseType(typeof(ShowCMASubject_Result))]
-        public IHttpActionResult GetSubjectDetails(string subjectBBL)
-        {
-            if (!BAL.BBL.IsValidFormat(subjectBBL))
-                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
-
-            try
-            {
-                var result = DAL.CMA.GetSubject(subjectBBL);
+                var result = BAL.CMA.SaveManualComparables(subjectBBL, manualCMA);
                 if (result == null)
-                    return NotFound();
+                    throw new Exception("Internal Error function should not return null"); 
                 return Ok(result);
             }
             catch (Exception e)

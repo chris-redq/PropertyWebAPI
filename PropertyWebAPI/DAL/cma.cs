@@ -13,8 +13,9 @@ namespace PropertyWebAPI.DAL
     using System.Web;
     using NYCMADB;
     using AutoMapper;
+    using System.Data.Entity.Validation;
 
-    public class SuggestPropertPrices: vwSuggestedSubjectPrice
+    public class SuggestedPropertyPrices: vwSuggestedSubjectPrice
     {
 
     }
@@ -50,11 +51,11 @@ namespace PropertyWebAPI.DAL
     public class CMA
     {
 
-        public static SuggestPropertPrices GetSuggestedPricesForAProperty(string propertyBBL)
+        public static SuggestedPropertyPrices GetSuggestedPricesForAProperty(string propertyBBL)
         {
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<SuggestPropertPrices>(nycmaE.vwSuggestedSubjectPrices.Where(i => i.SubjectBBL == propertyBBL).FirstOrDefault());
+                return Mapper.Map<SuggestedPropertyPrices>(nycmaE.vwSuggestedSubjectPrices.Where(i => i.SubjectBBL == propertyBBL).FirstOrDefault());
             }
         }
 
@@ -158,6 +159,95 @@ namespace PropertyWebAPI.DAL
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
                 return nycmaE.SaleParties.Where(i=> i.DeedUniqueKey== deedUniqueKey).ToList();
+            }
+        }
+
+        public static long SaveCMARun(string subjectBBL, BAL.ManualCMASelection manualCMA )
+        {
+            using (NYCMAEntities nycmaE = new NYCMAEntities())
+            {
+                using (var nycmaEntitiestransaction = nycmaE.Database.BeginTransaction())
+                {
+                    NYCMADB.CMARun cmaRun = new NYCMADB.CMARun();
+
+                    cmaRun.UserName = manualCMA.username;
+                    cmaRun.RunDateTime = DateTime.UtcNow;
+                    cmaRun.RunType = (int)CMARunType.Manual;
+                    cmaRun.CMAType = manualCMA.intent;
+                    cmaRun.BBL = subjectBBL;
+
+                    cmaRun.AlgorithmType = "F";
+                    if (manualCMA.basicFilter != null)
+                    {
+                        cmaRun.MonthsOffset = manualCMA.basicFilter.monthOffset;
+                        cmaRun.BuildingClassMatch = manualCMA.basicFilter.classMatchType;
+                        cmaRun.MinSalePrice = Convert.ToDecimal(manualCMA.basicFilter.minSalePrice);
+                        cmaRun.MaxSalePrice = Convert.ToDecimal(manualCMA.basicFilter.maxSalePrice);
+                        cmaRun.SameNeighborhood = manualCMA.basicFilter.sameNeighborhood;
+                        cmaRun.SameSchoolDistrict = manualCMA.basicFilter.sameSchoolDistrict;
+                        cmaRun.SameZip = manualCMA.basicFilter.sameZip;
+                        cmaRun.SameStreet = manualCMA.basicFilter.sameStreet;
+                        cmaRun.SameBlock = manualCMA.basicFilter.sameBlock;
+                        cmaRun.IsNotIntraFamily = manualCMA.basicFilter.isNotIntraFamily;
+                        cmaRun.BuyerIsCompany = manualCMA.basicFilter.isBuyeraCompany;
+                        cmaRun.SellerIsCompany = manualCMA.basicFilter.isSelleraCompany;
+                    }
+
+                    if (manualCMA.additionalFilter != null)
+                    {
+                        cmaRun.Distance = Convert.ToDecimal(manualCMA.additionalFilter.distance);
+                        cmaRun.GLAHiPercentage = manualCMA.additionalFilter.gLAMax;
+                        cmaRun.GLALoPercentage = manualCMA.additionalFilter.gLAMin;
+                        cmaRun.LAHiPercentage = manualCMA.additionalFilter.lotAreaMax;
+                        cmaRun.LALoPercentage = manualCMA.additionalFilter.lotAreaMin;
+                        cmaRun.BuildingFrontageHiRange = manualCMA.additionalFilter.buildingFrontageMax;
+                        cmaRun.BuildingFrontageLoRange = manualCMA.additionalFilter.buildingFrontageMin;
+                        cmaRun.BuildingDepthHiRange = manualCMA.additionalFilter.buildingDepthMax;
+                        cmaRun.BuildingDepthLoiRange = manualCMA.additionalFilter.buildingDepthMin;
+                        cmaRun.LotFrontageHiRange = manualCMA.additionalFilter.lotFrontageMax;
+                        cmaRun.LotFrontageLoRange = manualCMA.additionalFilter.lotFrontageMin;
+                        cmaRun.LotDepthHiRange = manualCMA.additionalFilter.lotDepthMax;
+                        cmaRun.LotDepthLoRange = manualCMA.additionalFilter.lotDepthMin;
+                    }
+
+                    try
+                    {
+                        cmaRun = nycmaE.CMARuns.Add(cmaRun);
+                        nycmaE.SaveChanges();
+
+                        foreach (var comp in manualCMA.comparables)
+                        {
+                            NYCMADB.CMAComparable cmaComp = new NYCMADB.CMAComparable();
+
+                            cmaComp.CMARunId = cmaRun.CMARunId;
+                            cmaComp.ComparableBBL = comp.BBLE;
+                            cmaComp.SaleDate = comp.DeedDate.GetValueOrDefault();
+                            cmaComp = nycmaE.CMAComparables.Add(cmaComp);
+                        }
+                        nycmaE.SaveChanges();
+
+                        nycmaEntitiestransaction.Commit();
+
+                        return cmaRun.CMARunId;
+                    }
+                    catch (DbEntityValidationException dbEx)
+                    {
+                        foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        {
+                            foreach (var validationError in validationErrors.ValidationErrors)
+                            {
+                                Common.Logs.log().Error(string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage));
+                            }
+                        }
+                        return 0;
+                    }
+                    catch (Exception e)
+                    {
+                        nycmaEntitiestransaction.Rollback();
+                        Common.Logs.log().Error(string.Format("Exception encountered saving manual CMARun for {} run by {2}", subjectBBL, manualCMA.username, Common.Logs.FormatException(e)));
+                        return 0;
+                    }
+                }
             }
         }
     }

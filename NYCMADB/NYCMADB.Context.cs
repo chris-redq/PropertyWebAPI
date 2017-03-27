@@ -33,6 +33,8 @@ namespace NYCMADB
         public virtual DbSet<PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing> PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings { get; set; }
         public virtual DbSet<SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing> SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings { get; set; }
         public virtual DbSet<vwSalesByMonthByNeighborhood> vwSalesByMonthByNeighborhoods { get; set; }
+        public virtual DbSet<CMAComparable> CMAComparables { get; set; }
+        public virtual DbSet<CMARun> CMARuns { get; set; }
     
         public virtual int GetCMA(string algorithmType, string sbjBBLE, Nullable<int> maxRecords, Nullable<bool> sameNeighborhood, Nullable<bool> sameSchoolDistrict, Nullable<bool> sameZip, Nullable<bool> sameBlock, Nullable<bool> sameStreetName, Nullable<int> monthOffset, Nullable<double> minSalePrice, Nullable<double> maxSalePrice, Nullable<int> classMatchType, Nullable<bool> isNotIntraFamily, Nullable<bool> isSelleraCompany, Nullable<bool> isBuyeraCompany, Nullable<bool> isDebugMode)
         {
