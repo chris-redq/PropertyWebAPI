@@ -41,7 +41,6 @@
       <Parameter Name="sbjBBLE" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="SaleParties" EntityType="NYCMAModel.SaleParty" />
-    <EntitySet Name="vwSuggestedSubjectPrices" EntityType="NYCMAModel.vwSuggestedSubjectPrice" />
     <FunctionImport Name="tfnGetManualCMA" IsComposable="true" ReturnType="Collection(NYCMAModel.tfnGetManualCMA_Result)">
       <Parameter Name="sbjBBLE" Mode="In" Type="String" />
       <Parameter Name="MaxRecords" Mode="In" Type="Int32" />
@@ -80,6 +79,7 @@
       <End Role="CMARun" EntitySet="CMARuns" />
       <End Role="CMAComparable" EntitySet="CMAComparables" />
     </AssociationSet>
+    <EntitySet Name="vwSuggestedSubjectPrices" EntityType="NYCMAModel.vwSuggestedSubjectPrice" />
   </EntityContainer>
   <ComplexType Name="tfnGetCMA_Result">
     <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
@@ -238,16 +238,6 @@
     <Property Name="Country" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="PartyType" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="vwSuggestedSubjectPrice">
-    <Key>
-      <PropertyRef Name="SubjectBBL" />
-    </Key>
-    <Property Name="SubjectBBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
-    <Property Name="AVGLowPrice" Type="Double" />
-    <Property Name="AVGLowPriceNoLP" Type="Double" />
-    <Property Name="MedianPrice" Type="Double" />
-    <Property Name="AVGHighPice" Type="Double" />
-  </EntityType>
   <ComplexType Name="tfnGetManualCMA_Result">
     <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
     <Property Type="String" Name="DeedUniqueKey" Nullable="true" MaxLength="16" />
@@ -385,4 +375,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="vwSuggestedSubjectPrice">
+    <Key>
+      <PropertyRef Name="SubjectBBL" />
+    </Key>
+    <Property Name="SubjectBBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="LowPrice" Type="Double" />
+    <Property Name="AVGPrice" Type="Double" />
+    <Property Name="MedianPrice" Type="Double" />
+    <Property Name="HighPrice" Type="Double" />
+  </EntityType>
 </Schema>

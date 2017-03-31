@@ -194,10 +194,10 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
             <PropertyRef Name="SubjectBBL" />
           </Key>
           <Property Name="SubjectBBL" Type="nvarchar" MaxLength="11" Nullable="false" />
-          <Property Name="AVGLowPrice" Type="float" />
-          <Property Name="AVGLowPriceNoLP" Type="float" />
+          <Property Name="LowPrice" Type="float" />
+          <Property Name="AVGPrice" Type="float" />
           <Property Name="MedianPrice" Type="float" />
-          <Property Name="AVGHighPice" Type="float" />
+          <Property Name="HighPrice" Type="float" />
         </EntityType>
         <Association Name="FK_CMAComparable_CMARunId">
           <End Role="CMARun" Type="Self.CMARun" Multiplicity="1" />
@@ -356,10 +356,10 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrices" store:Type="Views" store:Schema="App">
             <DefiningQuery>SELECT 
     [vwSuggestedSubjectPrices].[SubjectBBL] AS [SubjectBBL], 
-    [vwSuggestedSubjectPrices].[AVGLowPrice] AS [AVGLowPrice], 
-    [vwSuggestedSubjectPrices].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
+    [vwSuggestedSubjectPrices].[LowPrice] AS [LowPrice], 
+    [vwSuggestedSubjectPrices].[AVGPrice] AS [AVGPrice], 
     [vwSuggestedSubjectPrices].[MedianPrice] AS [MedianPrice], 
-    [vwSuggestedSubjectPrices].[AVGHighPice] AS [AVGHighPice]
+    [vwSuggestedSubjectPrices].[HighPrice] AS [HighPrice]
     FROM [App].[vwSuggestedSubjectPrices] AS [vwSuggestedSubjectPrices]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_CMAComparable_CMARunId" Association="Self.FK_CMAComparable_CMARunId">
@@ -412,7 +412,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Parameter Name="sbjBBLE" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="SaleParties" EntityType="NYCMAModel.SaleParty" />
-          <EntitySet Name="vwSuggestedSubjectPrices" EntityType="NYCMAModel.vwSuggestedSubjectPrice" />
           <FunctionImport Name="tfnGetManualCMA" IsComposable="true" ReturnType="Collection(NYCMAModel.tfnGetManualCMA_Result)">
             <Parameter Name="sbjBBLE" Mode="In" Type="String" />
             <Parameter Name="MaxRecords" Mode="In" Type="Int32" />
@@ -451,6 +450,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
             <End Role="CMARun" EntitySet="CMARuns" />
             <End Role="CMAComparable" EntitySet="CMAComparables" />
           </AssociationSet>
+          <EntitySet Name="vwSuggestedSubjectPrices" EntityType="NYCMAModel.vwSuggestedSubjectPrice" />
         </EntityContainer>
         <ComplexType Name="tfnGetCMA_Result">
           <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
@@ -609,16 +609,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="Country" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="PartyType" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vwSuggestedSubjectPrice">
-          <Key>
-            <PropertyRef Name="SubjectBBL" />
-          </Key>
-          <Property Name="SubjectBBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
-          <Property Name="AVGLowPrice" Type="Double" />
-          <Property Name="AVGLowPriceNoLP" Type="Double" />
-          <Property Name="MedianPrice" Type="Double" />
-          <Property Name="AVGHighPice" Type="Double" />
-        </EntityType>
         <ComplexType Name="tfnGetManualCMA_Result">
           <Property Type="String" Name="AlgorithmType" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="DeedUniqueKey" Nullable="true" MaxLength="16" />
@@ -756,6 +746,16 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwSuggestedSubjectPrice">
+          <Key>
+            <PropertyRef Name="SubjectBBL" />
+          </Key>
+          <Property Name="SubjectBBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="LowPrice" Type="Double" />
+          <Property Name="AVGPrice" Type="Double" />
+          <Property Name="MedianPrice" Type="Double" />
+          <Property Name="HighPrice" Type="Double" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -926,17 +926,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwSuggestedSubjectPrices">
-            <EntityTypeMapping TypeName="NYCMAModel.vwSuggestedSubjectPrice">
-              <MappingFragment StoreEntitySet="vwSuggestedSubjectPrices">
-                <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
-                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-                <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
-                <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
-                <ScalarProperty Name="SubjectBBL" ColumnName="SubjectBBL" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="tfnGetManualCMA" FunctionName="NYCMAModel.Store.tfnGetManualCMA">
             <ResultMapping>
               <ComplexTypeMapping TypeName="NYCMAModel.tfnGetManualCMA_Result">
@@ -1060,6 +1049,17 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
                 <ScalarProperty Name="BBL" ColumnName="BBL" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="CMARunId" ColumnName="CMARunId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwSuggestedSubjectPrices">
+            <EntityTypeMapping TypeName="NYCMAModel.vwSuggestedSubjectPrice">
+              <MappingFragment StoreEntitySet="vwSuggestedSubjectPrices">
+                <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
+                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+                <ScalarProperty Name="AVGPrice" ColumnName="AVGPrice" />
+                <ScalarProperty Name="LowPrice" ColumnName="LowPrice" />
+                <ScalarProperty Name="SubjectBBL" ColumnName="SubjectBBL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

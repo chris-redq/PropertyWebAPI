@@ -189,10 +189,10 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
       <PropertyRef Name="SubjectBBL" />
     </Key>
     <Property Name="SubjectBBL" Type="nvarchar" MaxLength="11" Nullable="false" />
-    <Property Name="AVGLowPrice" Type="float" />
-    <Property Name="AVGLowPriceNoLP" Type="float" />
+    <Property Name="LowPrice" Type="float" />
+    <Property Name="AVGPrice" Type="float" />
     <Property Name="MedianPrice" Type="float" />
-    <Property Name="AVGHighPice" Type="float" />
+    <Property Name="HighPrice" Type="float" />
   </EntityType>
   <Association Name="FK_CMAComparable_CMARunId">
     <End Role="CMARun" Type="Self.CMARun" Multiplicity="1" />
@@ -351,10 +351,10 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
     <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrices" store:Type="Views" store:Schema="App">
       <DefiningQuery>SELECT 
     [vwSuggestedSubjectPrices].[SubjectBBL] AS [SubjectBBL], 
-    [vwSuggestedSubjectPrices].[AVGLowPrice] AS [AVGLowPrice], 
-    [vwSuggestedSubjectPrices].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
+    [vwSuggestedSubjectPrices].[LowPrice] AS [LowPrice], 
+    [vwSuggestedSubjectPrices].[AVGPrice] AS [AVGPrice], 
     [vwSuggestedSubjectPrices].[MedianPrice] AS [MedianPrice], 
-    [vwSuggestedSubjectPrices].[AVGHighPice] AS [AVGHighPice]
+    [vwSuggestedSubjectPrices].[HighPrice] AS [HighPrice]
     FROM [App].[vwSuggestedSubjectPrices] AS [vwSuggestedSubjectPrices]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_CMAComparable_CMARunId" Association="Self.FK_CMAComparable_CMARunId">

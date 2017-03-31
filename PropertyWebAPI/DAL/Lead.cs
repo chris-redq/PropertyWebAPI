@@ -14,7 +14,11 @@ namespace PropertyWebAPI.DAL
     using System;
     using System.Data.Entity.Validation;
 
-    public class LeadSummaryData : vwGeneralLeadInfomation
+    public class LeadSummaryData : vwGeneralLeadInformation
+    {
+        //Blank classes to mask entity framework details
+    }
+    public class PropertySummaryData : vwGeneralPropertyInformation
     {
         //Blank classes to mask entity framework details
     }
@@ -39,7 +43,7 @@ namespace PropertyWebAPI.DAL
         {
             using (GPADBEntities1 gpaE = new GPADBEntities1())
             {
-                return Mapper.Map<List<vwGeneralLeadInfomation>, List<LeadSummaryData>>(gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
+                return Mapper.Map<List<vwGeneralLeadInformation>, List<LeadSummaryData>>(gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
                                                                                                      cities, neighborhoods, states, lientypes, leadgrades, ltv, equity, isfannie,
                                                                                                      isfreddie, unbuilt, servicer, landmark).ToList());
             }
@@ -133,7 +137,15 @@ namespace PropertyWebAPI.DAL
         {
             using (GPADBEntities1 gpaE = new GPADBEntities1())
             {
-                return Mapper.Map<LeadSummaryData>(gpaE.vwGeneralLeadInfomations.Where(x => x.BBLE == propertybbl).FirstOrDefault());
+                return Mapper.Map<LeadSummaryData>(gpaE.vwGeneralLeadInformations.Where(x => x.BBLE == propertybbl).FirstOrDefault());
+            }
+        }
+
+        public static LeadSummaryData GetProperty(string propertybbl)
+        {
+            using (GPADBEntities1 gpaE = new GPADBEntities1())
+            {
+                return Mapper.Map<LeadSummaryData>(gpaE.vwGeneralPropertyInformations.Where(x => x.BBLE == propertybbl).FirstOrDefault());
             }
         }
     }

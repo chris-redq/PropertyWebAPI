@@ -516,6 +516,114 @@
             Borough Block and Lot (BBL) of the property
             </summary>
         </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.maxRecords">
+            <summary>Maximum number of comparables to be returned</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.sameNeighborhood">
+            <summary>Valid values are 0, 1 or NULL. 0 means ignore neighborhood and 1 means search in same neighborhood. Default is 0</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.sameSchoolDistrict">
+            <summary>Valid values are 0, 1 or NULL. 0 means ignore school district and 1 means search in same school district. Default is 1</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.sameZip">
+            <summary>Valid values are 0, 1 or NULL. 0 means ignore zip code and 1 means search in same zip code. Default is 0</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.sameBlock">
+            <summary>Valid values are 0, 1 or NULL. 0 means ignore address block and 1 means search in same block. Default is 0</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.sameStreet">
+            <summary>Valid values are 0, 1 or NULL. 0 means ignore street and 1 means search in same street. Default is 0</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.monthOffset">
+            <summary>Month in past to inspect for comparables, always negative, default value is -12 (1 Year)</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.minSalePrice">
+            <summary>Minimum sale price for consideration. Default is 10000</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.maxSalePrice">
+            <summary>Maximum Sale price for consideration. Default is ignore max sale price</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.classMatchType">
+            <summary>0 - For same BuildingClass, 1  - For Expanded Building Classes based on Subject Building Class, 2 - To ignore Building Class</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.isNotIntraFamily">
+            <summary>Null or 1. 1 - means only arm length sales are considered.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.isSelleraCompany">
+            <summary>Null or 1. 1 - means seller is a company</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.isBuyeraCompany">
+            <summary>Null or 1. 1 - means buyer is a company.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.distance">
+            <summary>Search distance in miles. Values can be decimals. Default is 1.0</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.gLAMin">
+            <summary>Percentage difference in GLA for properties smaller than subject</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.gLAMax">
+            <summary>Percentage difference in GLA for properties larger than subject</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.lotAreaMin">
+            <summary>Percentage difference in Lot Area for properties smaller than subject</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.lotAreaMax">
+            <summary>Percentage difference in Lot Area for properties larger than subject</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.buildingFrontageMin">
+            <summary>Minimum Building Frontage in ft for consideration</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.buildingFrontageMax">
+            <summary>Maximum Building Frontage in ft for consideration</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.buildingDepthMin">
+            <summary>Minimum Building Depth in ft for consideration</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.buildingDepthMax">
+            <summary>Maximum Building Depth in ft for consideration</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.lotFrontageMin">
+            <summary>Minimum Lot Frontage in ft for consideration</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.lotFrontageMax">
+            <summary>Maximum Lot Frontage in ft for consideration</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.lotDepthMin">
+            <summary>Minimum Lot Depth in ft for consideration</summary>
+        </member>
+        <member name="P:PropertyWebAPI.BAL.AdditionalCMAFilter.lotDepthMax">
+            <summary>Maximum Lot Depth in ft for consideration</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ManualCMASelection.username">
+            <summary>Name of the user requesting CMA</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ManualCMASelection.intent">
+            <summary>Valid values are 1 - Regular CMA, 2 - Short Sale, 3 - Rehab</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ManualCMASelection.basicFilter">
+            <summary>Filters associated with result set size, ownership, location,price etc.</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ManualCMASelection.additionalFilter">
+            <summary>Filters associated with distance, building and lot dimensions</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ManualCMASelection.comparables">
+            <summary>List of comparables selected</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ManualCMAFilters.basicFilter">
+            <summary>Filters associated with result set size, ownership, location,price etc.</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.ManualCMAFilters.additionalFilter">
+            <summary>Filters associated with distance, building and lot dimensions</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.AutomatedCMAFilters.intent">
+            <summary>Valid values are 1 - Regular CMA, 2 - Short Sale, 3 - Rehab</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.AutomatedCMAFilters.algorithmType">
+            <summary>Valid values are G - Farther th property tighter the constraints, O - Iterative constraint relaxation with fixed upper bounds, E - Euclidean distance based ranking within set constraints</summary>
+        </member>
+        <member name="F:PropertyWebAPI.BAL.AutomatedCMAFilters.basicFilter">
+            <summary>Filters associated with result set size, ownership, location,price etc.</summary>
+        </member>
         <member name="T:PropertyWebAPI.BAL.DOBPenaltiesAndViolationsSummaryData">
             <summary>
             Helper class used to capture DOB Civil Penalties detail and used for serialization into JSON object 
@@ -1240,111 +1348,6 @@
                 This method updates the Zillow table based on the information received from the Request Object
             </summary>
         </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.maxRecords">
-            <summary>Maximum number of comparables to be returned</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.sameNeighborhood">
-            <summary>Valid values are 0, 1 or NULL. 0 means ignore neighborhood and 1 means search in same neighborhood. Default is 0</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.sameSchoolDistrict">
-            <summary>Valid values are 0, 1 or NULL. 0 means ignore school district and 1 means search in same school district. Default is 1</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.sameZip">
-            <summary>Valid values are 0, 1 or NULL. 0 means ignore zip code and 1 means search in same zip code. Default is 0</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.sameBlock">
-            <summary>Valid values are 0, 1 or NULL. 0 means ignore address block and 1 means search in same block. Default is 0</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.sameStreet">
-            <summary>Valid values are 0, 1 or NULL. 0 means ignore street and 1 means search in same street. Default is 0</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.monthOffset">
-            <summary>Month in past to inspect for comparables, always negative, default value is -12 (1 Year)</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.minSalePrice">
-            <summary>Minimum sale price for consideration. Default is 10000</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.maxSalePrice">
-            <summary>Maximum Sale price for consideration. Default is ignore max sale price</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.classMatchType">
-            <summary>0 - For same BuildingClass, 1  - For Expanded Building Classes based on Subject Building Class, 2 - To ignore Building Class</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.isNotIntraFamily">
-            <summary>Null or 1. 1 - means only arm length sales are considered.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.isSelleraCompany">
-            <summary>Null or 1. 1 - means seller is a company</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.BasicCMAFilter.isBuyeraCompany">
-            <summary>Null or 1. 1 - means buyer is a company.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.distance">
-            <summary>Search distance in miles. Values can be decimals. Default is 1.0</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.gLAMin">
-            <summary>Percentage difference in GLA for properties smaller than subject</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.gLAMax">
-            <summary>Percentage difference in GLA for properties larger than subject</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.lotAreaMin">
-            <summary>Percentage difference in Lot Area for properties smaller than subject</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.lotAreaMax">
-            <summary>Percentage difference in Lot Area for properties larger than subject</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.buildingFrontageMin">
-            <summary>Minimum Building Frontage in ft for consideration</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.buildingFrontageMax">
-            <summary>Maximum Building Frontage in ft for consideration</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.buildingDepthMin">
-            <summary>Minimum Building Depth in ft for consideration</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.buildingDepthMax">
-            <summary>Maximum Building Depth in ft for consideration</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.lotFrontageMin">
-            <summary>Minimum Lot Frontage in ft for consideration</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.lotFrontageMax">
-            <summary>Maximum Lot Frontage in ft for consideration</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.lotDepthMin">
-            <summary>Minimum Lot Depth in ft for consideration</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.AdditionalCMAFilter.lotDepthMax">
-            <summary>Maximum Lot Depth in ft for consideration</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.ManualCMASelection.basicFilter">
-            <summary>Filters associated with result set size, ownership, location,price etc.</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.ManualCMASelection.additionalFilter">
-            <summary>Filters associated with distance, building and lot dimensions</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.ManualCMASelection.comparables">
-            <summary>List of comparables selected</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.ManualCMASelection.intent">
-            <summary>Valid values are 1 - Regular CMA, 2 - Short Sale, 3 - Rehab</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.ManualCMAFilters.basicFilter">
-            <summary>Filters associated with result set size, ownership, location,price etc.</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.ManualCMAFilters.additionalFilter">
-            <summary>Filters associated with distance, building and lot dimensions</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.AutomatedCMAFilters.intent">
-            <summary>Valid values are 1 - Regular CMA, 2 - Short Sale, 3 - Rehab</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.AutomatedCMAFilters.algorithmType">
-            <summary>Valid values are G - Farther th property tighter the constraints, O - Iterative constraint relaxation with fixed upper bounds, E - Euclidean distance based ranking within set constraints</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.AutomatedCMAFilters.basicFilter">
-            <summary>Filters associated with result set size, ownership, location,price etc.</summary>
-        </member>
         <member name="T:PropertyWebAPI.Controllers.CMAController">
             <summary>  
             This controller handles all api requests associated with CMA related information
@@ -1459,15 +1462,28 @@
                 Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
             </returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,PropertyWebAPI.Controllers.AutomatedCMAFilters)">
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSubjectDetails(System.String)">
+            <summary>Use this api to get a subject property's details</summary>  
+            <param name="subjectBBL">Borough Block Lot Number of the subject property. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+            <returns>Returns subject property's details</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,PropertyWebAPI.BAL.AutomatedCMAFilters)">
             <summary>  
-                Use this api to get a list of comparables for the given property and associated parameters
+                Deprecated - Use this api to get a list of comparables for the given property and associated parameters
             </summary>  
             <param name="subjectBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
             <param name="filters">Filters to refine comparable</param>
             <returns>Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.CMAController.GetManualComparables(System.String,PropertyWebAPI.Controllers.ManualCMAFilters)">
+        <member name="M:PropertyWebAPI.Controllers.CMAController.RunAutomatedCMA(System.String,PropertyWebAPI.BAL.AutomatedCMAFilters)">
+            <summary>  
+                Use this api to get an automated CMA for a given property and associated parameters
+            </summary>  
+            <param name="subjectBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+            <param name="filters">Filters to refine comparables</param>
+            <returns>Returns a list of comparables and price range for the subject property</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetManualComparables(System.String,PropertyWebAPI.BAL.ManualCMAFilters)">
             <summary>
             Use this api to get a list of sales comparables for the given property and associated filters
             </summary>
@@ -1475,18 +1491,13 @@
             <param name="filters">Filters to refine comparable sales</param>
             <returns>Return a list of sales conforming with subject property and filters provided</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.CMAController.PostManualComparables(System.String,PropertyWebAPI.Controllers.ManualCMASelection)">
+        <member name="M:PropertyWebAPI.Controllers.CMAController.PostManualComparables(System.String,PropertyWebAPI.BAL.ManualCMASelection)">
             <summary>
             Use this API to get price estimates for a manual selection of comparables 
             </summary>
             <param name="subjectBBL">Borough Block Lot Number of the subject property. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
             <param name="manualCMA">Filters used for initial comparable sales</param>
             <returns>Estimated price for the subject property based on comparables selected</returns>
-        </member>
-        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSubjectDetails(System.String)">
-            <summary>Use this api to get a subject property's details</summary>  
-            <param name="subjectBBL">Borough Block Lot Number of the subject property. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
-            <returns>Returns subject property's details</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.CMAController.GetDeedParties(System.String)">
             <summary>  
@@ -1497,6 +1508,102 @@
             </param>
             <returns>
                 Returns parties associated with a deed (buyers and sellers)
+            </returns>
+        </member>
+        <member name="T:PropertyWebAPI.Controllers.CourtsController">
+            <summary>  
+            This controller handles all api requests associated with eCourts CCIS Case related data
+            </summary>  
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetRelatedLawFirms(System.String,System.String,System.String,System.Boolean)">
+            <summary>Use this api to get a list of all firms related to a given firm</summary>  
+            <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
+            <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
+            <param name="partyindicator">Valid Values are - Plaintiff and Defendant. Default is Plaintiff</param>
+            <param name="withinsamecounty">Default value is false</param>
+            <returns>Returns a list of all related firms and their case counts in descending order of count</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetJudgesPresidedOverRelatedLawFirmsCases(System.String,System.String,System.String,System.Boolean)">
+            <summary>Use this api to get a list of all Judges that presided over motion decisions associated with cases related to a given firm</summary>  
+            <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
+            <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
+            <param name="partyindicator">Valid Values are - Plaintiff and Defendant. Default is Plaintiff</param>
+            <param name="withinsamecounty">Default value is false</param>
+            <returns>Returns a list of all Judges that presided over motion decisions associated with cases related to a given firm</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetLawFirmCases(System.String,System.String,System.String,System.Boolean,System.String,System.String)">
+            <summary>Use this api to get a list of cases associated with a law firm and its related law firms</summary>  
+            <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
+            <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
+            <param name="partyindicator">Valid Values are - Plaintiff and Defendant. Default is Plaintiff</param>
+            <param name="withinsamecounty">Default value is false</param>
+            <param name="judgecountyid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <param name="judgeid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <returns>Returns a list of cases associated with a law firm and its related law firms in descending order of RJI filing date</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetLawFirmCompletedCases(System.String,System.String,System.String,System.String,System.Boolean,System.String,System.String)">
+            <summary>Use this api to get a list of completed cases, cases with a decision on Judgment of Foreclosure and Sale Motion, associated with a law firm and its related law firms</summary>  
+            <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
+            <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
+            <param name="decision">Valid Values are GRANTED, DENIED, WITHDRAWN and OTHER</param>
+            <param name="partyindicator">Valid Values are - Plaintiff and Defendant. Default is Plaintiff</param>
+            <param name="withinsamecounty">Default value is false</param>
+            <param name="judgecountyid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <param name="judgeid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <returns>Returns a list of completed cases in descending order of RJI filing date</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetReliefSoughtDecision5NumberSummary(System.String,System.String,System.String,System.Boolean,System.String,System.String)">
+            <summary>Use this api to get 5 number summary, instance count and average time taken to a decision, for various ReliefSought 
+            and decision combinations, for a law firm and its related law firms</summary>  
+            <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
+            <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
+            <param name="partyindicator">Valid Values are - Plaintiff and Defendant. Default is Plaintiff</param>
+            <param name="withinsamecounty">Default value is false</param>
+            <param name="judgecountyid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <param name="judgeid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <returns>Returns 5 number summary plus instance count and Average time taken to decision for various ReliefSought 
+            and decision combinations for a law firm and its related law firms</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetCaseCompletionDecision5NumberSummary(System.String,System.String,System.Boolean,System.String,System.String)">
+            <summary>Use this api to get 5 number summary, instance count and average time taken to a decision, for Judgment of Foreclosure and Sale
+            and decision type combinations, for a law firm and its related law firms</summary>  
+            <param name="countyId">CCIS County Id associated with the Law Firm.</param>  
+            <param name="firmid">ID of the law firm (AttorneyOfRecord) associated with a case</param>  
+            <param name="withinsamecounty">Default value is false</param>
+            <param name="judgecountyid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <param name="judgeid">Optional parameter. Set value if cases need filtering based on Attorney Judge Combination</param>
+            <returns>Returns 5 number summary plus instance count and Average time taken to decision for various ReliefSought 
+            and decision combinations for a law firm and its related law firms</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetCasesByJudgeReliefSought(System.String,System.String,System.String)">
+            <summary>Use this api to get a list of cases associated with a Relief Sought for a given judge in a county</summary>  
+            <param name="countyId">CCIS County Id associated with the Judge.</param>  
+            <param name="judgeId">ID of the Judge as it appears in the data</param>  
+            <param name="reliefSought">Relief Sought in a Motion. Use the name as it appears in the data do not modify it</param>
+            <returns>Returns a list of cases associated with a Relief Sought for a given judge in a county</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetMotionSummaryStatisticsByJudgeReliefSought(System.String,System.String)">
+            <summary>Use this api to get a list of decision statistics for various Relief Sought for a given judge.</summary>  
+            <param name="countyId">CCIS County Id associated with the Judge.</param>    
+            <param name="judgeId">Id of the Judge as it appears in the data do not modify it</param>  
+            <returns>Returns a list of decision statistics for various Relief Sought for a given judge.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetJudgeReliefSought5PlusNumberSummary(System.String,System.String,System.String)">
+            <summary>Use this api to get a 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.</summary>  
+            <param name="countyId">CCIS County Id associated with the Judge.</param> 
+            <param name="judgeId">Id of the Judge as it appears in the data do not modify it</param>  
+            <param name="reliefSought">Relief Sought in a Motion. Use the name as it appears in the data do not modify it</param>
+            <returns>Returns 5 Number Summary and Avg on days to decision for a Relief Sought for a Judge in a county.</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CourtsController.GetMotionSummaryStatisticsByReliefSought(System.String)">
+            <summary>  
+                Use this api to get a list of decision statistics for a Relief Sought for all judges in NYC Counties.
+            </summary>  
+            <param name="reliefSought">
+                Relief Sought in a Motion. Use the name as it appears in the data do not modify it 
+            </param> 
+            <returns>
+                Returns a list of decision statistics for a Relief Sought for all judges in NYC Counties.
             </returns>
         </member>
         <member name="P:PropertyWebAPI.Controllers.Scenario.username">
@@ -2519,6 +2626,21 @@
             <summary>
                 Update Request object with higher priority and Job Id
             </summary>
+        </member>
+        <member name="T:PropertyWebAPI.CMAType">
+            <summary>Types of CMAs</summary>
+        </member>
+        <member name="T:PropertyWebAPI.CMARunType">
+            <summary>Types of CMA Runs</summary>
+        </member>
+        <member name="F:PropertyWebAPI.CMARunType.BatchedRun">
+            <summary>Run automatically on regular basis</summary>
+        </member>
+        <member name="F:PropertyWebAPI.CMARunType.OnDemand">
+            <summary>Automate CMA run at a users request</summary>
+        </member>
+        <member name="F:PropertyWebAPI.CMARunType.Manual">
+            <summary>CMA computed manually with user input</summary>
         </member>
         <member name="T:PropertyWebAPI.RequestStatus">
             <summary>Types of Request Status</summary>

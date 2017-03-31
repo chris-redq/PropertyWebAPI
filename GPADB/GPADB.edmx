@@ -34,8 +34,8 @@
           <Property Name="Landmark" Type="varchar" MaxLength="1000" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vwGeneralLeadInfomation">
+warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwGeneralLeadInformation">
           <Key>
             <PropertyRef Name="BBLE" />
             <PropertyRef Name="IsFannieMaeMortgage" />
@@ -76,10 +76,103 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
           <Property Name="ResidentialUnits" Type="float" />
           <Property Name="TaxLienList" Type="int" />
-          <Property Name="PoolA" Type="int" />
+          <Property Name="PoolA" Type="bit" />
           <Property Name="TaxLienLPs" Type="int" />
           <Property Name="TaxLienActiveCases" Type="int" />
-          <Property Name="TaxLienSoldAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="MortgageForeclosureLPs" Type="int" />
+          <Property Name="MortgageForeclosureActiveCases" Type="int" />
+          <Property Name="COSPresent" Type="int" />
+          <Property Name="FormattedAddress" Type="varchar" MaxLength="250" />
+          <Property Name="IsVacant" Type="varchar" MaxLength="1" />
+          <Property Name="IsMailingAddressActive" Type="varchar" MaxLength="1" />
+          <Property Name="City" Type="varchar" MaxLength="64" />
+          <Property Name="State" Type="varchar" MaxLength="2" />
+          <Property Name="County" Type="varchar" MaxLength="64" />
+          <Property Name="ECBAmountDue" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="ECBOpenTickets" Type="int" />
+          <Property Name="DOBCivilPenaltiesDue" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="DOBOpenViolations" Type="int" />
+          <Property Name="DOBOpenClass1Violations" Type="int" />
+          <Property Name="IsFannieMaeMortgage" Type="int" Nullable="false" />
+          <Property Name="IsFreddieMacMortgagge" Type="int" Nullable="false" />
+          <Property Name="LeadGrade" Type="varchar" MaxLength="2" />
+          <Property Name="Equity" Type="numeric" Precision="2" Scale="2" Nullable="false" />
+          <Property Name="LTV" Type="numeric" Precision="2" Scale="2" Nullable="false" />
+          <Property Name="UnbuiltAreaAboveThreshold" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="LotType" Type="varchar" MaxLength="50" />
+          <Property Name="Proximity" Type="varchar" MaxLength="50" />
+          <Property Name="NumberOfBuildings" Type="int" />
+          <Property Name="Style" Type="varchar" MaxLength="50" />
+          <Property Name="ExteriorCondition" Type="varchar" MaxLength="50" />
+          <Property Name="FinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="UnfinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="CommercialUnits" Type="int" />
+          <Property Name="CommercialSquareFootage" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="GarageType" Type="varchar" MaxLength="50" />
+          <Property Name="GarageSquareFootage" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="BasementGrade" Type="varchar" MaxLength="50" />
+          <Property Name="BasementSquareFootage" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="BasementType" Type="varchar" MaxLength="50" />
+          <Property Name="ConstructionType" Type="varchar" MaxLength="50" />
+          <Property Name="ExteriorWall" Type="varchar" MaxLength="50" />
+          <Property Name="StructureType" Type="varchar" MaxLength="50" />
+          <Property Name="Grade" Type="varchar" MaxLength="50" />
+          <Property Name="IsSRORestricted" Type="int" />
+          <Property Name="IsLandmark" Type="int" />
+          <Property Name="ServicerName" Type="varchar" MaxLength="250" />
+          <Property Name="AVGLowPrice" Type="float" />
+          <Property Name="AVGLowPriceNoLP" Type="float" />
+          <Property Name="MedianPrice" Type="float" />
+          <Property Name="AVGHighPice" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwGeneralPropertyInformation">
+          <Key>
+            <PropertyRef Name="BBLE" />
+            <PropertyRef Name="IsFannieMaeMortgage" />
+            <PropertyRef Name="IsFreddieMacMortgagge" />
+            <PropertyRef Name="Equity" />
+            <PropertyRef Name="LTV" />
+          </Key>
+          <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+          <Property Name="LotFrontage" Type="float" />
+          <Property Name="LotDepth" Type="float" />
+          <Property Name="LotArea" Type="float" />
+          <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+          <Property Name="BuildingClassDescription" Type="varchar" MaxLength="255" />
+          <Property Name="BuildingForntage" Type="float" />
+          <Property Name="BuildingDepth" Type="float" />
+          <Property Name="Stories" Type="float" />
+          <Property Name="NumberOfBuildingsOnLot" Type="float" />
+          <Property Name="BuildingGrossArea" Type="float" />
+          <Property Name="BuiltFAR" Type="float" />
+          <Property Name="MaxResidentialFAR" Type="float" />
+          <Property Name="UnbuiltArea" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="YearBuilt" Type="float" />
+          <Property Name="Borough" Type="float" />
+          <Property Name="BoroughName" Type="varchar" MaxLength="13" />
+          <Property Name="Block" Type="float" />
+          <Property Name="Lot" Type="float" />
+          <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
+          <Property Name="StreetName" Type="varchar(max)" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="30" />
+          <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+          <Property Name="NTACode" Type="varchar" MaxLength="4" />
+          <Property Name="Zoning" Type="nvarchar" MaxLength="9" />
+          <Property Name="UnitNumber" Type="nvarchar" MaxLength="5" />
+          <Property Name="East" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="North" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="ResidentialUnits" Type="float" />
+          <Property Name="TaxLienList" Type="int" />
+          <Property Name="PoolA" Type="bit" />
+          <Property Name="TaxLienLPs" Type="int" />
+          <Property Name="TaxLienActiveCases" Type="int" />
+          <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
           <Property Name="MortgageForeclosureLPs" Type="int" />
           <Property Name="MortgageForeclosureActiveCases" Type="int" />
           <Property Name="COSPresent" Type="int" />
@@ -148,91 +241,177 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
         </Function>
         <EntityContainer Name="GPADBModelStoreContainer">
           <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
-          <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
+          <EntitySet Name="vwGeneralLeadInformation" EntityType="Self.vwGeneralLeadInformation" store:Type="Views" store:Schema="app">
             <DefiningQuery>SELECT 
-    [vwGeneralLeadInfomation].[BBLE] AS [BBLE], 
-    [vwGeneralLeadInfomation].[TaxClass] AS [TaxClass], 
-    [vwGeneralLeadInfomation].[LotFrontage] AS [LotFrontage], 
-    [vwGeneralLeadInfomation].[LotDepth] AS [LotDepth], 
-    [vwGeneralLeadInfomation].[LotArea] AS [LotArea], 
-    [vwGeneralLeadInfomation].[BuildingClass] AS [BuildingClass], 
-    [vwGeneralLeadInfomation].[BuildingClassDescription] AS [BuildingClassDescription], 
-    [vwGeneralLeadInfomation].[BuildingForntage] AS [BuildingForntage], 
-    [vwGeneralLeadInfomation].[BuildingDepth] AS [BuildingDepth], 
-    [vwGeneralLeadInfomation].[Stories] AS [Stories], 
-    [vwGeneralLeadInfomation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
-    [vwGeneralLeadInfomation].[BuildingGrossArea] AS [BuildingGrossArea], 
-    [vwGeneralLeadInfomation].[BuiltFAR] AS [BuiltFAR], 
-    [vwGeneralLeadInfomation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
-    [vwGeneralLeadInfomation].[UnbuiltArea] AS [UnbuiltArea], 
-    [vwGeneralLeadInfomation].[YearBuilt] AS [YearBuilt], 
-    [vwGeneralLeadInfomation].[Borough] AS [Borough], 
-    [vwGeneralLeadInfomation].[BoroughName] AS [BoroughName], 
-    [vwGeneralLeadInfomation].[Block] AS [Block], 
-    [vwGeneralLeadInfomation].[Lot] AS [Lot], 
-    [vwGeneralLeadInfomation].[StreetNumber] AS [StreetNumber], 
-    [vwGeneralLeadInfomation].[StreetName] AS [StreetName], 
-    [vwGeneralLeadInfomation].[ZipCode] AS [ZipCode], 
-    [vwGeneralLeadInfomation].[NeighborhoodName] AS [NeighborhoodName], 
-    [vwGeneralLeadInfomation].[NTACode] AS [NTACode], 
-    [vwGeneralLeadInfomation].[Zoning] AS [Zoning], 
-    [vwGeneralLeadInfomation].[UnitNumber] AS [UnitNumber], 
-    [vwGeneralLeadInfomation].[East] AS [East], 
-    [vwGeneralLeadInfomation].[North] AS [North], 
-    [vwGeneralLeadInfomation].[Longitude] AS [Longitude], 
-    [vwGeneralLeadInfomation].[Latitude] AS [Latitude], 
-    [vwGeneralLeadInfomation].[ResidentialUnits] AS [ResidentialUnits], 
-    [vwGeneralLeadInfomation].[TaxLienList] AS [TaxLienList], 
-    [vwGeneralLeadInfomation].[PoolA] AS [PoolA], 
-    [vwGeneralLeadInfomation].[TaxLienLPs] AS [TaxLienLPs], 
-    [vwGeneralLeadInfomation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
-    [vwGeneralLeadInfomation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
-    [vwGeneralLeadInfomation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
-    [vwGeneralLeadInfomation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
-    [vwGeneralLeadInfomation].[COSPresent] AS [COSPresent], 
-    [vwGeneralLeadInfomation].[FormattedAddress] AS [FormattedAddress], 
-    [vwGeneralLeadInfomation].[IsVacant] AS [IsVacant], 
-    [vwGeneralLeadInfomation].[IsMailingAddressActive] AS [IsMailingAddressActive], 
-    [vwGeneralLeadInfomation].[City] AS [City], 
-    [vwGeneralLeadInfomation].[State] AS [State], 
-    [vwGeneralLeadInfomation].[County] AS [County], 
-    [vwGeneralLeadInfomation].[ECBAmountDue] AS [ECBAmountDue], 
-    [vwGeneralLeadInfomation].[ECBOpenTickets] AS [ECBOpenTickets], 
-    [vwGeneralLeadInfomation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
-    [vwGeneralLeadInfomation].[DOBOpenViolations] AS [DOBOpenViolations], 
-    [vwGeneralLeadInfomation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
-    [vwGeneralLeadInfomation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
-    [vwGeneralLeadInfomation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
-    [vwGeneralLeadInfomation].[LeadGrade] AS [LeadGrade], 
-    [vwGeneralLeadInfomation].[Equity] AS [Equity], 
-    [vwGeneralLeadInfomation].[LTV] AS [LTV], 
-    [vwGeneralLeadInfomation].[UnbuiltAreaAboveThreshold] AS [UnbuiltAreaAboveThreshold], 
-    [vwGeneralLeadInfomation].[LotType] AS [LotType], 
-    [vwGeneralLeadInfomation].[Proximity] AS [Proximity], 
-    [vwGeneralLeadInfomation].[NumberOfBuildings] AS [NumberOfBuildings], 
-    [vwGeneralLeadInfomation].[Style] AS [Style], 
-    [vwGeneralLeadInfomation].[ExteriorCondition] AS [ExteriorCondition], 
-    [vwGeneralLeadInfomation].[FinishedSquareFootage] AS [FinishedSquareFootage], 
-    [vwGeneralLeadInfomation].[UnfinishedSquareFootage] AS [UnfinishedSquareFootage], 
-    [vwGeneralLeadInfomation].[CommercialUnits] AS [CommercialUnits], 
-    [vwGeneralLeadInfomation].[CommercialSquareFootage] AS [CommercialSquareFootage], 
-    [vwGeneralLeadInfomation].[GarageType] AS [GarageType], 
-    [vwGeneralLeadInfomation].[GarageSquareFootage] AS [GarageSquareFootage], 
-    [vwGeneralLeadInfomation].[BasementGrade] AS [BasementGrade], 
-    [vwGeneralLeadInfomation].[BasementSquareFootage] AS [BasementSquareFootage], 
-    [vwGeneralLeadInfomation].[BasementType] AS [BasementType], 
-    [vwGeneralLeadInfomation].[ConstructionType] AS [ConstructionType], 
-    [vwGeneralLeadInfomation].[ExteriorWall] AS [ExteriorWall], 
-    [vwGeneralLeadInfomation].[StructureType] AS [StructureType], 
-    [vwGeneralLeadInfomation].[Grade] AS [Grade], 
-    [vwGeneralLeadInfomation].[IsSRORestricted] AS [IsSRORestricted], 
-    [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralLeadInfomation].[ServicerName] AS [ServicerName], 
-    [vwGeneralLeadInfomation].[AVGLowPrice] AS [AVGLowPrice], 
-    [vwGeneralLeadInfomation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
-    [vwGeneralLeadInfomation].[MedianPrice] AS [MedianPrice], 
-    [vwGeneralLeadInfomation].[AVGHighPice] AS [AVGHighPice]
-    FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
+    [vwGeneralLeadInformation].[BBLE] AS [BBLE], 
+    [vwGeneralLeadInformation].[TaxClass] AS [TaxClass], 
+    [vwGeneralLeadInformation].[LotFrontage] AS [LotFrontage], 
+    [vwGeneralLeadInformation].[LotDepth] AS [LotDepth], 
+    [vwGeneralLeadInformation].[LotArea] AS [LotArea], 
+    [vwGeneralLeadInformation].[BuildingClass] AS [BuildingClass], 
+    [vwGeneralLeadInformation].[BuildingClassDescription] AS [BuildingClassDescription], 
+    [vwGeneralLeadInformation].[BuildingForntage] AS [BuildingForntage], 
+    [vwGeneralLeadInformation].[BuildingDepth] AS [BuildingDepth], 
+    [vwGeneralLeadInformation].[Stories] AS [Stories], 
+    [vwGeneralLeadInformation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
+    [vwGeneralLeadInformation].[BuildingGrossArea] AS [BuildingGrossArea], 
+    [vwGeneralLeadInformation].[BuiltFAR] AS [BuiltFAR], 
+    [vwGeneralLeadInformation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
+    [vwGeneralLeadInformation].[UnbuiltArea] AS [UnbuiltArea], 
+    [vwGeneralLeadInformation].[YearBuilt] AS [YearBuilt], 
+    [vwGeneralLeadInformation].[Borough] AS [Borough], 
+    [vwGeneralLeadInformation].[BoroughName] AS [BoroughName], 
+    [vwGeneralLeadInformation].[Block] AS [Block], 
+    [vwGeneralLeadInformation].[Lot] AS [Lot], 
+    [vwGeneralLeadInformation].[StreetNumber] AS [StreetNumber], 
+    [vwGeneralLeadInformation].[StreetName] AS [StreetName], 
+    [vwGeneralLeadInformation].[ZipCode] AS [ZipCode], 
+    [vwGeneralLeadInformation].[NeighborhoodName] AS [NeighborhoodName], 
+    [vwGeneralLeadInformation].[NTACode] AS [NTACode], 
+    [vwGeneralLeadInformation].[Zoning] AS [Zoning], 
+    [vwGeneralLeadInformation].[UnitNumber] AS [UnitNumber], 
+    [vwGeneralLeadInformation].[East] AS [East], 
+    [vwGeneralLeadInformation].[North] AS [North], 
+    [vwGeneralLeadInformation].[Longitude] AS [Longitude], 
+    [vwGeneralLeadInformation].[Latitude] AS [Latitude], 
+    [vwGeneralLeadInformation].[ResidentialUnits] AS [ResidentialUnits], 
+    [vwGeneralLeadInformation].[TaxLienList] AS [TaxLienList], 
+    [vwGeneralLeadInformation].[PoolA] AS [PoolA], 
+    [vwGeneralLeadInformation].[TaxLienLPs] AS [TaxLienLPs], 
+    [vwGeneralLeadInformation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
+    [vwGeneralLeadInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
+    [vwGeneralLeadInformation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
+    [vwGeneralLeadInformation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
+    [vwGeneralLeadInformation].[COSPresent] AS [COSPresent], 
+    [vwGeneralLeadInformation].[FormattedAddress] AS [FormattedAddress], 
+    [vwGeneralLeadInformation].[IsVacant] AS [IsVacant], 
+    [vwGeneralLeadInformation].[IsMailingAddressActive] AS [IsMailingAddressActive], 
+    [vwGeneralLeadInformation].[City] AS [City], 
+    [vwGeneralLeadInformation].[State] AS [State], 
+    [vwGeneralLeadInformation].[County] AS [County], 
+    [vwGeneralLeadInformation].[ECBAmountDue] AS [ECBAmountDue], 
+    [vwGeneralLeadInformation].[ECBOpenTickets] AS [ECBOpenTickets], 
+    [vwGeneralLeadInformation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
+    [vwGeneralLeadInformation].[DOBOpenViolations] AS [DOBOpenViolations], 
+    [vwGeneralLeadInformation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
+    [vwGeneralLeadInformation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
+    [vwGeneralLeadInformation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
+    [vwGeneralLeadInformation].[LeadGrade] AS [LeadGrade], 
+    [vwGeneralLeadInformation].[Equity] AS [Equity], 
+    [vwGeneralLeadInformation].[LTV] AS [LTV], 
+    [vwGeneralLeadInformation].[UnbuiltAreaAboveThreshold] AS [UnbuiltAreaAboveThreshold], 
+    [vwGeneralLeadInformation].[LotType] AS [LotType], 
+    [vwGeneralLeadInformation].[Proximity] AS [Proximity], 
+    [vwGeneralLeadInformation].[NumberOfBuildings] AS [NumberOfBuildings], 
+    [vwGeneralLeadInformation].[Style] AS [Style], 
+    [vwGeneralLeadInformation].[ExteriorCondition] AS [ExteriorCondition], 
+    [vwGeneralLeadInformation].[FinishedSquareFootage] AS [FinishedSquareFootage], 
+    [vwGeneralLeadInformation].[UnfinishedSquareFootage] AS [UnfinishedSquareFootage], 
+    [vwGeneralLeadInformation].[CommercialUnits] AS [CommercialUnits], 
+    [vwGeneralLeadInformation].[CommercialSquareFootage] AS [CommercialSquareFootage], 
+    [vwGeneralLeadInformation].[GarageType] AS [GarageType], 
+    [vwGeneralLeadInformation].[GarageSquareFootage] AS [GarageSquareFootage], 
+    [vwGeneralLeadInformation].[BasementGrade] AS [BasementGrade], 
+    [vwGeneralLeadInformation].[BasementSquareFootage] AS [BasementSquareFootage], 
+    [vwGeneralLeadInformation].[BasementType] AS [BasementType], 
+    [vwGeneralLeadInformation].[ConstructionType] AS [ConstructionType], 
+    [vwGeneralLeadInformation].[ExteriorWall] AS [ExteriorWall], 
+    [vwGeneralLeadInformation].[StructureType] AS [StructureType], 
+    [vwGeneralLeadInformation].[Grade] AS [Grade], 
+    [vwGeneralLeadInformation].[IsSRORestricted] AS [IsSRORestricted], 
+    [vwGeneralLeadInformation].[IsLandmark] AS [IsLandmark], 
+    [vwGeneralLeadInformation].[ServicerName] AS [ServicerName], 
+    [vwGeneralLeadInformation].[AVGLowPrice] AS [AVGLowPrice], 
+    [vwGeneralLeadInformation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
+    [vwGeneralLeadInformation].[MedianPrice] AS [MedianPrice], 
+    [vwGeneralLeadInformation].[AVGHighPice] AS [AVGHighPice]
+    FROM [app].[vwGeneralLeadInformation] AS [vwGeneralLeadInformation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwGeneralPropertyInformation" EntityType="Self.vwGeneralPropertyInformation" store:Type="Views" store:Schema="app">
+            <DefiningQuery>SELECT 
+    [vwGeneralPropertyInformation].[BBLE] AS [BBLE], 
+    [vwGeneralPropertyInformation].[TaxClass] AS [TaxClass], 
+    [vwGeneralPropertyInformation].[LotFrontage] AS [LotFrontage], 
+    [vwGeneralPropertyInformation].[LotDepth] AS [LotDepth], 
+    [vwGeneralPropertyInformation].[LotArea] AS [LotArea], 
+    [vwGeneralPropertyInformation].[BuildingClass] AS [BuildingClass], 
+    [vwGeneralPropertyInformation].[BuildingClassDescription] AS [BuildingClassDescription], 
+    [vwGeneralPropertyInformation].[BuildingForntage] AS [BuildingForntage], 
+    [vwGeneralPropertyInformation].[BuildingDepth] AS [BuildingDepth], 
+    [vwGeneralPropertyInformation].[Stories] AS [Stories], 
+    [vwGeneralPropertyInformation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
+    [vwGeneralPropertyInformation].[BuildingGrossArea] AS [BuildingGrossArea], 
+    [vwGeneralPropertyInformation].[BuiltFAR] AS [BuiltFAR], 
+    [vwGeneralPropertyInformation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
+    [vwGeneralPropertyInformation].[UnbuiltArea] AS [UnbuiltArea], 
+    [vwGeneralPropertyInformation].[YearBuilt] AS [YearBuilt], 
+    [vwGeneralPropertyInformation].[Borough] AS [Borough], 
+    [vwGeneralPropertyInformation].[BoroughName] AS [BoroughName], 
+    [vwGeneralPropertyInformation].[Block] AS [Block], 
+    [vwGeneralPropertyInformation].[Lot] AS [Lot], 
+    [vwGeneralPropertyInformation].[StreetNumber] AS [StreetNumber], 
+    [vwGeneralPropertyInformation].[StreetName] AS [StreetName], 
+    [vwGeneralPropertyInformation].[ZipCode] AS [ZipCode], 
+    [vwGeneralPropertyInformation].[NeighborhoodName] AS [NeighborhoodName], 
+    [vwGeneralPropertyInformation].[NTACode] AS [NTACode], 
+    [vwGeneralPropertyInformation].[Zoning] AS [Zoning], 
+    [vwGeneralPropertyInformation].[UnitNumber] AS [UnitNumber], 
+    [vwGeneralPropertyInformation].[East] AS [East], 
+    [vwGeneralPropertyInformation].[North] AS [North], 
+    [vwGeneralPropertyInformation].[Longitude] AS [Longitude], 
+    [vwGeneralPropertyInformation].[Latitude] AS [Latitude], 
+    [vwGeneralPropertyInformation].[ResidentialUnits] AS [ResidentialUnits], 
+    [vwGeneralPropertyInformation].[TaxLienList] AS [TaxLienList], 
+    [vwGeneralPropertyInformation].[PoolA] AS [PoolA], 
+    [vwGeneralPropertyInformation].[TaxLienLPs] AS [TaxLienLPs], 
+    [vwGeneralPropertyInformation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
+    [vwGeneralPropertyInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
+    [vwGeneralPropertyInformation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
+    [vwGeneralPropertyInformation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
+    [vwGeneralPropertyInformation].[COSPresent] AS [COSPresent], 
+    [vwGeneralPropertyInformation].[FormattedAddress] AS [FormattedAddress], 
+    [vwGeneralPropertyInformation].[IsVacant] AS [IsVacant], 
+    [vwGeneralPropertyInformation].[IsMailingAddressActive] AS [IsMailingAddressActive], 
+    [vwGeneralPropertyInformation].[City] AS [City], 
+    [vwGeneralPropertyInformation].[State] AS [State], 
+    [vwGeneralPropertyInformation].[County] AS [County], 
+    [vwGeneralPropertyInformation].[ECBAmountDue] AS [ECBAmountDue], 
+    [vwGeneralPropertyInformation].[ECBOpenTickets] AS [ECBOpenTickets], 
+    [vwGeneralPropertyInformation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
+    [vwGeneralPropertyInformation].[DOBOpenViolations] AS [DOBOpenViolations], 
+    [vwGeneralPropertyInformation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
+    [vwGeneralPropertyInformation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
+    [vwGeneralPropertyInformation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
+    [vwGeneralPropertyInformation].[LeadGrade] AS [LeadGrade], 
+    [vwGeneralPropertyInformation].[Equity] AS [Equity], 
+    [vwGeneralPropertyInformation].[LTV] AS [LTV], 
+    [vwGeneralPropertyInformation].[UnbuiltAreaAboveThreshold] AS [UnbuiltAreaAboveThreshold], 
+    [vwGeneralPropertyInformation].[LotType] AS [LotType], 
+    [vwGeneralPropertyInformation].[Proximity] AS [Proximity], 
+    [vwGeneralPropertyInformation].[NumberOfBuildings] AS [NumberOfBuildings], 
+    [vwGeneralPropertyInformation].[Style] AS [Style], 
+    [vwGeneralPropertyInformation].[ExteriorCondition] AS [ExteriorCondition], 
+    [vwGeneralPropertyInformation].[FinishedSquareFootage] AS [FinishedSquareFootage], 
+    [vwGeneralPropertyInformation].[UnfinishedSquareFootage] AS [UnfinishedSquareFootage], 
+    [vwGeneralPropertyInformation].[CommercialUnits] AS [CommercialUnits], 
+    [vwGeneralPropertyInformation].[CommercialSquareFootage] AS [CommercialSquareFootage], 
+    [vwGeneralPropertyInformation].[GarageType] AS [GarageType], 
+    [vwGeneralPropertyInformation].[GarageSquareFootage] AS [GarageSquareFootage], 
+    [vwGeneralPropertyInformation].[BasementGrade] AS [BasementGrade], 
+    [vwGeneralPropertyInformation].[BasementSquareFootage] AS [BasementSquareFootage], 
+    [vwGeneralPropertyInformation].[BasementType] AS [BasementType], 
+    [vwGeneralPropertyInformation].[ConstructionType] AS [ConstructionType], 
+    [vwGeneralPropertyInformation].[ExteriorWall] AS [ExteriorWall], 
+    [vwGeneralPropertyInformation].[StructureType] AS [StructureType], 
+    [vwGeneralPropertyInformation].[Grade] AS [Grade], 
+    [vwGeneralPropertyInformation].[IsSRORestricted] AS [IsSRORestricted], 
+    [vwGeneralPropertyInformation].[IsLandmark] AS [IsLandmark], 
+    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName], 
+    [vwGeneralPropertyInformation].[AVGLowPrice] AS [AVGLowPrice], 
+    [vwGeneralPropertyInformation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
+    [vwGeneralPropertyInformation].[MedianPrice] AS [MedianPrice], 
+    [vwGeneralPropertyInformation].[AVGHighPice] AS [AVGHighPice]
+    FROM [app].[vwGeneralPropertyInformation] AS [vwGeneralPropertyInformation]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -240,7 +419,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <edmx:ConceptualModels>
       <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="vwGeneralLeadInfomations" EntityType="GPADBModel.vwGeneralLeadInfomation" />
+          <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
+          <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
+          <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
           <FunctionImport Name="GetPropertyLeads">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
             <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -261,7 +442,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <Parameter Name="Servicer" Mode="In" Type="String" />
             <Parameter Name="Landmark" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInfomations" ReturnType="Collection(GPADBModel.vwGeneralLeadInfomation)">
+          <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
             <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
             <Parameter Name="Counties" Mode="In" Type="String" />
@@ -281,9 +462,36 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
             <Parameter Name="Servicer" Mode="In" Type="String" />
             <Parameter Name="Landmark" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
         </EntityContainer>
-        <EntityType Name="vwGeneralLeadInfomation">
+        <EntityType Name="SavedScenario">
+          <Key>
+            <PropertyRef Name="ScenarioId" />
+          </Key>
+          <Property Name="ScenarioId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScenarioName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingClassCodes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Counties" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Vacant" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddressActive" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Violations" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Cities" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Neighborhoods" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="States" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LienTypes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LeadGrades" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LTV" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Equity" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IsFannie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IsFreddie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UnbuiltArea" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwGeneralLeadInformation">
           <Key>
             <PropertyRef Name="BBLE" />
             <PropertyRef Name="IsFannieMaeMortgage" />
@@ -324,10 +532,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
           <Property Name="ResidentialUnits" Type="Double" />
           <Property Name="TaxLienList" Type="Int32" />
-          <Property Name="PoolA" Type="Int32" />
+          <Property Name="PoolA" Type="Boolean" />
           <Property Name="TaxLienLPs" Type="Int32" />
           <Property Name="TaxLienActiveCases" Type="Int32" />
-          <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
           <Property Name="MortgageForeclosureLPs" Type="Int32" />
           <Property Name="MortgageForeclosureActiveCases" Type="Int32" />
           <Property Name="COSPresent" Type="Int32" />
@@ -374,33 +582,96 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           <Property Name="MedianPrice" Type="Double" />
           <Property Name="AVGHighPice" Type="Double" />
         </EntityType>
-        <EntityType Name="SavedScenario">
+        <EntityType Name="vwGeneralPropertyInformation">
           <Key>
-            <PropertyRef Name="ScenarioId" />
+            <PropertyRef Name="BBLE" />
+            <PropertyRef Name="IsFannieMaeMortgage" />
+            <PropertyRef Name="IsFreddieMacMortgagge" />
+            <PropertyRef Name="Equity" />
+            <PropertyRef Name="LTV" />
           </Key>
-          <Property Name="ScenarioId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ScenarioName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="BuildingClassCodes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Counties" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Vacant" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="MailingAddressActive" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Violations" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Cities" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Neighborhoods" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="States" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LienTypes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LeadGrades" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LTV" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Equity" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IsFannie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IsFreddie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="UnbuiltArea" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="LotFrontage" Type="Double" />
+          <Property Name="LotDepth" Type="Double" />
+          <Property Name="LotArea" Type="Double" />
+          <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingClassDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingForntage" Type="Double" />
+          <Property Name="BuildingDepth" Type="Double" />
+          <Property Name="Stories" Type="Double" />
+          <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+          <Property Name="BuildingGrossArea" Type="Double" />
+          <Property Name="BuiltFAR" Type="Double" />
+          <Property Name="MaxResidentialFAR" Type="Double" />
+          <Property Name="UnbuiltArea" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="YearBuilt" Type="Double" />
+          <Property Name="Borough" Type="Double" />
+          <Property Name="BoroughName" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="Block" Type="Double" />
+          <Property Name="Lot" Type="Double" />
+          <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="ResidentialUnits" Type="Double" />
+          <Property Name="TaxLienList" Type="Int32" />
+          <Property Name="PoolA" Type="Boolean" />
+          <Property Name="TaxLienLPs" Type="Int32" />
+          <Property Name="TaxLienActiveCases" Type="Int32" />
+          <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="MortgageForeclosureLPs" Type="Int32" />
+          <Property Name="MortgageForeclosureActiveCases" Type="Int32" />
+          <Property Name="COSPresent" Type="Int32" />
+          <Property Name="FormattedAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsVacant" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IsMailingAddressActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="County" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="ECBAmountDue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ECBOpenTickets" Type="Int32" />
+          <Property Name="DOBCivilPenaltiesDue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DOBOpenViolations" Type="Int32" />
+          <Property Name="DOBOpenClass1Violations" Type="Int32" />
+          <Property Name="IsFannieMaeMortgage" Type="Int32" Nullable="false" />
+          <Property Name="IsFreddieMacMortgagge" Type="Int32" Nullable="false" />
+          <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
+          <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
+          <Property Name="UnbuiltAreaAboveThreshold" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="LotType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Proximity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NumberOfBuildings" Type="Int32" />
+          <Property Name="Style" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExteriorCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="UnfinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="CommercialUnits" Type="Int32" />
+          <Property Name="CommercialSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="GarageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GarageSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="BasementGrade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BasementSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="BasementType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConstructionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExteriorWall" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StructureType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsSRORestricted" Type="Int32" />
+          <Property Name="IsLandmark" Type="Int32" />
+          <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AVGLowPrice" Type="Double" />
+          <Property Name="AVGLowPriceNoLP" Type="Double" />
+          <Property Name="MedianPrice" Type="Double" />
+          <Property Name="AVGHighPice" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -408,9 +679,126 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities1">
-          <EntitySetMapping Name="vwGeneralLeadInfomations">
-            <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInfomation">
-              <MappingFragment StoreEntitySet="vwGeneralLeadInfomation">
+          <EntitySetMapping Name="SavedScenarios">
+            <EntityTypeMapping TypeName="GPADBModel.SavedScenario">
+              <MappingFragment StoreEntitySet="SavedScenario">
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Servicer" ColumnName="Servicer" />
+                <ScalarProperty Name="UnbuiltArea" ColumnName="UnbuiltArea" />
+                <ScalarProperty Name="IsFreddie" ColumnName="IsFreddie" />
+                <ScalarProperty Name="IsFannie" ColumnName="IsFannie" />
+                <ScalarProperty Name="Equity" ColumnName="Equity" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="LeadGrades" ColumnName="LeadGrades" />
+                <ScalarProperty Name="LienTypes" ColumnName="LienTypes" />
+                <ScalarProperty Name="States" ColumnName="States" />
+                <ScalarProperty Name="Neighborhoods" ColumnName="Neighborhoods" />
+                <ScalarProperty Name="Cities" ColumnName="Cities" />
+                <ScalarProperty Name="Violations" ColumnName="Violations" />
+                <ScalarProperty Name="MailingAddressActive" ColumnName="MailingAddressActive" />
+                <ScalarProperty Name="Vacant" ColumnName="Vacant" />
+                <ScalarProperty Name="Counties" ColumnName="Counties" />
+                <ScalarProperty Name="BuildingClassCodes" ColumnName="BuildingClassCodes" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateTimeSaved" ColumnName="DateTimeSaved" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ScenarioName" ColumnName="ScenarioName" />
+                <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwGeneralLeadInformations">
+            <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInformation">
+              <MappingFragment StoreEntitySet="vwGeneralLeadInformation">
+                <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
+                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+                <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
+                <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
+                <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
+                <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
+                <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="StructureType" ColumnName="StructureType" />
+                <ScalarProperty Name="ExteriorWall" ColumnName="ExteriorWall" />
+                <ScalarProperty Name="ConstructionType" ColumnName="ConstructionType" />
+                <ScalarProperty Name="BasementType" ColumnName="BasementType" />
+                <ScalarProperty Name="BasementSquareFootage" ColumnName="BasementSquareFootage" />
+                <ScalarProperty Name="BasementGrade" ColumnName="BasementGrade" />
+                <ScalarProperty Name="GarageSquareFootage" ColumnName="GarageSquareFootage" />
+                <ScalarProperty Name="GarageType" ColumnName="GarageType" />
+                <ScalarProperty Name="CommercialSquareFootage" ColumnName="CommercialSquareFootage" />
+                <ScalarProperty Name="CommercialUnits" ColumnName="CommercialUnits" />
+                <ScalarProperty Name="UnfinishedSquareFootage" ColumnName="UnfinishedSquareFootage" />
+                <ScalarProperty Name="FinishedSquareFootage" ColumnName="FinishedSquareFootage" />
+                <ScalarProperty Name="ExteriorCondition" ColumnName="ExteriorCondition" />
+                <ScalarProperty Name="Style" ColumnName="Style" />
+                <ScalarProperty Name="NumberOfBuildings" ColumnName="NumberOfBuildings" />
+                <ScalarProperty Name="Proximity" ColumnName="Proximity" />
+                <ScalarProperty Name="LotType" ColumnName="LotType" />
+                <ScalarProperty Name="UnbuiltAreaAboveThreshold" ColumnName="UnbuiltAreaAboveThreshold" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="Equity" ColumnName="Equity" />
+                <ScalarProperty Name="LeadGrade" ColumnName="LeadGrade" />
+                <ScalarProperty Name="IsFreddieMacMortgagge" ColumnName="IsFreddieMacMortgagge" />
+                <ScalarProperty Name="IsFannieMaeMortgage" ColumnName="IsFannieMaeMortgage" />
+                <ScalarProperty Name="DOBOpenClass1Violations" ColumnName="DOBOpenClass1Violations" />
+                <ScalarProperty Name="DOBOpenViolations" ColumnName="DOBOpenViolations" />
+                <ScalarProperty Name="DOBCivilPenaltiesDue" ColumnName="DOBCivilPenaltiesDue" />
+                <ScalarProperty Name="ECBOpenTickets" ColumnName="ECBOpenTickets" />
+                <ScalarProperty Name="ECBAmountDue" ColumnName="ECBAmountDue" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="IsMailingAddressActive" ColumnName="IsMailingAddressActive" />
+                <ScalarProperty Name="IsVacant" ColumnName="IsVacant" />
+                <ScalarProperty Name="FormattedAddress" ColumnName="FormattedAddress" />
+                <ScalarProperty Name="COSPresent" ColumnName="COSPresent" />
+                <ScalarProperty Name="MortgageForeclosureActiveCases" ColumnName="MortgageForeclosureActiveCases" />
+                <ScalarProperty Name="MortgageForeclosureLPs" ColumnName="MortgageForeclosureLPs" />
+                <ScalarProperty Name="TaxLienSoldAmount" ColumnName="TaxLienSoldAmount" />
+                <ScalarProperty Name="TaxLienActiveCases" ColumnName="TaxLienActiveCases" />
+                <ScalarProperty Name="TaxLienLPs" ColumnName="TaxLienLPs" />
+                <ScalarProperty Name="PoolA" ColumnName="PoolA" />
+                <ScalarProperty Name="TaxLienList" ColumnName="TaxLienList" />
+                <ScalarProperty Name="ResidentialUnits" ColumnName="ResidentialUnits" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="North" ColumnName="North" />
+                <ScalarProperty Name="East" ColumnName="East" />
+                <ScalarProperty Name="UnitNumber" ColumnName="UnitNumber" />
+                <ScalarProperty Name="Zoning" ColumnName="Zoning" />
+                <ScalarProperty Name="NTACode" ColumnName="NTACode" />
+                <ScalarProperty Name="NeighborhoodName" ColumnName="NeighborhoodName" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="Lot" ColumnName="Lot" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="BoroughName" ColumnName="BoroughName" />
+                <ScalarProperty Name="Borough" ColumnName="Borough" />
+                <ScalarProperty Name="YearBuilt" ColumnName="YearBuilt" />
+                <ScalarProperty Name="UnbuiltArea" ColumnName="UnbuiltArea" />
+                <ScalarProperty Name="MaxResidentialFAR" ColumnName="MaxResidentialFAR" />
+                <ScalarProperty Name="BuiltFAR" ColumnName="BuiltFAR" />
+                <ScalarProperty Name="BuildingGrossArea" ColumnName="BuildingGrossArea" />
+                <ScalarProperty Name="NumberOfBuildingsOnLot" ColumnName="NumberOfBuildingsOnLot" />
+                <ScalarProperty Name="Stories" ColumnName="Stories" />
+                <ScalarProperty Name="BuildingDepth" ColumnName="BuildingDepth" />
+                <ScalarProperty Name="BuildingForntage" ColumnName="BuildingForntage" />
+                <ScalarProperty Name="BuildingClassDescription" ColumnName="BuildingClassDescription" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="LotArea" ColumnName="LotArea" />
+                <ScalarProperty Name="LotDepth" ColumnName="LotDepth" />
+                <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
+                <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
+                <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwGeneralPropertyInformations">
+            <EntityTypeMapping TypeName="GPADBModel.vwGeneralPropertyInformation">
+              <MappingFragment StoreEntitySet="vwGeneralPropertyInformation">
                 <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
                 <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
                 <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
@@ -498,35 +886,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
           <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-          <EntitySetMapping Name="SavedScenarios">
-            <EntityTypeMapping TypeName="GPADBModel.SavedScenario">
-              <MappingFragment StoreEntitySet="SavedScenario">
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="Servicer" ColumnName="Servicer" />
-                <ScalarProperty Name="UnbuiltArea" ColumnName="UnbuiltArea" />
-                <ScalarProperty Name="IsFreddie" ColumnName="IsFreddie" />
-                <ScalarProperty Name="IsFannie" ColumnName="IsFannie" />
-                <ScalarProperty Name="Equity" ColumnName="Equity" />
-                <ScalarProperty Name="LTV" ColumnName="LTV" />
-                <ScalarProperty Name="LeadGrades" ColumnName="LeadGrades" />
-                <ScalarProperty Name="LienTypes" ColumnName="LienTypes" />
-                <ScalarProperty Name="States" ColumnName="States" />
-                <ScalarProperty Name="Neighborhoods" ColumnName="Neighborhoods" />
-                <ScalarProperty Name="Cities" ColumnName="Cities" />
-                <ScalarProperty Name="Violations" ColumnName="Violations" />
-                <ScalarProperty Name="MailingAddressActive" ColumnName="MailingAddressActive" />
-                <ScalarProperty Name="Vacant" ColumnName="Vacant" />
-                <ScalarProperty Name="Counties" ColumnName="Counties" />
-                <ScalarProperty Name="BuildingClassCodes" ColumnName="BuildingClassCodes" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DateTimeSaved" ColumnName="DateTimeSaved" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ScenarioName" ColumnName="ScenarioName" />
-                <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -5,8 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1216b8812cb44022b2e00604f57f5ded" Name="Diagram1" ZoomLevel="53">
-        <EntityTypeShape EntityType="GPADBModel.vwGeneralLeadInfomation" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GPADBModel.SavedScenario" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="GPADBModel.SavedScenario" Width="3.5" PointX="6.25" PointY="4.375" />
+        <EntityTypeShape EntityType="GPADBModel.vwGeneralLeadInformation" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GPADBModel.vwGeneralPropertyInformation" Width="1.5" PointX="2.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

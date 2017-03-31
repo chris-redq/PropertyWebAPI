@@ -17,8 +17,8 @@ namespace PropertyWebAPI.BAL
     using System.Runtime.Serialization.Json;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using DexiRobotRequestResponseBuilder.Response;
-    using DexiRobotRequestResponseBuilder.Request;
+    using RequestResponseBuilder;
+    using RequestResponseBuilder.ResponseObjects;
 
     #region Local Helper Classes
     /// <summary>
@@ -159,7 +159,7 @@ namespace PropertyWebAPI.BAL
 
                             if (dataRequestLogObj == null) //No Pending Request Create New Request
                             {
-                                string requestStr = RequestData.ECBviolationAndDOBCivilPenalties(propertyBBL);
+                                string requestStr = RequestResponseBuilder.RequestObjects.RequestData.ECBviolationAndDOBCivilPenalties(propertyBBL);
 
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 

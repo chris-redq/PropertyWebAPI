@@ -15,9 +15,9 @@ namespace NYCMADB
     public partial class vwSuggestedSubjectPrice
     {
         public string SubjectBBL { get; set; }
-        public Nullable<double> AVGLowPrice { get; set; }
-        public Nullable<double> AVGLowPriceNoLP { get; set; }
+        public Nullable<double> LowPrice { get; set; }
+        public Nullable<double> AVGPrice { get; set; }
         public Nullable<double> MedianPrice { get; set; }
-        public Nullable<double> AVGHighPice { get; set; }
+        public Nullable<double> HighPrice { get; set; }
     }
 }

@@ -20,6 +20,13 @@ namespace PropertyWebAPI.DAL
 
     }
 
+    public class AutomatedSuggestedPropertyPrices : vwSuggestedSubjectPrice
+    {
+        public string message;
+        public double? minClusterValue;
+        public double? maxClusterValue;
+    }
+
     public class SalesDataDetailsByMonth: vwSalesByMonthByNeighborhood
     {
 

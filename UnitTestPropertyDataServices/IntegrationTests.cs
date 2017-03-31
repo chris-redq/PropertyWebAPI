@@ -4,7 +4,7 @@ using PropertyWebAPI;
 using Newtonsoft.Json;
 using PropertyWebAPI.BAL;
 using PropertyWebAPI.Common;
-
+using System.Collections.Generic;
 
 namespace UnitTestPropertyDataServices
 {
@@ -34,13 +34,33 @@ namespace UnitTestPropertyDataServices
 
 
         [TestMethod]
-        public void TestStatistics()
+        public void TestAverage()
         {
-            DoubleList values = new DoubleList { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            DoubleList values = new DoubleList { 1, 2, 2, 3, 4, 5, 6, 6.3, 7, 7.4, 8, 9, 10 };
 
             double a = 4.0, b = 8.0;
 
             double val = values.Average(x => x >= a && x <= b);
+
+            return;
+        }
+
+        [TestMethod]
+        public void TestClustering()
+        {
+            DoubleList values1 = new DoubleList { 525.49, 521.86, 509.38, 319.55, 375.00 };
+            values1.Sort();
+            double[] smoothValues = Statistics.ApplyGaussianKDE(values1.ToArray(), 3, 0.45);
+            double[] derivatives = Statistics.DiscreteDerivative(smoothValues);
+            List<int> mins = Statistics.FindLocalMinima(derivatives);
+            mins = Statistics.FindClusters(derivatives, 0.06);
+
+            values1 = new DoubleList { 525.49, 521.86, 509.38, 319.55, 375.00, 325.00, 342.00 };
+            values1.Sort();
+            smoothValues = Statistics.ApplyGaussianKDE(values1.ToArray(), 3, 0.45);
+            derivatives = Statistics.DiscreteDerivative(smoothValues);
+            mins = Statistics.FindLocalMinima(derivatives);
+            mins = Statistics.FindClusters(derivatives, 0.06);
 
             return;
         }

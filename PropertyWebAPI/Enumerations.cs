@@ -8,11 +8,12 @@ namespace PropertyWebAPI
     /// <summary>Types of CMAs</summary>
     public enum CMAType
     {
-        Regular = 0,
+        Regular = 1,
 
-        ShortSale = 1,
+        ShortSale = 2,
 
-        Rehab = 2
+        Rehab = 3
+            
     }
 
     /// <summary>Types of CMA Runs</summary>

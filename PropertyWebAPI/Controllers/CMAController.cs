@@ -430,13 +430,30 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValidFormat(subjectBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
 
+            if (filters==null)
+                return this.BadRequest("Malformed filter - Check the api body");
+
             try
             {
-                var result = BAL.CMA.GetAutomatedCMA(filters.algorithmType, subjectBBL, filters.basicFilter.maxRecords, filters.basicFilter.sameNeighborhood,
-                                                     filters.basicFilter.sameSchoolDistrict, filters.basicFilter.sameZip, filters.basicFilter.sameBlock,
-                                                     filters.basicFilter.sameStreet, filters.basicFilter.monthOffset, filters.basicFilter.minSalePrice,
-                                                     filters.basicFilter.maxSalePrice, filters.basicFilter.classMatchType, filters.basicFilter.isNotIntraFamily,
-                                                     filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany);
+                BAL.AutomatedCMAResults result = null;
+                switch(filters.intent)
+                {
+                    case (int)CMAType.Regular:
+                        result = BAL.CMA.GetAutomatedCMA(filters.algorithmType, subjectBBL, filters.basicFilter.maxRecords, filters.basicFilter.sameNeighborhood,
+                                                         filters.basicFilter.sameSchoolDistrict, filters.basicFilter.sameZip, filters.basicFilter.sameBlock,
+                                                         filters.basicFilter.sameStreet, filters.basicFilter.monthOffset, filters.basicFilter.minSalePrice,
+                                                         filters.basicFilter.maxSalePrice, filters.basicFilter.classMatchType, filters.basicFilter.isNotIntraFamily,
+                                                         filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany);
+                        break;
+                    case (int)CMAType.ShortSale:
+                        result = BAL.CMA.GetAutomatedShortSaleCMA(subjectBBL, filters);
+                        break;
+                    case (int)CMAType.Rehab:
+                        result = BAL.CMA.GetAutomatedRehabCMA(subjectBBL, filters);
+                        break;
+                    default:
+                        return this.BadRequest("Incorrect Type of CMA request - Valid values for intent are 1, 2, 3"); ;
+                }
                 if (result == null)
                     return NotFound();
                 return Ok(result);

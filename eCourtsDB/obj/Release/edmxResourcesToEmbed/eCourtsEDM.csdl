@@ -759,6 +759,50 @@
       <Parameter Name="BBL" Mode="In" Type="String" />
       <Parameter Name="StartDate" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="tfnGetRelatedFirmsForAttorneyOfRecord" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetRelatedFirmsForAttorneyOfRecord_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="AttorneyOfRecordId" Mode="In" Type="String" />
+      <Parameter Name="PartyIndicator" Mode="In" Type="String" />
+      <Parameter Name="SameCountyOnly" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetJudgesForRelatedFirmsForAttorneyOfRecord" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="AttorneyOfRecordId" Mode="In" Type="String" />
+      <Parameter Name="PartyIndicator" Mode="In" Type="String" />
+      <Parameter Name="SameCountyOnly" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetCasesForRelatedFirmsForAttorneyOfRecord" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="AttorneyOfRecordId" Mode="In" Type="String" />
+      <Parameter Name="PartyIndicator" Mode="In" Type="String" />
+      <Parameter Name="SameCountyOnly" Mode="In" Type="Boolean" />
+      <Parameter Name="JudgeCountyId" Mode="In" Type="String" />
+      <Parameter Name="JudgeId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnReliefSoughtDecision5NSForLawFirmAndJudge" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnReliefSoughtDecision5NSForLawFirmAndJudge_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="AttorneyOfRecordId" Mode="In" Type="String" />
+      <Parameter Name="PartyIndicator" Mode="In" Type="String" />
+      <Parameter Name="SameCountyOnly" Mode="In" Type="Boolean" />
+      <Parameter Name="JudgeCountyId" Mode="In" Type="String" />
+      <Parameter Name="JudgeId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnCaseCompletionDecision5NSForLawFirmAndJudge" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="AttorneyOfRecordId" Mode="In" Type="String" />
+      <Parameter Name="SameCountyOnly" Mode="In" Type="Boolean" />
+      <Parameter Name="JudgeCountyId" Mode="In" Type="String" />
+      <Parameter Name="JudgeId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord" IsComposable="true" ReturnType="Collection(NYCOURTSModel.tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result)">
+      <Parameter Name="CountyId" Mode="In" Type="String" />
+      <Parameter Name="AttorneyOfRecordId" Mode="In" Type="String" />
+      <Parameter Name="PartyIndicator" Mode="In" Type="String" />
+      <Parameter Name="SameCountyOnly" Mode="In" Type="Boolean" />
+      <Parameter Name="JudgeCountyId" Mode="In" Type="String" />
+      <Parameter Name="JudgeId" Mode="In" Type="String" />
+      <Parameter Name="Decision" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="tfnGetDocumentExtractForCase_Result">
     <Property Type="Int32" Name="DocumentId" Nullable="false" />
@@ -940,5 +984,142 @@
     <Property Type="String" Name="CaseType" Nullable="true" MaxLength="30" />
     <Property Type="String" Name="Comment" Nullable="true" />
     <Property Type="String" Name="LienType" Nullable="false" MaxLength="13" />
+  </ComplexType>
+  <ComplexType Name="tfnGetRelatedFirmsForAttorneyOfRecord_Result">
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="SeqNumber" Nullable="false" MaxLength="9" />
+    <Property Type="String" Name="FirmName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="FirmType" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Mnemonic" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Address1" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="CityAndState" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="ZipCodePlus" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Status" Nullable="false" MaxLength="15" />
+    <Property Type="Int32" Name="Count" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result">
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="CaseIndexNumberExternal" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="SeqNumber" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="CourtType" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="PostDispositionIndicator" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="NumberOfComments" Nullable="true" />
+    <Property Type="String" Name="PlaintiffName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="DefendantName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="MunicipalityInvolvement" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="CaseComplexity" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="RJIDispositionDeadlineDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="RJIPreNOIDeadlineDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="PostNOIDispositionDeadlineDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="DateRJIFiled" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="DateNOIFiled" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="TimeStampNOIEntered" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateIssueJoined" Nullable="true" Precision="10" />
+    <Property Type="String" Name="ActionOrCaseTypeId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="ActionOrCaseType" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="ActionOrCaseTypeDescription" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="DamagesSought" Nullable="true" MaxLength="75" />
+    <Property Type="String" Name="GeneralPreference" Nullable="true" MaxLength="75" />
+    <Property Type="String" Name="SpecialPreference" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RJITypeCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="TypeOfRJI" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="DateOfRJI" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RJICourtPartId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="RJICourtPart" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="CommentForOtherRJIType" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="IASCategoryId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="IASCategory" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="IASJudgeId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="IASJudgeName" Nullable="true" MaxLength="30" />
+    <Property Type="DateTime" Name="IASAssignmentDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="TimeStampLastIASInformationEntered" Nullable="true" Precision="23" />
+    <Property Type="String" Name="PostDispositionActionJudgeId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="PostDispositionActionJudgeName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="PROSEIndicator" Nullable="true" MaxLength="1" />
+    <Property Type="DateTime" Name="DateRJIEntered" Nullable="true" Precision="10" />
+    <Property Type="String" Name="PrivateCaseIndicator" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="IsEfiled" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="Comment" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result">
+    <Property Type="String" Name="CountyName" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Judge" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="Motions" Nullable="true" />
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="JudgeId" Nullable="true" MaxLength="5" />
+  </ComplexType>
+  <ComplexType Name="tfnReliefSoughtDecision5NSForLawFirmAndJudge_Result">
+    <Property Type="String" Name="ReliefSought" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Result" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="Instances" Nullable="true" />
+    <Property Type="Int32" Name="MinDays" Nullable="true" />
+    <Property Type="Int32" Name="DaysWithin25Percentile" Nullable="true" />
+    <Property Type="Int32" Name="MedianDays" Nullable="true" />
+    <Property Type="Int32" Name="AvgDays" Nullable="true" />
+    <Property Type="Int32" Name="DaysWithin75Percentile" Nullable="true" />
+    <Property Type="Int32" Name="MaxDays" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="tfnCaseCompletionDecision5NSForLawFirmAndJudge_Result">
+    <Property Type="String" Name="ReliefSought" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Result" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="Instances" Nullable="true" />
+    <Property Type="Int32" Name="MinDays" Nullable="true" />
+    <Property Type="Int32" Name="DaysWithin25Percentile" Nullable="true" />
+    <Property Type="Int32" Name="MedianDays" Nullable="true" />
+    <Property Type="Int32" Name="AvgDays" Nullable="true" />
+    <Property Type="Int32" Name="DaysWithin75Percentile" Nullable="true" />
+    <Property Type="Int32" Name="MaxDays" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="tfnGetCompletedCasesForRelatedFirmsForAttorneyOfRecord_Result">
+    <Property Type="String" Name="CountyId" Nullable="false" MaxLength="2" />
+    <Property Type="String" Name="CaseIndexNumber" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="CaseIndexNumberExternal" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="SeqNumber" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="CourtType" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CaseStatus" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="PostDispositionIndicator" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="NumberOfComments" Nullable="true" />
+    <Property Type="String" Name="PlaintiffName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="DefendantName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="MunicipalityInvolvement" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="CaseComplexity" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="RJIDispositionDeadlineDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="RJIPreNOIDeadlineDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="PostNOIDispositionDeadlineDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="DateRJIFiled" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="DateNOIFiled" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="TimeStampNOIEntered" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateIssueJoined" Nullable="true" Precision="10" />
+    <Property Type="String" Name="ActionOrCaseTypeId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="ActionOrCaseType" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="ActionOrCaseTypeDescription" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="DamagesSought" Nullable="true" MaxLength="75" />
+    <Property Type="String" Name="GeneralPreference" Nullable="true" MaxLength="75" />
+    <Property Type="String" Name="SpecialPreference" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="CaseDispositionDate" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RJITypeCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="TypeOfRJI" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="DateOfRJI" Nullable="true" Precision="10" />
+    <Property Type="String" Name="RJICourtPartId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="RJICourtPart" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="CommentForOtherRJIType" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="IASCategoryId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="IASCategory" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="IASJudgeId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="IASJudgeName" Nullable="true" MaxLength="30" />
+    <Property Type="DateTime" Name="IASAssignmentDate" Nullable="true" Precision="10" />
+    <Property Type="DateTime" Name="TimeStampLastIASInformationEntered" Nullable="true" Precision="23" />
+    <Property Type="String" Name="PostDispositionActionJudgeId" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="PostDispositionActionJudgeName" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="PROSEIndicator" Nullable="true" MaxLength="1" />
+    <Property Type="DateTime" Name="DateRJIEntered" Nullable="true" Precision="10" />
+    <Property Type="String" Name="PrivateCaseIndicator" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="IsEfiled" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="Comment" Nullable="true" />
   </ComplexType>
 </Schema>

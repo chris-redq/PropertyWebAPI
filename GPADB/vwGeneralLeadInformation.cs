@@ -12,7 +12,7 @@ namespace GPADB
     using System;
     using System.Collections.Generic;
     
-    public partial class vwGeneralLeadInfomation
+    public partial class vwGeneralLeadInformation
     {
         public string BBLE { get; set; }
         public string TaxClass { get; set; }
@@ -47,7 +47,7 @@ namespace GPADB
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<double> ResidentialUnits { get; set; }
         public Nullable<int> TaxLienList { get; set; }
-        public Nullable<int> PoolA { get; set; }
+        public Nullable<bool> PoolA { get; set; }
         public Nullable<int> TaxLienLPs { get; set; }
         public Nullable<int> TaxLienActiveCases { get; set; }
         public Nullable<decimal> TaxLienSoldAmount { get; set; }

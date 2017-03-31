@@ -1679,13 +1679,14 @@
             This controller handles all api requests associated with property leads
             </summary>  
         </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetProperty(System.String)">
+            <summary>Use this api to get a property details</summary>  
+            <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
+            <returns>Returns property details</returns>
+        </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">
-            <summary>  
-            Use this api to get a lead details
-            </summary>  
-            <param name="propertybbl">
-                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-            </param>  
+            <summary>Use this api to get a lead details</summary>  
+            <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
             <returns>Returns lead details</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">

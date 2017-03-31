@@ -70,7 +70,10 @@
     <Compile Include="SavedScenario.cs">
       <DependentUpon>GPADB.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwGeneralLeadInfomation.cs">
+    <Compile Include="vwGeneralLeadInformation.cs">
+      <DependentUpon>GPADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwGeneralPropertyInformation.cs">
       <DependentUpon>GPADB.tt</DependentUpon>
     </Compile>
   </ItemGroup>

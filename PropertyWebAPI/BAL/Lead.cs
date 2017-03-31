@@ -10,7 +10,13 @@ namespace PropertyWebAPI.BAL
     using GPADB;
     using AutoMapper;
 
-    public class LeadDetailData : vwGeneralLeadInfomation
+    public class LeadDetailData : vwGeneralLeadInformation
+    {
+
+        public List<BAL.DeedParty> owners;
+    }
+
+    public class PropertyDetailData : vwGeneralPropertyInformation
     {
 
         public List<BAL.DeedParty> owners;
@@ -28,6 +34,18 @@ namespace PropertyWebAPI.BAL
                     leadDetailData.owners = deedDetailsObj.owners;
             }
             return leadDetailData;
+        }
+
+        public static PropertyDetailData GetProperty(string propertyBBL)
+        {
+            var propertyDetailData = Mapper.Map<PropertyDetailData>(DAL.Lead.GetProperty(propertyBBL));
+            if (propertyDetailData != null)
+            {
+                var deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
+                if (deedDetailsObj != null && deedDetailsObj.owners != null)
+                    propertyDetailData.owners = deedDetailsObj.owners;
+            }
+            return propertyDetailData;
         }
 
         public static bool IsValidFilter(string zipcodes, string neighborhoods, string isvacant, string leadgrades, string buildingclasscodes, string counties,

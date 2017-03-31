@@ -112,12 +112,22 @@ namespace PropertyWebAPI.BAL
 
     public class AutomatedCMAResults
     {
-        public DAL.SuggestedPropertyPrices price;
+        public DAL.AutomatedSuggestedPropertyPrices price;
         public List<DAL.CMAResult> results;
     }
-
+    
     public class CMA
     {
+        private static double[] THRESHOLD = new double[] { 0.08, 0.12, 0.25 };
+
+        private const double MAX_REDQ_THRESHOLD = 0.12;
+        private const double MAX_REHAB_THRESHOLD = 0.25;
+        private const double MAX_SHORTSALE_THRESHOLD = 0.25;
+        private const double MAX_THRESHOLD_PAD = 0.02;
+
+        private const double GAUSSIAN_SIGMA = 0.8;
+        private const int GAUSSIAN_KERNEL_SIZE = 3;
+
         public static ManualCMAResult SaveManualComparables(string propertyBBL, ManualCMASelection manualCMA)
         {
             DAL.CMA.SaveCMARun(propertyBBL, manualCMA);
@@ -145,34 +155,228 @@ namespace PropertyWebAPI.BAL
             return mCMAResult;
         }
 
-        private static DAL.SuggestedPropertyPrices getSuggestedPropertyPrice(string subjectBBL, List<DAL.CMAResult> results)
+        private static double[] GetThresholdsForClusters(int cMAType, double[] derivatives)
         {
-            DAL.SuggestedPropertyPrices price = new DAL.SuggestedPropertyPrices();
+            Common.DoubleList minThresholdRequiredList = new Common.DoubleList();
+            Common.DoubleList finalMinThresholdRequiredList = new Common.DoubleList();
+
+            double? minThresholdRequired = 0;
+            double? localMinThresholdRequired = 0;
+            while (minThresholdRequired != null)
+            {
+                minThresholdRequired = null;
+                if (derivatives.Length >= 2)
+                {
+                    for (int j = 0; j < derivatives.Length - 1; j++)
+                    {
+                        double localThreshold = derivatives[j] > derivatives[j + 1] ? derivatives[j] : derivatives[j + 1];
+                        if (localThreshold > localMinThresholdRequired)
+                        {
+                            if (minThresholdRequired == null)
+                                minThresholdRequired = localThreshold;
+                            else if (minThresholdRequired > localThreshold)
+                                minThresholdRequired = localThreshold;
+                        }
+                    }
+                    if (minThresholdRequired != null)
+                    {
+                        localMinThresholdRequired = minThresholdRequired;
+                        minThresholdRequiredList.Add(minThresholdRequired.GetValueOrDefault());
+                    }
+                }
+            }
+
+            foreach (var val in minThresholdRequiredList)
+            {
+                double? maxAllowedThreshold = null;
+                switch (cMAType)
+                {
+                    case (int)CMAType.Regular:
+                        maxAllowedThreshold = MAX_REDQ_THRESHOLD;
+                        break;
+                    case (int)CMAType.ShortSale:
+                        maxAllowedThreshold = MAX_SHORTSALE_THRESHOLD;
+                        break;
+                    case (int)CMAType.Rehab:
+                        maxAllowedThreshold = MAX_REDQ_THRESHOLD;
+                        break;
+                }
+                if (val < maxAllowedThreshold)
+                {
+                    if (val + MAX_THRESHOLD_PAD <= maxAllowedThreshold)
+                    {
+                        if (finalMinThresholdRequiredList.IndexOf(val + MAX_THRESHOLD_PAD)==-1)
+                            finalMinThresholdRequiredList.Add(val + MAX_THRESHOLD_PAD);
+                    }
+                    else
+                    {
+                        if (finalMinThresholdRequiredList.IndexOf(maxAllowedThreshold.GetValueOrDefault()) == -1)
+                            finalMinThresholdRequiredList.Add(maxAllowedThreshold.GetValueOrDefault());
+                    }
+                }
+            }
+            return finalMinThresholdRequiredList.ToArray();
+        }
+
+        private static double? GetMinimumThresholdForCluster(int cMAType, double[] derivatives)
+        {
+            double? minThresholdRequired = null;
+            if (derivatives.Length >= 2)
+            {
+                for (int j = 0; j < derivatives.Length - 1; j++)
+                {
+                    double localThreshold = derivatives[j] > derivatives[j + 1] ? derivatives[j] : derivatives[j + 1];
+                    if (minThresholdRequired == null)
+                        minThresholdRequired = localThreshold;
+                    else if (minThresholdRequired > localThreshold)
+                        minThresholdRequired = localThreshold;
+                }
+            }
+            if (minThresholdRequired != null)
+            {
+                double? maxAllowedThreshold = null;
+                switch (cMAType)
+                {
+                    case (int)CMAType.Regular:
+                        maxAllowedThreshold = MAX_REDQ_THRESHOLD;
+                        break;
+                    case (int)CMAType.ShortSale:
+                        maxAllowedThreshold = MAX_SHORTSALE_THRESHOLD;
+                        break;
+                    case (int)CMAType.Rehab:
+                        maxAllowedThreshold = MAX_REDQ_THRESHOLD;
+                        break;
+                }
+                if (minThresholdRequired + MAX_THRESHOLD_PAD <= maxAllowedThreshold)
+                    minThresholdRequired += MAX_THRESHOLD_PAD;
+                else
+                    minThresholdRequired = maxAllowedThreshold;
+            }
+            return minThresholdRequired;
+        }
+
+        private static int[] FindClusters(int cMAType, double[] derivatives, double minThresholdInData)
+        {
+            int[] mins = Common.Statistics.FindClusters(derivatives, minThresholdInData).ToArray();
+            return mins;
+        }
+
+
+        private static DAL.AutomatedSuggestedPropertyPrices getSuggestedPropertyPrices(int cMAType, string subjectBBL, List<DAL.CMAResult> results)
+        {
+            DAL.AutomatedSuggestedPropertyPrices price = new DAL.AutomatedSuggestedPropertyPrices();
+            price.SubjectBBL = subjectBBL;
+
+            var subject = DAL.CMA.GetSubject(subjectBBL);
+            if (subject == null)
+            {   price.message = "Error locating Subject Information";
+                return price;
+            }
+
+            double? GLA = subject.GLA.GetValueOrDefault();
+            if (GLA == null || GLA==0)
+            {
+                price.message = "GLA is null or zero for Subject";
+                return price;
+            }
 
             Common.DoubleList pricessqft = new Common.DoubleList();
             foreach (var comp in results)
-                pricessqft.Add(comp.DeedAmount.GetValueOrDefault()/comp.GLA.GetValueOrDefault());
+                pricessqft.Add(comp.DeedAmount.GetValueOrDefault() / comp.GLA.GetValueOrDefault());
 
-            double min = Common.Statistics.Percentile(pricessqft, 0);
-            double percentile7 = Common.Statistics.Percentile(pricessqft, 7);
-            double q1 = Common.Statistics.Percentile(pricessqft, 25);
-            double median = Common.Statistics.Percentile(pricessqft, 50);
-            double q3 = Common.Statistics.Percentile(pricessqft, 75);
-            double percentile95 = Common.Statistics.Percentile(pricessqft, 95);
-            double max = Common.Statistics.Percentile(pricessqft, 100);
+            pricessqft.Sort();
+            double[] pricesArray = pricessqft.ToArray();
+            double[] smoothValues = Common.Statistics.ApplyGaussianKDE(pricessqft.ToArray(), GAUSSIAN_KERNEL_SIZE, GAUSSIAN_SIGMA);
+            double[] derivatives = Common.Statistics.DiscreteDerivative(smoothValues);
+            for (int j = 0; j < derivatives.Length; j++)
+                derivatives[j] = Math.Round(derivatives[j],0);
 
-            double avgLowValueNoLP = pricessqft.Average(x => x<= q1 && !Common.Statistics.IsOutLier(x, q1, q3));
-            double avgHighValue = pricessqft.Average(x => x>=q3);
+            //What is the minimum threshold required to get a cluster from our comparables
+            double? minThresholdRequired = GetMinimumThresholdForCluster(cMAType, derivatives);
 
+            if (minThresholdRequired == null)
+            {
+                price.message = "At least 3 comparables required for pricing";
+                return price;
+            }
 
-            var subject = DAL.CMA.GetSubject(subjectBBL);
-            double GLA = subject.GLA.GetValueOrDefault();
+            //Using minThresholdRequired find clusters in comparables
+            int[] mins = FindClusters(cMAType, derivatives, minThresholdRequired.GetValueOrDefault());
 
-            price.SubjectBBL = subjectBBL;
-            price.AVGLowPrice = Math.Round(percentile7 * GLA, 0);
-            price.AVGLowPriceNoLP = Math.Round(avgLowValueNoLP * GLA,0);
-            price.MedianPrice = Math.Round(median * GLA, 0);
-            price.AVGHighPice = Math.Round(avgHighValue * GLA, 0);
+            int clusterValue=-1;
+            double? minClusterValue = null, maxClusterValue = null;
+            switch (mins.Length)
+            {
+                case 0:
+                    price.message = "No price clusters found";
+                    break;
+                case 1:
+                    price.message = "Single price cluster found";
+                    clusterValue = 0;
+                    break;
+                case 2:
+                    price.message = "Two price clusters found.";
+                    switch (cMAType)
+                    {
+                        case (int)CMAType.Regular:
+                            price.message += " Picking the second cluster.";
+                            clusterValue = 1;
+                            break;
+                        case (int)CMAType.ShortSale:
+                            price.message += " Picking the first cluster.";
+                            clusterValue = 0;
+                            break;
+                        case (int)CMAType.Rehab:
+                            price.message += " Picking the second cluster.";
+                            clusterValue = 1;
+                            break;
+                    }
+                    break;
+                default:
+                    price.message = string.Format("{0} clusters found.", mins.Length);
+                    switch (cMAType)
+                    {
+                        case (int)CMAType.Regular:
+                            price.message += " Cannot determine the right price cluster refine search.";
+                            break;
+                        case (int)CMAType.ShortSale:
+                            price.message += " Picking the first cluster.";
+                            clusterValue = 0;
+                            break;
+                        case (int)CMAType.Rehab:
+                            price.message += " Picking the last cluster.";
+                            clusterValue = mins.Length - 1;
+                            break;
+                    }
+                    break;
+            }
+
+            if (clusterValue!=-1)
+            {
+                minClusterValue = pricesArray[mins[clusterValue]];
+                maxClusterValue = pricesArray[mins[clusterValue] + 1];
+                int i = mins[clusterValue] + 1;
+                while (i < derivatives.Length)
+                {
+                    if (derivatives[i] <= minThresholdRequired.GetValueOrDefault())
+                        maxClusterValue = pricesArray[i + 1];
+                    else
+                        break;
+                    i++;
+                }
+            }
+
+            if (minClusterValue != null && maxClusterValue != null)
+            {
+                price.SubjectBBL = subjectBBL;
+                price.minClusterValue = minClusterValue;
+                price.maxClusterValue = maxClusterValue;
+
+                price.LowPrice = Math.Round(pricessqft.Min(x => x >= minClusterValue && x <= maxClusterValue) * GLA.GetValueOrDefault(), 0);
+                price.AVGPrice = Math.Round(pricessqft.Average(x => x >= minClusterValue && x <= maxClusterValue) * GLA.GetValueOrDefault(), 0);
+                price.MedianPrice = Math.Round(Common.Statistics.Percentile(pricessqft.SubList(x => x >= minClusterValue && x <= maxClusterValue), 50) * GLA.GetValueOrDefault(), 0);
+                price.HighPrice = Math.Round(pricessqft.Max(x => x >= minClusterValue && x <= maxClusterValue) * GLA.GetValueOrDefault(), 0);
+            }
 
             return price;
         }
@@ -186,7 +390,35 @@ namespace PropertyWebAPI.BAL
             cmaResult.results=DAL.CMA.GetComparables(algorithmType, subjectBBL, maxRecords, sameNeighborhood, sameSchoolDistrict, sameZip, sameBlock, sameStreet, 
                                                      monthOffset, minSalePrice, maxSalePrice, classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany);
 
-            cmaResult.price = getSuggestedPropertyPrice(subjectBBL, cmaResult.results);
+            cmaResult.price = getSuggestedPropertyPrices((int)CMAType.Regular, subjectBBL, cmaResult.results);
+
+            return cmaResult;
+        }
+
+        public static AutomatedCMAResults GetAutomatedShortSaleCMA(string subjectBBL, AutomatedCMAFilters fl)
+        {
+            AutomatedCMAResults cmaResult = new AutomatedCMAResults();
+
+            cmaResult.results = DAL.CMA.GetComparables(fl.algorithmType, subjectBBL, fl.basicFilter.maxRecords, fl.basicFilter.sameNeighborhood, fl.basicFilter.sameSchoolDistrict,
+                                                       fl.basicFilter.sameZip, fl.basicFilter.sameBlock, fl.basicFilter.sameStreet, fl.basicFilter.monthOffset, fl.basicFilter.minSalePrice,
+                                                       fl.basicFilter.maxSalePrice, fl.basicFilter.classMatchType, fl.basicFilter.isNotIntraFamily, fl.basicFilter.isSelleraCompany, 
+                                                       fl.basicFilter.isBuyeraCompany);
+
+            cmaResult.price = getSuggestedPropertyPrices((int)CMAType.ShortSale, subjectBBL, cmaResult.results);
+
+            return cmaResult;
+        }
+
+        public static AutomatedCMAResults GetAutomatedRehabCMA(string subjectBBL, AutomatedCMAFilters fl)
+        {
+            AutomatedCMAResults cmaResult = new AutomatedCMAResults();
+
+            cmaResult.results = DAL.CMA.GetComparables(fl.algorithmType, subjectBBL, fl.basicFilter.maxRecords, fl.basicFilter.sameNeighborhood, fl.basicFilter.sameSchoolDistrict,
+                                                       fl.basicFilter.sameZip, fl.basicFilter.sameBlock, fl.basicFilter.sameStreet, fl.basicFilter.monthOffset, fl.basicFilter.minSalePrice,
+                                                       fl.basicFilter.maxSalePrice, fl.basicFilter.classMatchType, fl.basicFilter.isNotIntraFamily, fl.basicFilter.isSelleraCompany, 
+                                                       fl.basicFilter.isBuyeraCompany);
+
+            cmaResult.price = cmaResult.price = getSuggestedPropertyPrices((int)CMAType.Rehab, subjectBBL, cmaResult.results);
 
             return cmaResult;
         }

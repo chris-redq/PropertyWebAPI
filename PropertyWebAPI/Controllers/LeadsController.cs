@@ -89,12 +89,34 @@
     public class LeadsController : ApiController
     {
 
-        /// <summary>  
-        /// Use this api to get a lead details
-        /// </summary>  
-        /// <param name="propertybbl">
-        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-        /// </param>  
+        /// <summary>Use this api to get a property details</summary>  
+        /// <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
+        /// <returns>Returns property details</returns>
+        [Route("api/propertyinfo/{propertybbl}")]
+        [ResponseType(typeof(BAL.PropertyDetailData))]
+        public IHttpActionResult GetProperty(string propertybbl)
+        {
+            if (!BAL.BBL.IsValidFormat(propertybbl))
+                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
+            try
+            {
+                var lead = BAL.Lead.GetProperty(propertybbl);
+
+                if (lead == null)
+                    return NotFound();
+
+                return Ok(lead);
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Lead for {0}{1}", propertybbl, Common.Logs.FormatException(e)));
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+            }
+        }
+
+        /// <summary>Use this api to get a lead details</summary>  
+        /// <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
         /// <returns>Returns lead details</returns>
         [Route("api/leads/{propertybbl}")]
         [ResponseType(typeof(BAL.LeadDetailData))]
