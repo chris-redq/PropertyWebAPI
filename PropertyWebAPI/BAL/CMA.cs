@@ -1,8 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="cma.cs" company="Redq Technologies, Inc.">
-//     Copyright (c) Redq Technologies, Inc. All rights reserved.
-// </copyright>
-// <author>Raj Sethi</author>
+// <author>Raj Sethi, Gurpreet Singh</author>
 //-----------------------------------------------------------------------
 
 namespace PropertyWebAPI.BAL
@@ -14,6 +11,8 @@ namespace PropertyWebAPI.BAL
     {
         /// <summary>Maximum number of comparables to be returned</summary>
         public int? maxRecords { get; set; }
+        /// <summary>Minimum similarity index score allowed for returned comparables. Default value is 85</summary>
+        public int? minSimilarity { get; set; }
         /// <summary>Valid values are 0, 1 or NULL. 0 means ignore neighborhood and 1 means search in same neighborhood. Default is 0</summary>
         public bool? sameNeighborhood { get; set; }
         /// <summary>Valid values are 0, 1 or NULL. 0 means ignore school district and 1 means search in same school district. Default is 1</summary>
@@ -105,7 +104,7 @@ namespace PropertyWebAPI.BAL
         /// <summary>Valid values are 1 - Regular CMA, 2 - Short Sale, 3 - Rehab</summary>
         public int intent;
         /// <summary>Valid values are G - Farther th property tighter the constraints, O - Iterative constraint relaxation with fixed upper bounds, E - Euclidean distance based ranking within set constraints</summary>
-        public string algorithmType = "O";
+        public string algorithmType = "F";
         /// <summary>Filters associated with result set size, ownership, location,price etc.</summary>
         public BasicCMAFilter basicFilter;
     }
@@ -118,16 +117,12 @@ namespace PropertyWebAPI.BAL
     
     public class CMA
     {
-        private static double[] THRESHOLD = new double[] { 0.08, 0.12, 0.25 };
-
         private const double MAX_REDQ_THRESHOLD = 0.12;
         private const double MAX_REHAB_THRESHOLD = 0.25;
         private const double MAX_SHORTSALE_THRESHOLD = 0.25;
-        private const double MAX_THRESHOLD_PAD = 0.02;
 
-        private const double GAUSSIAN_SIGMA = 0.8;
-        private const int GAUSSIAN_KERNEL_SIZE = 3;
-
+        private const double GAUSSIAN_SIGMA = 12;
+        
         public static ManualCMAResult SaveManualComparables(string propertyBBL, ManualCMASelection manualCMA)
         {
             DAL.CMA.SaveCMARun(propertyBBL, manualCMA);
@@ -155,7 +150,7 @@ namespace PropertyWebAPI.BAL
             return mCMAResult;
         }
 
-        private static double[] GetThresholdsForClusters(int cMAType, double[] derivatives)
+        public static double[] GetThresholdsForClusters(int cMAType, double[] derivatives)
         {
             Common.DoubleList minThresholdRequiredList = new Common.DoubleList();
             Common.DoubleList finalMinThresholdRequiredList = new Common.DoubleList();
@@ -198,67 +193,343 @@ namespace PropertyWebAPI.BAL
                         maxAllowedThreshold = MAX_SHORTSALE_THRESHOLD;
                         break;
                     case (int)CMAType.Rehab:
-                        maxAllowedThreshold = MAX_REDQ_THRESHOLD;
+                        maxAllowedThreshold = MAX_REHAB_THRESHOLD;
                         break;
                 }
-                if (val < maxAllowedThreshold)
-                {
-                    if (val + MAX_THRESHOLD_PAD <= maxAllowedThreshold)
-                    {
-                        if (finalMinThresholdRequiredList.IndexOf(val + MAX_THRESHOLD_PAD)==-1)
-                            finalMinThresholdRequiredList.Add(val + MAX_THRESHOLD_PAD);
-                    }
-                    else
-                    {
-                        if (finalMinThresholdRequiredList.IndexOf(maxAllowedThreshold.GetValueOrDefault()) == -1)
-                            finalMinThresholdRequiredList.Add(maxAllowedThreshold.GetValueOrDefault());
-                    }
-                }
+                if (val <= maxAllowedThreshold)
+                    finalMinThresholdRequiredList.Add(val);
             }
             return finalMinThresholdRequiredList.ToArray();
         }
 
-        private static double? GetMinimumThresholdForCluster(int cMAType, double[] derivatives)
+        public class Clusters
         {
-            double? minThresholdRequired = null;
-            if (derivatives.Length >= 2)
-            {
-                for (int j = 0; j < derivatives.Length - 1; j++)
-                {
-                    double localThreshold = derivatives[j] > derivatives[j + 1] ? derivatives[j] : derivatives[j + 1];
-                    if (minThresholdRequired == null)
-                        minThresholdRequired = localThreshold;
-                    else if (minThresholdRequired > localThreshold)
-                        minThresholdRequired = localThreshold;
-                }
-            }
-            if (minThresholdRequired != null)
-            {
-                double? maxAllowedThreshold = null;
-                switch (cMAType)
-                {
-                    case (int)CMAType.Regular:
-                        maxAllowedThreshold = MAX_REDQ_THRESHOLD;
-                        break;
-                    case (int)CMAType.ShortSale:
-                        maxAllowedThreshold = MAX_SHORTSALE_THRESHOLD;
-                        break;
-                    case (int)CMAType.Rehab:
-                        maxAllowedThreshold = MAX_REDQ_THRESHOLD;
-                        break;
-                }
-                if (minThresholdRequired + MAX_THRESHOLD_PAD <= maxAllowedThreshold)
-                    minThresholdRequired += MAX_THRESHOLD_PAD;
-                else
-                    minThresholdRequired = maxAllowedThreshold;
-            }
-            return minThresholdRequired;
+            public int[] clusters;
+            public double? minThresholdRequired;
         }
 
-        private static int[] FindClusters(int cMAType, double[] derivatives, double minThresholdInData)
+        private static Clusters FindClusters(int cMAType, double[] derivatives, double[] minThresholds)
         {
-            int[] mins = Common.Statistics.FindClusters(derivatives, minThresholdInData).ToArray();
-            return mins;
+            Clusters c = new BAL.CMA.Clusters();
+            Clusters optimalC = null;
+
+            for (int ii = 0; ii < minThresholds.Length; ii++)
+            {
+                c.minThresholdRequired = minThresholds[ii];
+                c.clusters = Common.Statistics.FindClusters(derivatives, minThresholds[ii]).ToArray();
+
+                if (cMAType == (int)CMAType.Regular)
+                {
+                    if (c.clusters.Length <= 2)
+                    {
+                        if (optimalC == null)
+                            optimalC = new BAL.CMA.Clusters();
+                        optimalC.minThresholdRequired = c.minThresholdRequired;
+                        optimalC.clusters = c.clusters;
+                    }
+
+                    if (c.clusters.Length == 2)
+                        break;
+                }
+                else if (cMAType == (int)CMAType.ShortSale)
+                {
+                    if (optimalC == null)
+                    {
+                        optimalC = new BAL.CMA.Clusters();
+                        optimalC.minThresholdRequired = c.minThresholdRequired;
+                        optimalC.clusters = c.clusters;
+                    }
+                    else if (optimalC.clusters.Length < c.clusters.Length)
+                    {
+                        optimalC.minThresholdRequired = c.minThresholdRequired;
+                        optimalC.clusters = c.clusters;
+                    }
+                }
+                else
+                {
+                    if (optimalC == null)
+                    {
+                        optimalC = new BAL.CMA.Clusters();
+                        optimalC.minThresholdRequired = c.minThresholdRequired;
+                        optimalC.clusters = c.clusters;
+                    }
+                    else if (optimalC.clusters.Length < c.clusters.Length)
+                    {
+                        optimalC.minThresholdRequired = c.minThresholdRequired;
+                        optimalC.clusters = c.clusters;
+                    }
+                }
+            }
+            return optimalC;
+        }
+
+        public class KDECluster
+        {
+            public double minValue;
+            public double maxValue;
+            public double threshold;
+            public int samples;
+            public string message;
+        }
+
+        private static List<KDECluster> FindClustersWithKDE(int cMAType, double[] kdeDensityPoints, double[] minThresholds, double[] priceArray)
+        {
+            List<KDECluster> clusters = new List<KDECluster>();
+
+            for (int k = 0; k < kdeDensityPoints.Length; k++)
+            {
+                for (int ii = 0; ii < minThresholds.Length; ii++)
+                {
+                    KDECluster cluster = new KDECluster();
+                    double maxVal = kdeDensityPoints[k] * (1 + minThresholds[ii]);
+                    double minVal = kdeDensityPoints[k] * (1 - minThresholds[ii]);
+                    cluster.samples = 0;
+                    cluster.threshold = minThresholds[ii];
+                    for (int j = 0; j < priceArray.Length; j++)
+                    {
+                        if (priceArray[j]>= minVal && priceArray[j]<= maxVal)
+                        {
+                            if (cluster.samples==0)
+                            {
+                                cluster.minValue = priceArray[j];
+                                cluster.maxValue = priceArray[j];
+                            }
+                            else if (cluster.minValue > priceArray[j])
+                                cluster.minValue = priceArray[j];
+                            else if (cluster.maxValue < priceArray[j])
+                                cluster.maxValue = priceArray[j];
+                            cluster.samples++;
+                        }              
+                    }
+                    if (cluster.samples >= 3)
+                        clusters.Add(cluster);
+                }
+            }
+            
+            return clusters;
+        }
+
+        public class ClusterSelection
+        {
+            public int clusterValue;
+            public KDECluster kDEcluster;
+            public string message;
+        }
+
+        private static ClusterSelection SelectCluster(int cMAType, List<KDECluster> clusters, double medianPrice)
+        {
+            ClusterSelection cs = new ClusterSelection();
+            cs.clusterValue = -1;
+            KDECluster[] clustersArray = clusters.ToArray();
+
+            switch (clustersArray.Length)
+            {
+                case 0:
+                    cs.message = "No price clusters found";
+                    break;
+                case 1:
+                    cs.message = "Single price cluster found";
+                    cs.kDEcluster = clustersArray[0];
+                    break;
+                default:
+                    cs.message = string.Format("{0} clusters found.", clusters.Count);
+                    switch (cMAType)
+                    {
+                        case (int)CMAType.Regular:
+                            cs.kDEcluster = null;
+                            cs.message += " Picking the largest cluster containing median price with min value closest to the median Price";
+                            for (int i = 0; i < clustersArray.Length; i++)
+                            {   if (cs.kDEcluster == null)
+                                {  if ((clustersArray[i].minValue <= medianPrice) && (clustersArray[i].maxValue >= medianPrice))
+                                        cs.kDEcluster = clustersArray[i];
+                                }
+                                else if ((clustersArray[i].minValue <= medianPrice) && (clustersArray[i].maxValue >= medianPrice))
+                                {
+                                    if (clustersArray[i].minValue > cs.kDEcluster.minValue)
+                                        cs.kDEcluster = clustersArray[i];
+                                    else if (clustersArray[i].minValue == cs.kDEcluster.minValue)
+                                    {
+                                        if (cs.kDEcluster.samples < clustersArray[i].samples)
+                                            cs.kDEcluster = clustersArray[i];
+                                    }
+                                }
+                            }
+                            if (cs.kDEcluster==null)
+                            {
+                                cs.message += " Picking the largest cluster  where median price  is less than with min value but closest to the median Price";
+                                for (int i = 0; i < clustersArray.Length; i++)
+                                {
+                                    if (cs.kDEcluster == null)
+                                    {  if (clustersArray[i].minValue >= medianPrice)
+                                            cs.kDEcluster = clustersArray[i];
+                                    }
+                                    else if (clustersArray[i].minValue >= medianPrice)
+                                    {
+                                        if (clustersArray[i].minValue < cs.kDEcluster.minValue)
+                                            cs.kDEcluster = clustersArray[i];
+                                        else if (clustersArray[i].minValue == cs.kDEcluster.minValue)
+                                        {
+                                            if (cs.kDEcluster.samples < clustersArray[i].samples)
+                                                cs.kDEcluster = clustersArray[i];
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case (int)CMAType.ShortSale:
+                            cs.message += " Picking the smallest cluster with minimum minValue.";
+                            cs.kDEcluster = null;
+                            for (int i = 0; i < clustersArray.Length; i++)
+                            {
+                                if (clustersArray[i].maxValue <= medianPrice)
+                                {
+                                    if (cs.kDEcluster == null)
+                                        cs.kDEcluster = clustersArray[i];
+                                    else if (cs.kDEcluster.minValue > clustersArray[i].minValue)
+                                        cs.kDEcluster = clustersArray[i];
+                                    else if (cs.kDEcluster.minValue == clustersArray[i].minValue)
+                                    {
+                                        if (cs.kDEcluster.samples > clustersArray[i].samples)
+                                            cs.kDEcluster = clustersArray[i];
+                                    }
+                                }
+                            }
+                            break;
+                        case (int)CMAType.Rehab:
+                            cs.message += " Picking the smallest cluster with maximum maxValue.";
+                            cs.kDEcluster = null;
+                            for (int i = 0; i < clustersArray.Length; i++)
+                            {
+                                if (clustersArray[i].minValue >= medianPrice)
+                                {
+                                    if (cs.kDEcluster == null)
+                                        cs.kDEcluster = clustersArray[i];
+                                    else if (cs.kDEcluster.maxValue < clustersArray[i].maxValue)
+                                        cs.kDEcluster = clustersArray[i];
+                                    else if (cs.kDEcluster.maxValue == clustersArray[i].maxValue)
+                                    {
+                                        if (cs.kDEcluster.samples > clustersArray[i].samples)
+                                            cs.kDEcluster = clustersArray[i];
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                    break;
+            }
+            if (cs.kDEcluster == null)
+                cs.message += " Cannot find an appropriate price cluster";
+            return cs;
+        }
+
+        private static ClusterSelection SelectCluster(int cMAType, Clusters clusterInfo)
+        {
+            ClusterSelection cs = new ClusterSelection();
+            cs.clusterValue = -1;
+
+            switch (clusterInfo.clusters.Length)
+            {
+                case 0:
+                    cs.message = "No price clusters found";
+                    break;
+                case 1:
+                    cs.message = "Single price cluster found";
+                    cs.clusterValue = 0;
+                    break;
+                case 2:
+                    cs.message = "Two price clusters found.";
+                    switch (cMAType)
+                    {
+                        case (int)CMAType.Regular:
+                            cs.message += " Picking the second cluster.";
+                            cs.clusterValue = 1;
+                            break;
+                        case (int)CMAType.ShortSale:
+                            cs.message += " Picking the first cluster.";
+                            cs.clusterValue = 0;
+                            break;
+                        case (int)CMAType.Rehab:
+                            cs.message += " Picking the second cluster.";
+                            cs.clusterValue = 1;
+                            break;
+                    }
+                    break;
+                default:
+                    cs.message = string.Format("{0} clusters found.", clusterInfo.clusters.Length);
+                    switch (cMAType)
+                    {
+                        case (int)CMAType.Regular:
+                            cs.message += " Cannot determine the right price cluster refine search.";
+                            break;
+                        case (int)CMAType.ShortSale:
+                            cs.message += " Picking the first cluster.";
+                            cs.clusterValue = 0;
+                            break;
+                        case (int)CMAType.Rehab:
+                            cs.message += " Picking the last cluster.";
+                            cs.clusterValue = clusterInfo.clusters.Length - 1;
+                            break;
+                    }
+                    break;
+            }
+
+            return cs;
+        }
+
+        private static double[] ApplyGaussianKDE(double[] pricesArray)
+        {
+            double minValue, maxValue;
+            int distance;
+            int kernelSize;
+            Common.DoubleList localDensityPoints = new Common.DoubleList();
+
+            if (pricesArray.Length <= 1)
+                localDensityPoints.ToArray();
+
+            minValue = pricesArray[0];
+            maxValue = pricesArray[pricesArray.Length - 1];
+            distance = Convert.ToInt32(Math.Round(maxValue-minValue)+1);
+
+            kernelSize = distance / (pricesArray.Length - 1);
+            if (kernelSize % 2 == 0)
+                kernelSize += 1;
+
+            double[] SampleArray = new double[distance];
+
+            for (int i = 0, j=0; i < distance; i++)
+            {
+                if (Convert.ToInt32(pricesArray[j]) - Convert.ToInt32(minValue) == i)
+                {
+                    SampleArray[i] = 1000;
+                    j++;
+                }
+                else
+                    SampleArray[i] = 0;
+
+            }
+
+            double[] densityArray = Common.Statistics.ApplyGaussianKDEV2(SampleArray, kernelSize, GAUSSIAN_SIGMA);
+
+            double? localMaxima = 0;
+            int? direction=null;
+            for (int i = 0; i < distance; i++)
+            {
+                if (localMaxima == null)
+                    localMaxima=densityArray[i];
+                else if (densityArray[i]>= localMaxima)
+                {
+                    direction = 1;
+                    localMaxima = densityArray[i];
+                }
+                else
+                {   if (direction == 1)
+                        localDensityPoints.Add(i + minValue);
+                    direction = 0;
+                    localMaxima = densityArray[i];
+                }
+            }
+
+            return localDensityPoints.ToArray();
         }
 
 
@@ -280,95 +551,85 @@ namespace PropertyWebAPI.BAL
                 return price;
             }
 
+            if (results.Count == 0)
+            {
+                price.message = "No Comparables found";
+                return price;
+            }
+
             Common.DoubleList pricessqft = new Common.DoubleList();
             foreach (var comp in results)
-                pricessqft.Add(comp.DeedAmount.GetValueOrDefault() / comp.GLA.GetValueOrDefault());
-
+                pricessqft.Add(Math.Round(comp.DeedAmount.GetValueOrDefault() / comp.GLA.GetValueOrDefault(),0));
             pricessqft.Sort();
+
+            double medianPrice = Common.Statistics.Percentile(pricessqft, 50);
+
             double[] pricesArray = pricessqft.ToArray();
-            double[] smoothValues = Common.Statistics.ApplyGaussianKDE(pricessqft.ToArray(), GAUSSIAN_KERNEL_SIZE, GAUSSIAN_SIGMA);
-            double[] derivatives = Common.Statistics.DiscreteDerivative(smoothValues);
+            //Round Prices
+            for (int j = 0; j < pricesArray.Length; j++)
+                pricesArray[j] = Math.Round(pricesArray[j], 0);
+
+            double[] kDEDensityPoints = ApplyGaussianKDE(pricesArray);
+            //double[] smoothValues = Common.Statistics.ApplyGaussianKDE(pricesArray, GAUSSIAN_KERNEL_SIZE, GAUSSIAN_SIGMA);
+
+            double[] derivatives = Common.Statistics.DiscreteDerivative(pricesArray);
             for (int j = 0; j < derivatives.Length; j++)
-                derivatives[j] = Math.Round(derivatives[j],0);
+            {
+                double value = derivatives[j];
+                if (Math.Round(value, 2)>= value)
+                    derivatives[j] = Math.Round(value, 2);
+                else
+                    derivatives[j] = Math.Round(value + 0.005, 2);
+            }
 
             //What is the minimum threshold required to get a cluster from our comparables
-            double? minThresholdRequired = GetMinimumThresholdForCluster(cMAType, derivatives);
+            double[] minThresholds = GetThresholdsForClusters(cMAType, derivatives);
 
-            if (minThresholdRequired == null)
+            if (minThresholds.Length < 1)
             {
                 price.message = "At least 3 comparables required for pricing";
                 return price;
             }
 
-            //Using minThresholdRequired find clusters in comparables
-            int[] mins = FindClusters(cMAType, derivatives, minThresholdRequired.GetValueOrDefault());
+            //Using minThresholds find clusters in comparables with KDE points
+            List<KDECluster> clusters = FindClustersWithKDE(cMAType, kDEDensityPoints, minThresholds, pricesArray);
+            //Using minThresholds find clusters in comparables
+            Clusters clusterInfo = FindClusters(cMAType, derivatives, minThresholds);
 
-            int clusterValue=-1;
-            double? minClusterValue = null, maxClusterValue = null;
-            switch (mins.Length)
+            //Select the appropriate cluster based on CMAType
+            ClusterSelection clusterSelection = SelectCluster(cMAType, clusterInfo);
+            ClusterSelection clusterSelectionKDE = SelectCluster(cMAType, clusters, medianPrice);
+            
+            //mix and max values from the cluster
+            double ? minClusterValue = null, maxClusterValue = null;
+
+            if (clusterSelectionKDE.kDEcluster!=null)
             {
-                case 0:
-                    price.message = "No price clusters found";
-                    break;
-                case 1:
-                    price.message = "Single price cluster found";
-                    clusterValue = 0;
-                    break;
-                case 2:
-                    price.message = "Two price clusters found.";
-                    switch (cMAType)
-                    {
-                        case (int)CMAType.Regular:
-                            price.message += " Picking the second cluster.";
-                            clusterValue = 1;
-                            break;
-                        case (int)CMAType.ShortSale:
-                            price.message += " Picking the first cluster.";
-                            clusterValue = 0;
-                            break;
-                        case (int)CMAType.Rehab:
-                            price.message += " Picking the second cluster.";
-                            clusterValue = 1;
-                            break;
-                    }
-                    break;
-                default:
-                    price.message = string.Format("{0} clusters found.", mins.Length);
-                    switch (cMAType)
-                    {
-                        case (int)CMAType.Regular:
-                            price.message += " Cannot determine the right price cluster refine search.";
-                            break;
-                        case (int)CMAType.ShortSale:
-                            price.message += " Picking the first cluster.";
-                            clusterValue = 0;
-                            break;
-                        case (int)CMAType.Rehab:
-                            price.message += " Picking the last cluster.";
-                            clusterValue = mins.Length - 1;
-                            break;
-                    }
-                    break;
+                minClusterValue = clusterSelectionKDE.kDEcluster.minValue;
+                maxClusterValue = clusterSelectionKDE.kDEcluster.maxValue;
+                price.message = clusterSelectionKDE.message;
             }
-
-            if (clusterValue!=-1)
+            else if (clusterSelection.clusterValue != -1)
             {
-                minClusterValue = pricesArray[mins[clusterValue]];
-                maxClusterValue = pricesArray[mins[clusterValue] + 1];
-                int i = mins[clusterValue] + 1;
+                minClusterValue = Math.Round(pricesArray[clusterInfo.clusters[clusterSelection.clusterValue]],0);
+                maxClusterValue = Math.Round(pricesArray[clusterInfo.clusters[clusterSelection.clusterValue] + 1],0);
+                int i = clusterInfo.clusters[clusterSelection.clusterValue] + 1;
                 while (i < derivatives.Length)
                 {
-                    if (derivatives[i] <= minThresholdRequired.GetValueOrDefault())
-                        maxClusterValue = pricesArray[i + 1];
+                    if (derivatives[i] <= clusterInfo.minThresholdRequired.GetValueOrDefault())
+                        maxClusterValue = Math.Round(pricesArray[i + 1],0);
                     else
                         break;
                     i++;
                 }
+                price.message = clusterSelection.message;
             }
-
+            
+            //use min max values to compute subject price
             if (minClusterValue != null && maxClusterValue != null)
             {
                 price.SubjectBBL = subjectBBL;
+
                 price.minClusterValue = minClusterValue;
                 price.maxClusterValue = maxClusterValue;
 
@@ -383,12 +644,12 @@ namespace PropertyWebAPI.BAL
 
         public static AutomatedCMAResults GetAutomatedCMA(string algorithmType, string subjectBBL, int? maxRecords, bool? sameNeighborhood, bool? sameSchoolDistrict,
                                                           bool? sameZip, bool? sameBlock, bool? sameStreet, int? monthOffset, double? minSalePrice, double? maxSalePrice,
-                                                          int? classMatchType, bool? isNotIntraFamily, bool? isSelleraCompany, bool? isBuyeraCompany)
+                                                          int? classMatchType, bool? isNotIntraFamily, bool? isSelleraCompany, bool? isBuyeraCompany, int? minSimilarity)
         {
             AutomatedCMAResults cmaResult = new AutomatedCMAResults();
             
             cmaResult.results=DAL.CMA.GetComparables(algorithmType, subjectBBL, maxRecords, sameNeighborhood, sameSchoolDistrict, sameZip, sameBlock, sameStreet, 
-                                                     monthOffset, minSalePrice, maxSalePrice, classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany);
+                                                     monthOffset, minSalePrice, maxSalePrice, classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany, minSimilarity);
 
             cmaResult.price = getSuggestedPropertyPrices((int)CMAType.Regular, subjectBBL, cmaResult.results);
 
@@ -402,7 +663,7 @@ namespace PropertyWebAPI.BAL
             cmaResult.results = DAL.CMA.GetComparables(fl.algorithmType, subjectBBL, fl.basicFilter.maxRecords, fl.basicFilter.sameNeighborhood, fl.basicFilter.sameSchoolDistrict,
                                                        fl.basicFilter.sameZip, fl.basicFilter.sameBlock, fl.basicFilter.sameStreet, fl.basicFilter.monthOffset, fl.basicFilter.minSalePrice,
                                                        fl.basicFilter.maxSalePrice, fl.basicFilter.classMatchType, fl.basicFilter.isNotIntraFamily, fl.basicFilter.isSelleraCompany, 
-                                                       fl.basicFilter.isBuyeraCompany);
+                                                       fl.basicFilter.isBuyeraCompany, fl.basicFilter.minSimilarity);
 
             cmaResult.price = getSuggestedPropertyPrices((int)CMAType.ShortSale, subjectBBL, cmaResult.results);
 
@@ -416,7 +677,7 @@ namespace PropertyWebAPI.BAL
             cmaResult.results = DAL.CMA.GetComparables(fl.algorithmType, subjectBBL, fl.basicFilter.maxRecords, fl.basicFilter.sameNeighborhood, fl.basicFilter.sameSchoolDistrict,
                                                        fl.basicFilter.sameZip, fl.basicFilter.sameBlock, fl.basicFilter.sameStreet, fl.basicFilter.monthOffset, fl.basicFilter.minSalePrice,
                                                        fl.basicFilter.maxSalePrice, fl.basicFilter.classMatchType, fl.basicFilter.isNotIntraFamily, fl.basicFilter.isSelleraCompany, 
-                                                       fl.basicFilter.isBuyeraCompany);
+                                                       fl.basicFilter.isBuyeraCompany, fl.basicFilter.minSimilarity);
 
             cmaResult.price = cmaResult.price = getSuggestedPropertyPrices((int)CMAType.Rehab, subjectBBL, cmaResult.results);
 

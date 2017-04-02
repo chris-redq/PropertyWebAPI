@@ -29,8 +29,8 @@
     <Property Name="Landmark" Type="varchar" MaxLength="1000" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="vwGeneralLeadInfomation">
+warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwGeneralLeadInformation">
     <Key>
       <PropertyRef Name="BBLE" />
       <PropertyRef Name="IsFannieMaeMortgage" />
@@ -71,10 +71,103 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
     <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
     <Property Name="ResidentialUnits" Type="float" />
     <Property Name="TaxLienList" Type="int" />
-    <Property Name="PoolA" Type="int" />
+    <Property Name="PoolA" Type="bit" />
     <Property Name="TaxLienLPs" Type="int" />
     <Property Name="TaxLienActiveCases" Type="int" />
-    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
+    <Property Name="MortgageForeclosureLPs" Type="int" />
+    <Property Name="MortgageForeclosureActiveCases" Type="int" />
+    <Property Name="COSPresent" Type="int" />
+    <Property Name="FormattedAddress" Type="varchar" MaxLength="250" />
+    <Property Name="IsVacant" Type="varchar" MaxLength="1" />
+    <Property Name="IsMailingAddressActive" Type="varchar" MaxLength="1" />
+    <Property Name="City" Type="varchar" MaxLength="64" />
+    <Property Name="State" Type="varchar" MaxLength="2" />
+    <Property Name="County" Type="varchar" MaxLength="64" />
+    <Property Name="ECBAmountDue" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="ECBOpenTickets" Type="int" />
+    <Property Name="DOBCivilPenaltiesDue" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="DOBOpenViolations" Type="int" />
+    <Property Name="DOBOpenClass1Violations" Type="int" />
+    <Property Name="IsFannieMaeMortgage" Type="int" Nullable="false" />
+    <Property Name="IsFreddieMacMortgagge" Type="int" Nullable="false" />
+    <Property Name="LeadGrade" Type="varchar" MaxLength="2" />
+    <Property Name="Equity" Type="numeric" Precision="2" Scale="2" Nullable="false" />
+    <Property Name="LTV" Type="numeric" Precision="2" Scale="2" Nullable="false" />
+    <Property Name="UnbuiltAreaAboveThreshold" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="LotType" Type="varchar" MaxLength="50" />
+    <Property Name="Proximity" Type="varchar" MaxLength="50" />
+    <Property Name="NumberOfBuildings" Type="int" />
+    <Property Name="Style" Type="varchar" MaxLength="50" />
+    <Property Name="ExteriorCondition" Type="varchar" MaxLength="50" />
+    <Property Name="FinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="UnfinishedSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialUnits" Type="int" />
+    <Property Name="CommercialSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="GarageType" Type="varchar" MaxLength="50" />
+    <Property Name="GarageSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="BasementGrade" Type="varchar" MaxLength="50" />
+    <Property Name="BasementSquareFootage" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="BasementType" Type="varchar" MaxLength="50" />
+    <Property Name="ConstructionType" Type="varchar" MaxLength="50" />
+    <Property Name="ExteriorWall" Type="varchar" MaxLength="50" />
+    <Property Name="StructureType" Type="varchar" MaxLength="50" />
+    <Property Name="Grade" Type="varchar" MaxLength="50" />
+    <Property Name="IsSRORestricted" Type="int" />
+    <Property Name="IsLandmark" Type="int" />
+    <Property Name="ServicerName" Type="varchar" MaxLength="250" />
+    <Property Name="AVGLowPrice" Type="float" />
+    <Property Name="AVGLowPriceNoLP" Type="float" />
+    <Property Name="MedianPrice" Type="float" />
+    <Property Name="AVGHighPice" Type="float" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwGeneralPropertyInformation">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="IsFannieMaeMortgage" />
+      <PropertyRef Name="IsFreddieMacMortgagge" />
+      <PropertyRef Name="Equity" />
+      <PropertyRef Name="LTV" />
+    </Key>
+    <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="LotFrontage" Type="float" />
+    <Property Name="LotDepth" Type="float" />
+    <Property Name="LotArea" Type="float" />
+    <Property Name="BuildingClass" Type="nvarchar" MaxLength="2" />
+    <Property Name="BuildingClassDescription" Type="varchar" MaxLength="255" />
+    <Property Name="BuildingForntage" Type="float" />
+    <Property Name="BuildingDepth" Type="float" />
+    <Property Name="Stories" Type="float" />
+    <Property Name="NumberOfBuildingsOnLot" Type="float" />
+    <Property Name="BuildingGrossArea" Type="float" />
+    <Property Name="BuiltFAR" Type="float" />
+    <Property Name="MaxResidentialFAR" Type="float" />
+    <Property Name="UnbuiltArea" Type="decimal" Precision="8" Scale="2" />
+    <Property Name="YearBuilt" Type="float" />
+    <Property Name="Borough" Type="float" />
+    <Property Name="BoroughName" Type="varchar" MaxLength="13" />
+    <Property Name="Block" Type="float" />
+    <Property Name="Lot" Type="float" />
+    <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
+    <Property Name="StreetName" Type="varchar(max)" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="30" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+    <Property Name="NTACode" Type="varchar" MaxLength="4" />
+    <Property Name="Zoning" Type="nvarchar" MaxLength="9" />
+    <Property Name="UnitNumber" Type="nvarchar" MaxLength="5" />
+    <Property Name="East" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="North" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="ResidentialUnits" Type="float" />
+    <Property Name="TaxLienList" Type="int" />
+    <Property Name="PoolA" Type="bit" />
+    <Property Name="TaxLienLPs" Type="int" />
+    <Property Name="TaxLienActiveCases" Type="int" />
+    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
     <Property Name="MortgageForeclosureLPs" Type="int" />
     <Property Name="MortgageForeclosureActiveCases" Type="int" />
     <Property Name="COSPresent" Type="int" />
@@ -143,91 +236,177 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInfomation' does not have a
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
-    <EntitySet Name="vwGeneralLeadInfomation" EntityType="Self.vwGeneralLeadInfomation" store:Type="Views" store:Schema="app">
+    <EntitySet Name="vwGeneralLeadInformation" EntityType="Self.vwGeneralLeadInformation" store:Type="Views" store:Schema="app">
       <DefiningQuery>SELECT 
-    [vwGeneralLeadInfomation].[BBLE] AS [BBLE], 
-    [vwGeneralLeadInfomation].[TaxClass] AS [TaxClass], 
-    [vwGeneralLeadInfomation].[LotFrontage] AS [LotFrontage], 
-    [vwGeneralLeadInfomation].[LotDepth] AS [LotDepth], 
-    [vwGeneralLeadInfomation].[LotArea] AS [LotArea], 
-    [vwGeneralLeadInfomation].[BuildingClass] AS [BuildingClass], 
-    [vwGeneralLeadInfomation].[BuildingClassDescription] AS [BuildingClassDescription], 
-    [vwGeneralLeadInfomation].[BuildingForntage] AS [BuildingForntage], 
-    [vwGeneralLeadInfomation].[BuildingDepth] AS [BuildingDepth], 
-    [vwGeneralLeadInfomation].[Stories] AS [Stories], 
-    [vwGeneralLeadInfomation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
-    [vwGeneralLeadInfomation].[BuildingGrossArea] AS [BuildingGrossArea], 
-    [vwGeneralLeadInfomation].[BuiltFAR] AS [BuiltFAR], 
-    [vwGeneralLeadInfomation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
-    [vwGeneralLeadInfomation].[UnbuiltArea] AS [UnbuiltArea], 
-    [vwGeneralLeadInfomation].[YearBuilt] AS [YearBuilt], 
-    [vwGeneralLeadInfomation].[Borough] AS [Borough], 
-    [vwGeneralLeadInfomation].[BoroughName] AS [BoroughName], 
-    [vwGeneralLeadInfomation].[Block] AS [Block], 
-    [vwGeneralLeadInfomation].[Lot] AS [Lot], 
-    [vwGeneralLeadInfomation].[StreetNumber] AS [StreetNumber], 
-    [vwGeneralLeadInfomation].[StreetName] AS [StreetName], 
-    [vwGeneralLeadInfomation].[ZipCode] AS [ZipCode], 
-    [vwGeneralLeadInfomation].[NeighborhoodName] AS [NeighborhoodName], 
-    [vwGeneralLeadInfomation].[NTACode] AS [NTACode], 
-    [vwGeneralLeadInfomation].[Zoning] AS [Zoning], 
-    [vwGeneralLeadInfomation].[UnitNumber] AS [UnitNumber], 
-    [vwGeneralLeadInfomation].[East] AS [East], 
-    [vwGeneralLeadInfomation].[North] AS [North], 
-    [vwGeneralLeadInfomation].[Longitude] AS [Longitude], 
-    [vwGeneralLeadInfomation].[Latitude] AS [Latitude], 
-    [vwGeneralLeadInfomation].[ResidentialUnits] AS [ResidentialUnits], 
-    [vwGeneralLeadInfomation].[TaxLienList] AS [TaxLienList], 
-    [vwGeneralLeadInfomation].[PoolA] AS [PoolA], 
-    [vwGeneralLeadInfomation].[TaxLienLPs] AS [TaxLienLPs], 
-    [vwGeneralLeadInfomation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
-    [vwGeneralLeadInfomation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
-    [vwGeneralLeadInfomation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
-    [vwGeneralLeadInfomation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
-    [vwGeneralLeadInfomation].[COSPresent] AS [COSPresent], 
-    [vwGeneralLeadInfomation].[FormattedAddress] AS [FormattedAddress], 
-    [vwGeneralLeadInfomation].[IsVacant] AS [IsVacant], 
-    [vwGeneralLeadInfomation].[IsMailingAddressActive] AS [IsMailingAddressActive], 
-    [vwGeneralLeadInfomation].[City] AS [City], 
-    [vwGeneralLeadInfomation].[State] AS [State], 
-    [vwGeneralLeadInfomation].[County] AS [County], 
-    [vwGeneralLeadInfomation].[ECBAmountDue] AS [ECBAmountDue], 
-    [vwGeneralLeadInfomation].[ECBOpenTickets] AS [ECBOpenTickets], 
-    [vwGeneralLeadInfomation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
-    [vwGeneralLeadInfomation].[DOBOpenViolations] AS [DOBOpenViolations], 
-    [vwGeneralLeadInfomation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
-    [vwGeneralLeadInfomation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
-    [vwGeneralLeadInfomation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
-    [vwGeneralLeadInfomation].[LeadGrade] AS [LeadGrade], 
-    [vwGeneralLeadInfomation].[Equity] AS [Equity], 
-    [vwGeneralLeadInfomation].[LTV] AS [LTV], 
-    [vwGeneralLeadInfomation].[UnbuiltAreaAboveThreshold] AS [UnbuiltAreaAboveThreshold], 
-    [vwGeneralLeadInfomation].[LotType] AS [LotType], 
-    [vwGeneralLeadInfomation].[Proximity] AS [Proximity], 
-    [vwGeneralLeadInfomation].[NumberOfBuildings] AS [NumberOfBuildings], 
-    [vwGeneralLeadInfomation].[Style] AS [Style], 
-    [vwGeneralLeadInfomation].[ExteriorCondition] AS [ExteriorCondition], 
-    [vwGeneralLeadInfomation].[FinishedSquareFootage] AS [FinishedSquareFootage], 
-    [vwGeneralLeadInfomation].[UnfinishedSquareFootage] AS [UnfinishedSquareFootage], 
-    [vwGeneralLeadInfomation].[CommercialUnits] AS [CommercialUnits], 
-    [vwGeneralLeadInfomation].[CommercialSquareFootage] AS [CommercialSquareFootage], 
-    [vwGeneralLeadInfomation].[GarageType] AS [GarageType], 
-    [vwGeneralLeadInfomation].[GarageSquareFootage] AS [GarageSquareFootage], 
-    [vwGeneralLeadInfomation].[BasementGrade] AS [BasementGrade], 
-    [vwGeneralLeadInfomation].[BasementSquareFootage] AS [BasementSquareFootage], 
-    [vwGeneralLeadInfomation].[BasementType] AS [BasementType], 
-    [vwGeneralLeadInfomation].[ConstructionType] AS [ConstructionType], 
-    [vwGeneralLeadInfomation].[ExteriorWall] AS [ExteriorWall], 
-    [vwGeneralLeadInfomation].[StructureType] AS [StructureType], 
-    [vwGeneralLeadInfomation].[Grade] AS [Grade], 
-    [vwGeneralLeadInfomation].[IsSRORestricted] AS [IsSRORestricted], 
-    [vwGeneralLeadInfomation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralLeadInfomation].[ServicerName] AS [ServicerName], 
-    [vwGeneralLeadInfomation].[AVGLowPrice] AS [AVGLowPrice], 
-    [vwGeneralLeadInfomation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
-    [vwGeneralLeadInfomation].[MedianPrice] AS [MedianPrice], 
-    [vwGeneralLeadInfomation].[AVGHighPice] AS [AVGHighPice]
-    FROM [app].[vwGeneralLeadInfomation] AS [vwGeneralLeadInfomation]</DefiningQuery>
+    [vwGeneralLeadInformation].[BBLE] AS [BBLE], 
+    [vwGeneralLeadInformation].[TaxClass] AS [TaxClass], 
+    [vwGeneralLeadInformation].[LotFrontage] AS [LotFrontage], 
+    [vwGeneralLeadInformation].[LotDepth] AS [LotDepth], 
+    [vwGeneralLeadInformation].[LotArea] AS [LotArea], 
+    [vwGeneralLeadInformation].[BuildingClass] AS [BuildingClass], 
+    [vwGeneralLeadInformation].[BuildingClassDescription] AS [BuildingClassDescription], 
+    [vwGeneralLeadInformation].[BuildingForntage] AS [BuildingForntage], 
+    [vwGeneralLeadInformation].[BuildingDepth] AS [BuildingDepth], 
+    [vwGeneralLeadInformation].[Stories] AS [Stories], 
+    [vwGeneralLeadInformation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
+    [vwGeneralLeadInformation].[BuildingGrossArea] AS [BuildingGrossArea], 
+    [vwGeneralLeadInformation].[BuiltFAR] AS [BuiltFAR], 
+    [vwGeneralLeadInformation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
+    [vwGeneralLeadInformation].[UnbuiltArea] AS [UnbuiltArea], 
+    [vwGeneralLeadInformation].[YearBuilt] AS [YearBuilt], 
+    [vwGeneralLeadInformation].[Borough] AS [Borough], 
+    [vwGeneralLeadInformation].[BoroughName] AS [BoroughName], 
+    [vwGeneralLeadInformation].[Block] AS [Block], 
+    [vwGeneralLeadInformation].[Lot] AS [Lot], 
+    [vwGeneralLeadInformation].[StreetNumber] AS [StreetNumber], 
+    [vwGeneralLeadInformation].[StreetName] AS [StreetName], 
+    [vwGeneralLeadInformation].[ZipCode] AS [ZipCode], 
+    [vwGeneralLeadInformation].[NeighborhoodName] AS [NeighborhoodName], 
+    [vwGeneralLeadInformation].[NTACode] AS [NTACode], 
+    [vwGeneralLeadInformation].[Zoning] AS [Zoning], 
+    [vwGeneralLeadInformation].[UnitNumber] AS [UnitNumber], 
+    [vwGeneralLeadInformation].[East] AS [East], 
+    [vwGeneralLeadInformation].[North] AS [North], 
+    [vwGeneralLeadInformation].[Longitude] AS [Longitude], 
+    [vwGeneralLeadInformation].[Latitude] AS [Latitude], 
+    [vwGeneralLeadInformation].[ResidentialUnits] AS [ResidentialUnits], 
+    [vwGeneralLeadInformation].[TaxLienList] AS [TaxLienList], 
+    [vwGeneralLeadInformation].[PoolA] AS [PoolA], 
+    [vwGeneralLeadInformation].[TaxLienLPs] AS [TaxLienLPs], 
+    [vwGeneralLeadInformation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
+    [vwGeneralLeadInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
+    [vwGeneralLeadInformation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
+    [vwGeneralLeadInformation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
+    [vwGeneralLeadInformation].[COSPresent] AS [COSPresent], 
+    [vwGeneralLeadInformation].[FormattedAddress] AS [FormattedAddress], 
+    [vwGeneralLeadInformation].[IsVacant] AS [IsVacant], 
+    [vwGeneralLeadInformation].[IsMailingAddressActive] AS [IsMailingAddressActive], 
+    [vwGeneralLeadInformation].[City] AS [City], 
+    [vwGeneralLeadInformation].[State] AS [State], 
+    [vwGeneralLeadInformation].[County] AS [County], 
+    [vwGeneralLeadInformation].[ECBAmountDue] AS [ECBAmountDue], 
+    [vwGeneralLeadInformation].[ECBOpenTickets] AS [ECBOpenTickets], 
+    [vwGeneralLeadInformation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
+    [vwGeneralLeadInformation].[DOBOpenViolations] AS [DOBOpenViolations], 
+    [vwGeneralLeadInformation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
+    [vwGeneralLeadInformation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
+    [vwGeneralLeadInformation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
+    [vwGeneralLeadInformation].[LeadGrade] AS [LeadGrade], 
+    [vwGeneralLeadInformation].[Equity] AS [Equity], 
+    [vwGeneralLeadInformation].[LTV] AS [LTV], 
+    [vwGeneralLeadInformation].[UnbuiltAreaAboveThreshold] AS [UnbuiltAreaAboveThreshold], 
+    [vwGeneralLeadInformation].[LotType] AS [LotType], 
+    [vwGeneralLeadInformation].[Proximity] AS [Proximity], 
+    [vwGeneralLeadInformation].[NumberOfBuildings] AS [NumberOfBuildings], 
+    [vwGeneralLeadInformation].[Style] AS [Style], 
+    [vwGeneralLeadInformation].[ExteriorCondition] AS [ExteriorCondition], 
+    [vwGeneralLeadInformation].[FinishedSquareFootage] AS [FinishedSquareFootage], 
+    [vwGeneralLeadInformation].[UnfinishedSquareFootage] AS [UnfinishedSquareFootage], 
+    [vwGeneralLeadInformation].[CommercialUnits] AS [CommercialUnits], 
+    [vwGeneralLeadInformation].[CommercialSquareFootage] AS [CommercialSquareFootage], 
+    [vwGeneralLeadInformation].[GarageType] AS [GarageType], 
+    [vwGeneralLeadInformation].[GarageSquareFootage] AS [GarageSquareFootage], 
+    [vwGeneralLeadInformation].[BasementGrade] AS [BasementGrade], 
+    [vwGeneralLeadInformation].[BasementSquareFootage] AS [BasementSquareFootage], 
+    [vwGeneralLeadInformation].[BasementType] AS [BasementType], 
+    [vwGeneralLeadInformation].[ConstructionType] AS [ConstructionType], 
+    [vwGeneralLeadInformation].[ExteriorWall] AS [ExteriorWall], 
+    [vwGeneralLeadInformation].[StructureType] AS [StructureType], 
+    [vwGeneralLeadInformation].[Grade] AS [Grade], 
+    [vwGeneralLeadInformation].[IsSRORestricted] AS [IsSRORestricted], 
+    [vwGeneralLeadInformation].[IsLandmark] AS [IsLandmark], 
+    [vwGeneralLeadInformation].[ServicerName] AS [ServicerName], 
+    [vwGeneralLeadInformation].[AVGLowPrice] AS [AVGLowPrice], 
+    [vwGeneralLeadInformation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
+    [vwGeneralLeadInformation].[MedianPrice] AS [MedianPrice], 
+    [vwGeneralLeadInformation].[AVGHighPice] AS [AVGHighPice]
+    FROM [app].[vwGeneralLeadInformation] AS [vwGeneralLeadInformation]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwGeneralPropertyInformation" EntityType="Self.vwGeneralPropertyInformation" store:Type="Views" store:Schema="app">
+      <DefiningQuery>SELECT 
+    [vwGeneralPropertyInformation].[BBLE] AS [BBLE], 
+    [vwGeneralPropertyInformation].[TaxClass] AS [TaxClass], 
+    [vwGeneralPropertyInformation].[LotFrontage] AS [LotFrontage], 
+    [vwGeneralPropertyInformation].[LotDepth] AS [LotDepth], 
+    [vwGeneralPropertyInformation].[LotArea] AS [LotArea], 
+    [vwGeneralPropertyInformation].[BuildingClass] AS [BuildingClass], 
+    [vwGeneralPropertyInformation].[BuildingClassDescription] AS [BuildingClassDescription], 
+    [vwGeneralPropertyInformation].[BuildingForntage] AS [BuildingForntage], 
+    [vwGeneralPropertyInformation].[BuildingDepth] AS [BuildingDepth], 
+    [vwGeneralPropertyInformation].[Stories] AS [Stories], 
+    [vwGeneralPropertyInformation].[NumberOfBuildingsOnLot] AS [NumberOfBuildingsOnLot], 
+    [vwGeneralPropertyInformation].[BuildingGrossArea] AS [BuildingGrossArea], 
+    [vwGeneralPropertyInformation].[BuiltFAR] AS [BuiltFAR], 
+    [vwGeneralPropertyInformation].[MaxResidentialFAR] AS [MaxResidentialFAR], 
+    [vwGeneralPropertyInformation].[UnbuiltArea] AS [UnbuiltArea], 
+    [vwGeneralPropertyInformation].[YearBuilt] AS [YearBuilt], 
+    [vwGeneralPropertyInformation].[Borough] AS [Borough], 
+    [vwGeneralPropertyInformation].[BoroughName] AS [BoroughName], 
+    [vwGeneralPropertyInformation].[Block] AS [Block], 
+    [vwGeneralPropertyInformation].[Lot] AS [Lot], 
+    [vwGeneralPropertyInformation].[StreetNumber] AS [StreetNumber], 
+    [vwGeneralPropertyInformation].[StreetName] AS [StreetName], 
+    [vwGeneralPropertyInformation].[ZipCode] AS [ZipCode], 
+    [vwGeneralPropertyInformation].[NeighborhoodName] AS [NeighborhoodName], 
+    [vwGeneralPropertyInformation].[NTACode] AS [NTACode], 
+    [vwGeneralPropertyInformation].[Zoning] AS [Zoning], 
+    [vwGeneralPropertyInformation].[UnitNumber] AS [UnitNumber], 
+    [vwGeneralPropertyInformation].[East] AS [East], 
+    [vwGeneralPropertyInformation].[North] AS [North], 
+    [vwGeneralPropertyInformation].[Longitude] AS [Longitude], 
+    [vwGeneralPropertyInformation].[Latitude] AS [Latitude], 
+    [vwGeneralPropertyInformation].[ResidentialUnits] AS [ResidentialUnits], 
+    [vwGeneralPropertyInformation].[TaxLienList] AS [TaxLienList], 
+    [vwGeneralPropertyInformation].[PoolA] AS [PoolA], 
+    [vwGeneralPropertyInformation].[TaxLienLPs] AS [TaxLienLPs], 
+    [vwGeneralPropertyInformation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
+    [vwGeneralPropertyInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
+    [vwGeneralPropertyInformation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
+    [vwGeneralPropertyInformation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
+    [vwGeneralPropertyInformation].[COSPresent] AS [COSPresent], 
+    [vwGeneralPropertyInformation].[FormattedAddress] AS [FormattedAddress], 
+    [vwGeneralPropertyInformation].[IsVacant] AS [IsVacant], 
+    [vwGeneralPropertyInformation].[IsMailingAddressActive] AS [IsMailingAddressActive], 
+    [vwGeneralPropertyInformation].[City] AS [City], 
+    [vwGeneralPropertyInformation].[State] AS [State], 
+    [vwGeneralPropertyInformation].[County] AS [County], 
+    [vwGeneralPropertyInformation].[ECBAmountDue] AS [ECBAmountDue], 
+    [vwGeneralPropertyInformation].[ECBOpenTickets] AS [ECBOpenTickets], 
+    [vwGeneralPropertyInformation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
+    [vwGeneralPropertyInformation].[DOBOpenViolations] AS [DOBOpenViolations], 
+    [vwGeneralPropertyInformation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
+    [vwGeneralPropertyInformation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
+    [vwGeneralPropertyInformation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
+    [vwGeneralPropertyInformation].[LeadGrade] AS [LeadGrade], 
+    [vwGeneralPropertyInformation].[Equity] AS [Equity], 
+    [vwGeneralPropertyInformation].[LTV] AS [LTV], 
+    [vwGeneralPropertyInformation].[UnbuiltAreaAboveThreshold] AS [UnbuiltAreaAboveThreshold], 
+    [vwGeneralPropertyInformation].[LotType] AS [LotType], 
+    [vwGeneralPropertyInformation].[Proximity] AS [Proximity], 
+    [vwGeneralPropertyInformation].[NumberOfBuildings] AS [NumberOfBuildings], 
+    [vwGeneralPropertyInformation].[Style] AS [Style], 
+    [vwGeneralPropertyInformation].[ExteriorCondition] AS [ExteriorCondition], 
+    [vwGeneralPropertyInformation].[FinishedSquareFootage] AS [FinishedSquareFootage], 
+    [vwGeneralPropertyInformation].[UnfinishedSquareFootage] AS [UnfinishedSquareFootage], 
+    [vwGeneralPropertyInformation].[CommercialUnits] AS [CommercialUnits], 
+    [vwGeneralPropertyInformation].[CommercialSquareFootage] AS [CommercialSquareFootage], 
+    [vwGeneralPropertyInformation].[GarageType] AS [GarageType], 
+    [vwGeneralPropertyInformation].[GarageSquareFootage] AS [GarageSquareFootage], 
+    [vwGeneralPropertyInformation].[BasementGrade] AS [BasementGrade], 
+    [vwGeneralPropertyInformation].[BasementSquareFootage] AS [BasementSquareFootage], 
+    [vwGeneralPropertyInformation].[BasementType] AS [BasementType], 
+    [vwGeneralPropertyInformation].[ConstructionType] AS [ConstructionType], 
+    [vwGeneralPropertyInformation].[ExteriorWall] AS [ExteriorWall], 
+    [vwGeneralPropertyInformation].[StructureType] AS [StructureType], 
+    [vwGeneralPropertyInformation].[Grade] AS [Grade], 
+    [vwGeneralPropertyInformation].[IsSRORestricted] AS [IsSRORestricted], 
+    [vwGeneralPropertyInformation].[IsLandmark] AS [IsLandmark], 
+    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName], 
+    [vwGeneralPropertyInformation].[AVGLowPrice] AS [AVGLowPrice], 
+    [vwGeneralPropertyInformation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
+    [vwGeneralPropertyInformation].[MedianPrice] AS [MedianPrice], 
+    [vwGeneralPropertyInformation].[AVGHighPice] AS [AVGHighPice]
+    FROM [app].[vwGeneralPropertyInformation] AS [vwGeneralPropertyInformation]</DefiningQuery>
     </EntitySet>
   </EntityContainer>
 </Schema>

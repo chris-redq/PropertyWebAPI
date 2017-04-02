@@ -141,11 +141,11 @@ namespace PropertyWebAPI.DAL
             }
         }
 
-        public static LeadSummaryData GetProperty(string propertybbl)
+        public static PropertySummaryData GetProperty(string propertybbl)
         {
             using (GPADBEntities1 gpaE = new GPADBEntities1())
             {
-                return Mapper.Map<LeadSummaryData>(gpaE.vwGeneralPropertyInformations.Where(x => x.BBLE == propertybbl).FirstOrDefault());
+                return Mapper.Map<PropertySummaryData>(gpaE.vwGeneralPropertyInformations.Where(x => x.BBLE == propertybbl).FirstOrDefault());
             }
         }
     }

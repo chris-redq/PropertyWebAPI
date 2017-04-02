@@ -111,6 +111,7 @@
     <Property Name="ExemptionsCount" Type="float" />
     <Property Name="SchoolDistrict" Type="varchar" MaxLength="2" />
     <Property Name="CommunityDistrict" Type="numeric" Precision="4" Scale="0" />
+    <Property Name="MaxResidentialFAR" Type="float" />
     <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
     <Property Name="NTACode" Type="varchar" MaxLength="4" />
     <Property Name="East" Type="decimal" Precision="28" Scale="15" />
@@ -222,6 +223,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
     <Parameter Name="IsNotIntraFamily" Type="bit" Mode="In" />
     <Parameter Name="IsSelleraCompany" Type="bit" Mode="In" />
     <Parameter Name="IsBuyeraCompany" Type="bit" Mode="In" />
+    <Parameter Name="MinSimilarity" Type="int" Mode="In" />
     <ReturnType>
       <CollectionType>
         <RowType>
@@ -256,7 +258,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="BuildingClass" Type="varchar" MaxLength="2" />
           <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
           <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="Cost" Type="float" />
+          <Property Name="Similarity" Type="decimal" Precision="5" Scale="2" />
           <Property Name="SortOrder" Type="int" />
         </RowType>
       </CollectionType>
@@ -264,7 +266,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
   </Function>
   <Function Name="tfnGetManualCMA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="App">
     <Parameter Name="sbjBBLE" Type="varchar" Mode="In" />
-    <Parameter Name="MaxRecords" Type="int" Mode="In" />
+    <Parameter Name="MinSimilarity" Type="int" Mode="In" />
     <Parameter Name="SameNeighborhood" Type="bit" Mode="In" />
     <Parameter Name="SameSchoolDistrict" Type="bit" Mode="In" />
     <Parameter Name="SameZip" Type="bit" Mode="In" />
@@ -324,7 +326,7 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="BuildingClass" Type="varchar" MaxLength="2" />
           <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
           <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
-          <Property Name="Cost" Type="float" />
+          <Property Name="Similarity" Type="decimal" Precision="5" Scale="2" />
           <Property Name="SortOrder" Type="int" />
         </RowType>
       </CollectionType>

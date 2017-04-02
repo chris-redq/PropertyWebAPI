@@ -164,6 +164,35 @@ namespace PropertyWebAPI.Common
             return values;
         }
 
+
+        public static double[] ApplyGaussianKDEV2(double[] values, int kernalSize, double sigma)
+        {
+            int inputArraySize = values.Count();
+            int kernelPad = kernalSize / 2;
+
+            double[] paddedValues = new double[inputArraySize + 2 * kernelPad];
+            for (int i = 0; i < kernelPad; i++)
+                paddedValues[i] = 0;
+
+            for (int i = kernelPad + inputArraySize; i < inputArraySize + 2 * kernelPad; i++)
+                paddedValues[i] = 0;
+
+            for (int i = kernelPad; i < inputArraySize + kernelPad; i++)
+                paddedValues[i] = values[i - kernelPad];
+
+            var terms = DiscreteNormalizedGuassianTerms(kernalSize, sigma);
+            double newValue;
+            for (int i = kernelPad; i < inputArraySize + kernelPad; i++)
+            {
+                newValue = 0.0;
+                for (int j = 0; j < kernalSize; j++)
+                    newValue = newValue + terms[j] * paddedValues[i - kernelPad + j];
+                values[i - kernelPad] = newValue;
+            }
+
+            return values;
+        }
+
         public static double[] DiscreteDerivative(double[] values)
         {
             int inputArraySize = values.Count();

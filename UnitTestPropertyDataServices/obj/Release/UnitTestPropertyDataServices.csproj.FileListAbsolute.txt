@@ -24,7 +24,6 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\R
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\ACRISDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\AutoMapper.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\EntityFramework.dll
-C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\DexiRobotRequestResponseBuilder.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCDOF.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\System.Web.Mvc.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\System.Net.Http.Formatting.dll
@@ -45,7 +44,6 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\R
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\ACRISDB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\AutoMapper.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\EntityFramework.xml
-C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\DexiRobotRequestResponseBuilder.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCDOF.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\System.Web.Mvc.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\System.Net.Http.Formatting.xml
@@ -70,3 +68,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\R
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCDOB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\NYCVNL.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\RequestResponseBuilder.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\MathNet.Numerics.dll
+C:\code\Visual Studio\Projects\PropertyWebAPI\UnitTestPropertyDataServices\bin\Release\MathNet.Numerics.xml

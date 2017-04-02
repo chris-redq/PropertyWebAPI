@@ -57,8 +57,50 @@ namespace UnitTestPropertyDataServices
 
             values1 = new DoubleList { 525.49, 521.86, 509.38, 319.55, 375.00, 325.00, 342.00 };
             values1.Sort();
+            double[] values1Array = values1.ToArray();
             smoothValues = Statistics.ApplyGaussianKDE(values1.ToArray(), 3, 0.45);
             derivatives = Statistics.DiscreteDerivative(smoothValues);
+            for (int j = 0; j < derivatives.Length; j++)
+                derivatives[j] = Math.Round(derivatives[j], 2);
+
+            double[] thresholds = PropertyWebAPI.BAL.CMA.GetThresholdsForClusters(1, derivatives);
+            int k = 0;
+            int[] minsv=null;
+
+            for (int ii=0; ii<thresholds.Length; ii++)
+            {
+                k = ii;
+                minsv = Statistics.FindClusters(derivatives, thresholds[ii]).ToArray();
+                if (minsv.Length > 1)
+                    break;
+            }
+                       
+            double minClusterValue = values1Array[minsv[0]];
+            double maxClusterValue = values1Array[minsv[0] + 1];
+            int i = minsv[0] + 1;
+            while (i < derivatives.Length)
+            {
+                if (derivatives[i] <= thresholds[k])
+                    maxClusterValue = values1Array[i + 1];
+                else
+                    break;
+                i++;
+            }
+
+            if (minsv.Length > 1)
+            {
+                minClusterValue = values1Array[minsv[1]];
+                maxClusterValue = values1Array[minsv[1] + 1];
+                i = minsv[1] + 1;
+                while (i < derivatives.Length)
+                {
+                    if (derivatives[i] <= thresholds[k])
+                        maxClusterValue = values1Array[i + 1];
+                    else
+                        break;
+                    i++;
+                }
+            }
             mins = Statistics.FindLocalMinima(derivatives);
             mins = Statistics.FindClusters(derivatives, 0.06);
 

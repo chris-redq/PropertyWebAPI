@@ -83,5 +83,6 @@ namespace NYCMADB
         public string CoordinatesSource { get; set; }
         public Nullable<double> BuildingGrossAreaCalculated { get; set; }
         public Nullable<decimal> GarageArea { get; set; }
+        public Nullable<double> MaxResidentialFAR { get; set; }
     }
 }

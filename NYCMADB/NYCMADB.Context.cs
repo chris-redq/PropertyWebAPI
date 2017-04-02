@@ -105,8 +105,17 @@ namespace NYCMADB
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetCMA", algorithmTypeParameter, sbjBBLEParameter, maxRecordsParameter, sameNeighborhoodParameter, sameSchoolDistrictParameter, sameZipParameter, sameBlockParameter, sameStreetNameParameter, monthOffsetParameter, minSalePriceParameter, maxSalePriceParameter, classMatchTypeParameter, isNotIntraFamilyParameter, isSelleraCompanyParameter, isBuyeraCompanyParameter, isDebugModeParameter);
         }
     
+        public virtual ObjectResult<ShowCMASubject_Result> ShowCMASubject(string sbjBBLE)
+        {
+            var sbjBBLEParameter = sbjBBLE != null ?
+                new ObjectParameter("sbjBBLE", sbjBBLE) :
+                new ObjectParameter("sbjBBLE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowCMASubject_Result>("ShowCMASubject", sbjBBLEParameter);
+        }
+    
         [DbFunction("NYCMAEntities", "tfnGetCMA")]
-        public virtual IQueryable<tfnGetCMA_Result> tfnGetCMA(string algorithmType, string sbjBBLE, Nullable<int> maxRecords, Nullable<bool> sameNeighborhood, Nullable<bool> sameSchoolDistrict, Nullable<bool> sameZip, Nullable<bool> sameBlock, Nullable<bool> sameStreetName, Nullable<int> monthOffset, Nullable<double> minSalePrice, Nullable<double> maxSalePrice, Nullable<int> classMatchType, Nullable<bool> isNotIntraFamily, Nullable<bool> isSelleraCompany, Nullable<bool> isBuyeraCompany)
+        public virtual IQueryable<tfnGetCMA_Result> tfnGetCMA(string algorithmType, string sbjBBLE, Nullable<int> maxRecords, Nullable<bool> sameNeighborhood, Nullable<bool> sameSchoolDistrict, Nullable<bool> sameZip, Nullable<bool> sameBlock, Nullable<bool> sameStreetName, Nullable<int> monthOffset, Nullable<double> minSalePrice, Nullable<double> maxSalePrice, Nullable<int> classMatchType, Nullable<bool> isNotIntraFamily, Nullable<bool> isSelleraCompany, Nullable<bool> isBuyeraCompany, Nullable<int> minSimilarity)
         {
             var algorithmTypeParameter = algorithmType != null ?
                 new ObjectParameter("AlgorithmType", algorithmType) :
@@ -168,28 +177,23 @@ namespace NYCMADB
                 new ObjectParameter("IsBuyeraCompany", isBuyeraCompany) :
                 new ObjectParameter("IsBuyeraCompany", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCMA_Result>("[NYCMAEntities].[tfnGetCMA](@AlgorithmType, @sbjBBLE, @MaxRecords, @SameNeighborhood, @SameSchoolDistrict, @SameZip, @SameBlock, @SameStreetName, @MonthOffset, @MinSalePrice, @MaxSalePrice, @ClassMatchType, @IsNotIntraFamily, @IsSelleraCompany, @IsBuyeraCompany)", algorithmTypeParameter, sbjBBLEParameter, maxRecordsParameter, sameNeighborhoodParameter, sameSchoolDistrictParameter, sameZipParameter, sameBlockParameter, sameStreetNameParameter, monthOffsetParameter, minSalePriceParameter, maxSalePriceParameter, classMatchTypeParameter, isNotIntraFamilyParameter, isSelleraCompanyParameter, isBuyeraCompanyParameter);
-        }
+            var minSimilarityParameter = minSimilarity.HasValue ?
+                new ObjectParameter("MinSimilarity", minSimilarity) :
+                new ObjectParameter("MinSimilarity", typeof(int));
     
-        public virtual ObjectResult<ShowCMASubject_Result> ShowCMASubject(string sbjBBLE)
-        {
-            var sbjBBLEParameter = sbjBBLE != null ?
-                new ObjectParameter("sbjBBLE", sbjBBLE) :
-                new ObjectParameter("sbjBBLE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowCMASubject_Result>("ShowCMASubject", sbjBBLEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetCMA_Result>("[NYCMAEntities].[tfnGetCMA](@AlgorithmType, @sbjBBLE, @MaxRecords, @SameNeighborhood, @SameSchoolDistrict, @SameZip, @SameBlock, @SameStreetName, @MonthOffset, @MinSalePrice, @MaxSalePrice, @ClassMatchType, @IsNotIntraFamily, @IsSelleraCompany, @IsBuyeraCompany, @MinSimilarity)", algorithmTypeParameter, sbjBBLEParameter, maxRecordsParameter, sameNeighborhoodParameter, sameSchoolDistrictParameter, sameZipParameter, sameBlockParameter, sameStreetNameParameter, monthOffsetParameter, minSalePriceParameter, maxSalePriceParameter, classMatchTypeParameter, isNotIntraFamilyParameter, isSelleraCompanyParameter, isBuyeraCompanyParameter, minSimilarityParameter);
         }
     
         [DbFunction("NYCMAEntities", "tfnGetManualCMA")]
-        public virtual IQueryable<tfnGetManualCMA_Result> tfnGetManualCMA(string sbjBBLE, Nullable<int> maxRecords, Nullable<bool> sameNeighborhood, Nullable<bool> sameSchoolDistrict, Nullable<bool> sameZip, Nullable<bool> sameBlock, Nullable<bool> sameStreetName, Nullable<int> monthOffset, Nullable<double> minSalePrice, Nullable<double> maxSalePrice, Nullable<int> classMatchType, Nullable<bool> isNotIntraFamily, Nullable<bool> isSelleraCompany, Nullable<bool> isBuyeraCompany, Nullable<double> distanceInMiles, Nullable<int> gLAHiRange, Nullable<int> gLALoRange, Nullable<int> lAHiRange, Nullable<int> lALoRange, Nullable<int> buildingFrontageHiRange, Nullable<int> buildingFrontageLoRange, Nullable<int> buildingDepthHiRange, Nullable<int> buildingDepthLoRange, Nullable<int> lotFrontageHiRange, Nullable<int> lotFrontageLoRange, Nullable<int> lotDepthHiRange, Nullable<int> lotDepthLoRange)
+        public virtual IQueryable<tfnGetManualCMA_Result> tfnGetManualCMA(string sbjBBLE, Nullable<int> minSimilarity, Nullable<bool> sameNeighborhood, Nullable<bool> sameSchoolDistrict, Nullable<bool> sameZip, Nullable<bool> sameBlock, Nullable<bool> sameStreetName, Nullable<int> monthOffset, Nullable<double> minSalePrice, Nullable<double> maxSalePrice, Nullable<int> classMatchType, Nullable<bool> isNotIntraFamily, Nullable<bool> isSelleraCompany, Nullable<bool> isBuyeraCompany, Nullable<double> distanceInMiles, Nullable<int> gLAHiRange, Nullable<int> gLALoRange, Nullable<int> lAHiRange, Nullable<int> lALoRange, Nullable<int> buildingFrontageHiRange, Nullable<int> buildingFrontageLoRange, Nullable<int> buildingDepthHiRange, Nullable<int> buildingDepthLoRange, Nullable<int> lotFrontageHiRange, Nullable<int> lotFrontageLoRange, Nullable<int> lotDepthHiRange, Nullable<int> lotDepthLoRange)
         {
             var sbjBBLEParameter = sbjBBLE != null ?
                 new ObjectParameter("sbjBBLE", sbjBBLE) :
                 new ObjectParameter("sbjBBLE", typeof(string));
     
-            var maxRecordsParameter = maxRecords.HasValue ?
-                new ObjectParameter("MaxRecords", maxRecords) :
-                new ObjectParameter("MaxRecords", typeof(int));
+            var minSimilarityParameter = minSimilarity.HasValue ?
+                new ObjectParameter("MinSimilarity", minSimilarity) :
+                new ObjectParameter("MinSimilarity", typeof(int));
     
             var sameNeighborhoodParameter = sameNeighborhood.HasValue ?
                 new ObjectParameter("SameNeighborhood", sameNeighborhood) :
@@ -291,7 +295,7 @@ namespace NYCMADB
                 new ObjectParameter("LotDepthLoRange", lotDepthLoRange) :
                 new ObjectParameter("LotDepthLoRange", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetManualCMA_Result>("[NYCMAEntities].[tfnGetManualCMA](@sbjBBLE, @MaxRecords, @SameNeighborhood, @SameSchoolDistrict, @SameZip, @SameBlock, @SameStreetName, @MonthOffset, @MinSalePrice, @MaxSalePrice, @ClassMatchType, @IsNotIntraFamily, @IsSelleraCompany, @IsBuyeraCompany, @DistanceInMiles, @GLAHiRange, @GLALoRange, @LAHiRange, @LALoRange, @BuildingFrontageHiRange, @BuildingFrontageLoRange, @BuildingDepthHiRange, @BuildingDepthLoRange, @LotFrontageHiRange, @LotFrontageLoRange, @LotDepthHiRange, @LotDepthLoRange)", sbjBBLEParameter, maxRecordsParameter, sameNeighborhoodParameter, sameSchoolDistrictParameter, sameZipParameter, sameBlockParameter, sameStreetNameParameter, monthOffsetParameter, minSalePriceParameter, maxSalePriceParameter, classMatchTypeParameter, isNotIntraFamilyParameter, isSelleraCompanyParameter, isBuyeraCompanyParameter, distanceInMilesParameter, gLAHiRangeParameter, gLALoRangeParameter, lAHiRangeParameter, lALoRangeParameter, buildingFrontageHiRangeParameter, buildingFrontageLoRangeParameter, buildingDepthHiRangeParameter, buildingDepthLoRangeParameter, lotFrontageHiRangeParameter, lotFrontageLoRangeParameter, lotDepthHiRangeParameter, lotDepthLoRangeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<tfnGetManualCMA_Result>("[NYCMAEntities].[tfnGetManualCMA](@sbjBBLE, @MinSimilarity, @SameNeighborhood, @SameSchoolDistrict, @SameZip, @SameBlock, @SameStreetName, @MonthOffset, @MinSalePrice, @MaxSalePrice, @ClassMatchType, @IsNotIntraFamily, @IsSelleraCompany, @IsBuyeraCompany, @DistanceInMiles, @GLAHiRange, @GLALoRange, @LAHiRange, @LALoRange, @BuildingFrontageHiRange, @BuildingFrontageLoRange, @BuildingDepthHiRange, @BuildingDepthLoRange, @LotFrontageHiRange, @LotFrontageLoRange, @LotDepthHiRange, @LotDepthLoRange)", sbjBBLEParameter, minSimilarityParameter, sameNeighborhoodParameter, sameSchoolDistrictParameter, sameZipParameter, sameBlockParameter, sameStreetNameParameter, monthOffsetParameter, minSalePriceParameter, maxSalePriceParameter, classMatchTypeParameter, isNotIntraFamilyParameter, isSelleraCompanyParameter, isBuyeraCompanyParameter, distanceInMilesParameter, gLAHiRangeParameter, gLALoRangeParameter, lAHiRangeParameter, lALoRangeParameter, buildingFrontageHiRangeParameter, buildingFrontageLoRangeParameter, buildingDepthHiRangeParameter, buildingDepthLoRangeParameter, lotFrontageHiRangeParameter, lotFrontageLoRangeParameter, lotDepthHiRangeParameter, lotDepthLoRangeParameter);
         }
     }
 }

@@ -199,7 +199,8 @@ namespace PropertyWebAPI.Controllers
         /// <param name="maxSalePrice">Maximum Sale price for consideration. Default is ignore max sale price</param>
         /// <param name="isNotIntraFamily">Null or 1. 1 means only arm length sales are considered.</param>
         /// <param name="isBuyeraCompany">Null or 1. 1 means buyer is company.</param>
-        /// <param name="isSelleraCompany">>Null or 1. 1 means seller is a company</param>
+        /// <param name="isSelleraCompany">Null or 1. 1 means seller is a company</param>
+        /// <param name="minSimilarity"></param>
         /// <returns>
         ///     Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
         /// </returns>
@@ -207,7 +208,8 @@ namespace PropertyWebAPI.Controllers
         [ResponseType(typeof(List<DAL.CMAResult>))]
         public IHttpActionResult GetComparables(string propertyBBL, string algorithmType="O", int? maxRecords=null, bool? sameNeighboorhood=null, bool? sameSchoolDistrict=null,
                                                 bool? sameZip=null, bool? sameBlock=null, bool? sameStreetName=null, int? monthOffset=null, double? minSalePrice=null, 
-                                                double? maxSalePrice=null, int? classMatchType=null, bool? isNotIntraFamily=null, bool? isSelleraCompany=null, bool? isBuyeraCompany=null)
+                                                double? maxSalePrice=null, int? classMatchType=null, bool? isNotIntraFamily=null, bool? isSelleraCompany=null, bool? isBuyeraCompany=null,
+                                                int? minSimilarity=null)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
@@ -215,7 +217,7 @@ namespace PropertyWebAPI.Controllers
             try
             {
                 var result = DAL.CMA.GetComparables(algorithmType, propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict, sameZip, sameBlock, sameStreetName, monthOffset,
-                                                     minSalePrice, maxSalePrice, classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany);
+                                                     minSalePrice, maxSalePrice, classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany, minSimilarity);
                 if (result == null)
                     return NotFound();
                 return Ok(result);
@@ -405,7 +407,7 @@ namespace PropertyWebAPI.Controllers
                                                     filters.basicFilter.sameSchoolDistrict, filters.basicFilter.sameZip, filters.basicFilter.sameBlock, 
                                                     filters.basicFilter.sameStreet, filters.basicFilter.monthOffset, filters.basicFilter.minSalePrice,
                                                     filters.basicFilter.maxSalePrice, filters.basicFilter.classMatchType, filters.basicFilter.isNotIntraFamily, 
-                                                    filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany);
+                                                    filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany, filters.basicFilter.minSimilarity);
                 if (result == null)
                     return NotFound();
                 return Ok(result);
@@ -443,7 +445,7 @@ namespace PropertyWebAPI.Controllers
                                                          filters.basicFilter.sameSchoolDistrict, filters.basicFilter.sameZip, filters.basicFilter.sameBlock,
                                                          filters.basicFilter.sameStreet, filters.basicFilter.monthOffset, filters.basicFilter.minSalePrice,
                                                          filters.basicFilter.maxSalePrice, filters.basicFilter.classMatchType, filters.basicFilter.isNotIntraFamily,
-                                                         filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany);
+                                                         filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany, filters.basicFilter.minSimilarity);
                         break;
                     case (int)CMAType.ShortSale:
                         result = BAL.CMA.GetAutomatedShortSaleCMA(subjectBBL, filters);
@@ -491,7 +493,7 @@ namespace PropertyWebAPI.Controllers
 
             try
             {
-                var result = DAL.CMA.GetManualComparables(subjectBBL, filters.basicFilter.maxRecords, filters.basicFilter.sameNeighborhood, filters.basicFilter.sameSchoolDistrict, 
+                var result = DAL.CMA.GetManualComparables(subjectBBL, filters.basicFilter.minSimilarity, filters.basicFilter.sameNeighborhood, filters.basicFilter.sameSchoolDistrict, 
                                                           filters.basicFilter.sameZip, filters.basicFilter.sameBlock, filters.basicFilter.sameStreet, filters.basicFilter.monthOffset, 
                                                           filters.basicFilter.minSalePrice, filters.basicFilter.maxSalePrice, filters.basicFilter.classMatchType, filters.basicFilter.isNotIntraFamily, 
                                                           filters.basicFilter.isSelleraCompany, filters.basicFilter.isBuyeraCompany, filters.additionalFilter.distance, filters.additionalFilter.gLAMax, 

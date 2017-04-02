@@ -44,7 +44,7 @@ namespace NYCMADB
         public string BuildingClass { get; set; }
         public Nullable<decimal> Longitude { get; set; }
         public Nullable<decimal> Latitude { get; set; }
-        public Nullable<double> Cost { get; set; }
+        public Nullable<decimal> Similarity { get; set; }
         public Nullable<int> SortOrder { get; set; }
     }
 }

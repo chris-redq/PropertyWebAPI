@@ -7,3 +7,4 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Debug\EntityFramework.
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\obj\Debug\NYCMADB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\obj\Debug\NYCMADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\obj\Debug\NYCMADB.csprojResolveAssemblyReference.cache

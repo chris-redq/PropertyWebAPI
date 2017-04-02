@@ -519,6 +519,9 @@
         <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.maxRecords">
             <summary>Maximum number of comparables to be returned</summary>
         </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.minSimilarity">
+            <summary>Minimum similarity index score allowed for returned comparables. Default value is 85</summary>
+        </member>
         <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.sameNeighborhood">
             <summary>Valid values are 0, 1 or NULL. 0 means ignore neighborhood and 1 means search in same neighborhood. Default is 0</summary>
         </member>
@@ -1406,7 +1409,7 @@
                 Returns sales price per sq-ft data by month for the neighborhood around a given property
             </returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32})">
             <summary>  
                 Use this api to get a list of comparables for the given property and associated parameters
             </summary>  
@@ -1426,7 +1429,8 @@
             <param name="maxSalePrice">Maximum Sale price for consideration. Default is ignore max sale price</param>
             <param name="isNotIntraFamily">Null or 1. 1 means only arm length sales are considered.</param>
             <param name="isBuyeraCompany">Null or 1. 1 means buyer is company.</param>
-            <param name="isSelleraCompany">>Null or 1. 1 means seller is a company</param>
+            <param name="isSelleraCompany">Null or 1. 1 means seller is a company</param>
+            <param name="minSimilarity"></param>
             <returns>
                 Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
             </returns>

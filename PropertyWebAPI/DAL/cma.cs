@@ -48,11 +48,12 @@ namespace PropertyWebAPI.DAL
 
     public class CMAResult: tfnGetCMA_Result
     {
+        public int? GLAppsqft;
 
     }
     public class CMAManualResult : tfnGetManualCMA_Result
     {
-
+        public int? GLAppsqft;
     }
 
     public class CMA
@@ -126,18 +127,25 @@ namespace PropertyWebAPI.DAL
 
         public static List<CMAResult> GetComparables(string algorithmType, string propertyBBL, int? maxRecords, bool? sameNeighboorhood, bool? sameSchoolDistrict,
                                                          bool? sameZip, bool? sameBlock, bool? sameStreetName, int? monthOffset, double? minSalePrice, double? maxSalePrice,
-                                                         int? classMatchType, bool? isNotIntraFamily, bool? isSelleraCompany, bool? isBuyeraCompany)
+                                                         int? classMatchType, bool? isNotIntraFamily, bool? isSelleraCompany, bool? isBuyeraCompany, int? minSimilarity)
         {
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<List<tfnGetCMA_Result>, List<CMAResult>>(nycmaE.tfnGetCMA(algorithmType, propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict, 
-                                                                                            sameZip, sameBlock, sameStreetName, monthOffset, minSalePrice, maxSalePrice, 
-                                                                                            classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany).ToList());
+                var resultList = Mapper.Map<List<tfnGetCMA_Result>, List<CMAResult>>(nycmaE.tfnGetCMA(algorithmType, propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict, 
+                                                                                     sameZip, sameBlock, sameStreetName, monthOffset, minSalePrice, maxSalePrice, 
+                                                                                     classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany, minSimilarity)
+                                                                                     .OrderBy(o=> o.SortOrder)
+                                                                                     .ThenByDescending(o=>o.Similarity)
+                                                                                     .ToList());
+                foreach (var res in resultList)
+                    if (res.GLA.GetValueOrDefault()>0)
+                        res.GLAppsqft = Convert.ToInt32(Math.Round(res.DeedAmount.GetValueOrDefault()/ res.GLA.GetValueOrDefault(), 0));
+                return resultList;
             }
         }
 
 
-        public static List<CMAManualResult> GetManualComparables(string propertyBBL, int? maxRecords, bool? sameNeighboorhood, bool? sameSchoolDistrict,
+        public static List<CMAManualResult> GetManualComparables(string propertyBBL, int? minSimilarity, bool? sameNeighboorhood, bool? sameSchoolDistrict,
                                                         bool? sameZip, bool? sameBlock, bool? sameStreetName, int? monthOffset, double? minSalePrice, double? maxSalePrice,
                                                         int? classMatchType, bool? isNotIntraFamily, bool? isSelleraCompany, bool? isBuyeraCompany, double? distanceInMiles, int? gLAHiRange,
                                                         int? gLALoRange, int? lAHiRange, int? lALoRange, int? buildingFrontageHiRange, int? buildingFrontageLoRange, int? buildingDepthHiRange,
@@ -145,11 +153,18 @@ namespace PropertyWebAPI.DAL
         {
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<List<tfnGetManualCMA_Result>, List<CMAManualResult>>(nycmaE.tfnGetManualCMA(propertyBBL, maxRecords, sameNeighboorhood, sameSchoolDistrict,
-                                                                                       sameZip, sameBlock, sameStreetName, monthOffset, minSalePrice, maxSalePrice,
-                                                                                       classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany, distanceInMiles, gLAHiRange,
-                                                                                       gLALoRange, lAHiRange, lALoRange, buildingFrontageHiRange, buildingFrontageLoRange, buildingDepthHiRange,
-                                                                                       buildingDepthLoRange, lotFrontageHiRange, lotFrontageLoRange, lotDepthHiRange, lotDepthLoRange).ToList());
+                var resultList = Mapper.Map<List<tfnGetManualCMA_Result>, List<CMAManualResult>>(nycmaE.tfnGetManualCMA(propertyBBL, minSimilarity, sameNeighboorhood, sameSchoolDistrict,
+                                                                                                sameZip, sameBlock, sameStreetName, monthOffset, minSalePrice, maxSalePrice,
+                                                                                                classMatchType, isNotIntraFamily, isSelleraCompany, isBuyeraCompany, distanceInMiles, gLAHiRange,
+                                                                                                gLALoRange, lAHiRange, lALoRange, buildingFrontageHiRange, buildingFrontageLoRange, buildingDepthHiRange,
+                                                                                                buildingDepthLoRange, lotFrontageHiRange, lotFrontageLoRange, lotDepthHiRange, lotDepthLoRange)
+                                                                                                .OrderBy(o=> o.SortOrder)
+                                                                                                .ThenByDescending(o=>o.Similarity)
+                                                                                                .ToList());
+                foreach (var res in resultList)
+                    if (res.GLA.GetValueOrDefault() > 0)
+                        res.GLAppsqft = Convert.ToInt32(Math.Round(res.DeedAmount.GetValueOrDefault() / res.GLA.GetValueOrDefault(), 0));
+                return resultList;
             }
         }
 

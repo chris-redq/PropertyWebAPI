@@ -165,17 +165,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vwSuggestedSubjectPrices">
-      <EntityTypeMapping TypeName="NYCMAModel.vwSuggestedSubjectPrice">
-        <MappingFragment StoreEntitySet="vwSuggestedSubjectPrices">
-          <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
-          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-          <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
-          <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
-          <ScalarProperty Name="SubjectBBL" ColumnName="SubjectBBL" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="tfnGetManualCMA" FunctionName="NYCMAModel.Store.tfnGetManualCMA">
       <ResultMapping>
         <ComplexTypeMapping TypeName="NYCMAModel.tfnGetManualCMA_Result">
@@ -299,6 +288,17 @@
           <ScalarProperty Name="BBL" ColumnName="BBL" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="CMARunId" ColumnName="CMARunId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwSuggestedSubjectPrices">
+      <EntityTypeMapping TypeName="NYCMAModel.vwSuggestedSubjectPrice">
+        <MappingFragment StoreEntitySet="vwSuggestedSubjectPrices">
+          <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
+          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
+          <ScalarProperty Name="AVGPrice" ColumnName="AVGPrice" />
+          <ScalarProperty Name="LowPrice" ColumnName="LowPrice" />
+          <ScalarProperty Name="SubjectBBL" ColumnName="SubjectBBL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
