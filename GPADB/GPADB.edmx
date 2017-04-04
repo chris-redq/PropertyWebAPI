@@ -38,8 +38,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
         <EntityType Name="vwGeneralLeadInformation">
           <Key>
             <PropertyRef Name="BBLE" />
-            <PropertyRef Name="IsFannieMaeMortgage" />
-            <PropertyRef Name="IsFreddieMacMortgagge" />
             <PropertyRef Name="Equity" />
             <PropertyRef Name="LTV" />
           </Key>
@@ -94,8 +92,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
           <Property Name="DOBCivilPenaltiesDue" Type="numeric" Precision="18" Scale="2" />
           <Property Name="DOBOpenViolations" Type="int" />
           <Property Name="DOBOpenClass1Violations" Type="int" />
-          <Property Name="IsFannieMaeMortgage" Type="int" Nullable="false" />
-          <Property Name="IsFreddieMacMortgagge" Type="int" Nullable="false" />
+          <Property Name="HasFannieMaeMortgage" Type="int" />
+          <Property Name="HasFreddieMacMortgage" Type="int" />
+          <Property Name="HasFHAMortgage" Type="int" />
           <Property Name="LeadGrade" Type="varchar" MaxLength="2" />
           <Property Name="Equity" Type="numeric" Precision="2" Scale="2" Nullable="false" />
           <Property Name="LTV" Type="numeric" Precision="2" Scale="2" Nullable="false" />
@@ -121,18 +120,12 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
           <Property Name="IsSRORestricted" Type="int" />
           <Property Name="IsLandmark" Type="int" />
           <Property Name="ServicerName" Type="varchar" MaxLength="250" />
-          <Property Name="AVGLowPrice" Type="float" />
-          <Property Name="AVGLowPriceNoLP" Type="float" />
-          <Property Name="MedianPrice" Type="float" />
-          <Property Name="AVGHighPice" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwGeneralPropertyInformation">
           <Key>
             <PropertyRef Name="BBLE" />
-            <PropertyRef Name="IsFannieMaeMortgage" />
-            <PropertyRef Name="IsFreddieMacMortgagge" />
             <PropertyRef Name="Equity" />
             <PropertyRef Name="LTV" />
           </Key>
@@ -187,8 +180,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="DOBCivilPenaltiesDue" Type="numeric" Precision="18" Scale="2" />
           <Property Name="DOBOpenViolations" Type="int" />
           <Property Name="DOBOpenClass1Violations" Type="int" />
-          <Property Name="IsFannieMaeMortgage" Type="int" Nullable="false" />
-          <Property Name="IsFreddieMacMortgagge" Type="int" Nullable="false" />
+          <Property Name="HasFannieMaeMortgage" Type="int" />
+          <Property Name="HasFreddieMacMortgage" Type="int" />
+          <Property Name="HasFHAMortgage" Type="int" />
           <Property Name="LeadGrade" Type="varchar" MaxLength="2" />
           <Property Name="Equity" Type="numeric" Precision="2" Scale="2" Nullable="false" />
           <Property Name="LTV" Type="numeric" Precision="2" Scale="2" Nullable="false" />
@@ -214,10 +208,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="IsSRORestricted" Type="int" />
           <Property Name="IsLandmark" Type="int" />
           <Property Name="ServicerName" Type="varchar" MaxLength="250" />
-          <Property Name="AVGLowPrice" Type="float" />
-          <Property Name="AVGLowPriceNoLP" Type="float" />
-          <Property Name="MedianPrice" Type="float" />
-          <Property Name="AVGHighPice" Type="float" />
         </EntityType>
         <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
           <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
@@ -294,8 +284,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralLeadInformation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
     [vwGeneralLeadInformation].[DOBOpenViolations] AS [DOBOpenViolations], 
     [vwGeneralLeadInformation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
-    [vwGeneralLeadInformation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
-    [vwGeneralLeadInformation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
+    [vwGeneralLeadInformation].[HasFannieMaeMortgage] AS [HasFannieMaeMortgage], 
+    [vwGeneralLeadInformation].[HasFreddieMacMortgage] AS [HasFreddieMacMortgage], 
+    [vwGeneralLeadInformation].[HasFHAMortgage] AS [HasFHAMortgage], 
     [vwGeneralLeadInformation].[LeadGrade] AS [LeadGrade], 
     [vwGeneralLeadInformation].[Equity] AS [Equity], 
     [vwGeneralLeadInformation].[LTV] AS [LTV], 
@@ -320,11 +311,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralLeadInformation].[Grade] AS [Grade], 
     [vwGeneralLeadInformation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralLeadInformation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralLeadInformation].[ServicerName] AS [ServicerName], 
-    [vwGeneralLeadInformation].[AVGLowPrice] AS [AVGLowPrice], 
-    [vwGeneralLeadInformation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
-    [vwGeneralLeadInformation].[MedianPrice] AS [MedianPrice], 
-    [vwGeneralLeadInformation].[AVGHighPice] AS [AVGHighPice]
+    [vwGeneralLeadInformation].[ServicerName] AS [ServicerName]
     FROM [app].[vwGeneralLeadInformation] AS [vwGeneralLeadInformation]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwGeneralPropertyInformation" EntityType="Self.vwGeneralPropertyInformation" store:Type="Views" store:Schema="app">
@@ -380,8 +367,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralPropertyInformation].[DOBCivilPenaltiesDue] AS [DOBCivilPenaltiesDue], 
     [vwGeneralPropertyInformation].[DOBOpenViolations] AS [DOBOpenViolations], 
     [vwGeneralPropertyInformation].[DOBOpenClass1Violations] AS [DOBOpenClass1Violations], 
-    [vwGeneralPropertyInformation].[IsFannieMaeMortgage] AS [IsFannieMaeMortgage], 
-    [vwGeneralPropertyInformation].[IsFreddieMacMortgagge] AS [IsFreddieMacMortgagge], 
+    [vwGeneralPropertyInformation].[HasFannieMaeMortgage] AS [HasFannieMaeMortgage], 
+    [vwGeneralPropertyInformation].[HasFreddieMacMortgage] AS [HasFreddieMacMortgage], 
+    [vwGeneralPropertyInformation].[HasFHAMortgage] AS [HasFHAMortgage], 
     [vwGeneralPropertyInformation].[LeadGrade] AS [LeadGrade], 
     [vwGeneralPropertyInformation].[Equity] AS [Equity], 
     [vwGeneralPropertyInformation].[LTV] AS [LTV], 
@@ -406,11 +394,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralPropertyInformation].[Grade] AS [Grade], 
     [vwGeneralPropertyInformation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralPropertyInformation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName], 
-    [vwGeneralPropertyInformation].[AVGLowPrice] AS [AVGLowPrice], 
-    [vwGeneralPropertyInformation].[AVGLowPriceNoLP] AS [AVGLowPriceNoLP], 
-    [vwGeneralPropertyInformation].[MedianPrice] AS [MedianPrice], 
-    [vwGeneralPropertyInformation].[AVGHighPice] AS [AVGHighPice]
+    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName]
     FROM [app].[vwGeneralPropertyInformation] AS [vwGeneralPropertyInformation]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -420,8 +404,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
       <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
-          <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
-          <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
           <FunctionImport Name="GetPropertyLeads">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
             <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -462,6 +444,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
             <Parameter Name="Servicer" Mode="In" Type="String" />
             <Parameter Name="Landmark" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
+          <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
         </EntityContainer>
         <EntityType Name="SavedScenario">
           <Key>
@@ -494,8 +478,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
         <EntityType Name="vwGeneralLeadInformation">
           <Key>
             <PropertyRef Name="BBLE" />
-            <PropertyRef Name="IsFannieMaeMortgage" />
-            <PropertyRef Name="IsFreddieMacMortgagge" />
             <PropertyRef Name="Equity" />
             <PropertyRef Name="LTV" />
           </Key>
@@ -550,8 +532,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="DOBCivilPenaltiesDue" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DOBOpenViolations" Type="Int32" />
           <Property Name="DOBOpenClass1Violations" Type="Int32" />
-          <Property Name="IsFannieMaeMortgage" Type="Int32" Nullable="false" />
-          <Property Name="IsFreddieMacMortgagge" Type="Int32" Nullable="false" />
+          <Property Name="HasFannieMaeMortgage" Type="Int32" />
+          <Property Name="HasFreddieMacMortgage" Type="Int32" />
+          <Property Name="HasFHAMortgage" Type="Int32" />
           <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
           <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
@@ -577,16 +560,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="IsSRORestricted" Type="Int32" />
           <Property Name="IsLandmark" Type="Int32" />
           <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="AVGLowPrice" Type="Double" />
-          <Property Name="AVGLowPriceNoLP" Type="Double" />
-          <Property Name="MedianPrice" Type="Double" />
-          <Property Name="AVGHighPice" Type="Double" />
         </EntityType>
         <EntityType Name="vwGeneralPropertyInformation">
           <Key>
             <PropertyRef Name="BBLE" />
-            <PropertyRef Name="IsFannieMaeMortgage" />
-            <PropertyRef Name="IsFreddieMacMortgagge" />
             <PropertyRef Name="Equity" />
             <PropertyRef Name="LTV" />
           </Key>
@@ -641,8 +618,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="DOBCivilPenaltiesDue" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DOBOpenViolations" Type="Int32" />
           <Property Name="DOBOpenClass1Violations" Type="Int32" />
-          <Property Name="IsFannieMaeMortgage" Type="Int32" Nullable="false" />
-          <Property Name="IsFreddieMacMortgagge" Type="Int32" Nullable="false" />
+          <Property Name="HasFannieMaeMortgage" Type="Int32" />
+          <Property Name="HasFreddieMacMortgage" Type="Int32" />
+          <Property Name="HasFHAMortgage" Type="Int32" />
           <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
           <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
@@ -668,10 +646,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="IsSRORestricted" Type="Int32" />
           <Property Name="IsLandmark" Type="Int32" />
           <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="AVGLowPrice" Type="Double" />
-          <Property Name="AVGLowPriceNoLP" Type="Double" />
-          <Property Name="MedianPrice" Type="Double" />
-          <Property Name="AVGHighPice" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -708,13 +682,11 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+          <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
           <EntitySetMapping Name="vwGeneralLeadInformations">
             <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInformation">
               <MappingFragment StoreEntitySet="vwGeneralLeadInformation">
-                <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
-                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-                <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
-                <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
                 <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
                 <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
                 <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
@@ -740,8 +712,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
                 <ScalarProperty Name="LTV" ColumnName="LTV" />
                 <ScalarProperty Name="Equity" ColumnName="Equity" />
                 <ScalarProperty Name="LeadGrade" ColumnName="LeadGrade" />
-                <ScalarProperty Name="IsFreddieMacMortgagge" ColumnName="IsFreddieMacMortgagge" />
-                <ScalarProperty Name="IsFannieMaeMortgage" ColumnName="IsFannieMaeMortgage" />
+                <ScalarProperty Name="HasFHAMortgage" ColumnName="HasFHAMortgage" />
+                <ScalarProperty Name="HasFreddieMacMortgage" ColumnName="HasFreddieMacMortgage" />
+                <ScalarProperty Name="HasFannieMaeMortgage" ColumnName="HasFannieMaeMortgage" />
                 <ScalarProperty Name="DOBOpenClass1Violations" ColumnName="DOBOpenClass1Violations" />
                 <ScalarProperty Name="DOBOpenViolations" ColumnName="DOBOpenViolations" />
                 <ScalarProperty Name="DOBCivilPenaltiesDue" ColumnName="DOBCivilPenaltiesDue" />
@@ -799,10 +772,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <EntitySetMapping Name="vwGeneralPropertyInformations">
             <EntityTypeMapping TypeName="GPADBModel.vwGeneralPropertyInformation">
               <MappingFragment StoreEntitySet="vwGeneralPropertyInformation">
-                <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
-                <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-                <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
-                <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
                 <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
                 <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
                 <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
@@ -828,8 +797,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
                 <ScalarProperty Name="LTV" ColumnName="LTV" />
                 <ScalarProperty Name="Equity" ColumnName="Equity" />
                 <ScalarProperty Name="LeadGrade" ColumnName="LeadGrade" />
-                <ScalarProperty Name="IsFreddieMacMortgagge" ColumnName="IsFreddieMacMortgagge" />
-                <ScalarProperty Name="IsFannieMaeMortgage" ColumnName="IsFannieMaeMortgage" />
+                <ScalarProperty Name="HasFHAMortgage" ColumnName="HasFHAMortgage" />
+                <ScalarProperty Name="HasFreddieMacMortgage" ColumnName="HasFreddieMacMortgage" />
+                <ScalarProperty Name="HasFannieMaeMortgage" ColumnName="HasFannieMaeMortgage" />
                 <ScalarProperty Name="DOBOpenClass1Violations" ColumnName="DOBOpenClass1Violations" />
                 <ScalarProperty Name="DOBOpenViolations" ColumnName="DOBOpenViolations" />
                 <ScalarProperty Name="DOBCivilPenaltiesDue" ColumnName="DOBCivilPenaltiesDue" />
@@ -884,8 +854,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-          <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

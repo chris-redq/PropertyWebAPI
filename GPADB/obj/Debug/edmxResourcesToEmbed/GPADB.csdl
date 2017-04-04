@@ -2,8 +2,6 @@
 <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
-    <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
-    <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
     <FunctionImport Name="GetPropertyLeads">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
       <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -44,6 +42,8 @@
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
+    <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
   </EntityContainer>
   <EntityType Name="SavedScenario">
     <Key>
@@ -76,8 +76,6 @@
   <EntityType Name="vwGeneralLeadInformation">
     <Key>
       <PropertyRef Name="BBLE" />
-      <PropertyRef Name="IsFannieMaeMortgage" />
-      <PropertyRef Name="IsFreddieMacMortgagge" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
     </Key>
@@ -132,8 +130,9 @@
     <Property Name="DOBCivilPenaltiesDue" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="DOBOpenViolations" Type="Int32" />
     <Property Name="DOBOpenClass1Violations" Type="Int32" />
-    <Property Name="IsFannieMaeMortgage" Type="Int32" Nullable="false" />
-    <Property Name="IsFreddieMacMortgagge" Type="Int32" Nullable="false" />
+    <Property Name="HasFannieMaeMortgage" Type="Int32" />
+    <Property Name="HasFreddieMacMortgage" Type="Int32" />
+    <Property Name="HasFHAMortgage" Type="Int32" />
     <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
     <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
@@ -159,16 +158,10 @@
     <Property Name="IsSRORestricted" Type="Int32" />
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="AVGLowPrice" Type="Double" />
-    <Property Name="AVGLowPriceNoLP" Type="Double" />
-    <Property Name="MedianPrice" Type="Double" />
-    <Property Name="AVGHighPice" Type="Double" />
   </EntityType>
   <EntityType Name="vwGeneralPropertyInformation">
     <Key>
       <PropertyRef Name="BBLE" />
-      <PropertyRef Name="IsFannieMaeMortgage" />
-      <PropertyRef Name="IsFreddieMacMortgagge" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
     </Key>
@@ -223,8 +216,9 @@
     <Property Name="DOBCivilPenaltiesDue" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="DOBOpenViolations" Type="Int32" />
     <Property Name="DOBOpenClass1Violations" Type="Int32" />
-    <Property Name="IsFannieMaeMortgage" Type="Int32" Nullable="false" />
-    <Property Name="IsFreddieMacMortgagge" Type="Int32" Nullable="false" />
+    <Property Name="HasFannieMaeMortgage" Type="Int32" />
+    <Property Name="HasFreddieMacMortgage" Type="Int32" />
+    <Property Name="HasFHAMortgage" Type="Int32" />
     <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
     <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
@@ -250,9 +244,5 @@
     <Property Name="IsSRORestricted" Type="Int32" />
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="AVGLowPrice" Type="Double" />
-    <Property Name="AVGLowPriceNoLP" Type="Double" />
-    <Property Name="MedianPrice" Type="Double" />
-    <Property Name="AVGHighPice" Type="Double" />
   </EntityType>
 </Schema>

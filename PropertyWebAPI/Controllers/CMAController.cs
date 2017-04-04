@@ -418,6 +418,7 @@ namespace PropertyWebAPI.Controllers
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
+
         /// <summary>  
         ///     Use this api to get an automated CMA for a given property and associated parameters
         /// </summary>  
@@ -466,6 +467,64 @@ namespace PropertyWebAPI.Controllers
                 return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
             }
         }
+
+
+        /// <summary>  
+        ///     Use this api to get an automated CMA for a given property and associated parameters
+        /// </summary>  
+        /// <param name="subjectBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+        /// <param name="filters">Filters to refine comparables</param>
+        /// <returns>Returns a list of comparables and price range for the subject property</returns>
+        [Route("api/cma/{subjectBBL}/multipleautomatedCMA")]
+        [ResponseType(typeof(List<BAL.AutomatedBatchCMAResults>))]
+        [HttpPost]
+        public IHttpActionResult RunMultipleAutomatedCMAs(string subjectBBL, BAL.AutomatedCMAFilters[] filters)
+        {
+            if (!BAL.BBL.IsValidFormat(subjectBBL))
+                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
+
+            if (filters == null)
+                return this.BadRequest("Malformed filter - Check the api body");
+
+            List<BAL.AutomatedBatchCMAResults> resultList = new List<BAL.AutomatedBatchCMAResults>();
+
+            for (int i=0; i < filters.Length; i++)
+            {
+                try
+                {
+                    BAL.AutomatedCMAResults result = null;
+                    switch (filters[i].intent)
+                    {
+                        case (int)CMAType.Regular:
+                            result = BAL.CMA.GetAutomatedCMA(filters[i].algorithmType, subjectBBL, filters[i].basicFilter.maxRecords, filters[i].basicFilter.sameNeighborhood,
+                                                             filters[i].basicFilter.sameSchoolDistrict, filters[i].basicFilter.sameZip, filters[i].basicFilter.sameBlock,
+                                                             filters[i].basicFilter.sameStreet, filters[i].basicFilter.monthOffset, filters[i].basicFilter.minSalePrice,
+                                                             filters[i].basicFilter.maxSalePrice, filters[i].basicFilter.classMatchType, filters[i].basicFilter.isNotIntraFamily,
+                                                             filters[i].basicFilter.isSelleraCompany, filters[i].basicFilter.isBuyeraCompany, filters[i].basicFilter.minSimilarity);
+                            break;
+                        case (int)CMAType.ShortSale:
+                            result = BAL.CMA.GetAutomatedShortSaleCMA(subjectBBL, filters[i]);
+                            break;
+                        case (int)CMAType.Rehab:
+                            result = BAL.CMA.GetAutomatedRehabCMA(subjectBBL, filters[i]);
+                            break;
+                        default:
+                            return this.BadRequest("Incorrect Type of CMA request - Valid values for intent are 1, 2, 3"); ;
+                    }
+                    BAL.AutomatedBatchCMAResults batchresult = new BAL.AutomatedBatchCMAResults();
+                    batchresult.cma = result;
+                    batchresult.filter = filters[i];
+                    resultList.Add(batchresult);
+                }
+                catch (Exception e)
+                {
+                    Common.Logs.log().Error(string.Format("Exception encountered while running automated for BBL: {0}{1}", subjectBBL, Common.Logs.FormatException(e)));
+                    return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+                }
+            }
+            return Ok(resultList);
+        }
+
 
         /// <summary>
         /// Use this api to get a list of sales comparables for the given property and associated filters

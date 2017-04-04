@@ -114,7 +114,14 @@ namespace PropertyWebAPI.BAL
         public DAL.AutomatedSuggestedPropertyPrices price;
         public List<DAL.CMAResult> results;
     }
-    
+
+    public class AutomatedBatchCMAResults
+    {
+        public AutomatedCMAResults cma;
+        public AutomatedCMAFilters filter;
+    }
+
+
     public class CMA
     {
         private const double MAX_REDQ_THRESHOLD = 0.12;
@@ -484,7 +491,7 @@ namespace PropertyWebAPI.BAL
             Common.DoubleList localDensityPoints = new Common.DoubleList();
 
             if (pricesArray.Length <= 1)
-                localDensityPoints.ToArray();
+                return localDensityPoints.ToArray();
 
             minValue = pricesArray[0];
             maxValue = pricesArray[pricesArray.Length - 1];
@@ -496,16 +503,13 @@ namespace PropertyWebAPI.BAL
 
             double[] SampleArray = new double[distance];
 
-            for (int i = 0, j=0; i < distance; i++)
-            {
-                if (Convert.ToInt32(pricesArray[j]) - Convert.ToInt32(minValue) == i)
-                {
-                    SampleArray[i] = 1000;
-                    j++;
-                }
-                else
-                    SampleArray[i] = 0;
+            for (int i = 0; i < distance; i++)
+                SampleArray[i] = 0;
 
+            for (int j = 0; j < pricesArray.Length; j++)
+            {
+                int samplePoint = Convert.ToInt32(pricesArray[j] - minValue);
+                SampleArray[samplePoint] += 1000;
             }
 
             double[] densityArray = Common.Statistics.ApplyGaussianKDEV2(SampleArray, kernelSize, GAUSSIAN_SIGMA);

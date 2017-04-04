@@ -30,13 +30,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+    <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
     <EntitySetMapping Name="vwGeneralLeadInformations">
       <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInformation">
         <MappingFragment StoreEntitySet="vwGeneralLeadInformation">
-          <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
-          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-          <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
-          <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
           <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
           <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
           <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
@@ -62,8 +60,9 @@
           <ScalarProperty Name="LTV" ColumnName="LTV" />
           <ScalarProperty Name="Equity" ColumnName="Equity" />
           <ScalarProperty Name="LeadGrade" ColumnName="LeadGrade" />
-          <ScalarProperty Name="IsFreddieMacMortgagge" ColumnName="IsFreddieMacMortgagge" />
-          <ScalarProperty Name="IsFannieMaeMortgage" ColumnName="IsFannieMaeMortgage" />
+          <ScalarProperty Name="HasFHAMortgage" ColumnName="HasFHAMortgage" />
+          <ScalarProperty Name="HasFreddieMacMortgage" ColumnName="HasFreddieMacMortgage" />
+          <ScalarProperty Name="HasFannieMaeMortgage" ColumnName="HasFannieMaeMortgage" />
           <ScalarProperty Name="DOBOpenClass1Violations" ColumnName="DOBOpenClass1Violations" />
           <ScalarProperty Name="DOBOpenViolations" ColumnName="DOBOpenViolations" />
           <ScalarProperty Name="DOBCivilPenaltiesDue" ColumnName="DOBCivilPenaltiesDue" />
@@ -121,10 +120,6 @@
     <EntitySetMapping Name="vwGeneralPropertyInformations">
       <EntityTypeMapping TypeName="GPADBModel.vwGeneralPropertyInformation">
         <MappingFragment StoreEntitySet="vwGeneralPropertyInformation">
-          <ScalarProperty Name="AVGHighPice" ColumnName="AVGHighPice" />
-          <ScalarProperty Name="MedianPrice" ColumnName="MedianPrice" />
-          <ScalarProperty Name="AVGLowPriceNoLP" ColumnName="AVGLowPriceNoLP" />
-          <ScalarProperty Name="AVGLowPrice" ColumnName="AVGLowPrice" />
           <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
           <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
           <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
@@ -150,8 +145,9 @@
           <ScalarProperty Name="LTV" ColumnName="LTV" />
           <ScalarProperty Name="Equity" ColumnName="Equity" />
           <ScalarProperty Name="LeadGrade" ColumnName="LeadGrade" />
-          <ScalarProperty Name="IsFreddieMacMortgagge" ColumnName="IsFreddieMacMortgagge" />
-          <ScalarProperty Name="IsFannieMaeMortgage" ColumnName="IsFannieMaeMortgage" />
+          <ScalarProperty Name="HasFHAMortgage" ColumnName="HasFHAMortgage" />
+          <ScalarProperty Name="HasFreddieMacMortgage" ColumnName="HasFreddieMacMortgage" />
+          <ScalarProperty Name="HasFannieMaeMortgage" ColumnName="HasFannieMaeMortgage" />
           <ScalarProperty Name="DOBOpenClass1Violations" ColumnName="DOBOpenClass1Violations" />
           <ScalarProperty Name="DOBOpenViolations" ColumnName="DOBOpenViolations" />
           <ScalarProperty Name="DOBCivilPenaltiesDue" ColumnName="DOBCivilPenaltiesDue" />
@@ -206,7 +202,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-    <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
   </EntityContainerMapping>
 </Mapping>

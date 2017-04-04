@@ -65,8 +65,9 @@ namespace GPADB
         public Nullable<decimal> DOBCivilPenaltiesDue { get; set; }
         public Nullable<int> DOBOpenViolations { get; set; }
         public Nullable<int> DOBOpenClass1Violations { get; set; }
-        public int IsFannieMaeMortgage { get; set; }
-        public int IsFreddieMacMortgagge { get; set; }
+        public Nullable<int> HasFannieMaeMortgage { get; set; }
+        public Nullable<int> HasFreddieMacMortgage { get; set; }
+        public Nullable<int> HasFHAMortgage { get; set; }
         public string LeadGrade { get; set; }
         public decimal Equity { get; set; }
         public decimal LTV { get; set; }
@@ -92,9 +93,5 @@ namespace GPADB
         public Nullable<int> IsSRORestricted { get; set; }
         public Nullable<int> IsLandmark { get; set; }
         public string ServicerName { get; set; }
-        public Nullable<double> AVGLowPrice { get; set; }
-        public Nullable<double> AVGLowPriceNoLP { get; set; }
-        public Nullable<double> MedianPrice { get; set; }
-        public Nullable<double> AVGHighPice { get; set; }
     }
 }

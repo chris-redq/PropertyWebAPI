@@ -7,3 +7,4 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Debug\EntityFramework.xm
 C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Debug\GPADB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Debug\GPADB.pdb
+C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Debug\GPADB.csprojResolveAssemblyReference.cache
