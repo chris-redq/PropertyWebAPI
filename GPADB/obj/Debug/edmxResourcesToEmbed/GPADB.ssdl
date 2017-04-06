@@ -22,11 +22,12 @@
     <Property Name="LeadGrades" Type="varchar" MaxLength="1000" />
     <Property Name="LTV" Type="varchar" MaxLength="1000" />
     <Property Name="Equity" Type="varchar" MaxLength="1000" />
-    <Property Name="IsFannie" Type="varchar" MaxLength="1000" />
-    <Property Name="IsFreddie" Type="varchar" MaxLength="1000" />
+    <Property Name="HasFannie" Type="varchar" MaxLength="1000" />
+    <Property Name="HasFreddie" Type="varchar" MaxLength="1000" />
     <Property Name="UnbuiltArea" Type="varchar" MaxLength="1000" />
     <Property Name="Servicer" Type="varchar" MaxLength="1000" />
     <Property Name="Landmark" Type="varchar" MaxLength="1000" />
+    <Property Name="HasFHA" Type="varchar" MaxLength="1" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -218,11 +219,12 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Parameter Name="LeadGrades" Type="varchar" Mode="In" />
     <Parameter Name="LTV" Type="varchar" Mode="In" />
     <Parameter Name="Equity" Type="varchar" Mode="In" />
-    <Parameter Name="IsFannie" Type="varchar" Mode="In" />
-    <Parameter Name="IsFreddie" Type="varchar" Mode="In" />
+    <Parameter Name="HasFannie" Type="varchar" Mode="In" />
+    <Parameter Name="HasFreddie" Type="varchar" Mode="In" />
     <Parameter Name="UnbuiltArea" Type="varchar" Mode="In" />
     <Parameter Name="Servicer" Type="varchar" Mode="In" />
     <Parameter Name="Landmark" Type="varchar" Mode="In" />
+    <Parameter Name="HasFHA" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />

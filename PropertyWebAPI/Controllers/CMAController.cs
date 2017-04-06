@@ -58,21 +58,14 @@ namespace PropertyWebAPI.Controllers
             }
         }
 
-        /// <summary>  
-        ///     Use this api to get sales data by month for the neighborhood around a given property
-        /// </summary>  
-        /// <param name="propertyBBL">
-        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-        /// </param>
-        /// <param name="timeSpanInYears">
-        ///     Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
-        /// </param>
-        /// <returns>
-        ///     Returns sales data by month for the neighborhood around a given property
-        /// </returns>
+        /// <summary>Use this api to get sales data by month for the neighborhood around a given property</summary>  
+        /// <param name="propertyBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+        /// <param name="timeSpanInYears">Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.</param>
+        /// <param name="forallbuildingclasses">Default value is false.</param>
+        /// <returns>Returns sales data by month for the neighborhood around a given property</returns>
         [Route("api/cma/{propertyBBL}/salestrend")]
         [ResponseType(typeof(List<DAL.SalesDataDetailsByMonth>))]
-        public IHttpActionResult GetSalesTrendAroundProperty(string propertyBBL, int timeSpanInYears=1)
+        public IHttpActionResult GetSalesTrendAroundProperty(string propertyBBL, bool forallbuildingclasses=false, int timeSpanInYears=1)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");
@@ -86,7 +79,7 @@ namespace PropertyWebAPI.Controllers
                 if (assessment==null)
                     return this.BadRequest("Incorrect BBL - Borough Block Lot number not found");
 
-                var result = DAL.CMA.GetSalesTrend(assessment.NeighborhoodName, timeSpanInYears);
+                var result = DAL.CMA.GetSalesTrend(assessment.NeighborhoodName, (forallbuildingclasses?null:assessment.BuildingClass), timeSpanInYears);
                 if (result == null)
                     return NotFound();
                 return Ok(result);
@@ -98,18 +91,10 @@ namespace PropertyWebAPI.Controllers
             }
         }
 
-        /// <summary>  
-        ///     Use this api to get sales price data by month for the neighborhood around a given property
-        /// </summary>  
-        /// <param name="propertyBBL">
-        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-        /// </param>
-        /// <param name="timeSpanInYears">
-        ///     Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
-        /// </param>
-        /// <returns>
-        ///     Returns sales price data by month for the neighborhood around a given property
-        /// </returns>
+        /// <summary>Use this api to get sales price data by month for the neighborhood around a given property for the same building class</summary>  
+        /// <param name="propertyBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+        /// <param name="timeSpanInYears">Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.</param>
+        /// <returns>Returns sales price data by month for the neighborhood around a given property for the same building class</returns>
         [Route("api/cma/{propertyBBL}/salespricetrend")]
         [ResponseType(typeof(List<DAL.PriceDetailsByMonth>))]
         public IHttpActionResult GetSalesPriceTrendAroundProperty(string propertyBBL, int timeSpanInYears = 1)
@@ -138,18 +123,10 @@ namespace PropertyWebAPI.Controllers
             }
         }
 
-        /// <summary>  
-        ///     Use this api to get price per sq-ft data by month for the neighborhood around a given property
-        /// </summary>  
-        /// <param name="propertyBBL">
-        ///     Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-        /// </param>
-        /// <param name="timeSpanInYears">
-        ///     Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
-        /// </param>
-        /// <returns>
-        ///     Returns sales price per sq-ft data by month for the neighborhood around a given property
-        /// </returns>
+        /// <summary>Use this api to get price per sq-ft data by month for the neighborhood around a given property for the same building class</summary>  
+        /// <param name="propertyBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+        /// <param name="timeSpanInYears">Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.</param>
+        /// <returns>Returns sales price per sq-ft data by month for the neighborhood around a given property for the same building class</returns>
         [Route("api/cma/{propertyBBL}/salespricepersqfttrend")]
         [ResponseType(typeof(List<DAL.PricePerSqftDetailsByMonth>))]
         public IHttpActionResult GetPricePerSqFtTrendAroundProperty(string propertyBBL, int timeSpanInYears = 1)

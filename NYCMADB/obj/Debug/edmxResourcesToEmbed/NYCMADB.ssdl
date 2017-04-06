@@ -173,15 +173,27 @@
     <Property Name="MaxPrice" Type="numeric" Precision="38" Scale="6" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNeighborhood' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="vwSalesByMonthByNeighborhood">
+warning 6002: The table/view 'NYCMA.App.vwSalesStatisticsByMonthByNeighborhood' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwSalesStatisticsByMonthByNeighborhood">
     <Key>
       <PropertyRef Name="PKID" />
     </Key>
     <Property Name="PKID" Type="int" Nullable="false" />
     <Property Name="Neighborhood" Type="varchar" MaxLength="260" />
     <Property Name="YearMonth" Type="date" />
-    <Property Name="NumberofSales" Type="int" />
+    <Property Name="TotalSales" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCMA.App.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+    <Key>
+      <PropertyRef Name="PKID" />
+    </Key>
+    <Property Name="PKID" Type="int" Nullable="false" />
+    <Property Name="Neighborhood" Type="varchar" MaxLength="260" />
+    <Property Name="BuildingClass" Type="varchar" MaxLength="2" />
+    <Property Name="YearMonth" Type="date" />
+    <Property Name="TotalSales" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -342,13 +354,22 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
     <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
     <EntitySet Name="SaleParty" EntityType="Self.SaleParty" Schema="exdata" store:Type="Tables" />
     <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
-    <EntitySet Name="vwSalesByMonthByNeighborhood" EntityType="Self.vwSalesByMonthByNeighborhood" store:Type="Views" store:Schema="App">
+    <EntitySet Name="vwSalesStatisticsByMonthByNeighborhood" EntityType="Self.vwSalesStatisticsByMonthByNeighborhood" store:Type="Views" store:Schema="App">
       <DefiningQuery>SELECT 
-    [vwSalesByMonthByNeighborhood].[PKID] AS [PKID], 
-    [vwSalesByMonthByNeighborhood].[Neighborhood] AS [Neighborhood], 
-    [vwSalesByMonthByNeighborhood].[YearMonth] AS [YearMonth], 
-    [vwSalesByMonthByNeighborhood].[NumberofSales] AS [NumberofSales]
-    FROM [App].[vwSalesByMonthByNeighborhood] AS [vwSalesByMonthByNeighborhood]</DefiningQuery>
+    [vwSalesStatisticsByMonthByNeighborhood].[PKID] AS [PKID], 
+    [vwSalesStatisticsByMonthByNeighborhood].[Neighborhood] AS [Neighborhood], 
+    [vwSalesStatisticsByMonthByNeighborhood].[YearMonth] AS [YearMonth], 
+    [vwSalesStatisticsByMonthByNeighborhood].[TotalSales] AS [TotalSales]
+    FROM [App].[vwSalesStatisticsByMonthByNeighborhood] AS [vwSalesStatisticsByMonthByNeighborhood]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass" EntityType="Self.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass" store:Type="Views" store:Schema="App">
+      <DefiningQuery>SELECT 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[PKID] AS [PKID], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[Neighborhood] AS [Neighborhood], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[BuildingClass] AS [BuildingClass], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[YearMonth] AS [YearMonth], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[TotalSales] AS [TotalSales]
+    FROM [App].[vwSalesStatisticsByMonthByNeighborhoodByBuildingClass] AS [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrices" store:Type="Views" store:Schema="App">
       <DefiningQuery>SELECT 

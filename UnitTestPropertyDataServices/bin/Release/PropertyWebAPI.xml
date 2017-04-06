@@ -519,6 +519,9 @@
         <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.maxRecords">
             <summary>Maximum number of comparables to be returned</summary>
         </member>
+        <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.minSimilarity">
+            <summary>Minimum similarity index score allowed for returned comparables. Default value is 85</summary>
+        </member>
         <member name="P:PropertyWebAPI.BAL.BasicCMAFilter.sameNeighborhood">
             <summary>Valid values are 0, 1 or NULL. 0 means ignore neighborhood and 1 means search in same neighborhood. Default is 0</summary>
         </member>
@@ -1364,49 +1367,26 @@
                 Returns Average Low, Median and Avg High Price for a property in NYC
             </returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSalesTrendAroundProperty(System.String,System.Int32)">
-            <summary>  
-                Use this api to get sales data by month for the neighborhood around a given property
-            </summary>  
-            <param name="propertyBBL">
-                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-            </param>
-            <param name="timeSpanInYears">
-                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
-            </param>
-            <returns>
-                Returns sales data by month for the neighborhood around a given property
-            </returns>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetSalesTrendAroundProperty(System.String,System.Boolean,System.Int32)">
+            <summary>Use this api to get sales data by month for the neighborhood around a given property</summary>  
+            <param name="propertyBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+            <param name="timeSpanInYears">Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.</param>
+            <param name="forallbuildingclasses">Default value is false.</param>
+            <returns>Returns sales data by month for the neighborhood around a given property</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.CMAController.GetSalesPriceTrendAroundProperty(System.String,System.Int32)">
-            <summary>  
-                Use this api to get sales price data by month for the neighborhood around a given property
-            </summary>  
-            <param name="propertyBBL">
-                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-            </param>
-            <param name="timeSpanInYears">
-                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
-            </param>
-            <returns>
-                Returns sales price data by month for the neighborhood around a given property
-            </returns>
+            <summary>Use this api to get sales price data by month for the neighborhood around a given property for the same building class</summary>  
+            <param name="propertyBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+            <param name="timeSpanInYears">Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.</param>
+            <returns>Returns sales price data by month for the neighborhood around a given property for the same building class</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.CMAController.GetPricePerSqFtTrendAroundProperty(System.String,System.Int32)">
-            <summary>  
-                Use this api to get price per sq-ft data by month for the neighborhood around a given property
-            </summary>  
-            <param name="propertyBBL">
-                Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
-            </param>
-            <param name="timeSpanInYears">
-                Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.
-            </param>
-            <returns>
-                Returns sales price per sq-ft data by month for the neighborhood around a given property
-            </returns>
+            <summary>Use this api to get price per sq-ft data by month for the neighborhood around a given property for the same building class</summary>  
+            <param name="propertyBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+            <param name="timeSpanInYears">Time span in Years over which the trend data is requested. Default Value is 1. Valid range is 1-10.</param>
+            <returns>Returns sales price per sq-ft data by month for the neighborhood around a given property for the same building class</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+        <member name="M:PropertyWebAPI.Controllers.CMAController.GetComparables(System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Int32})">
             <summary>  
                 Use this api to get a list of comparables for the given property and associated parameters
             </summary>  
@@ -1426,7 +1406,8 @@
             <param name="maxSalePrice">Maximum Sale price for consideration. Default is ignore max sale price</param>
             <param name="isNotIntraFamily">Null or 1. 1 means only arm length sales are considered.</param>
             <param name="isBuyeraCompany">Null or 1. 1 means buyer is company.</param>
-            <param name="isSelleraCompany">>Null or 1. 1 means seller is a company</param>
+            <param name="isSelleraCompany">Null or 1. 1 means seller is a company</param>
+            <param name="minSimilarity"></param>
             <returns>
                 Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property
             </returns>
@@ -1476,6 +1457,14 @@
             <returns>Returns sales price per a list of comparables for the given property and associated parameters data by month for the neighborhood around a given property</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.CMAController.RunAutomatedCMA(System.String,PropertyWebAPI.BAL.AutomatedCMAFilters)">
+            <summary>  
+                Use this api to get an automated CMA for a given property and associated parameters
+            </summary>  
+            <param name="subjectBBL">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>
+            <param name="filters">Filters to refine comparables</param>
+            <returns>Returns a list of comparables and price range for the subject property</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.CMAController.RunMultipleAutomatedCMAs(System.String,PropertyWebAPI.BAL.AutomatedCMAFilters[])">
             <summary>  
                 Use this api to get an automated CMA for a given property and associated parameters
             </summary>  
@@ -1659,10 +1648,10 @@
         <member name="P:PropertyWebAPI.Controllers.Filters.states">
             <summary>Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</summary>
         </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.isfannie">
+        <member name="P:PropertyWebAPI.Controllers.Filters.hasFannie">
             <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
         </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.isfreddie">
+        <member name="P:PropertyWebAPI.Controllers.Filters.hasFreddie">
             <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
         </member>
         <member name="P:PropertyWebAPI.Controllers.Filters.unbuilt">
@@ -1679,17 +1668,12 @@
             This controller handles all api requests associated with property leads
             </summary>  
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetProperty(System.String)">
-            <summary>Use this api to get a property details</summary>  
-            <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
-            <returns>Returns property details</returns>
-        </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">
             <summary>Use this api to get a lead details</summary>  
             <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
             <returns>Returns lead details</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>  
             Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
             multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
@@ -1709,11 +1693,12 @@
             <param name="ltv">Optional parameter. Minimum one value, max two values can be sent. No wildcards</param>
             <param name="neighborhoods">Optional parameter. Multiple values can be sent along with wildcards.</param>
             <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
-            <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-            <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="hasfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="hasfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
             <param name="landmark">Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</param>
+            <param name="hasFHA">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
             <returns>Returns a list of leads (properties)</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetScenarios(System.String)">
@@ -1747,6 +1732,16 @@
                 Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number
             </param>  
             <returns>Returns all lien details</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PropertyInfoController.GetProperty(System.String)">
+            <summary>Use this api to get a property details</summary>  
+            <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
+            <returns>Returns property details</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.PropertyInfoController.GetCertificatesOfOccupancy(System.String)">
+            <summary>Use this api to get a list of URLS for certificates of occupancy</summary>  
+            <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
+            <returns>Returns a list of URLS for certificates of occupancy for a property</returns>
         </member>
         <member name="T:PropertyWebAPI.Controllers.BillsController">
             <summary>  

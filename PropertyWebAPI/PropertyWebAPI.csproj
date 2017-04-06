@@ -227,12 +227,14 @@
     <Compile Include="BAL\MortgageDocument.cs" />
     <Compile Include="BAL\NoticeOfPropertyValueDocument.cs" />
     <Compile Include="BAL\Portal.cs" />
+    <Compile Include="BAL\Property.cs" />
     <Compile Include="BAL\Results.cs" />
     <Compile Include="Common\Statistics.cs" />
     <Compile Include="Controllers\CMAController.cs" />
     <Compile Include="Controllers\CourtsController.cs" />
     <Compile Include="Controllers\LeadsController.cs" />
     <Compile Include="Controllers\LiensController.cs" />
+    <Compile Include="Controllers\PropertyInfoController.cs" />
     <Compile Include="DAL\CMA.cs" />
     <Compile Include="DAL\eCourts.cs" />
     <Compile Include="BAL\MortgageServicer.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="DAL\DataRequestLog.cs" />
     <Compile Include="DAL\Lead.cs" />
     <Compile Include="DAL\Liens.cs" />
+    <Compile Include="DAL\Property.cs" />
     <Compile Include="DAL\Request.cs" />
     <Compile Include="DAL\Violations.cs" />
     <Compile Include="Enumerations.cs" />

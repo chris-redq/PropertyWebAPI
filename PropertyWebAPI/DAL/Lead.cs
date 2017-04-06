@@ -18,10 +18,7 @@ namespace PropertyWebAPI.DAL
     {
         //Blank classes to mask entity framework details
     }
-    public class PropertySummaryData : vwGeneralPropertyInformation
-    {
-        //Blank classes to mask entity framework details
-    }
+  
 
     public class ScenarioListData
     {
@@ -39,13 +36,13 @@ namespace PropertyWebAPI.DAL
     {
         public static List<LeadSummaryData> GetPropertyLeads(string zipcodes, string neighborhoods, string isvacant, string leadgrades, string buildingclasscodes, string counties, 
                                                              string ismailingaddressactive, string lientypes, string ltv, string equity, string violations, string cities,
-                                                             string states,  string isfannie, string isfreddie, string unbuilt, string servicer, string landmark)
+                                                             string states,  string hasfannie, string hasfreddie, string unbuilt, string servicer, string landmark, string hasFHA)
         {
             using (GPADBEntities1 gpaE = new GPADBEntities1())
             {
                 return Mapper.Map<List<vwGeneralLeadInformation>, List<LeadSummaryData>>(gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
-                                                                                                     cities, neighborhoods, states, lientypes, leadgrades, ltv, equity, isfannie,
-                                                                                                     isfreddie, unbuilt, servicer, landmark).ToList());
+                                                                                                     cities, neighborhoods, states, lientypes, leadgrades, ltv, equity, hasfannie,
+                                                                                                     hasfreddie, unbuilt, servicer, landmark, hasFHA).ToList());
             }
         }
 
@@ -82,7 +79,7 @@ namespace PropertyWebAPI.DAL
 
         public static long SaveScenario(string userName, string scenarioName, string description, string zipcodes, string neighborhoods, string isvacant, string leadgrades, 
                                         string buildingclasscodes, string counties, string ismailingaddressactive, string lientypes, string ltv, string equity, string violations, 
-                                        string cities, string states, string isfannie, string isfreddie, string unbuilt, string servicer, string landmark)
+                                        string cities, string states, string hasFannie, string hasFreddie, string unbuilt, string servicer, string landmark, string hasFHA)
         {
             try
             {
@@ -94,8 +91,9 @@ namespace PropertyWebAPI.DAL
                     scenarioObj.Counties = counties;
                     scenarioObj.DateTimeSaved = DateTime.UtcNow;
                     scenarioObj.Description = description;
-                    scenarioObj.IsFannie = isfannie;
-                    scenarioObj.IsFreddie = isfreddie;
+                    scenarioObj.HasFannie = hasFannie;
+                    scenarioObj.HasFreddie = hasFreddie;
+                    scenarioObj.HasFHA = hasFHA;
                     scenarioObj.Landmark = landmark;
                     scenarioObj.LeadGrades = leadgrades;
                     scenarioObj.LienTypes = lientypes;
@@ -138,14 +136,6 @@ namespace PropertyWebAPI.DAL
             using (GPADBEntities1 gpaE = new GPADBEntities1())
             {
                 return Mapper.Map<LeadSummaryData>(gpaE.vwGeneralLeadInformations.Where(x => x.BBLE == propertybbl).FirstOrDefault());
-            }
-        }
-
-        public static PropertySummaryData GetProperty(string propertybbl)
-        {
-            using (GPADBEntities1 gpaE = new GPADBEntities1())
-            {
-                return Mapper.Map<PropertySummaryData>(gpaE.vwGeneralPropertyInformations.Where(x => x.BBLE == propertybbl).FirstOrDefault());
             }
         }
     }

@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="NYCDOBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CertificateOfOccupancy">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="CONumber" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="CONumber" Type="bigint" Nullable="false" />
+    <Property Name="COURL" Type="nvarchar" MaxLength="255" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+  </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'NYCDOB.dob.Complaint' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Complaint">
@@ -80,6 +90,7 @@ warning 6002: The table/view 'NYCDOB.dob.vwViolationSummary' does not have a pri
     <Property Name="DOBCivilPenalties" Type="decimal" Precision="11" Scale="2" />
   </EntityType>
   <EntityContainer Name="NYCDOBModelStoreContainer">
+    <EntitySet Name="CertificateOfOccupancy" EntityType="Self.CertificateOfOccupancy" Schema="dob" store:Type="Tables" />
     <EntitySet Name="Violation" EntityType="Self.Violation" Schema="dob" store:Type="Tables" />
     <EntitySet Name="Complaint" EntityType="Self.Complaint" store:Type="Tables" store:Schema="dob">
       <DefiningQuery>SELECT 

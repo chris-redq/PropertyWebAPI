@@ -67,10 +67,10 @@
         public string states { get; set; }
         /// <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string isfannie { get; set; }
+        public string hasFannie { get; set; }
         /// <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string isfreddie { get; set; }
+        public string hasFreddie { get; set; }
         /// <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string unbuilt { get; set; }
@@ -80,6 +80,7 @@
         /// <summary>Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string landmark { get; set; }
+        public string hasFHA { get; set; }
     }
 
     /// <summary>  
@@ -89,31 +90,7 @@
     public class LeadsController : ApiController
     {
 
-        /// <summary>Use this api to get a property details</summary>  
-        /// <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
-        /// <returns>Returns property details</returns>
-        [Route("api/propertyinfo/{propertybbl}")]
-        [ResponseType(typeof(BAL.PropertyDetailData))]
-        public IHttpActionResult GetProperty(string propertybbl)
-        {
-            if (!BAL.BBL.IsValidFormat(propertybbl))
-                return this.BadRequest("Incorrect BBL - Borough Block Lot number");
-
-            try
-            {
-                var lead = BAL.Lead.GetProperty(propertybbl);
-
-                if (lead == null)
-                    return NotFound();
-
-                return Ok(lead);
-            }
-            catch (Exception e)
-            {
-                Common.Logs.log().Error(string.Format("Exception encountered while retrieving Lead for {0}{1}", propertybbl, Common.Logs.FormatException(e)));
-                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
-            }
-        }
+       
 
         /// <summary>Use this api to get a lead details</summary>  
         /// <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
@@ -160,28 +137,30 @@
         /// <param name="ltv">Optional parameter. Minimum one value, max two values can be sent. No wildcards</param>
         /// <param name="neighborhoods">Optional parameter. Multiple values can be sent along with wildcards.</param>
         /// <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
-        /// <param name="isfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-        /// <param name="isfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+        /// <param name="hasfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+        /// <param name="hasfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
         /// <param name="landmark">Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</param>
+        /// <param name="hasFHA">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
         /// <returns>Returns a list of leads (properties)</returns>
         [Route("api/leads/")]
         [ResponseType(typeof(List<DAL.LeadSummaryData>))]
         public IHttpActionResult GetLeads(string zipcodes = null, string neighborhoods = null, string isvacant = null, string leadgrades = null,
                                           string buildingclasscodes = null, string counties = null, string ismailingaddressactive = null,
                                           string lientypes = null, string ltv = null, string equity = null, string violations = null,
-                                          string cities = null, string states = null, string isfannie = null, string isfreddie = null, 
-                                          string unbuilt = null, string servicer=null, string landmark = null)
+                                          string cities = null, string states = null, string hasfannie = null, string hasfreddie = null, 
+                                          string unbuilt = null, string servicer=null, string landmark = null, string hasFHA = null)
         {
             if (!BAL.Lead.IsValidFilter(zipcodes, neighborhoods, isvacant, leadgrades, buildingclasscodes, counties, ismailingaddressactive, 
-                                       lientypes, ltv, equity, violations, cities, states, isfannie, isfreddie, unbuilt, servicer, landmark))
+                                       lientypes, ltv, equity, violations, cities, states, hasfannie, hasfreddie, unbuilt, servicer, landmark, hasFHA))
                 return BadRequest("At least one filter is required");
 
             try
             {
                 var leadList = DAL.Lead.GetPropertyLeads(zipcodes, neighborhoods, isvacant, leadgrades, buildingclasscodes, counties, ismailingaddressactive,
-                                                         lientypes, ltv, equity, violations, cities, states, isfannie, isfreddie, unbuilt, servicer, landmark).ToList();
+                                                         lientypes, ltv, equity, violations, cities, states, hasfannie, hasfreddie, unbuilt, servicer, landmark,
+                                                         hasFHA).ToList();
                 if (leadList == null || leadList.Count == 0)
                         return NotFound();
                     return Ok(leadList);
@@ -229,14 +208,16 @@
         {
             if (!BAL.Lead.IsValidFilter(filterdata.zipcodes, filterdata.neighborhoods, filterdata.isvacant, filterdata.leadgrades, filterdata.buildingclasscodes,
                                         filterdata.counties, filterdata.ismailingaddressactive, filterdata.lientypes, filterdata.ltv, filterdata.equity, filterdata.violations,
-                                        filterdata.cities, filterdata.states, filterdata.isfannie, filterdata.isfreddie, filterdata.unbuilt, filterdata.servicer, filterdata.landmark))
+                                        filterdata.cities, filterdata.states, filterdata.hasFannie, filterdata.hasFreddie, filterdata.unbuilt, filterdata.servicer, 
+                                        filterdata.landmark, filterdata.hasFHA))
                 return BadRequest("At least one filter is required");
 
             try
             {
                 var leadList = DAL.Lead.GetPropertyLeads(filterdata.zipcodes, filterdata.neighborhoods, filterdata.isvacant, filterdata.leadgrades, filterdata.buildingclasscodes,
                                                          filterdata.counties, filterdata.ismailingaddressactive, filterdata.lientypes, filterdata.ltv, filterdata.equity, filterdata.violations,
-                                                         filterdata.cities, filterdata.states, filterdata.isfannie, filterdata.isfreddie, filterdata.unbuilt, filterdata.servicer, filterdata.landmark).ToList();
+                                                         filterdata.cities, filterdata.states, filterdata.hasFannie, filterdata.hasFreddie, filterdata.unbuilt, filterdata.servicer, 
+                                                         filterdata.landmark, filterdata.hasFHA).ToList();
                 if (leadList == null || leadList.Count == 0)
                     return NotFound();
                 return Ok(leadList);
@@ -264,8 +245,8 @@
 
             if (!BAL.Lead.IsValidFilter(scenarioObj.filterdata.zipcodes, scenarioObj.filterdata.neighborhoods, scenarioObj.filterdata.isvacant, scenarioObj.filterdata.leadgrades, scenarioObj.filterdata.buildingclasscodes, 
                                         scenarioObj.filterdata.counties, scenarioObj.filterdata.ismailingaddressactive, scenarioObj.filterdata.lientypes, scenarioObj.filterdata.ltv, scenarioObj.filterdata.equity, 
-                                        scenarioObj.filterdata.violations, scenarioObj.filterdata.cities, scenarioObj.filterdata.states, scenarioObj.filterdata.isfannie, scenarioObj.filterdata.isfreddie, scenarioObj.filterdata.unbuilt, 
-                                        scenarioObj.filterdata.servicer, scenarioObj.filterdata.landmark))
+                                        scenarioObj.filterdata.violations, scenarioObj.filterdata.cities, scenarioObj.filterdata.states, scenarioObj.filterdata.hasFannie, scenarioObj.filterdata.hasFreddie, scenarioObj.filterdata.unbuilt, 
+                                        scenarioObj.filterdata.servicer, scenarioObj.filterdata.landmark, scenarioObj.filterdata.hasFHA))
                 return BadRequest("At least one filter is required");
 
             if (scenarioObj.username == null || scenarioObj.scenarioname == null || scenarioObj.description == null)
@@ -277,7 +258,8 @@
                 return Ok(DAL.Lead.SaveScenario(scenarioObj.username, scenarioObj.scenarioname, scenarioObj.description, scenarioObj.filterdata.zipcodes, scenarioObj.filterdata.neighborhoods,
                                                 scenarioObj.filterdata.isvacant, scenarioObj.filterdata.leadgrades, scenarioObj.filterdata.buildingclasscodes, scenarioObj.filterdata.counties, scenarioObj.filterdata.ismailingaddressactive,
                                                 scenarioObj.filterdata.lientypes, scenarioObj.filterdata.ltv, scenarioObj.filterdata.equity, scenarioObj.filterdata.violations, scenarioObj.filterdata.cities, scenarioObj.filterdata.states,
-                                                scenarioObj.filterdata.isfannie, scenarioObj.filterdata.isfreddie, scenarioObj.filterdata.unbuilt, scenarioObj.filterdata.servicer, scenarioObj.filterdata.landmark));
+                                                scenarioObj.filterdata.hasFannie, scenarioObj.filterdata.hasFreddie, scenarioObj.filterdata.unbuilt, scenarioObj.filterdata.servicer, scenarioObj.filterdata.landmark,
+                                                scenarioObj.filterdata.hasFHA));
             }
             catch (Exception e)
             {

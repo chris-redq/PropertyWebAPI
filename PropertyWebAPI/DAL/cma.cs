@@ -27,7 +27,7 @@ namespace PropertyWebAPI.DAL
         public double? maxClusterValue;
     }
 
-    public class SalesDataDetailsByMonth: vwSalesByMonthByNeighborhood
+    public class SalesDataDetailsByMonth: vwSalesStatisticsByMonthByNeighborhood
     {
 
     }
@@ -75,7 +75,7 @@ namespace PropertyWebAPI.DAL
             }
         }
 
-        public static List<SalesDataDetailsByMonth> GetSalesTrend(string neighborhood, int timeSpanInYears)
+        public static List<SalesDataDetailsByMonth> GetSalesTrend(string neighborhood, string buildingClass, int timeSpanInYears)
         {
             DateTime eDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1,0,0,0);
             DateTime sDate = new DateTime(DateTime.Today.Year- timeSpanInYears, DateTime.Today.Month, 1, 0, 0, 0);
@@ -83,10 +83,21 @@ namespace PropertyWebAPI.DAL
 
             using (NYCMAEntities nycmaE = new NYCMAEntities())
             {
-                return Mapper.Map<List<vwSalesByMonthByNeighborhood>,List<SalesDataDetailsByMonth>>(nycmaE.vwSalesByMonthByNeighborhoods
-                                                                                                          .Where(i => i.YearMonth >= sDate 
-                                                                                                                 && i.YearMonth <= eDate 
-                                                                                                                 && i.Neighborhood== neighborhood).ToList());
+                if (buildingClass==null)
+                    return Mapper.Map<List<vwSalesStatisticsByMonthByNeighborhood>,List<SalesDataDetailsByMonth>>
+                           (nycmaE.vwSalesStatisticsByMonthByNeighborhoods.Where(i => i.YearMonth >= sDate 
+                                                                                 && i.YearMonth <= eDate 
+                                                                                 && i.Neighborhood== neighborhood)
+                                                                          .OrderBy(i => i.YearMonth)
+                                                                          .ToList());
+                else
+                    return Mapper.Map<List<vwSalesStatisticsByMonthByNeighborhoodByBuildingClass>, List<SalesDataDetailsByMonth>>
+                           (nycmaE.vwSalesStatisticsByMonthByNeighborhoodByBuildingClasses.Where(i => i.YearMonth >= sDate
+                                                                                                 && i.YearMonth <= eDate
+                                                                                                 && i.Neighborhood == neighborhood
+                                                                                                 && i.BuildingClass == buildingClass)
+                                                                                          .OrderBy(i => i.YearMonth)
+                                                                                          .ToList());
             }
         }
 

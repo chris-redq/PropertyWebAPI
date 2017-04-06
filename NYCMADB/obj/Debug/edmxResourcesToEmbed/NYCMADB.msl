@@ -157,16 +157,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="vwSalesByMonthByNeighborhoods">
-      <EntityTypeMapping TypeName="NYCMAModel.vwSalesByMonthByNeighborhood">
-        <MappingFragment StoreEntitySet="vwSalesByMonthByNeighborhood">
-          <ScalarProperty Name="NumberofSales" ColumnName="NumberofSales" />
-          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-          <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
-          <ScalarProperty Name="PKID" ColumnName="PKID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CMAComparables">
       <EntityTypeMapping TypeName="NYCMAModel.CMAComparable">
         <MappingFragment StoreEntitySet="CMAComparable">
@@ -303,5 +293,26 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="vwSalesStatisticsByMonthByNeighborhoods">
+      <EntityTypeMapping TypeName="NYCMAModel.vwSalesStatisticsByMonthByNeighborhood">
+        <MappingFragment StoreEntitySet="vwSalesStatisticsByMonthByNeighborhood">
+          <ScalarProperty Name="TotalSales" ColumnName="TotalSales" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClasses">
+      <EntityTypeMapping TypeName="NYCMAModel.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+        <MappingFragment StoreEntitySet="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+          <ScalarProperty Name="TotalSales" ColumnName="TotalSales" />
+          <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+          <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+          <ScalarProperty Name="PKID" ColumnName="PKID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

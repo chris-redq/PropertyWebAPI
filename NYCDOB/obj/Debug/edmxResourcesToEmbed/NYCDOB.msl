@@ -77,5 +77,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CertificateOfOccupancies">
+      <EntityTypeMapping TypeName="NYCDOBModel.CertificateOfOccupancy">
+        <MappingFragment StoreEntitySet="CertificateOfOccupancy">
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="COURL" ColumnName="COURL" />
+          <ScalarProperty Name="CONumber" ColumnName="CONumber" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

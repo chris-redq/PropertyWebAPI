@@ -16,12 +16,6 @@ namespace PropertyWebAPI.BAL
         public List<BAL.DeedParty> owners;
     }
 
-    public class PropertyDetailData : vwGeneralPropertyInformation
-    {
-
-        public List<BAL.DeedParty> owners;
-    }
-
     public class Lead
     {
         public static LeadDetailData GetPropertyLead(string propertyBBL)
@@ -36,27 +30,15 @@ namespace PropertyWebAPI.BAL
             return leadDetailData;
         }
 
-        public static PropertyDetailData GetProperty(string propertyBBL)
-        {
-            var propertyDetailData = Mapper.Map<PropertyDetailData>(DAL.Lead.GetProperty(propertyBBL));
-            if (propertyDetailData != null)
-            {
-                var deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
-                if (deedDetailsObj != null && deedDetailsObj.owners != null)
-                    propertyDetailData.owners = deedDetailsObj.owners;
-            }
-            return propertyDetailData;
-        }
-
         public static bool IsValidFilter(string zipcodes, string neighborhoods, string isvacant, string leadgrades, string buildingclasscodes, string counties,
                                          string ismailingaddressactive, string lientypes, string ltv, string equity, string violations, string cities, string states,
-                                         string isfannie, string isfreddie, string unbuilt, string servicer, string landmark)
+                                         string hasfannie, string hasfreddie, string unbuilt, string servicer, string landmark, string hasFHA)
         {
             if (zipcodes == null && buildingclasscodes == null && counties == null &&
                 isvacant == null && violations == null && ismailingaddressactive == null &&
                 cities == null && neighborhoods == null && states == null && lientypes == null &&
-                leadgrades == null && ltv == null && equity == null && isfannie == null && isfreddie == null &&
-                unbuilt == null && servicer == null && landmark == null)
+                leadgrades == null && ltv == null && equity == null && hasfannie == null && hasfreddie == null &&
+                unbuilt == null && servicer == null && landmark == null && hasFHA == null)
                 return false;
             return true;
         }

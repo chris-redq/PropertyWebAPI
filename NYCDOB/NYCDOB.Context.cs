@@ -29,5 +29,6 @@ namespace NYCDOB
         public virtual DbSet<vwViolationSummary> vwViolationSummaries { get; set; }
         public virtual DbSet<Complaint> Complaints { get; set; }
         public virtual DbSet<vwComplaintsSummary> vwComplaintsSummaries { get; set; }
+        public virtual DbSet<CertificateOfOccupancy> CertificateOfOccupancies { get; set; }
     }
 }

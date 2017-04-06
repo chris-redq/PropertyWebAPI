@@ -54,7 +54,8 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<MultiAgencyViolation, DAL.ECBViolationDetail>();
                 cfg.CreateMap<vwTaxLien, DAL.LocalTaxLienDetails>();
                 cfg.CreateMap<vwSuggestedSubjectPrice, DAL.SuggestedPropertyPrices>();
-                cfg.CreateMap<vwSalesByMonthByNeighborhood, DAL.SalesDataDetailsByMonth>();
+                cfg.CreateMap<vwSalesStatisticsByMonthByNeighborhood, DAL.SalesDataDetailsByMonth>();
+                cfg.CreateMap<vwSalesStatisticsByMonthByNeighborhoodByBuildingClass, DAL.SalesDataDetailsByMonth>();
                 cfg.CreateMap<SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing, DAL.PriceDetailsByMonth>();
                 cfg.CreateMap<PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing, DAL.PricePerSqftDetailsByMonth>();
                 cfg.CreateMap<ShowCMASubject_Result, DAL.SubjectDetails>();

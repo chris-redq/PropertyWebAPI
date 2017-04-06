@@ -27,11 +27,11 @@ namespace GPADB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<SavedScenario> SavedScenarios { get; set; }
         public virtual DbSet<vwGeneralLeadInformation> vwGeneralLeadInformations { get; set; }
         public virtual DbSet<vwGeneralPropertyInformation> vwGeneralPropertyInformations { get; set; }
+        public virtual DbSet<SavedScenario> SavedScenarios { get; set; }
     
-        public virtual int GetPropertyLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string isFannie, string isFreddie, string unbuiltArea, string servicer, string landmark)
+        public virtual int GetPropertyLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -85,13 +85,13 @@ namespace GPADB
                 new ObjectParameter("Equity", equity) :
                 new ObjectParameter("Equity", typeof(string));
     
-            var isFannieParameter = isFannie != null ?
-                new ObjectParameter("IsFannie", isFannie) :
-                new ObjectParameter("IsFannie", typeof(string));
+            var hasFannieParameter = hasFannie != null ?
+                new ObjectParameter("HasFannie", hasFannie) :
+                new ObjectParameter("HasFannie", typeof(string));
     
-            var isFreddieParameter = isFreddie != null ?
-                new ObjectParameter("IsFreddie", isFreddie) :
-                new ObjectParameter("IsFreddie", typeof(string));
+            var hasFreddieParameter = hasFreddie != null ?
+                new ObjectParameter("HasFreddie", hasFreddie) :
+                new ObjectParameter("HasFreddie", typeof(string));
     
             var unbuiltAreaParameter = unbuiltArea != null ?
                 new ObjectParameter("UnbuiltArea", unbuiltArea) :
@@ -105,10 +105,14 @@ namespace GPADB
                 new ObjectParameter("Landmark", landmark) :
                 new ObjectParameter("Landmark", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetPropertyLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, isFannieParameter, isFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter);
+            var hasFHAParameter = hasFHA != null ?
+                new ObjectParameter("HasFHA", hasFHA) :
+                new ObjectParameter("HasFHA", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetPropertyLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter);
         }
     
-        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string isFannie, string isFreddie, string unbuiltArea, string servicer, string landmark)
+        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -162,13 +166,13 @@ namespace GPADB
                 new ObjectParameter("Equity", equity) :
                 new ObjectParameter("Equity", typeof(string));
     
-            var isFannieParameter = isFannie != null ?
-                new ObjectParameter("IsFannie", isFannie) :
-                new ObjectParameter("IsFannie", typeof(string));
+            var hasFannieParameter = hasFannie != null ?
+                new ObjectParameter("HasFannie", hasFannie) :
+                new ObjectParameter("HasFannie", typeof(string));
     
-            var isFreddieParameter = isFreddie != null ?
-                new ObjectParameter("IsFreddie", isFreddie) :
-                new ObjectParameter("IsFreddie", typeof(string));
+            var hasFreddieParameter = hasFreddie != null ?
+                new ObjectParameter("HasFreddie", hasFreddie) :
+                new ObjectParameter("HasFreddie", typeof(string));
     
             var unbuiltAreaParameter = unbuiltArea != null ?
                 new ObjectParameter("UnbuiltArea", unbuiltArea) :
@@ -182,10 +186,14 @@ namespace GPADB
                 new ObjectParameter("Landmark", landmark) :
                 new ObjectParameter("Landmark", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, isFannieParameter, isFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter);
+            var hasFHAParameter = hasFHA != null ?
+                new ObjectParameter("HasFHA", hasFHA) :
+                new ObjectParameter("HasFHA", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter);
         }
     
-        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string isFannie, string isFreddie, string unbuiltArea, string servicer, string landmark, MergeOption mergeOption)
+        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA, MergeOption mergeOption)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -239,13 +247,13 @@ namespace GPADB
                 new ObjectParameter("Equity", equity) :
                 new ObjectParameter("Equity", typeof(string));
     
-            var isFannieParameter = isFannie != null ?
-                new ObjectParameter("IsFannie", isFannie) :
-                new ObjectParameter("IsFannie", typeof(string));
+            var hasFannieParameter = hasFannie != null ?
+                new ObjectParameter("HasFannie", hasFannie) :
+                new ObjectParameter("HasFannie", typeof(string));
     
-            var isFreddieParameter = isFreddie != null ?
-                new ObjectParameter("IsFreddie", isFreddie) :
-                new ObjectParameter("IsFreddie", typeof(string));
+            var hasFreddieParameter = hasFreddie != null ?
+                new ObjectParameter("HasFreddie", hasFreddie) :
+                new ObjectParameter("HasFreddie", typeof(string));
     
             var unbuiltAreaParameter = unbuiltArea != null ?
                 new ObjectParameter("UnbuiltArea", unbuiltArea) :
@@ -259,7 +267,11 @@ namespace GPADB
                 new ObjectParameter("Landmark", landmark) :
                 new ObjectParameter("Landmark", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", mergeOption, zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, isFannieParameter, isFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter);
+            var hasFHAParameter = hasFHA != null ?
+                new ObjectParameter("HasFHA", hasFHA) :
+                new ObjectParameter("HasFHA", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", mergeOption, zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter);
         }
     }
 }

@@ -178,15 +178,27 @@
           <Property Name="MaxPrice" Type="numeric" Precision="38" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'NYCMA.App.vwSalesByMonthByNeighborhood' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vwSalesByMonthByNeighborhood">
+warning 6002: The table/view 'NYCMA.App.vwSalesStatisticsByMonthByNeighborhood' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwSalesStatisticsByMonthByNeighborhood">
           <Key>
             <PropertyRef Name="PKID" />
           </Key>
           <Property Name="PKID" Type="int" Nullable="false" />
           <Property Name="Neighborhood" Type="varchar" MaxLength="260" />
           <Property Name="YearMonth" Type="date" />
-          <Property Name="NumberofSales" Type="int" />
+          <Property Name="TotalSales" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCMA.App.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="int" Nullable="false" />
+          <Property Name="Neighborhood" Type="varchar" MaxLength="260" />
+          <Property Name="BuildingClass" Type="varchar" MaxLength="2" />
+          <Property Name="YearMonth" Type="date" />
+          <Property Name="TotalSales" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -347,13 +359,22 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
           <EntitySet Name="SaleParty" EntityType="Self.SaleParty" Schema="exdata" store:Type="Tables" />
           <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" EntityType="Self.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" Schema="exdata" store:Type="Tables" />
-          <EntitySet Name="vwSalesByMonthByNeighborhood" EntityType="Self.vwSalesByMonthByNeighborhood" store:Type="Views" store:Schema="App">
+          <EntitySet Name="vwSalesStatisticsByMonthByNeighborhood" EntityType="Self.vwSalesStatisticsByMonthByNeighborhood" store:Type="Views" store:Schema="App">
             <DefiningQuery>SELECT 
-    [vwSalesByMonthByNeighborhood].[PKID] AS [PKID], 
-    [vwSalesByMonthByNeighborhood].[Neighborhood] AS [Neighborhood], 
-    [vwSalesByMonthByNeighborhood].[YearMonth] AS [YearMonth], 
-    [vwSalesByMonthByNeighborhood].[NumberofSales] AS [NumberofSales]
-    FROM [App].[vwSalesByMonthByNeighborhood] AS [vwSalesByMonthByNeighborhood]</DefiningQuery>
+    [vwSalesStatisticsByMonthByNeighborhood].[PKID] AS [PKID], 
+    [vwSalesStatisticsByMonthByNeighborhood].[Neighborhood] AS [Neighborhood], 
+    [vwSalesStatisticsByMonthByNeighborhood].[YearMonth] AS [YearMonth], 
+    [vwSalesStatisticsByMonthByNeighborhood].[TotalSales] AS [TotalSales]
+    FROM [App].[vwSalesStatisticsByMonthByNeighborhood] AS [vwSalesStatisticsByMonthByNeighborhood]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass" EntityType="Self.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass" store:Type="Views" store:Schema="App">
+            <DefiningQuery>SELECT 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[PKID] AS [PKID], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[Neighborhood] AS [Neighborhood], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[BuildingClass] AS [BuildingClass], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[YearMonth] AS [YearMonth], 
+    [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass].[TotalSales] AS [TotalSales]
+    FROM [App].[vwSalesStatisticsByMonthByNeighborhoodByBuildingClass] AS [vwSalesStatisticsByMonthByNeighborhoodByBuildingClass]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwSuggestedSubjectPrices" EntityType="Self.vwSuggestedSubjectPrices" store:Type="Views" store:Schema="App">
             <DefiningQuery>SELECT 
@@ -399,7 +420,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <EntitySet Name="SaleParties" EntityType="NYCMAModel.SaleParty" />
           <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" />
           <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" />
-          <EntitySet Name="vwSalesByMonthByNeighborhoods" EntityType="NYCMAModel.vwSalesByMonthByNeighborhood" />
           <EntitySet Name="CMAComparables" EntityType="NYCMAModel.CMAComparable" />
           <EntitySet Name="CMARuns" EntityType="NYCMAModel.CMARun" />
           <AssociationSet Name="FK_CMAComparable_CMARunId" Association="NYCMAModel.FK_CMAComparable_CMARunId">
@@ -454,6 +474,8 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
             <Parameter Name="LotDepthHiRange" Mode="In" Type="Int32" />
             <Parameter Name="LotDepthLoRange" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vwSalesStatisticsByMonthByNeighborhoods" EntityType="NYCMAModel.vwSalesStatisticsByMonthByNeighborhood" />
+          <EntitySet Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClasses" EntityType="NYCMAModel.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass" />
         </EntityContainer>
         <EntityType Name="Assessment">
           <Key>
@@ -610,15 +632,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Name="Q3Price" Type="Decimal" Precision="38" Scale="6" />
           <Property Name="MaxPrice" Type="Decimal" Precision="38" Scale="6" />
         </EntityType>
-        <EntityType Name="vwSalesByMonthByNeighborhood">
-          <Key>
-            <PropertyRef Name="PKID" />
-          </Key>
-          <Property Name="PKID" Type="Int32" Nullable="false" />
-          <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
-          <Property Name="YearMonth" Type="DateTime" Precision="0" />
-          <Property Name="NumberofSales" Type="Int32" />
-        </EntityType>
         <EntityType Name="CMAComparable">
           <Key>
             <PropertyRef Name="CMARunId" />
@@ -760,6 +773,25 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
           <Property Type="Decimal" Name="Similarity" Nullable="true" Precision="5" Scale="2" />
           <Property Type="Int32" Name="SortOrder" Nullable="true" />
         </ComplexType>
+        <EntityType Name="vwSalesStatisticsByMonthByNeighborhood">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="Int32" Nullable="false" />
+          <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+          <Property Name="YearMonth" Type="DateTime" Precision="0" />
+          <Property Name="TotalSales" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+          <Key>
+            <PropertyRef Name="PKID" />
+          </Key>
+          <Property Name="PKID" Type="Int32" Nullable="false" />
+          <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="YearMonth" Type="DateTime" Precision="0" />
+          <Property Name="TotalSales" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -922,16 +954,6 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwSalesByMonthByNeighborhoods">
-            <EntityTypeMapping TypeName="NYCMAModel.vwSalesByMonthByNeighborhood">
-              <MappingFragment StoreEntitySet="vwSalesByMonthByNeighborhood">
-                <ScalarProperty Name="NumberofSales" ColumnName="NumberofSales" />
-                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
-                <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
-                <ScalarProperty Name="PKID" ColumnName="PKID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CMAComparables">
             <EntityTypeMapping TypeName="NYCMAModel.CMAComparable">
               <MappingFragment StoreEntitySet="CMAComparable">
@@ -1068,6 +1090,27 @@ warning 6002: The table/view 'NYCMA.App.vwSuggestedSubjectPrices' does not have 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vwSalesStatisticsByMonthByNeighborhoods">
+            <EntityTypeMapping TypeName="NYCMAModel.vwSalesStatisticsByMonthByNeighborhood">
+              <MappingFragment StoreEntitySet="vwSalesStatisticsByMonthByNeighborhood">
+                <ScalarProperty Name="TotalSales" ColumnName="TotalSales" />
+                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+                <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+                <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClasses">
+            <EntityTypeMapping TypeName="NYCMAModel.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+              <MappingFragment StoreEntitySet="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+                <ScalarProperty Name="TotalSales" ColumnName="TotalSales" />
+                <ScalarProperty Name="YearMonth" ColumnName="YearMonth" />
+                <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+                <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+                <ScalarProperty Name="PKID" ColumnName="PKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -94,7 +94,10 @@
     <Compile Include="tfnGetManualCMA_Result.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwSalesByMonthByNeighborhood.cs">
+    <Compile Include="vwSalesStatisticsByMonthByNeighborhood.cs">
+      <DependentUpon>NYCMADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass.cs">
       <DependentUpon>NYCMADB.tt</DependentUpon>
     </Compile>
     <Compile Include="vwSuggestedSubjectPrice.cs">

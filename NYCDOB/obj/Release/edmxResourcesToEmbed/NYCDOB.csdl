@@ -5,6 +5,7 @@
     <EntitySet Name="vwViolationSummaries" EntityType="NYCDOBModel.vwViolationSummary" />
     <EntitySet Name="Complaints" EntityType="NYCDOBModel.Complaint" />
     <EntitySet Name="vwComplaintsSummaries" EntityType="NYCDOBModel.vwComplaintsSummary" />
+    <EntitySet Name="CertificateOfOccupancies" EntityType="NYCDOBModel.CertificateOfOccupancy" />
   </EntityContainer>
   <EntityType Name="Violation">
     <Key>
@@ -78,5 +79,15 @@
     <Property Name="StopWorkOrder" Type="Int32" />
     <Property Name="PartialVacateOrder" Type="Int32" />
     <Property Name="Total" Type="Int32" />
+  </EntityType>
+  <EntityType Name="CertificateOfOccupancy">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="CONumber" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CONumber" Type="Int64" Nullable="false" />
+    <Property Name="COURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
 </Schema>

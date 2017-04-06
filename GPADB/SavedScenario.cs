@@ -32,10 +32,11 @@ namespace GPADB
         public string LeadGrades { get; set; }
         public string LTV { get; set; }
         public string Equity { get; set; }
-        public string IsFannie { get; set; }
-        public string IsFreddie { get; set; }
+        public string HasFannie { get; set; }
+        public string HasFreddie { get; set; }
         public string UnbuiltArea { get; set; }
         public string Servicer { get; set; }
         public string Landmark { get; set; }
+        public string HasFHA { get; set; }
     }
 }

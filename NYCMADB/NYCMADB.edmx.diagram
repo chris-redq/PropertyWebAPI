@@ -9,11 +9,12 @@
         <EntityTypeShape EntityType="NYCMAModel.SaleParty" Width="1.5" PointX="5.625" PointY="0.625" />
         <EntityTypeShape EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" Width="4.75" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" Width="4.625" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="NYCMAModel.vwSalesByMonthByNeighborhood" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="NYCMAModel.CMAComparable" Width="1.5" PointX="11.625" PointY="4" />
         <EntityTypeShape EntityType="NYCMAModel.CMARun" Width="1.5" PointX="9.375" PointY="1.25" />
         <AssociationConnector Association="NYCMAModel.FK_CMAComparable_CMARunId" />
         <EntityTypeShape EntityType="NYCMAModel.vwSuggestedSubjectPrice" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NYCMAModel.vwSalesStatisticsByMonthByNeighborhood" Width="1.5" PointX="11.75" PointY="1.125" />
+        <EntityTypeShape EntityType="NYCMAModel.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass" Width="1.5" PointX="13.5" PointY="1.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

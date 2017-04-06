@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NYCMADB
+namespace NYCDOB
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class vwSalesByMonthByNeighborhood
+    public partial class CertificateOfOccupancy
     {
-        public int PKID { get; set; }
-        public string Neighborhood { get; set; }
-        public Nullable<System.DateTime> YearMonth { get; set; }
-        public Nullable<int> NumberofSales { get; set; }
+        public string BBL { get; set; }
+        public long CONumber { get; set; }
+        public string COURL { get; set; }
+        public System.DateTime LastUpdated { get; set; }
     }
 }

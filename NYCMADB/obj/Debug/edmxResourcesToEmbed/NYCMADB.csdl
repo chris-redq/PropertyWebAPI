@@ -26,7 +26,6 @@
     <EntitySet Name="SaleParties" EntityType="NYCMAModel.SaleParty" />
     <EntitySet Name="PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.PricePerSqFtStatisticsByMonthByNeighborhoodMeanSmoothing" />
     <EntitySet Name="SalePriceStatisticsByMonthByNeighborhoodMeanSmoothings" EntityType="NYCMAModel.SalePriceStatisticsByMonthByNeighborhoodMeanSmoothing" />
-    <EntitySet Name="vwSalesByMonthByNeighborhoods" EntityType="NYCMAModel.vwSalesByMonthByNeighborhood" />
     <EntitySet Name="CMAComparables" EntityType="NYCMAModel.CMAComparable" />
     <EntitySet Name="CMARuns" EntityType="NYCMAModel.CMARun" />
     <AssociationSet Name="FK_CMAComparable_CMARunId" Association="NYCMAModel.FK_CMAComparable_CMARunId">
@@ -81,6 +80,8 @@
       <Parameter Name="LotDepthHiRange" Mode="In" Type="Int32" />
       <Parameter Name="LotDepthLoRange" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="vwSalesStatisticsByMonthByNeighborhoods" EntityType="NYCMAModel.vwSalesStatisticsByMonthByNeighborhood" />
+    <EntitySet Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClasses" EntityType="NYCMAModel.vwSalesStatisticsByMonthByNeighborhoodByBuildingClass" />
   </EntityContainer>
   <EntityType Name="Assessment">
     <Key>
@@ -237,15 +238,6 @@
     <Property Name="Q3Price" Type="Decimal" Precision="38" Scale="6" />
     <Property Name="MaxPrice" Type="Decimal" Precision="38" Scale="6" />
   </EntityType>
-  <EntityType Name="vwSalesByMonthByNeighborhood">
-    <Key>
-      <PropertyRef Name="PKID" />
-    </Key>
-    <Property Name="PKID" Type="Int32" Nullable="false" />
-    <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
-    <Property Name="YearMonth" Type="DateTime" Precision="0" />
-    <Property Name="NumberofSales" Type="Int32" />
-  </EntityType>
   <EntityType Name="CMAComparable">
     <Key>
       <PropertyRef Name="CMARunId" />
@@ -387,4 +379,23 @@
     <Property Type="Decimal" Name="Similarity" Nullable="true" Precision="5" Scale="2" />
     <Property Type="Int32" Name="SortOrder" Nullable="true" />
   </ComplexType>
+  <EntityType Name="vwSalesStatisticsByMonthByNeighborhood">
+    <Key>
+      <PropertyRef Name="PKID" />
+    </Key>
+    <Property Name="PKID" Type="Int32" Nullable="false" />
+    <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+    <Property Name="YearMonth" Type="DateTime" Precision="0" />
+    <Property Name="TotalSales" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vwSalesStatisticsByMonthByNeighborhoodByBuildingClass">
+    <Key>
+      <PropertyRef Name="PKID" />
+    </Key>
+    <Property Name="PKID" Type="Int32" Nullable="false" />
+    <Property Name="Neighborhood" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="YearMonth" Type="DateTime" Precision="0" />
+    <Property Name="TotalSales" Type="Int32" />
+  </EntityType>
 </Schema>

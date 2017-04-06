@@ -27,11 +27,12 @@
           <Property Name="LeadGrades" Type="varchar" MaxLength="1000" />
           <Property Name="LTV" Type="varchar" MaxLength="1000" />
           <Property Name="Equity" Type="varchar" MaxLength="1000" />
-          <Property Name="IsFannie" Type="varchar" MaxLength="1000" />
-          <Property Name="IsFreddie" Type="varchar" MaxLength="1000" />
+          <Property Name="HasFannie" Type="varchar" MaxLength="1000" />
+          <Property Name="HasFreddie" Type="varchar" MaxLength="1000" />
           <Property Name="UnbuiltArea" Type="varchar" MaxLength="1000" />
           <Property Name="Servicer" Type="varchar" MaxLength="1000" />
           <Property Name="Landmark" Type="varchar" MaxLength="1000" />
+          <Property Name="HasFHA" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -223,11 +224,12 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Parameter Name="LeadGrades" Type="varchar" Mode="In" />
           <Parameter Name="LTV" Type="varchar" Mode="In" />
           <Parameter Name="Equity" Type="varchar" Mode="In" />
-          <Parameter Name="IsFannie" Type="varchar" Mode="In" />
-          <Parameter Name="IsFreddie" Type="varchar" Mode="In" />
+          <Parameter Name="HasFannie" Type="varchar" Mode="In" />
+          <Parameter Name="HasFreddie" Type="varchar" Mode="In" />
           <Parameter Name="UnbuiltArea" Type="varchar" Mode="In" />
           <Parameter Name="Servicer" Type="varchar" Mode="In" />
           <Parameter Name="Landmark" Type="varchar" Mode="In" />
+          <Parameter Name="HasFHA" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="GPADBModelStoreContainer">
           <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
@@ -403,7 +405,8 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <edmx:ConceptualModels>
       <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
+          <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
+          <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
           <FunctionImport Name="GetPropertyLeads">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
             <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -418,11 +421,12 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
             <Parameter Name="LeadGrades" Mode="In" Type="String" />
             <Parameter Name="LTV" Mode="In" Type="String" />
             <Parameter Name="Equity" Mode="In" Type="String" />
-            <Parameter Name="IsFannie" Mode="In" Type="String" />
-            <Parameter Name="IsFreddie" Mode="In" Type="String" />
+            <Parameter Name="HasFannie" Mode="In" Type="String" />
+            <Parameter Name="HasFreddie" Mode="In" Type="String" />
             <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
             <Parameter Name="Servicer" Mode="In" Type="String" />
             <Parameter Name="Landmark" Mode="In" Type="String" />
+            <Parameter Name="HasFHA" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -438,43 +442,15 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
             <Parameter Name="LeadGrades" Mode="In" Type="String" />
             <Parameter Name="LTV" Mode="In" Type="String" />
             <Parameter Name="Equity" Mode="In" Type="String" />
-            <Parameter Name="IsFannie" Mode="In" Type="String" />
-            <Parameter Name="IsFreddie" Mode="In" Type="String" />
+            <Parameter Name="HasFannie" Mode="In" Type="String" />
+            <Parameter Name="HasFreddie" Mode="In" Type="String" />
             <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
             <Parameter Name="Servicer" Mode="In" Type="String" />
             <Parameter Name="Landmark" Mode="In" Type="String" />
+            <Parameter Name="HasFHA" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
-          <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
+          <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
         </EntityContainer>
-        <EntityType Name="SavedScenario">
-          <Key>
-            <PropertyRef Name="ScenarioId" />
-          </Key>
-          <Property Name="ScenarioId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ScenarioName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="BuildingClassCodes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Counties" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Vacant" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="MailingAddressActive" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Violations" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Cities" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Neighborhoods" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="States" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LienTypes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LeadGrades" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="LTV" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Equity" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IsFannie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IsFreddie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="UnbuiltArea" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="vwGeneralLeadInformation">
           <Key>
             <PropertyRef Name="BBLE" />
@@ -647,43 +623,41 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="IsLandmark" Type="Int32" />
           <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="SavedScenario">
+          <Key>
+            <PropertyRef Name="ScenarioId" />
+          </Key>
+          <Property Name="ScenarioId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScenarioName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingClassCodes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Counties" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Vacant" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddressActive" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Violations" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Cities" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Neighborhoods" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="States" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LienTypes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LeadGrades" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LTV" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Equity" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="HasFannie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="HasFreddie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UnbuiltArea" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="HasFHA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GPADBModelStoreContainer" CdmEntityContainer="GPADBEntities1">
-          <EntitySetMapping Name="SavedScenarios">
-            <EntityTypeMapping TypeName="GPADBModel.SavedScenario">
-              <MappingFragment StoreEntitySet="SavedScenario">
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="Servicer" ColumnName="Servicer" />
-                <ScalarProperty Name="UnbuiltArea" ColumnName="UnbuiltArea" />
-                <ScalarProperty Name="IsFreddie" ColumnName="IsFreddie" />
-                <ScalarProperty Name="IsFannie" ColumnName="IsFannie" />
-                <ScalarProperty Name="Equity" ColumnName="Equity" />
-                <ScalarProperty Name="LTV" ColumnName="LTV" />
-                <ScalarProperty Name="LeadGrades" ColumnName="LeadGrades" />
-                <ScalarProperty Name="LienTypes" ColumnName="LienTypes" />
-                <ScalarProperty Name="States" ColumnName="States" />
-                <ScalarProperty Name="Neighborhoods" ColumnName="Neighborhoods" />
-                <ScalarProperty Name="Cities" ColumnName="Cities" />
-                <ScalarProperty Name="Violations" ColumnName="Violations" />
-                <ScalarProperty Name="MailingAddressActive" ColumnName="MailingAddressActive" />
-                <ScalarProperty Name="Vacant" ColumnName="Vacant" />
-                <ScalarProperty Name="Counties" ColumnName="Counties" />
-                <ScalarProperty Name="BuildingClassCodes" ColumnName="BuildingClassCodes" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DateTimeSaved" ColumnName="DateTimeSaved" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ScenarioName" ColumnName="ScenarioName" />
-                <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-          <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
           <EntitySetMapping Name="vwGeneralLeadInformations">
             <EntityTypeMapping TypeName="GPADBModel.vwGeneralLeadInformation">
               <MappingFragment StoreEntitySet="vwGeneralLeadInformation">
@@ -851,6 +825,38 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
                 <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
                 <ScalarProperty Name="TaxClass" ColumnName="TaxClass" />
                 <ScalarProperty Name="BBLE" ColumnName="BBLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+          <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+          <EntitySetMapping Name="SavedScenarios">
+            <EntityTypeMapping TypeName="GPADBModel.SavedScenario">
+              <MappingFragment StoreEntitySet="SavedScenario">
+                <ScalarProperty Name="HasFHA" ColumnName="HasFHA" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Servicer" ColumnName="Servicer" />
+                <ScalarProperty Name="UnbuiltArea" ColumnName="UnbuiltArea" />
+                <ScalarProperty Name="HasFreddie" ColumnName="HasFreddie" />
+                <ScalarProperty Name="HasFannie" ColumnName="HasFannie" />
+                <ScalarProperty Name="Equity" ColumnName="Equity" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="LeadGrades" ColumnName="LeadGrades" />
+                <ScalarProperty Name="LienTypes" ColumnName="LienTypes" />
+                <ScalarProperty Name="States" ColumnName="States" />
+                <ScalarProperty Name="Neighborhoods" ColumnName="Neighborhoods" />
+                <ScalarProperty Name="Cities" ColumnName="Cities" />
+                <ScalarProperty Name="Violations" ColumnName="Violations" />
+                <ScalarProperty Name="MailingAddressActive" ColumnName="MailingAddressActive" />
+                <ScalarProperty Name="Vacant" ColumnName="Vacant" />
+                <ScalarProperty Name="Counties" ColumnName="Counties" />
+                <ScalarProperty Name="BuildingClassCodes" ColumnName="BuildingClassCodes" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateTimeSaved" ColumnName="DateTimeSaved" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ScenarioName" ColumnName="ScenarioName" />
+                <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
+    <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
+    <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
     <FunctionImport Name="GetPropertyLeads">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
       <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -16,11 +17,12 @@
       <Parameter Name="LeadGrades" Mode="In" Type="String" />
       <Parameter Name="LTV" Mode="In" Type="String" />
       <Parameter Name="Equity" Mode="In" Type="String" />
-      <Parameter Name="IsFannie" Mode="In" Type="String" />
-      <Parameter Name="IsFreddie" Mode="In" Type="String" />
+      <Parameter Name="HasFannie" Mode="In" Type="String" />
+      <Parameter Name="HasFreddie" Mode="In" Type="String" />
       <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
+      <Parameter Name="HasFHA" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -36,43 +38,15 @@
       <Parameter Name="LeadGrades" Mode="In" Type="String" />
       <Parameter Name="LTV" Mode="In" Type="String" />
       <Parameter Name="Equity" Mode="In" Type="String" />
-      <Parameter Name="IsFannie" Mode="In" Type="String" />
-      <Parameter Name="IsFreddie" Mode="In" Type="String" />
+      <Parameter Name="HasFannie" Mode="In" Type="String" />
+      <Parameter Name="HasFreddie" Mode="In" Type="String" />
       <Parameter Name="UnbuiltArea" Mode="In" Type="String" />
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
+      <Parameter Name="HasFHA" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
-    <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
+    <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
   </EntityContainer>
-  <EntityType Name="SavedScenario">
-    <Key>
-      <PropertyRef Name="ScenarioId" />
-    </Key>
-    <Property Name="ScenarioId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ScenarioName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
-    <Property Name="ZipCode" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="BuildingClassCodes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Counties" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Vacant" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="MailingAddressActive" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Violations" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Cities" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Neighborhoods" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="States" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="LienTypes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="LeadGrades" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="LTV" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Equity" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="IsFannie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="IsFreddie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="UnbuiltArea" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="vwGeneralLeadInformation">
     <Key>
       <PropertyRef Name="BBLE" />
@@ -244,5 +218,34 @@
     <Property Name="IsSRORestricted" Type="Int32" />
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SavedScenario">
+    <Key>
+      <PropertyRef Name="ScenarioId" />
+    </Key>
+    <Property Name="ScenarioId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ScenarioName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingClassCodes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Counties" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Vacant" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="MailingAddressActive" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Violations" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Cities" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Neighborhoods" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="States" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="LienTypes" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="LeadGrades" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="LTV" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Equity" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="HasFannie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="HasFreddie" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="UnbuiltArea" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="HasFHA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

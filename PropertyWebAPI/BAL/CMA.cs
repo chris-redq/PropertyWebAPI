@@ -536,6 +536,82 @@ namespace PropertyWebAPI.BAL
             return localDensityPoints.ToArray();
         }
 
+        private static double[] MapDensityPointsToDiscretePrices(double[] densityPoints, double[] pricesArray)
+        {
+            Common.DoubleList newList = new Common.DoubleList();
+
+            for (int i=0; i <densityPoints.Length; i++)
+            {
+                for (int j=0; j<pricesArray.Length; j++)
+                {
+                    if (pricesArray[j]<=densityPoints[i] && pricesArray[j+1]>= densityPoints[i])
+                    {
+                        if(densityPoints[i] - pricesArray[j] > pricesArray[j + 1] - densityPoints[i])
+                            newList.Add(pricesArray[j + 1]);
+                        else
+                            newList.Add(pricesArray[j]);
+                        break;
+                    }
+                }
+            }
+
+            newList.Sort();
+            return newList.ToArray();
+        }
+
+        private static double[] GetSimplePriceDerivates(double[] pricesArray)
+        {
+            double[] derivatives = Common.Statistics.DiscreteDerivative(pricesArray);
+            for (int j = 0; j < derivatives.Length; j++)
+            {
+                double value = derivatives[j];
+                if (Math.Round(value, 2) >= value)
+                    derivatives[j] = Math.Round(value, 2);
+                else
+                    derivatives[j] = Math.Round(value + 0.005, 2);
+            }
+            return derivatives;
+        }
+
+        /*
+        private static double[] GetModifiedPriceDerivatesUsingKDEDensityPoints(double[] pricesArray, double[] densityPoints)
+        {
+            int inputArraySize = densityPoints.Length;
+            double[] derivatives = new double[inputArraySize - 1];
+
+            for (int i = 0; i < inputArraySize; i++)
+            {
+                for (int j = 0; j < pricesArray.Length - 1; j++)
+                {
+                    if (pricesArray[j] <= densityPoints[i] && pricesArray[j + 1] >= densityPoints[i])
+                    {
+                        if (densityPoints[i] - pricesArray[j] > pricesArray[j + 1] - densityPoints[i])
+                        {
+                            newList.Add(pricesArray[j + 1]);
+                        }
+                        else
+                        {
+                            newList.Add(pricesArray[j]);
+                        }
+                        break;
+                    }
+                }
+
+                // derivatives[i] = Math.Abs((values[i + 1] - values[i]) / values[i]);
+            }
+            
+
+            for (int j = 0; j < derivatives.Length; j++)
+            {
+                double value = derivatives[j];
+                if (Math.Round(value, 2) >= value)
+                    derivatives[j] = Math.Round(value, 2);
+                else
+                    derivatives[j] = Math.Round(value + 0.005, 2);
+            }
+            return derivatives;
+        }
+        */
 
         private static DAL.AutomatedSuggestedPropertyPrices getSuggestedPropertyPrices(int cMAType, string subjectBBL, List<DAL.CMAResult> results)
         {
@@ -574,17 +650,11 @@ namespace PropertyWebAPI.BAL
                 pricesArray[j] = Math.Round(pricesArray[j], 0);
 
             double[] kDEDensityPoints = ApplyGaussianKDE(pricesArray);
-            //double[] smoothValues = Common.Statistics.ApplyGaussianKDE(pricesArray, GAUSSIAN_KERNEL_SIZE, GAUSSIAN_SIGMA);
 
-            double[] derivatives = Common.Statistics.DiscreteDerivative(pricesArray);
-            for (int j = 0; j < derivatives.Length; j++)
-            {
-                double value = derivatives[j];
-                if (Math.Round(value, 2)>= value)
-                    derivatives[j] = Math.Round(value, 2);
-                else
-                    derivatives[j] = Math.Round(value + 0.005, 2);
-            }
+            //double[] modifiedkDEDensityPoints = MapDensityPointsToDiscretePrices(kDEDensityPoints,pricesArray);
+
+            double[] derivatives = GetSimplePriceDerivates(pricesArray);
+       //     double[] modifiedDerivatives = GetModifiedPriceDerivatesUsingKDEDensityPoints(pricesArray, kDEDensityPoints);
 
             //What is the minimum threshold required to get a cluster from our comparables
             double[] minThresholds = GetThresholdsForClusters(cMAType, derivatives);
