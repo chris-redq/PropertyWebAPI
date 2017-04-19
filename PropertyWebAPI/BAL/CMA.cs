@@ -124,9 +124,10 @@ namespace PropertyWebAPI.BAL
 
     public class CMA
     {
-        private const double MAX_REDQ_THRESHOLD = 0.12;
+        private const double MAX_REDQ_THRESHOLD = 0.15;
         private const double MAX_REHAB_THRESHOLD = 0.25;
         private const double MAX_SHORTSALE_THRESHOLD = 0.25;
+        private const double MEDIAN_CROSSING_THRESHOLD = 0.05;
 
         private const double GAUSSIAN_SIGMA = 12;
         
@@ -335,8 +336,27 @@ namespace PropertyWebAPI.BAL
                     cs.message = "No price clusters found";
                     break;
                 case 1:
-                    cs.message = "Single price cluster found";
-                    cs.kDEcluster = clustersArray[0];
+                    cs.message = "Single price cluster found.";
+                    switch (cMAType)
+                    {
+                        case (int)CMAType.Regular:
+                            cs.kDEcluster = clustersArray[0];
+                            break;
+                        case (int)CMAType.ShortSale:
+                            cs.kDEcluster = null;
+                            if (clustersArray[0].maxValue <= medianPrice * (1 + MEDIAN_CROSSING_THRESHOLD))
+                                cs.kDEcluster = clustersArray[0];
+                            else
+                                cs.message += " Cluster does not satisfy median restrictions.";
+                            break;
+                        case (int)CMAType.Rehab:
+                            cs.kDEcluster = null;
+                            if (clustersArray[0].minValue >= medianPrice * (1 - MEDIAN_CROSSING_THRESHOLD))
+                                cs.kDEcluster = clustersArray[0];
+                            else
+                                cs.message += " Cluster does not satisfy median restrictions.";
+                            break;
+                    }
                     break;
                 default:
                     cs.message = string.Format("{0} clusters found.", clusters.Count);
@@ -388,7 +408,7 @@ namespace PropertyWebAPI.BAL
                             cs.kDEcluster = null;
                             for (int i = 0; i < clustersArray.Length; i++)
                             {
-                                if (clustersArray[i].maxValue <= medianPrice)
+                                if (clustersArray[i].maxValue <= medianPrice* (1 + MEDIAN_CROSSING_THRESHOLD))
                                 {
                                     if (cs.kDEcluster == null)
                                         cs.kDEcluster = clustersArray[i];
@@ -401,13 +421,15 @@ namespace PropertyWebAPI.BAL
                                     }
                                 }
                             }
+                            if (cs.kDEcluster==null)
+                                cs.message += " No Cluster satisfies median restrictions.";
                             break;
                         case (int)CMAType.Rehab:
                             cs.message += " Picking the smallest cluster with maximum maxValue.";
                             cs.kDEcluster = null;
                             for (int i = 0; i < clustersArray.Length; i++)
                             {
-                                if (clustersArray[i].minValue >= medianPrice)
+                                if (clustersArray[i].minValue >= medianPrice * (1-MEDIAN_CROSSING_THRESHOLD))
                                 {
                                     if (cs.kDEcluster == null)
                                         cs.kDEcluster = clustersArray[i];
@@ -420,12 +442,14 @@ namespace PropertyWebAPI.BAL
                                     }
                                 }
                             }
+                            if (cs.kDEcluster == null)
+                                cs.message += " No Cluster satisfies median restrictions.";
                             break;
                     }
                     break;
             }
             if (cs.kDEcluster == null)
-                cs.message += " Cannot find an appropriate price cluster";
+                cs.message += " Cannot find an appropriate price cluster.";
             return cs;
         }
 
@@ -573,12 +597,13 @@ namespace PropertyWebAPI.BAL
             return derivatives;
         }
 
-        /*
+        
         private static double[] GetModifiedPriceDerivatesUsingKDEDensityPoints(double[] pricesArray, double[] densityPoints)
         {
             int inputArraySize = densityPoints.Length;
-            double[] derivatives = new double[inputArraySize - 1];
+            double[] derivatives = new double[2*inputArraySize];
 
+            int k = 0;
             for (int i = 0; i < inputArraySize; i++)
             {
                 for (int j = 0; j < pricesArray.Length - 1; j++)
@@ -587,20 +612,25 @@ namespace PropertyWebAPI.BAL
                     {
                         if (densityPoints[i] - pricesArray[j] > pricesArray[j + 1] - densityPoints[i])
                         {
-                            newList.Add(pricesArray[j + 1]);
+                            derivatives[k++] = (densityPoints[i] - pricesArray[j])/ pricesArray[j];
+                            if (j< pricesArray.Length - 2)
+                                derivatives[k++] = (pricesArray[j + 2] - densityPoints[i])/ densityPoints[i];
+                            else
+                                derivatives[k++] = (pricesArray[j + 1] - densityPoints[i])/ densityPoints[i];
                         }
                         else
-                        {
-                            newList.Add(pricesArray[j]);
+                        {   if (j>1)
+                                derivatives[k++] = (densityPoints[i] - pricesArray[j-1])/ pricesArray[j - 1];
+                            else
+                                derivatives[k++] = (densityPoints[i] - pricesArray[j])/ pricesArray[j];
+
+                            derivatives[k++] = (pricesArray[j + 1] - densityPoints[i])/ densityPoints[i];
                         }
                         break;
                     }
                 }
-
-                // derivatives[i] = Math.Abs((values[i + 1] - values[i]) / values[i]);
             }
             
-
             for (int j = 0; j < derivatives.Length; j++)
             {
                 double value = derivatives[j];
@@ -611,7 +641,7 @@ namespace PropertyWebAPI.BAL
             }
             return derivatives;
         }
-        */
+        
 
         private static DAL.AutomatedSuggestedPropertyPrices getSuggestedPropertyPrices(int cMAType, string subjectBBL, List<DAL.CMAResult> results)
         {
@@ -648,42 +678,47 @@ namespace PropertyWebAPI.BAL
             //Round Prices
             for (int j = 0; j < pricesArray.Length; j++)
                 pricesArray[j] = Math.Round(pricesArray[j], 0);
-
-            double[] kDEDensityPoints = ApplyGaussianKDE(pricesArray);
-
-            //double[] modifiedkDEDensityPoints = MapDensityPointsToDiscretePrices(kDEDensityPoints,pricesArray);
-
-            double[] derivatives = GetSimplePriceDerivates(pricesArray);
-       //     double[] modifiedDerivatives = GetModifiedPriceDerivatesUsingKDEDensityPoints(pricesArray, kDEDensityPoints);
-
+            
             //What is the minimum threshold required to get a cluster from our comparables
-            double[] minThresholds = GetThresholdsForClusters(cMAType, derivatives);
+           // double[] derivatives = GetSimplePriceDerivates(pricesArray);
+           // double[] minThresholds = GetThresholdsForClusters(cMAType, derivatives);
 
-            if (minThresholds.Length < 1)
+            //KDE Approach
+            double[] kDEDensityPoints = ApplyGaussianKDE(pricesArray);
+            double[] modifiedDerivatives = GetModifiedPriceDerivatesUsingKDEDensityPoints(pricesArray, kDEDensityPoints);
+            double[] minKDEThresholds = GetThresholdsForClusters(cMAType, modifiedDerivatives);
+
+            if (minKDEThresholds.Length < 1)
             {
-                price.message = "At least 3 comparables required for pricing";
+                price.message = "No price clusters can be established based on threshold percentages defined.";
                 return price;
             }
 
             //Using minThresholds find clusters in comparables with KDE points
-            List<KDECluster> clusters = FindClustersWithKDE(cMAType, kDEDensityPoints, minThresholds, pricesArray);
-            //Using minThresholds find clusters in comparables
-            Clusters clusterInfo = FindClusters(cMAType, derivatives, minThresholds);
+            //List<KDECluster> clusters = FindClustersWithKDE(cMAType, kDEDensityPoints, minThresholds, pricesArray);
+            List<KDECluster> clusters = FindClustersWithKDE(cMAType, kDEDensityPoints, minKDEThresholds, pricesArray);
 
-            //Select the appropriate cluster based on CMAType
-            ClusterSelection clusterSelection = SelectCluster(cMAType, clusterInfo);
+            //Using minThresholds find clusters in comparables Old Approach
+            //Clusters clusterInfo = FindClusters(cMAType, derivatives, minThresholds);
+
+            //Select the appropriate cluster based on CMAType price derivatives approach
+            //ClusterSelection clusterSelection = SelectCluster(cMAType, clusterInfo);
+
+            // ClusterSelection clusterSelectionKDE = SelectCluster(cMAType, clusters, medianPrice);
             ClusterSelection clusterSelectionKDE = SelectCluster(cMAType, clusters, medianPrice);
-            
+
             //mix and max values from the cluster
             double ? minClusterValue = null, maxClusterValue = null;
 
+            
             if (clusterSelectionKDE.kDEcluster!=null)
             {
                 minClusterValue = clusterSelectionKDE.kDEcluster.minValue;
                 maxClusterValue = clusterSelectionKDE.kDEcluster.maxValue;
-                price.message = clusterSelectionKDE.message;
             }
-            else if (clusterSelection.clusterValue != -1)
+
+            /*
+            else if (clusterSelection.clusterValue != -1) //old Approach
             {
                 minClusterValue = Math.Round(pricesArray[clusterInfo.clusters[clusterSelection.clusterValue]],0);
                 maxClusterValue = Math.Round(pricesArray[clusterInfo.clusters[clusterSelection.clusterValue] + 1],0);
@@ -698,7 +733,8 @@ namespace PropertyWebAPI.BAL
                 }
                 price.message = clusterSelection.message;
             }
-            
+            */
+
             //use min max values to compute subject price
             if (minClusterValue != null && maxClusterValue != null)
             {
@@ -711,6 +747,11 @@ namespace PropertyWebAPI.BAL
                 price.AVGPrice = Math.Round(pricessqft.Average(x => x >= minClusterValue && x <= maxClusterValue) * GLA.GetValueOrDefault(), 0);
                 price.MedianPrice = Math.Round(Common.Statistics.Percentile(pricessqft.SubList(x => x >= minClusterValue && x <= maxClusterValue), 50) * GLA.GetValueOrDefault(), 0);
                 price.HighPrice = Math.Round(pricessqft.Max(x => x >= minClusterValue && x <= maxClusterValue) * GLA.GetValueOrDefault(), 0);
+            }
+            else
+            {
+                price.SubjectBBL = subjectBBL;
+                price.message = clusterSelectionKDE.message;
             }
 
             return price;
