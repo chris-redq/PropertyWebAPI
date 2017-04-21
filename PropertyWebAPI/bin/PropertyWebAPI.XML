@@ -1595,74 +1595,6 @@
                 Returns a list of decision statistics for a Relief Sought for all judges in NYC Counties.
             </returns>
         </member>
-        <member name="P:PropertyWebAPI.Controllers.Scenario.username">
-            <summary>Name of the user saving the scenario</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Scenario.scenarioname">
-            <summary>Name of the scenario</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Scenario.description">
-            <summary>Description of the scenario</summary>
-        </member>
-        <member name="F:PropertyWebAPI.Controllers.Scenario.filterdata">
-            <summary>Filters for the Lead List</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.zipcodes">
-            <summary>Optional parameter. Multiple values can be sent. No wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.neighborhoods">
-            <summary>Optional parameter. Multiple values can be sent along with wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.isvacant">
-            <summary>Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.leadgrades">
-            <summary>Optional parameter. Multiple values can be sent. Valid values are A, B, C and D. No wildcards</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.buildingclasscodes">
-            <summary>Optional parameter. Multiple values can be sent along with wildcards. For example: A*,B1</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.counties">
-            <summary>Optional parameter. Multiple values can be sent. No wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.ismailingaddressactive">
-            <summary>Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.lientypes">
-            <summary>Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS and ALL. 
-            By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
-            the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.ltv">
-            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.equity">
-            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.violations">
-            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.cities">
-            <summary>Optional parameter. Multiple values can be sent. No wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.states">
-            <summary>Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.hasFannie">
-            <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.hasFreddie">
-            <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.unbuilt">
-            <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.servicer">
-            <summary>Optional parameter. Multiple values can be sent along with wildcards.</summary>
-        </member>
-        <member name="P:PropertyWebAPI.Controllers.Filters.landmark">
-            <summary>Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</summary>
-        </member>
         <member name="T:PropertyWebAPI.Controllers.LeadsController">
             <summary>  
             This controller handles all api requests associated with property leads
@@ -1673,7 +1605,7 @@
             <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
             <returns>Returns lead details</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>  
             Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
             multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
@@ -1699,6 +1631,10 @@
             <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
             <param name="landmark">Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</param>
             <param name="hasFHA">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="satisfiedmortgages">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
+            <param name="deedage">Optional parameter. Always in months. Minimum one value, max two values can be sent. No wildcards.</param>
+            <param name="taxlienssoldtotal">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
+            <param name="taxlienssoldyear">Optional parameter. Multiple values can be sent. No wildcards.</param>
             <returns>Returns a list of leads (properties)</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetScenarios(System.String)">
@@ -1708,7 +1644,7 @@
             <param name="username">User name associated with scenarios</param>
             <returns>Returns a list of filtered leads (properties)</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetFilteredLeads(PropertyWebAPI.Controllers.Filters)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetFilteredLeads(PropertyWebAPI.DAL.Filters)">
             <summary>  
             Use this api to get a list of leads satisfying the filters provided. At least one filter must exist. All filters support
             multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
@@ -1716,7 +1652,7 @@
             <param name="filterdata">Filters for the Lead List</param>
             <returns>Returns a list of filtered leads (properties)</returns>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.SaveScenario(PropertyWebAPI.Controllers.Scenario)">
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.SaveScenario(PropertyWebAPI.DAL.Scenario)">
             <summary>  
             Use this api to save a scenario. At least one filter must exist. All filters support
             multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*'.
@@ -2585,6 +2521,89 @@
             <summary>
                 Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
             </summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.zipcodes">
+            <summary>Optional parameter. Multiple values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.neighborhoods">
+            <summary>Optional parameter. Multiple values can be sent along with wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.isvacant">
+            <summary>Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.leadgrades">
+            <summary>Optional parameter. Multiple values can be sent. Valid values are A, B, C and D. No wildcards</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.buildingclasscodes">
+            <summary>Optional parameter. Multiple values can be sent along with wildcards. For example: A*,B1</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.counties">
+            <summary>Optional parameter. Multiple values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.ismailingaddressactive">
+            <summary>Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.lientypes">
+            <summary>Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS and ALL. 
+            By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
+            the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.ltv">
+            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.equity">
+            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.violations">
+            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.cities">
+            <summary>Optional parameter. Multiple values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.states">
+            <summary>Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.hasFannie">
+            <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.hasFreddie">
+            <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.unbuilt">
+            <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.servicer">
+            <summary>Optional parameter. Multiple values can be sent along with wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.landmark">
+            <summary>Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.hasFHA">
+            <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.satisfiedMortgages">
+            <summary>Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.deedAge">
+            <summary>Optional parameter. Always in months. Minimum one value, max two values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.taxLiensSoldYear">
+            <summary>Optional parameter. Multiple values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.taxLiensSoldTotal">
+            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Scenario.username">
+            <summary>Name of the user saving the scenario</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Scenario.scenarioname">
+            <summary>Name of the scenario</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Scenario.description">
+            <summary>Description of the scenario</summary>
+        </member>
+        <member name="F:PropertyWebAPI.DAL.Scenario.filterdata">
+            <summary>Filters for the Lead List</summary>
         </member>
         <member name="P:PropertyWebAPI.DAL.ScenarioListData.ScenarioId">
             <summary>Unique Scenario ID</summary>

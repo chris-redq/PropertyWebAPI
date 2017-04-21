@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1216b8812cb44022b2e00604f57f5ded" Name="Diagram1" ZoomLevel="53">
-        <EntityTypeShape EntityType="GPADBModel.vwGeneralLeadInformation" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GPADBModel.vwGeneralPropertyInformation" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GPADBModel.SavedScenario" Width="1.5" PointX="5.375" PointY="0.75" />
+      <Diagram DiagramId="1216b8812cb44022b2e00604f57f5ded" Name="Diagram1" ZoomLevel="68">
+        <EntityTypeShape EntityType="GPADBModel.vwGeneralPropertyInformation" Width="1.5" PointX="7.875" PointY="0.875" />
+        <EntityTypeShape EntityType="GPADBModel.vwGeneralLeadInformation" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="GPADBModel.SavedScenario" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
