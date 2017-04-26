@@ -5,20 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NYCDOFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vwTaxLien">
+        <EntityType Name="TaxLienSold">
           <Key>
-            <PropertyRef Name="TaxLienSaleList" />
-            <PropertyRef Name="TaxLienSold" />
-            <PropertyRef Name="TaxLienCertificate" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="BBL" />
           </Key>
-          <Property Name="BBL" Type="varchar" MaxLength="10" />
-          <Property Name="TaxLienSaleList" Type="int" Nullable="false" />
-          <Property Name="TaxLienSold" Type="int" Nullable="false" />
-          <Property Name="TaxLienCertificate" Type="int" Nullable="false" />
-          <Property Name="IsWaterDebtOnly" Type="bit" />
-          <Property Name="Year" Type="int" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="250" />
+          <Property Name="Owner" Type="varchar" MaxLength="100" />
           <Property Name="Property" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Other" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ERP" Type="decimal" Precision="18" Scale="2" />
@@ -30,7 +25,10 @@ warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key 
           <Property Name="InterestRate" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DOFInterestRate" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DEPInterestRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Schedule" Type="varchar" MaxLength="15" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Function Name="tfnGetGeneralPropertyInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dof">
           <Parameter Name="BBLE" Type="varchar" Mode="In" />
           <ReturnType>
@@ -69,27 +67,7 @@ warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key 
           </ReturnType>
         </Function>
         <EntityContainer Name="NYCDOFModelStoreContainer">
-          <EntitySet Name="vwTaxLien" EntityType="Self.vwTaxLien" store:Type="Views" store:Schema="dof">
-            <DefiningQuery>SELECT 
-    [vwTaxLien].[BBL] AS [BBL], 
-    [vwTaxLien].[TaxLienSaleList] AS [TaxLienSaleList], 
-    [vwTaxLien].[TaxLienSold] AS [TaxLienSold], 
-    [vwTaxLien].[TaxLienCertificate] AS [TaxLienCertificate], 
-    [vwTaxLien].[IsWaterDebtOnly] AS [IsWaterDebtOnly], 
-    [vwTaxLien].[Year] AS [Year], 
-    [vwTaxLien].[Property] AS [Property], 
-    [vwTaxLien].[Other] AS [Other], 
-    [vwTaxLien].[ERP] AS [ERP], 
-    [vwTaxLien].[Environmental] AS [Environmental], 
-    [vwTaxLien].[CIS] AS [CIS], 
-    [vwTaxLien].[NoticingFees] AS [NoticingFees], 
-    [vwTaxLien].[Surchages] AS [Surchages], 
-    [vwTaxLien].[LienTotal] AS [LienTotal], 
-    [vwTaxLien].[InterestRate] AS [InterestRate], 
-    [vwTaxLien].[DOFInterestRate] AS [DOFInterestRate], 
-    [vwTaxLien].[DEPInterestRate] AS [DEPInterestRate]
-    FROM [dof].[vwTaxLien] AS [vwTaxLien]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="TaxLienSold" EntityType="Self.TaxLienSold" Schema="dof" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -129,20 +107,17 @@ warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key 
           <FunctionImport Name="tfnGetGeneralPropertyInformation" IsComposable="true" ReturnType="Collection(NYCDOFModel.tfnGetGeneralPropertyInformation_Result)">
           <Parameter Name="BBLE" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vwTaxLiens" EntityType="NYCDOFModel.vwTaxLien" />
+          <EntitySet Name="TaxLienSolds" EntityType="NYCDOFModel.TaxLienSold" />
         </EntityContainer>
-        <EntityType Name="vwTaxLien">
+        <EntityType Name="TaxLienSold">
           <Key>
-            <PropertyRef Name="TaxLienSaleList" />
-            <PropertyRef Name="TaxLienSold" />
-            <PropertyRef Name="TaxLienCertificate" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="BBL" />
           </Key>
-          <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TaxLienSaleList" Type="Int32" Nullable="false" />
-          <Property Name="TaxLienSold" Type="Int32" Nullable="false" />
-          <Property Name="TaxLienCertificate" Type="Int32" Nullable="false" />
-          <Property Name="IsWaterDebtOnly" Type="Boolean" />
-          <Property Name="Year" Type="Int32" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Owner" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Property" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Other" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="ERP" Type="Decimal" Precision="18" Scale="2" />
@@ -154,6 +129,7 @@ warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key 
           <Property Name="InterestRate" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DOFInterestRate" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="DEPInterestRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Schedule" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -195,9 +171,10 @@ warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="vwTaxLiens">
-            <EntityTypeMapping TypeName="NYCDOFModel.vwTaxLien">
-              <MappingFragment StoreEntitySet="vwTaxLien">
+          <EntitySetMapping Name="TaxLienSolds">
+            <EntityTypeMapping TypeName="NYCDOFModel.TaxLienSold">
+              <MappingFragment StoreEntitySet="TaxLienSold">
+                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
                 <ScalarProperty Name="DEPInterestRate" ColumnName="DEPInterestRate" />
                 <ScalarProperty Name="DOFInterestRate" ColumnName="DOFInterestRate" />
                 <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
@@ -209,12 +186,10 @@ warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key 
                 <ScalarProperty Name="ERP" ColumnName="ERP" />
                 <ScalarProperty Name="Other" ColumnName="Other" />
                 <ScalarProperty Name="Property" ColumnName="Property" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="IsWaterDebtOnly" ColumnName="IsWaterDebtOnly" />
-                <ScalarProperty Name="TaxLienCertificate" ColumnName="TaxLienCertificate" />
-                <ScalarProperty Name="TaxLienSold" ColumnName="TaxLienSold" />
-                <ScalarProperty Name="TaxLienSaleList" ColumnName="TaxLienSaleList" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

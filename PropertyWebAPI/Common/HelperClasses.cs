@@ -31,8 +31,8 @@ namespace PropertyWebAPI.Common
             Logs.log().Info("Property Data Service Started");
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<tfnGetDocumentParties_Result, BAL.DeedParty>();
-                cfg.CreateMap<PropertyNotInAssessment, BAL.PropertyLotInformation>();
+                cfg.CreateMap<tfnGetDocumentParties_Result, DAL.DeedParty>();
+                cfg.CreateMap<PropertyNotInAssessment, DAL.PropertyLotInformation>();
                 cfg.CreateMap<tfnGetGeneralPropertyInformation_Result, BAL.PhysicalPropertyInformation>();
                 cfg.CreateMap<vwMotionExpanded, DAL.MotionDetails>();
                 cfg.CreateMap<vwCaseExpanded, DAL.CaseDetails>();
@@ -43,7 +43,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetMortgageForeclosureCasesForaProperty_Result, DAL.CaseBasicInformation>();
                 cfg.CreateMap<tfnGetNewMortgageForeclosureCases_Result, DAL.CaseBasicInformationWithBBL>();
                 cfg.CreateMap<tfnGetCaseColumnChanges_Result, DAL.CaseDataChange>();
-                cfg.CreateMap<tfnGetUnsatisfiedMortgages_Result, BAL.DeedDocument>();
+                cfg.CreateMap<tfnGetUnsatisfiedMortgages_Result, DAL.DeedDocument>();
                 cfg.CreateMap<vwGeneralLeadInformation, DAL.LeadSummaryData>();
                 cfg.CreateMap<vwGeneralPropertyInformation, DAL.PropertySummaryData>();
                 cfg.CreateMap<vwGeneralLeadInformation, BAL.LeadDetailData>();
@@ -52,7 +52,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<vwViolationSummary, DAL.ViolationSummary>();
                 cfg.CreateMap<vwComplaintsSummary, DAL.DOBComplaintsSummary>();
                 cfg.CreateMap<MultiAgencyViolation, DAL.ECBViolationDetail>();
-                cfg.CreateMap<vwTaxLien, DAL.LocalTaxLienDetails>();
+                cfg.CreateMap<TaxLienSold, DAL.TaxLienSoldNYC>();
                 cfg.CreateMap<vwSuggestedSubjectPrice, DAL.SuggestedPropertyPrices>();
                 cfg.CreateMap<vwSalesStatisticsByMonthByNeighborhood, DAL.SalesDataDetailsByMonth>();
                 cfg.CreateMap<vwSalesStatisticsByMonthByNeighborhoodByBuildingClass, DAL.SalesDataDetailsByMonth>();
@@ -63,9 +63,9 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<tfnGetCMA_Result, DAL.CMAResult>();
                 cfg.CreateMap<tfnActiveLPsForaProperty_Result, DAL.LPDetail>();
                 cfg.CreateMap<WebAPISecurityDB.vwAPIUser, Security.User>();
-                cfg.CreateMap<tfnGetDocuments_Result, BAL.DocumentDetail>();
-                cfg.CreateMap<tfnGetMortgageChain_Result, BAL.MortgageDocumentDetail>();
-                cfg.CreateMap<tfnGetDocumentParties_Result, BAL.DocumentParty>();
+                cfg.CreateMap<tfnGetDocuments_Result, DAL.DocumentDetail>();
+                cfg.CreateMap<tfnGetMortgageChain_Result, DAL.MortgageDocumentDetail>();
+                cfg.CreateMap<tfnGetDocumentParties_Result, DAL.DocumentParty>();
                 cfg.CreateMap<tfnGetRelatedFirmsForAttorneyOfRecord_Result, DAL.FirmDetail>();
                 cfg.CreateMap<tfnGetCasesForRelatedFirmsForAttorneyOfRecord_Result, DAL.FirmCaseDetail>();
                 cfg.CreateMap<tfnGetJudgesForRelatedFirmsForAttorneyOfRecord_Result, DAL.JudgeNameCount>();

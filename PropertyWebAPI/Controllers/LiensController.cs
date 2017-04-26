@@ -30,7 +30,7 @@ namespace PropertyWebAPI.Controllers
         /// <returns>Returns all lien details</returns>
         [Route("api/liens/{propertyBBL}")]
         [ResponseType(typeof(DAL.AllLiens))]
-        public IHttpActionResult GetPropertyLead(string propertyBBL)
+        public IHttpActionResult GetPropertyLiens(string propertyBBL)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return this.BadRequest("Incorrect BBL - Borough Block Lot number");

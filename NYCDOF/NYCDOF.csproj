@@ -67,10 +67,10 @@
       <DependentUpon>NYCDOFDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="tfnGetGeneralPropertyInformation_Result.cs">
+    <Compile Include="TaxLienSold.cs">
       <DependentUpon>NYCDOFDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="vwTaxLien.cs">
+    <Compile Include="tfnGetGeneralPropertyInformation_Result.cs">
       <DependentUpon>NYCDOFDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>

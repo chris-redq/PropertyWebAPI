@@ -13,101 +13,11 @@ namespace PropertyWebAPI.BAL
     using System.Web;
     using ACRISDB;
     using AutoMapper;
-
-    public class DeedParty:tfnGetDocumentParties_Result
-    {
-        //
-    }
-
-    public class DocumentParty : tfnGetDocumentParties_Result
-    {
-        //
-    }
-
-    public class DeedDocument : tfnGetUnsatisfiedMortgages_Result
-    {
-        //Blank classes to mask entity framework details
-    }
-
-    public class PropertyLotInformation : PropertyNotInAssessment
-    {
-        //Blank classes to mask entity framework details
-    }
-
-    public class DeedDetails
-    {
-        public LatestDeedDocument deedDocument;
-        public List<DeedParty> owners;
-    }
-
-    public class DocumentDetail: tfnGetDocuments_Result
-    {
-        
-    }
-
-    public class MortgageRelatedDocumentDetail
-    {
-        public string UniqueKey { get; set; }
-        public string DocumentType { get; set; }
-        public string DocumentTypeDescription { get; set; }
-        public Nullable<System.DateTime> DocumentDate { get; set; }
-        public Nullable<System.DateTime> DateRecorded { get; set; }
-        public string URL { get; set; }
-        public List<DocumentParty> Parties;
-    }
-
-    public class MortgageDocumentDetail
-    {
-        public string BBLE { get; set; }
-        public string UniqueKey { get; set; }
-        public string CRFN { get; set; }
-        public string PropertyType { get; set; }
-        public string DocumentType { get; set; }
-        public string DocumentTypeDescription { get; set; }
-        public string DocumentClassCodeDescription { get; set; }
-        public Nullable<System.DateTime> DocumentDate { get; set; }
-        public Nullable<decimal> DocumentAmount { get; set; }
-        public Nullable<decimal> PercentageOfTransaction { get; set; }
-        public Nullable<System.DateTime> DateRecorded { get; set; }
-        public Nullable<System.DateTime> DateModified { get; set; }
-        public string RecordedBorough { get; set; }
-        public Nullable<System.DateTime> DateLastUpdated { get; set; }
-        public string ReelYear { get; set; }
-        public string ReelNumber { get; set; }
-        public string ReelPage { get; set; }
-        public string URL { get; set; }
-        public bool IsPaid { get; set; }
-        public List<DocumentParty> Parties;
-        public List<MortgageRelatedDocumentDetail> RelatedDocuments;
-
-    }
-
-    
+   
 
     public class ACRIS
     {
-        public static List<DocumentDetail> GetDocuments(string propertyBBL)
-        {
-            using (ACRISEntities acrisDBEntities = new ACRISEntities())
-            {
-                return Mapper.Map<List<tfnGetDocuments_Result>, List <DocumentDetail>>( acrisDBEntities.tfnGetDocuments(propertyBBL,null)
-                                                                                                       .OrderByDescending(m => (m.DocumentDate != null) ? m.DocumentDate : m.DateRecorded)
-                                                                                                       .ToList());
-            }
-        }
-
-        public static List<DocumentDetail> GetDeeds(string propertyBBL)
-        {
-           using (ACRISEntities acrisDBEntities = new ACRISEntities())
-            {
-                return Mapper.Map<List<tfnGetDocuments_Result>, List<DocumentDetail>>(acrisDBEntities.tfnGetDocuments(propertyBBL, null)
-                                                                                                     .Where(i => i.DocumentType == "DEED" || i.DocumentType == "DEEDO")
-                                                                                                     .OrderByDescending(m => (m.DocumentDate!=null)? m.DocumentDate : m.DateRecorded)
-                                                                                                     .ToList());
-            }
-        }
-
-        public static List<MortgageDocumentDetail> GetMortgageChain(string propertyBBL)
+        public static List<DAL.MortgageDocumentDetail> GetMortgageChain(string propertyBBL)
         {
             using (ACRISEntities acrisDBEntities = new ACRISEntities())
             {
@@ -117,34 +27,35 @@ namespace PropertyWebAPI.BAL
                 if (resultList == null || resultList.Count == 0)
                     return null;
 
-                List<MortgageDocumentDetail> mortgageChain = new List<MortgageDocumentDetail>();
+                List<DAL.MortgageDocumentDetail> mortgageChain = new List<DAL.MortgageDocumentDetail>();
                 string documentKey = "";
-                MortgageDocumentDetail mortgage = null;
+                DAL.MortgageDocumentDetail mortgage = null;
+
                 foreach (var rec in resultList)
                 {
                     if (documentKey!=rec.UniqueKey)
                     {
                         documentKey = rec.UniqueKey;
 
-                        mortgage = Mapper.Map<MortgageDocumentDetail>(rec);
+                        mortgage = Mapper.Map<DAL.MortgageDocumentDetail>(rec);
                         mortgage.IsPaid = false;
-                        mortgage.Parties = Mapper.Map<List<tfnGetDocumentParties_Result>, List<DocumentParty>>(acrisDBEntities.tfnGetDocumentParties(rec.UniqueKey, null).ToList());
+                        mortgage.Parties = Mapper.Map<List<tfnGetDocumentParties_Result>, List<DAL.DocumentParty>>(acrisDBEntities.tfnGetDocumentParties(rec.UniqueKey, null).ToList());
                         mortgageChain.Add(mortgage);
                     }
                     if (rec.RelatedDocumentUniqueKey!=null)
                     {
                         if (mortgage.RelatedDocuments==null)
-                            mortgage.RelatedDocuments = new List<MortgageRelatedDocumentDetail>();
+                            mortgage.RelatedDocuments = new List<DAL.MortgageRelatedDocumentDetail>();
                         if (rec.RelatedDocumentType == "SAT")
                             mortgage.IsPaid = true;
-                        MortgageRelatedDocumentDetail rDoc = new MortgageRelatedDocumentDetail();
+                        DAL.MortgageRelatedDocumentDetail rDoc = new DAL.MortgageRelatedDocumentDetail();
                         rDoc.UniqueKey = rec.RelatedDocumentUniqueKey;
                         rDoc.DocumentType = rec.RelatedDocumentType;
                         rDoc.DocumentTypeDescription = rec.RelatedDocumentTypeDescription;
                         rDoc.DocumentDate = rec.RelatedDocumentDate;
                         rDoc.DateRecorded = rec.RelatedDocumentRecordDate;
                         rDoc.URL = rec.RelatedDocumentURL;
-                        rDoc.Parties = Mapper.Map<List<tfnGetDocumentParties_Result>, List<DocumentParty>>(acrisDBEntities.tfnGetDocumentParties(rec.RelatedDocumentUniqueKey, null).ToList());
+                        rDoc.Parties = Mapper.Map<List<tfnGetDocumentParties_Result>, List<DAL.DocumentParty>>(acrisDBEntities.tfnGetDocumentParties(rec.RelatedDocumentUniqueKey, null).ToList());
                         mortgage.RelatedDocuments.Add(rDoc);
                     }
                 }
@@ -152,7 +63,7 @@ namespace PropertyWebAPI.BAL
             }
         }
 
-        public static DeedDetails GetLatestDeedDetails(string propertyBBLE)
+        public static DAL.DeedDetails GetLatestDeedDetails(string propertyBBLE)
         {
             try
             {
@@ -164,13 +75,13 @@ namespace PropertyWebAPI.BAL
                     {   Common.Logs.log().Error(string.Format("Error finding record for BBLE {0} in LatestDeedDocument", propertyBBLE));
                         return null;
                     }
-                    DeedDetails deedDetailsObj = new DeedDetails();
+                    DAL.DeedDetails deedDetailsObj = new DAL.DeedDetails();
                     deedDetailsObj.deedDocument = documentObj;
                     foreach (tfnGetDocumentParties_Result a in acrisDBEntities.tfnGetDocumentParties(documentObj.DeedUniqueKey, "BUYER").ToList())
                     {
                         if (deedDetailsObj.owners == null)
-                            deedDetailsObj.owners = new List<DeedParty>();
-                        deedDetailsObj.owners.Add(Mapper.Map<DeedParty>(a));
+                            deedDetailsObj.owners = new List<DAL.DeedParty>();
+                        deedDetailsObj.owners.Add(Mapper.Map<DAL.DeedParty>(a));
                     }
                     return deedDetailsObj;
                 }
@@ -181,26 +92,6 @@ namespace PropertyWebAPI.BAL
                 return null;
             }
         }
-
-        public static PropertyLotInformation GetLotInformation(string propertyBBLE)
-        {
-            try
-            {   using (ACRISEntities acrisDBEntities = new ACRISEntities())
-                {
-                    PropertyNotInAssessment propertyLotInformationObj = acrisDBEntities.PropertyNotInAssessments.FirstOrDefault(i => i.BBL == propertyBBLE);
-
-                    if (propertyLotInformationObj == null)
-                    {   Common.Logs.log().Error(string.Format("Error finding record for BBLE {0} in ACRIS", propertyBBLE));
-                        return null;
-                    }
-                    return Mapper.Map<PropertyLotInformation>(propertyLotInformationObj);
-                }
-            }
-            catch (Exception e)
-            {
-                Common.Logs.log().Error(string.Format("Error reading AreaAbstract{0}", Common.Logs.FormatException(e)));
-                return null;
-            }
-        }
+     
     }
 }

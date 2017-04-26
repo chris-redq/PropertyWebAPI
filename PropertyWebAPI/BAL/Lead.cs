@@ -14,7 +14,7 @@ namespace PropertyWebAPI.BAL
     public class LeadDetailData : vwGeneralLeadInformation
     {
 
-        public List<BAL.DeedParty> owners;
+        public List<DAL.DeedParty> owners;
     }
 
     public class Lead

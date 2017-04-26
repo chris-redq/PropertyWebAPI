@@ -12,14 +12,12 @@ namespace NYCDOF
     using System;
     using System.Collections.Generic;
     
-    public partial class vwTaxLien
+    public partial class TaxLienSold
     {
+        public int Year { get; set; }
         public string BBL { get; set; }
-        public int TaxLienSaleList { get; set; }
-        public int TaxLienSold { get; set; }
-        public int TaxLienCertificate { get; set; }
-        public Nullable<bool> IsWaterDebtOnly { get; set; }
-        public Nullable<int> Year { get; set; }
+        public string Address { get; set; }
+        public string Owner { get; set; }
         public Nullable<decimal> Property { get; set; }
         public Nullable<decimal> Other { get; set; }
         public Nullable<decimal> ERP { get; set; }
@@ -31,5 +29,6 @@ namespace NYCDOF
         public Nullable<decimal> InterestRate { get; set; }
         public Nullable<decimal> DOFInterestRate { get; set; }
         public Nullable<decimal> DEPInterestRate { get; set; }
+        public string Schedule { get; set; }
     }
 }

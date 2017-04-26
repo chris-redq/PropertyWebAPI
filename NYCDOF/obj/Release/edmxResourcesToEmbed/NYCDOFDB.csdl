@@ -34,20 +34,17 @@
     <FunctionImport Name="tfnGetGeneralPropertyInformation" IsComposable="true" ReturnType="Collection(NYCDOFModel.tfnGetGeneralPropertyInformation_Result)">
       <Parameter Name="BBLE" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="vwTaxLiens" EntityType="NYCDOFModel.vwTaxLien" />
+    <EntitySet Name="TaxLienSolds" EntityType="NYCDOFModel.TaxLienSold" />
   </EntityContainer>
-  <EntityType Name="vwTaxLien">
+  <EntityType Name="TaxLienSold">
     <Key>
-      <PropertyRef Name="TaxLienSaleList" />
-      <PropertyRef Name="TaxLienSold" />
-      <PropertyRef Name="TaxLienCertificate" />
+      <PropertyRef Name="Year" />
+      <PropertyRef Name="BBL" />
     </Key>
-    <Property Name="BBL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="TaxLienSaleList" Type="Int32" Nullable="false" />
-    <Property Name="TaxLienSold" Type="Int32" Nullable="false" />
-    <Property Name="TaxLienCertificate" Type="Int32" Nullable="false" />
-    <Property Name="IsWaterDebtOnly" Type="Boolean" />
-    <Property Name="Year" Type="Int32" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Owner" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Property" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Other" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="ERP" Type="Decimal" Precision="18" Scale="2" />
@@ -59,5 +56,6 @@
     <Property Name="InterestRate" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="DOFInterestRate" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="DEPInterestRate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Schedule" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

@@ -235,6 +235,7 @@
     <Compile Include="Controllers\LeadsController.cs" />
     <Compile Include="Controllers\LiensController.cs" />
     <Compile Include="Controllers\PropertyInfoController.cs" />
+    <Compile Include="DAL\ACRIS.cs" />
     <Compile Include="DAL\CMA.cs" />
     <Compile Include="DAL\eCourts.cs" />
     <Compile Include="BAL\MortgageServicer.cs" />

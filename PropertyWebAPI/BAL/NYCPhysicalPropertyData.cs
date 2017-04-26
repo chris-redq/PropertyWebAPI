@@ -68,7 +68,7 @@ namespace PropertyWebAPI.BAL
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public GeneralAddress address;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public List<BAL.DeedParty> owners;
+        public List<DAL.DeedParty> owners;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public PhysicalPropertyInformation propertyInformation;
         public string errors;
@@ -188,7 +188,7 @@ namespace PropertyWebAPI.BAL
                     if (propertyInfo == null || propertyInfo.Count <= 0)
                     {
                         //BBL not in Assessment Table check ACRIS
-                        BAL.PropertyLotInformation lotObj = BAL.ACRIS.GetLotInformation(propertyBBL);
+                        DAL.PropertyLotInformation lotObj = DAL.ACRIS.GetLotInformation(propertyBBL);
                         if (lotObj != null)
                         {
                             propertyInfo.Add(new tfnGetGeneralPropertyInformation_Result());
@@ -238,7 +238,7 @@ namespace PropertyWebAPI.BAL
                     propertyDetails.address = address;
                     propertyDetails.propertyInformation = Mapper.Map<PhysicalPropertyInformation>(propertyInfo[0]);
 
-                    BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
+                    DAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBL);
                     if (deedDetailsObj != null)
                         propertyDetails.owners = deedDetailsObj.owners;
 
@@ -297,7 +297,7 @@ namespace PropertyWebAPI.BAL
 
             if (BAL.BBL.GetLot((string)jsonObj.SelectToken("address.bbl")) <= 6999)
             {
-                BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails((string)jsonObj.SelectToken("address.bbl"));
+                DAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails((string)jsonObj.SelectToken("address.bbl"));
                 if (deedDetailsObj != null)
                 {
                     propertyDetails.owners = deedDetailsObj.owners;

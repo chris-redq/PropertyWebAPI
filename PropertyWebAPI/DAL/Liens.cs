@@ -15,14 +15,14 @@ namespace PropertyWebAPI.DAL
     using AutoMapper;
     using Newtonsoft.Json;
 
-    public class LocalTaxLienDetails: vwTaxLien
+    public class TaxLienSoldNYC: TaxLienSold
     {
 
     }
 
     public class LocalLiens
     {
-        public LocalTaxLienDetails localTaxLienDetailData;
+        public List<TaxLienSoldNYC> nYCTaxLiensSold;
     }
 
     public class StateLiens
@@ -56,7 +56,7 @@ namespace PropertyWebAPI.DAL
     {
         public static AllLiens GetAllLiens(string propertyBBL)
         {
-            var result = GetNYCLien(propertyBBL);
+            var result = GetNYCLiensSold(propertyBBL);
 
             if (result == null)
                 return null;
@@ -65,16 +65,18 @@ namespace PropertyWebAPI.DAL
 
             lienData.localLienData = new LocalLiens();
 
-            lienData.localLienData.localTaxLienDetailData = result;
+            lienData.localLienData.nYCTaxLiensSold = result;
 
             return lienData;
         }
 
-        public static LocalTaxLienDetails GetNYCLien(string propertyBBL)
+        public static List<TaxLienSoldNYC> GetNYCLiensSold(string propertyBBL)
         {
             using (NYCDOFEntities nycdofE = new NYCDOFEntities())
             {
-                return Mapper.Map<LocalTaxLienDetails>(nycdofE.vwTaxLiens.Where(i=> i.BBL==propertyBBL).FirstOrDefault());
+                return Mapper.Map<List<TaxLienSold>, List <TaxLienSoldNYC>>(nycdofE.TaxLienSolds
+                                                                                   .Where(i => i.BBL == propertyBBL)
+                                                                                   .OrderBy(i=> i.Year).ToList());
             }
         }
     }

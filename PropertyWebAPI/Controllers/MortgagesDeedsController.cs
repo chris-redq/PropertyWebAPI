@@ -36,7 +36,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of all Mortgage and Deed related documents filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/documents")]
-        [ResponseType(typeof(List<BAL.DocumentDetail>))]
+        [ResponseType(typeof(List<DAL.DocumentDetail>))]
         public IHttpActionResult Get(string propertyBBLE)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBLE))
@@ -44,7 +44,7 @@ namespace PropertyWebAPI.Controllers
 
             try
             {
-                var documentsObj = BAL.ACRIS.GetDocuments(propertyBBLE);
+                var documentsObj = DAL.ACRIS.GetDocuments(propertyBBLE);
                                                                             
                  if (documentsObj == null || documentsObj.Count <= 0)
                      return NotFound();
@@ -68,7 +68,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns mortgage chain for a property in NYC.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/mortgagechain")]
-        [ResponseType(typeof(List<BAL.MortgageDocumentDetail>))]
+        [ResponseType(typeof(List<DAL.MortgageDocumentDetail>))]
         public IHttpActionResult GetMortgageChain(string propertyBBLE)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBLE))
@@ -104,7 +104,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns a list of all deeds filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/deeds")]
-        [ResponseType(typeof(List<BAL.DocumentDetail>))]
+        [ResponseType(typeof(List<DAL.DocumentDetail>))]
         public IHttpActionResult GetAllDeeds(string propertyBBLE)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBLE))
@@ -112,7 +112,7 @@ namespace PropertyWebAPI.Controllers
 
             try
             {
-                var documentsObj = BAL.ACRIS.GetDeeds(propertyBBLE);
+                var documentsObj = DAL.ACRIS.GetDeeds(propertyBBLE);
 
                 if (documentsObj == null || documentsObj.Count <= 0)
                     return NotFound();
@@ -161,13 +161,13 @@ namespace PropertyWebAPI.Controllers
         ///     Returns deed details and owners filed with the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/latestdeed")]
-        [ResponseType(typeof(BAL.DeedDetails))]
+        [ResponseType(typeof(DAL.DeedDetails))]
         public IHttpActionResult GetLatestDeedDetails(string propertyBBLE)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBLE))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
             
-            BAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBLE);
+            DAL.DeedDetails deedDetailsObj = BAL.ACRIS.GetLatestDeedDetails(propertyBBLE);
             if (deedDetailsObj==null)
                 return NotFound();
 
@@ -185,7 +185,7 @@ namespace PropertyWebAPI.Controllers
         ///     Returns unsatisfied mortgages in the ACRIS system for a given property identified by a BBLE - Borough Block Lot and Easement Number.
         /// </returns>
         [Route("api/mortgagesdeeds/{propertyBBLE}/unsatisfiedMortgages")]
-        [ResponseType(typeof(List<BAL.DeedDocument>))]
+        [ResponseType(typeof(List<DAL.DeedDocument>))]
         public IHttpActionResult GetUnsatisfiedMortgages(string propertyBBLE)
         {
             if (!BAL.BBL.IsValidFormat(propertyBBLE))
@@ -200,7 +200,7 @@ namespace PropertyWebAPI.Controllers
                     if (mortgagesList == null || mortgagesList.Count <= 0)
                         return NotFound();
 
-                    return Ok(Mapper.Map<List<tfnGetUnsatisfiedMortgages_Result>,List<BAL.DeedDocument>>(mortgagesList));
+                    return Ok(Mapper.Map<List<tfnGetUnsatisfiedMortgages_Result>,List<DAL.DeedDocument>>(mortgagesList));
                 }
             }
             catch(Exception e)

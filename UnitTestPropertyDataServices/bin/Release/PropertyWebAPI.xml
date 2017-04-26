@@ -1660,7 +1660,7 @@
             </summary>  
             <param name="scenarioObj"></param>
         </member>
-        <member name="M:PropertyWebAPI.Controllers.LiensController.GetPropertyLead(System.String)">
+        <member name="M:PropertyWebAPI.Controllers.LiensController.GetPropertyLiens(System.String)">
             <summary>  
                 Use this api to get all liens associated with a property
             </summary>  
