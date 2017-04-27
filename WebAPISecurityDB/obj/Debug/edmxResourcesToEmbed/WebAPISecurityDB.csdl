@@ -8,6 +8,7 @@
       <End Role="APIUser" EntitySet="APIUsers" />
       <End Role="Role" EntitySet="Roles" />
     </AssociationSet>
+    <EntitySet Name="CallBacks" EntityType="WebAPISecurityModel.CallBack" />
   </EntityContainer>
   <EntityType Name="APIUser">
     <Key>
@@ -41,4 +42,17 @@
     <End Type="WebAPISecurityModel.APIUser" Role="APIUser" Multiplicity="*" />
     <End Type="WebAPISecurityModel.Role" Role="Role" Multiplicity="*" />
   </Association>
+  <EntityType Name="CallBack">
+    <Key>
+      <PropertyRef Name="AccountId" />
+      <PropertyRef Name="CallType" />
+    </Key>
+    <Property Name="AccountId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="CallType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="URL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="API" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Account" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="APIKey" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

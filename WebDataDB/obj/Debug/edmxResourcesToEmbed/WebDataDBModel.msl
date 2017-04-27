@@ -140,22 +140,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DataRequestLogs">
-      <EntityTypeMapping TypeName="WebDataModel.DataRequestLog">
-        <MappingFragment StoreEntitySet="DataRequestLog">
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="RequestParameters" ColumnName="RequestParameters" />
-          <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="WebDataRequestMade" ColumnName="WebDataRequestMade" />
-          <ScalarProperty Name="ServedFromCache" ColumnName="ServedFromCache" />
-          <ScalarProperty Name="ExternalReferenceId" ColumnName="ExternalReferenceId" />
-          <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
-          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
-          <ScalarProperty Name="BBL" ColumnName="BBL" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="NoticeOfProperyValues">
       <EntityTypeMapping TypeName="WebDataModel.NoticeOfProperyValue">
         <MappingFragment StoreEntitySet="NoticeOfProperyValue">
@@ -204,6 +188,23 @@
           <ScalarProperty Name="LotFrontage" ColumnName="LotFrontage" />
           <ScalarProperty Name="PrimaryZoning" ColumnName="PrimaryZoning" />
           <ScalarProperty Name="BuildingClass" ColumnName="BuildingClass" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DataRequestLogs">
+      <EntityTypeMapping TypeName="WebDataModel.DataRequestLog">
+        <MappingFragment StoreEntitySet="DataRequestLog">
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="RequestParameters" ColumnName="RequestParameters" />
+          <ScalarProperty Name="RequestStatusTypeId" ColumnName="RequestStatusTypeId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="WebDataRequestMade" ColumnName="WebDataRequestMade" />
+          <ScalarProperty Name="ServedFromCache" ColumnName="ServedFromCache" />
+          <ScalarProperty Name="ExternalReferenceId" ColumnName="ExternalReferenceId" />
+          <ScalarProperty Name="RequestDateTime" ColumnName="RequestDateTime" />
+          <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
           <ScalarProperty Name="BBL" ColumnName="BBL" />
         </MappingFragment>
       </EntityTypeMapping>

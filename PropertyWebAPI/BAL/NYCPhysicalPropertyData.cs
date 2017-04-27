@@ -96,22 +96,49 @@ namespace PropertyWebAPI.BAL
             return appTokens;
         }
 
+        private class API
+        {
+            HttpClient client;
+
+            public API()
+            {
+                client = new HttpClient();
+                client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
+            }
+
+            public JObject GetResponse(string requestStr)
+            {
+                //Ignore Certificate Issuer Check
+                var oldValue = ServicePointManager.ServerCertificateValidationCallback;
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
+                HttpResponseMessage response = client.GetAsync(requestStr).Result;
+
+                ServicePointManager.ServerCertificateValidationCallback = oldValue;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Common.Logs.log().Error(string.Format("Geoclient API call failed{0}", response.StatusCode));
+                    return null;
+                }
+
+                return JObject.Parse(response.Content.ReadAsStringAsync().Result);
+
+            }
+        }       
+
         /// <summary>  
         ///     Method returns address corrections and details based on street number, street address and borough for NYC properties
         /// </summary>  
         public static JObject GetAddressDetailsFromGeoClientAPI(string streetNumber, string streetName, string borough)
         {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
+            var client = new API();
             AppTokens appTokens = GetConfigurationTokens();
 
             try
             {
-
-                HttpResponseMessage response = client.GetAsync("geoclient/v1/address.json?houseNumber=" + streetNumber + "&street=" + streetName + "&borough=" + borough
-                                                            + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
-
-                return JObject.Parse(response.Content.ReadAsStringAsync().Result);
+               return client.GetResponse(String.Format("geoclient/v1/address.json?houseNumber={0}&street={1}&borough={2}&app_id={3}&app_key={4}",
+                                                        streetNumber, streetName, borough, appTokens.appId, appTokens.appKey));
             }
             catch (Exception e)
             {
@@ -126,16 +153,23 @@ namespace PropertyWebAPI.BAL
         public static JObject GetBBLDetailsFromGeoClientAPI(string propertyBBL)
         {
 
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
+            var client = new API();
             AppTokens appTokens = GetConfigurationTokens();
 
             string borough = BAL.BBL.GetBoroughName(propertyBBL);
 
-            HttpResponseMessage response = client.GetAsync("geoclient/v1/bbl.json?borough=" + borough + "&block=" + propertyBBL.Substring(1, 5)
-                                                           + "&lot=" + propertyBBL.Substring(6, 4) + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
-
-            return JObject.Parse(response.Content.ReadAsStringAsync().Result);
+            //HttpResponseMessage response = client.GetAsync("geoclient/v1/bbl.json?borough=" + borough + "&block=" + propertyBBL.Substring(1, 5)
+            //                                               + "&lot=" + propertyBBL.Substring(6, 4) + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
+            try
+            {
+                return client.GetResponse(String.Format("geoclient/v1/bbl.json?borough={0}&block={1}&lot={2}&app_id={3}&app_key={4}",
+                                                         borough, propertyBBL.Substring(1, 5), propertyBBL.Substring(6, 4), appTokens.appId, appTokens.appKey));
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Geoclient API call failed{0}", Common.Logs.FormatException(e)));
+                return null;
+            }
         }
 
 
@@ -144,14 +178,22 @@ namespace PropertyWebAPI.BAL
         /// </summary>  
         public static JObject GetBuildingDetailsFromGeoClientAPI(string buildingIdentificationNumber)
         {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.cityofnewyork.us/");
+            var client = new API();
             AppTokens appTokens = GetConfigurationTokens();
 
-            HttpResponseMessage response = client.GetAsync("geoclient/v1/bin.json?bin=" + buildingIdentificationNumber
-                                                            + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
+            //HttpResponseMessage response = client.GetAsync("geoclient/v1/bin.json?bin=" + buildingIdentificationNumber
+            //                                                + "&app_id=" + appTokens.appId + "&app_key=" + appTokens.appKey).Result;
 
-            return JObject.Parse(response.Content.ReadAsStringAsync().Result);
+            try
+            {
+                return client.GetResponse(String.Format("geoclient/v1/bin.json?borough={0}&app_id={1}&app_key={2}",
+                                                         buildingIdentificationNumber, appTokens.appId, appTokens.appKey));
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Geoclient API call failed{0}", Common.Logs.FormatException(e)));
+                return null;
+            }
         }
 
         /// <summary>  

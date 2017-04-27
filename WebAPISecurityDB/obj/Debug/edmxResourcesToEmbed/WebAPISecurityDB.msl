@@ -37,5 +37,18 @@
         <ScalarProperty Name="UserId" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="CallBacks">
+      <EntityTypeMapping TypeName="WebAPISecurityModel.CallBack">
+        <MappingFragment StoreEntitySet="CallBack">
+          <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="API" ColumnName="API" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="CallType" ColumnName="CallType" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

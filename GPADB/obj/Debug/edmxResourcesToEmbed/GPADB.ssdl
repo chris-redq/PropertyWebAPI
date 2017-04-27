@@ -28,6 +28,10 @@
     <Property Name="Servicer" Type="varchar" MaxLength="1000" />
     <Property Name="Landmark" Type="varchar" MaxLength="1000" />
     <Property Name="HasFHA" Type="varchar" MaxLength="1" />
+    <Property Name="SatisfiedMortgages" Type="varchar" MaxLength="1" />
+    <Property Name="DeedAge" Type="varchar" MaxLength="1000" />
+    <Property Name="TaxLiensSoldYear" Type="varchar" MaxLength="1000" />
+    <Property Name="TaxLiensSoldTotal" Type="varchar" MaxLength="1000" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -36,6 +40,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
       <PropertyRef Name="BBLE" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
+      <PropertyRef Name="MortgagesSatisfied" />
     </Key>
     <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
     <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
@@ -73,7 +78,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
     <Property Name="PoolA" Type="bit" />
     <Property Name="TaxLienLPs" Type="int" />
     <Property Name="TaxLienActiveCases" Type="int" />
-    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
     <Property Name="MortgageForeclosureLPs" Type="int" />
     <Property Name="MortgageForeclosureActiveCases" Type="int" />
     <Property Name="COSPresent" Type="int" />
@@ -116,6 +120,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
     <Property Name="IsSRORestricted" Type="int" />
     <Property Name="IsLandmark" Type="int" />
     <Property Name="ServicerName" Type="varchar" MaxLength="250" />
+    <Property Name="MortgagesSatisfied" Type="int" Nullable="false" />
+    <Property Name="DeedAgeInMonths" Type="int" />
+    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
+    <Property Name="TaxLiensSold" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -225,6 +233,10 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Parameter Name="Servicer" Type="varchar" Mode="In" />
     <Parameter Name="Landmark" Type="varchar" Mode="In" />
     <Parameter Name="HasFHA" Type="varchar" Mode="In" />
+    <Parameter Name="MortgagesSatisfied" Type="varchar" Mode="In" />
+    <Parameter Name="DeedAge" Type="varchar" Mode="In" />
+    <Parameter Name="TaxLiensSoldYear" Type="varchar" Mode="In" />
+    <Parameter Name="TaxLiensSoldTotal" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
@@ -266,7 +278,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralLeadInformation].[PoolA] AS [PoolA], 
     [vwGeneralLeadInformation].[TaxLienLPs] AS [TaxLienLPs], 
     [vwGeneralLeadInformation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
-    [vwGeneralLeadInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
     [vwGeneralLeadInformation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
     [vwGeneralLeadInformation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
     [vwGeneralLeadInformation].[COSPresent] AS [COSPresent], 
@@ -308,7 +319,11 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralLeadInformation].[Grade] AS [Grade], 
     [vwGeneralLeadInformation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralLeadInformation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralLeadInformation].[ServicerName] AS [ServicerName]
+    [vwGeneralLeadInformation].[ServicerName] AS [ServicerName], 
+    [vwGeneralLeadInformation].[MortgagesSatisfied] AS [MortgagesSatisfied], 
+    [vwGeneralLeadInformation].[DeedAgeInMonths] AS [DeedAgeInMonths], 
+    [vwGeneralLeadInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
+    [vwGeneralLeadInformation].[TaxLiensSold] AS [TaxLiensSold]
     FROM [app].[vwGeneralLeadInformation] AS [vwGeneralLeadInformation]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwGeneralPropertyInformation" EntityType="Self.vwGeneralPropertyInformation" store:Type="Views" store:Schema="app">

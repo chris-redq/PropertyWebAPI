@@ -15,6 +15,5 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Debug\EntityFramework.
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Debug\EntityFramework.SqlServer.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Debug\EntityFramework.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Debug\EntityFramework.SqlServer.xml
-C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Debug\ACRISDB.csprojResolveAssemblyReference.cache
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Debug\ACRISDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Debug\ACRISDB.pdb

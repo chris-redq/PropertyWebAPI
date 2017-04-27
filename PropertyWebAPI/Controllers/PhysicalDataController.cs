@@ -54,6 +54,9 @@ namespace PropertyWebAPI.Controllers
 
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
 
+            if (jsonObj==null)
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+
             string bbl = (string)jsonObj.SelectToken("address.bbl");
 
             if (bbl == null)
@@ -149,7 +152,7 @@ namespace PropertyWebAPI.Controllers
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetAddressDetailsFromGeoClientAPI(streetNumber, streetName, borough);
 
             if (jsonObj == null)
-                return NotFound();
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
 
             if (BAL.NYCPhysicalPropertyData.CheckIfMessageContainsNotFound(jsonObj, "address"))
                 return NotFound();
@@ -187,7 +190,7 @@ namespace PropertyWebAPI.Controllers
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetBBLDetailsFromGeoClientAPI(propertyBBL);
 
             if (jsonObj == null)
-                return NotFound();
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
 
             if (BAL.NYCPhysicalPropertyData.CheckIfMessageContainsNotFound(jsonObj, "bbl"))
                 return NotFound();
@@ -224,8 +227,8 @@ namespace PropertyWebAPI.Controllers
             JObject jsonObj = BAL.NYCPhysicalPropertyData.GetBuildingDetailsFromGeoClientAPI(buildingIdentificationNumber);
 
             if (jsonObj == null)
-                return NotFound();
-            
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+
             if (BAL.NYCPhysicalPropertyData.CheckIfMessageContainsNotFound(jsonObj, "bin"))
                 return NotFound();
             return Ok(jsonObj);
@@ -290,7 +293,8 @@ namespace PropertyWebAPI.Controllers
             var propertyDetails = BAL.NYCPhysicalPropertyData.Get(streetNumber, streetName, borough);
 
             if (propertyDetails == null)
-                return NotFound();
+                return Common.HttpResponse.InternalError(Request, "Internal Error in processing request");
+
             return Ok(propertyDetails);
         }
 

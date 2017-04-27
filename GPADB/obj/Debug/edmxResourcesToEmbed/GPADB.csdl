@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GPADBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
     <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
+    <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
     <FunctionImport Name="GetPropertyLeads">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
       <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -23,6 +23,10 @@
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
       <Parameter Name="HasFHA" Mode="In" Type="String" />
+      <Parameter Name="MortgagesSatisfied" Mode="In" Type="String" />
+      <Parameter Name="DeedAge" Mode="In" Type="String" />
+      <Parameter Name="TaxLiensSoldYear" Mode="In" Type="String" />
+      <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -44,95 +48,13 @@
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
       <Parameter Name="HasFHA" Mode="In" Type="String" />
+      <Parameter Name="MortgagesSatisfied" Mode="In" Type="String" />
+      <Parameter Name="DeedAge" Mode="In" Type="String" />
+      <Parameter Name="TaxLiensSoldYear" Mode="In" Type="String" />
+      <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
   </EntityContainer>
-  <EntityType Name="vwGeneralLeadInformation">
-    <Key>
-      <PropertyRef Name="BBLE" />
-      <PropertyRef Name="Equity" />
-      <PropertyRef Name="LTV" />
-    </Key>
-    <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
-    <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-    <Property Name="LotFrontage" Type="Double" />
-    <Property Name="LotDepth" Type="Double" />
-    <Property Name="LotArea" Type="Double" />
-    <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-    <Property Name="BuildingClassDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="BuildingForntage" Type="Double" />
-    <Property Name="BuildingDepth" Type="Double" />
-    <Property Name="Stories" Type="Double" />
-    <Property Name="NumberOfBuildingsOnLot" Type="Double" />
-    <Property Name="BuildingGrossArea" Type="Double" />
-    <Property Name="BuiltFAR" Type="Double" />
-    <Property Name="MaxResidentialFAR" Type="Double" />
-    <Property Name="UnbuiltArea" Type="Decimal" Precision="8" Scale="2" />
-    <Property Name="YearBuilt" Type="Double" />
-    <Property Name="Borough" Type="Double" />
-    <Property Name="BoroughName" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
-    <Property Name="Block" Type="Double" />
-    <Property Name="Lot" Type="Double" />
-    <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-    <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
-    <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="ResidentialUnits" Type="Double" />
-    <Property Name="TaxLienList" Type="Int32" />
-    <Property Name="PoolA" Type="Boolean" />
-    <Property Name="TaxLienLPs" Type="Int32" />
-    <Property Name="TaxLienActiveCases" Type="Int32" />
-    <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
-    <Property Name="MortgageForeclosureLPs" Type="Int32" />
-    <Property Name="MortgageForeclosureActiveCases" Type="Int32" />
-    <Property Name="COSPresent" Type="Int32" />
-    <Property Name="FormattedAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="IsVacant" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="IsMailingAddressActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="City" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="County" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-    <Property Name="ECBAmountDue" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ECBOpenTickets" Type="Int32" />
-    <Property Name="DOBCivilPenaltiesDue" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="DOBOpenViolations" Type="Int32" />
-    <Property Name="DOBOpenClass1Violations" Type="Int32" />
-    <Property Name="HasFannieMaeMortgage" Type="Int32" />
-    <Property Name="HasFreddieMacMortgage" Type="Int32" />
-    <Property Name="HasFHAMortgage" Type="Int32" />
-    <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
-    <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
-    <Property Name="UnbuiltAreaAboveThreshold" Type="Decimal" Precision="8" Scale="2" />
-    <Property Name="LotType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Proximity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="NumberOfBuildings" Type="Int32" />
-    <Property Name="Style" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ExteriorCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="FinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="UnfinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="CommercialUnits" Type="Int32" />
-    <Property Name="CommercialSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="GarageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="GarageSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="BasementGrade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="BasementSquareFootage" Type="Decimal" Precision="9" Scale="2" />
-    <Property Name="BasementType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ConstructionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ExteriorWall" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="StructureType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="IsSRORestricted" Type="Int32" />
-    <Property Name="IsLandmark" Type="Int32" />
-    <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-  </EntityType>
   <EntityType Name="vwGeneralPropertyInformation">
     <Key>
       <PropertyRef Name="BBLE" />
@@ -219,6 +141,96 @@
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="vwGeneralLeadInformation">
+    <Key>
+      <PropertyRef Name="BBLE" />
+      <PropertyRef Name="Equity" />
+      <PropertyRef Name="LTV" />
+      <PropertyRef Name="MortgagesSatisfied" />
+    </Key>
+    <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="LotFrontage" Type="Double" />
+    <Property Name="LotDepth" Type="Double" />
+    <Property Name="LotArea" Type="Double" />
+    <Property Name="BuildingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="BuildingClassDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="BuildingForntage" Type="Double" />
+    <Property Name="BuildingDepth" Type="Double" />
+    <Property Name="Stories" Type="Double" />
+    <Property Name="NumberOfBuildingsOnLot" Type="Double" />
+    <Property Name="BuildingGrossArea" Type="Double" />
+    <Property Name="BuiltFAR" Type="Double" />
+    <Property Name="MaxResidentialFAR" Type="Double" />
+    <Property Name="UnbuiltArea" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="YearBuilt" Type="Double" />
+    <Property Name="Borough" Type="Double" />
+    <Property Name="BoroughName" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="Block" Type="Double" />
+    <Property Name="Lot" Type="Double" />
+    <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+    <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="ResidentialUnits" Type="Double" />
+    <Property Name="TaxLienList" Type="Int32" />
+    <Property Name="PoolA" Type="Boolean" />
+    <Property Name="TaxLienLPs" Type="Int32" />
+    <Property Name="TaxLienActiveCases" Type="Int32" />
+    <Property Name="MortgageForeclosureLPs" Type="Int32" />
+    <Property Name="MortgageForeclosureActiveCases" Type="Int32" />
+    <Property Name="COSPresent" Type="Int32" />
+    <Property Name="FormattedAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsVacant" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IsMailingAddressActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="County" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ECBAmountDue" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ECBOpenTickets" Type="Int32" />
+    <Property Name="DOBCivilPenaltiesDue" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DOBOpenViolations" Type="Int32" />
+    <Property Name="DOBOpenClass1Violations" Type="Int32" />
+    <Property Name="HasFannieMaeMortgage" Type="Int32" />
+    <Property Name="HasFreddieMacMortgage" Type="Int32" />
+    <Property Name="HasFHAMortgage" Type="Int32" />
+    <Property Name="LeadGrade" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Equity" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
+    <Property Name="LTV" Type="Decimal" Nullable="false" Precision="2" Scale="2" />
+    <Property Name="UnbuiltAreaAboveThreshold" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="LotType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Proximity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NumberOfBuildings" Type="Int32" />
+    <Property Name="Style" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ExteriorCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="UnfinishedSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="CommercialUnits" Type="Int32" />
+    <Property Name="CommercialSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="GarageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GarageSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="BasementGrade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BasementSquareFootage" Type="Decimal" Precision="9" Scale="2" />
+    <Property Name="BasementType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConstructionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ExteriorWall" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StructureType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsSRORestricted" Type="Int32" />
+    <Property Name="IsLandmark" Type="Int32" />
+    <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="MortgagesSatisfied" Type="Int32" Nullable="false" />
+    <Property Name="DeedAgeInMonths" Type="Int32" />
+    <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="TaxLiensSold" Type="Int32" />
+  </EntityType>
   <EntityType Name="SavedScenario">
     <Key>
       <PropertyRef Name="ScenarioId" />
@@ -247,5 +259,9 @@
     <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="HasFHA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SatisfiedMortgages" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DeedAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="TaxLiensSoldYear" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="TaxLiensSoldTotal" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

@@ -12,6 +12,7 @@ namespace PropertyWebAPI
     using System.Linq;
     using System.Web.Http;
     using log4net;
+    using System.Net;
 
     public static class WebApiConfig
     {
