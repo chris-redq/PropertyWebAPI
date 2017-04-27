@@ -163,7 +163,7 @@ namespace PropertyWebAPI.DAL
         ///     Inserts a DataRequestLog object(row) for a given BBL and type of request with Pending status when data is not found or is found but stale in WebData DB
         /// </summary>
         public static WebDataDB.DataRequestLog InsertForWebDataRequest(WebDataEntities webDBEntities, string propertyBBL, int requestTypeId, long requestId, 
-                                                                       string externalReferenceId, string jobId, string requestParameters)
+                                                                       string externalReferenceId, string jobId, string accountId, string requestParameters)
         {
             WebDataDB.DataRequestLog dataRequestLogObj = new WebDataDB.DataRequestLog();
 
@@ -177,6 +177,7 @@ namespace PropertyWebAPI.DAL
             dataRequestLogObj.WebDataRequestMade = true;
             dataRequestLogObj.RequestId = requestId;
             dataRequestLogObj.RequestParameters = requestParameters;
+            dataRequestLogObj.AccountId = accountId;
             
             dataRequestLogObj = webDBEntities.DataRequestLogs.Add(dataRequestLogObj);
             webDBEntities.SaveChanges();

@@ -91,22 +91,24 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method calls back portal for every log record in the list
         /// </summary>
-        private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, string servicerName)
+        private static void MakeCallBacks(List<DataRequestLog> logs, string servicerName)
         {
-            if (!CallingSystem.isAnyCallBack(appContext))
-                return;
-
+            
             var resultObj = new BAL.Results();
             resultObj.mortgageServicer = new MortgageServicerDetails();
             resultObj.mortgageServicer.servicerName = servicerName;
 
             foreach (var rec in logs)
             {
+                var cb = CallingSystem.isAnyCallBack(rec.AccountId);
+                if (cb == null)
+                    continue;
+
                 resultObj.mortgageServicer.BBL = rec.BBL;
                 resultObj.mortgageServicer.requestId = rec.RequestId;
                 resultObj.mortgageServicer.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.mortgageServicer.externalReferenceId = rec.ExternalReferenceId;
-                CallingSystem.PostCallBack(appContext, resultObj);
+                CallingSystem.PostCallBack(rec.AccountId, cb, resultObj);
             }
         }
 
@@ -114,16 +116,16 @@ namespace PropertyWebAPI.BAL
         ///     This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
         ///     request for getting it scrapped from the web 
         /// </summary>
-        public static MortgageServicerDetails Get(string propertyBBL, string externalReferenceId)
+        public static MortgageServicerDetails Get(Common.Context appContext, string propertyBBL, string externalReferenceId)
         {
-            return Get(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+            return Get(appContext, propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
         }
 
         /// <summary>
         ///     This method deals with all the details associated with either returning the Mortgage Servicer details or creating the 
         ///     request for getting it scrapped from the web 
         /// </summary>
-        public static MortgageServicerDetails Get(string propertyBBL, string externalReferenceId, int priority, string jobId)
+        public static MortgageServicerDetails Get(Common.Context appContext, string propertyBBL, string externalReferenceId, int priority, string jobId)
         {
             MortgageServicerDetails mServicerDetails = new MortgageServicerDetails();
             mServicerDetails.BBL = propertyBBL;
@@ -162,7 +164,7 @@ namespace PropertyWebAPI.BAL
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jobId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, appContext.getAccountId(), jsonBillParams);
 
                                 mServicerDetails.status = RequestStatus.Pending.ToString();
                                 mServicerDetails.requestId = requestObj.RequestId;
@@ -173,7 +175,8 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 mServicerDetails.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, 
+                                                                                               jobId, appContext.getAccountId(), jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -296,7 +299,7 @@ namespace PropertyWebAPI.BAL
 
                         webDBEntitiestransaction.Commit();
                         if (logs != null)
-                            MakeCallBacks(appContext, logs, servicerName);
+                            MakeCallBacks(logs, servicerName);
                         return true;
                     }
                     catch (DbEntityValidationException dbEx)

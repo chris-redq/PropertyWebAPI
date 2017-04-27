@@ -75,8 +75,10 @@ namespace PropertyWebAPI.Controllers
 
             Violations violationsObj = new Violations();
 
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             if (dobPenaltiesAndViolationsSummary == "Y")
-                violationsObj.dobPenaltiesAndViolations = BAL.DOBPenaltiesAndViolationsSummary.Get(propertyBBL, externalReferenceId);
+                violationsObj.dobPenaltiesAndViolations = BAL.DOBPenaltiesAndViolationsSummary.Get(appContext, propertyBBL, externalReferenceId);
                 
             return Ok(violationsObj);
         }

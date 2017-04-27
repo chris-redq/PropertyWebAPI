@@ -31,6 +31,7 @@
     <EntitySet Name="Zillows" EntityType="WebDataModel.Zillow" />
     <EntitySet Name="Mortgages" EntityType="WebDataModel.Mortgage" />
     <EntitySet Name="vwStaleDataBBLs" EntityType="WebDataModel.vwStaleDataBBL" />
+    <EntitySet Name="NoticeOfProperyValues" EntityType="WebDataModel.NoticeOfProperyValue" />
     <EntitySet Name="DataRequestLogs" EntityType="WebDataModel.DataRequestLog" />
     <AssociationSet Name="Request1" Association="WebDataModel.Request1">
       <End Role="Request" EntitySet="Requests" />
@@ -44,7 +45,6 @@
       <End Role="RequestType" EntitySet="RequestTypes" />
       <End Role="DataRequestLog" EntitySet="DataRequestLogs" />
     </AssociationSet>
-    <EntitySet Name="NoticeOfProperyValues" EntityType="WebDataModel.NoticeOfProperyValue" />
   </EntityContainer>
   <EntityType Name="DOBViolation">
     <Key>
@@ -232,62 +232,6 @@
     <Property Name="BBL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
     <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
   </EntityType>
-  <EntityType Name="DataRequestLog">
-    <Key>
-      <PropertyRef Name="BBL" />
-      <PropertyRef Name="RequestTypeId" />
-      <PropertyRef Name="RequestDateTime" />
-    </Key>
-    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
-    <Property Name="RequestDateTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="ExternalReferenceId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="ServedFromCache" Type="Boolean" />
-    <Property Name="WebDataRequestMade" Type="Boolean" />
-    <Property Name="RequestId" Type="Int64" />
-    <Property Name="RequestStatusTypeId" Type="Int32" />
-    <Property Name="RequestParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Request" Relationship="WebDataModel.Request1" FromRole="DataRequestLog" ToRole="Request" />
-    <NavigationProperty Name="RequestStatusType" Relationship="WebDataModel.RequestStatus" FromRole="DataRequestLog" ToRole="RequestStatusType" />
-    <NavigationProperty Name="RequestType" Relationship="WebDataModel.RequestType1" FromRole="DataRequestLog" ToRole="RequestType" />
-  </EntityType>
-  <Association Name="Request1">
-    <End Type="WebDataModel.Request" Role="Request" Multiplicity="0..1" />
-    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Request">
-        <PropertyRef Name="RequestId" />
-      </Principal>
-      <Dependent Role="DataRequestLog">
-        <PropertyRef Name="RequestId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="RequestStatus">
-    <End Type="WebDataModel.RequestStatusType" Role="RequestStatusType" Multiplicity="0..1" />
-    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RequestStatusType">
-        <PropertyRef Name="RequestStatusTypeId" />
-      </Principal>
-      <Dependent Role="DataRequestLog">
-        <PropertyRef Name="RequestStatusTypeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="RequestType1">
-    <End Type="WebDataModel.RequestType" Role="RequestType" Multiplicity="1" />
-    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RequestType">
-        <PropertyRef Name="RequestTypeId" />
-      </Principal>
-      <Dependent Role="DataRequestLog">
-        <PropertyRef Name="RequestTypeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="NoticeOfProperyValue">
     <Key>
       <PropertyRef Name="BBL" />
@@ -339,4 +283,61 @@
     <Property Name="ResidentialLots" Type="Int32" />
     <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
+  <EntityType Name="DataRequestLog">
+    <Key>
+      <PropertyRef Name="BBL" />
+      <PropertyRef Name="RequestTypeId" />
+      <PropertyRef Name="RequestDateTime" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="RequestDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExternalReferenceId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ServedFromCache" Type="Boolean" />
+    <Property Name="WebDataRequestMade" Type="Boolean" />
+    <Property Name="RequestId" Type="Int64" />
+    <Property Name="RequestStatusTypeId" Type="Int32" />
+    <Property Name="RequestParameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AccountId" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Request" Relationship="WebDataModel.Request1" FromRole="DataRequestLog" ToRole="Request" />
+    <NavigationProperty Name="RequestStatusType" Relationship="WebDataModel.RequestStatus" FromRole="DataRequestLog" ToRole="RequestStatusType" />
+    <NavigationProperty Name="RequestType" Relationship="WebDataModel.RequestType1" FromRole="DataRequestLog" ToRole="RequestType" />
+  </EntityType>
+  <Association Name="Request1">
+    <End Type="WebDataModel.Request" Role="Request" Multiplicity="0..1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RequestStatus">
+    <End Type="WebDataModel.RequestStatusType" Role="RequestStatusType" Multiplicity="0..1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatusType">
+        <PropertyRef Name="RequestStatusTypeId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestStatusTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RequestType1">
+    <End Type="WebDataModel.RequestType" Role="RequestType" Multiplicity="1" />
+    <End Type="WebDataModel.DataRequestLog" Role="DataRequestLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="RequestTypeId" />
+      </Principal>
+      <Dependent Role="DataRequestLog">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

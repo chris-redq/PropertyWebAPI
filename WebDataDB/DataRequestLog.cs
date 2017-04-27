@@ -24,6 +24,7 @@ namespace WebDataDB
         public Nullable<int> RequestStatusTypeId { get; set; }
         public string RequestParameters { get; set; }
         public string JobId { get; set; }
+        public string AccountId { get; set; }
     
         public virtual Request Request { get; set; }
         public virtual RequestStatusType RequestStatusType { get; set; }

@@ -14,6 +14,19 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="255" />
           <Property Name="AccountId" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
+        <EntityType Name="CallBack">
+          <Key>
+            <PropertyRef Name="AccountId" />
+            <PropertyRef Name="CallType" />
+          </Key>
+          <Property Name="AccountId" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="CallType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="URL" Type="varchar" MaxLength="250" />
+          <Property Name="API" Type="varchar" MaxLength="250" />
+          <Property Name="Account" Type="varchar" MaxLength="250" />
+          <Property Name="Password" Type="varchar" MaxLength="250" />
+          <Property Name="APIKey" Type="varchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -67,6 +80,7 @@ warning 6002: The table/view 'WebAPISecurity.dbo.vwAPIUser' does not have a prim
         </Association>
         <EntityContainer Name="WebAPISecurityModelStoreContainer">
           <EntitySet Name="APIUsers" EntityType="Self.APIUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CallBack" EntityType="Self.CallBack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vwAPIUser" EntityType="Self.vwAPIUser" store:Type="Views" store:Schema="dbo">
@@ -98,6 +112,7 @@ warning 6002: The table/view 'WebAPISecurity.dbo.vwAPIUser' does not have a prim
             <End Role="APIUser" EntitySet="APIUsers" />
             <End Role="Role" EntitySet="Roles" />
           </AssociationSet>
+          <EntitySet Name="CallBacks" EntityType="WebAPISecurityModel.CallBack" />
         </EntityContainer>
         <EntityType Name="APIUser">
           <Key>
@@ -131,6 +146,19 @@ warning 6002: The table/view 'WebAPISecurity.dbo.vwAPIUser' does not have a prim
           <End Type="WebAPISecurityModel.APIUser" Role="APIUser" Multiplicity="*" />
           <End Type="WebAPISecurityModel.Role" Role="Role" Multiplicity="*" />
         </Association>
+        <EntityType Name="CallBack">
+          <Key>
+            <PropertyRef Name="AccountId" />
+            <PropertyRef Name="CallType" />
+          </Key>
+          <Property Name="AccountId" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="CallType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="API" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Account" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="APIKey" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -173,6 +201,19 @@ warning 6002: The table/view 'WebAPISecurity.dbo.vwAPIUser' does not have a prim
               <ScalarProperty Name="UserId" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="CallBacks">
+            <EntityTypeMapping TypeName="WebAPISecurityModel.CallBack">
+              <MappingFragment StoreEntitySet="CallBack">
+                <ScalarProperty Name="APIKey" ColumnName="APIKey" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="API" ColumnName="API" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="CallType" ColumnName="CallType" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -39,7 +39,7 @@ namespace WebDataDB
         public virtual DbSet<Zillow> Zillows { get; set; }
         public virtual DbSet<Mortgage> Mortgages { get; set; }
         public virtual DbSet<vwStaleDataBBL> vwStaleDataBBLs { get; set; }
-        public virtual DbSet<DataRequestLog> DataRequestLogs { get; set; }
         public virtual DbSet<NoticeOfProperyValue> NoticeOfProperyValues { get; set; }
+        public virtual DbSet<DataRequestLog> DataRequestLogs { get; set; }
     }
 }

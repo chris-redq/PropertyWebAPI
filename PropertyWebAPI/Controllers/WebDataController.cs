@@ -254,6 +254,8 @@ namespace PropertyWebAPI.Controllers
         [HttpPost]
         public void UpdateStaleData()
         {
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             string jobId = "SCH-"+ DateTime.UtcNow.ToString() + " UTC" ;
 
             List<WebDataDB.vwStaleDataBBL> bblList = null;
@@ -270,26 +272,26 @@ namespace PropertyWebAPI.Controllers
                 switch (bbl.RequestTypeId)
                 {
                     case (int)RequestTypes.NYCTaxBill:
-                        BAL.TaxBill.Get(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                        BAL.TaxBill.Get(appContext, bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCWaterBill:
-                        BAL.WaterBill.Get(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                        BAL.WaterBill.Get(appContext, bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCMortgageServicer:
-                        BAL.MortgageServicer.Get(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                        BAL.MortgageServicer.Get(appContext, bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.Zillow:
                         var propInfo = BAL.NYCPhysicalPropertyData.Get(bbl.BBL, true);
                         if (propInfo != null)
                             BAL.Zillow.LogFailure(bbl.BBL, null, jobId, (int)HttpStatusCode.BadRequest);
                         else
-                            BAL.Zillow.Get(bbl.BBL, propInfo.address.ToString(), null, DAL.Request.STALEDATAPRIORITY, jobId);
+                            BAL.Zillow.Get(appContext, bbl.BBL, propInfo.address.ToString(), null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCNoticeOfPropertyValue:
-                        BAL.NoticeOfPropertyValueDocument.GetDetails(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                        BAL.NoticeOfPropertyValueDocument.GetDetails(appContext, bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCMortgageDocumentDetails:
-                        BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
+                        BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(appContext, bbl.BBL, null, DAL.Request.STALEDATAPRIORITY, jobId);
                         break;
                     default:
                         String msg = String.Format("Cannot process request - Invalid Request Type: {0} for BBL {1}", bbl.RequestTypeId, bbl.BBL);
@@ -307,6 +309,8 @@ namespace PropertyWebAPI.Controllers
         [Route("api/webdata/bulkretrieve")]
         public void PostBulkRetrieve([FromBody]List<string> bblList, int requestTypeId = 0)
         {
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             string jobId = "SCH-" + DateTime.UtcNow.ToString() + " UTC";
 
             if (bblList == null || bblList.Count <= 0)
@@ -329,13 +333,13 @@ namespace PropertyWebAPI.Controllers
                 switch (requestTypeId)
                 {
                     case (int)RequestTypes.NYCTaxBill:
-                        BAL.TaxBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                        BAL.TaxBill.Get(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCWaterBill:
-                        BAL.WaterBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                        BAL.WaterBill.Get(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCMortgageServicer:
-                        BAL.MortgageServicer.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                        BAL.MortgageServicer.Get(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.Zillow:
                         {
@@ -343,27 +347,27 @@ namespace PropertyWebAPI.Controllers
                             if (propInfo != null)
                                 BAL.Zillow.LogFailure(bbl, null, jobId, (int)HttpStatusCode.BadRequest);
                             else
-                                BAL.Zillow.Get(bbl, propInfo.address.ToString(), null, DAL.Request.BULKDATAPRIORITY, jobId);
+                                BAL.Zillow.Get(appContext, bbl, propInfo.address.ToString(), null, DAL.Request.BULKDATAPRIORITY, jobId);
                             break;
                         }
                     case (int)RequestTypes.NYCNoticeOfPropertyValue:
-                        BAL.NoticeOfPropertyValueDocument.GetDetails(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                        BAL.NoticeOfPropertyValueDocument.GetDetails(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
                     case (int)RequestTypes.NYCMortgageDocumentDetails:
-                        BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                        BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                         break;
                     case 0:
                         {
-                            BAL.TaxBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
-                            BAL.WaterBill.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
-                            BAL.MortgageServicer.Get(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                            BAL.TaxBill.Get(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                            BAL.WaterBill.Get(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                            BAL.MortgageServicer.Get(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                             var propInfo = BAL.NYCPhysicalPropertyData.Get(bbl, true);
                             if (propInfo != null)
                                 BAL.Zillow.LogFailure(bbl, null, jobId, (int)HttpStatusCode.BadRequest);
                             else
-                                BAL.Zillow.Get(bbl, propInfo.address.ToString(), null, DAL.Request.BULKDATAPRIORITY, jobId);
-                            BAL.NoticeOfPropertyValueDocument.GetDetails(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
-                            BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                                BAL.Zillow.Get(appContext, bbl, propInfo.address.ToString(), null, DAL.Request.BULKDATAPRIORITY, jobId);
+                            BAL.NoticeOfPropertyValueDocument.GetDetails(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
+                            BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(appContext, bbl, null, DAL.Request.BULKDATAPRIORITY, jobId);
                             break;
                         }
                     default:

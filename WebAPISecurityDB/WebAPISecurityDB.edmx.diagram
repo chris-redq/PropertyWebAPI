@@ -6,9 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d4a42a74052344288fcbaec8b3246763" Name="Diagram1">
         <EntityTypeShape EntityType="WebAPISecurityModel.APIUser" Width="1.5" PointX="0.75" PointY="0.875" />
-        <EntityTypeShape EntityType="WebAPISecurityModel.Role" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="WebAPISecurityModel.Role" Width="1.5" PointX="3.75" PointY="0.875" />
         <EntityTypeShape EntityType="WebAPISecurityModel.vwAPIUser" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="WebAPISecurityModel.UserRole" />
+        <EntityTypeShape EntityType="WebAPISecurityModel.CallBack" Width="1.5" PointX="3.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

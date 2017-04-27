@@ -144,7 +144,9 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValidFormat(propertyBBL))
                 return BadRequest("Incorrect BBLE - Borough Block Lot & Easement number");
 
-            BAL.MortgageServicerDetails mortgageServicerObj = BAL.MortgageServicer.Get(propertyBBL, externalReferenceId);
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
+            BAL.MortgageServicerDetails mortgageServicerObj = BAL.MortgageServicer.Get(appContext, propertyBBL, externalReferenceId);
             if (mortgageServicerObj == null)
                 return NotFound();
             return Ok(mortgageServicerObj);
@@ -272,9 +274,11 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValid(propertyBBLE))
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
 
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             try
             {
-                var resultList = BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(propertyBBLE, externalReferenceId);
+                var resultList = BAL.MortgageDocument.GetDetailsAllUnstaisfiedMortgages(appContext, propertyBBLE, externalReferenceId);
 
                 if (resultList == null || resultList.Count <= 0)
                     return NotFound();
@@ -313,10 +317,12 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValid(propertyBBLE))
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
 
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             try
             {
                 BAL.Freddie.Parameters inParameters = new BAL.Freddie.Parameters();
-                var resultObj = BAL.Freddie.Get(inParameters, externalReferenceId);
+                var resultObj = BAL.Freddie.Get(appContext, inParameters, externalReferenceId);
 
                 if (resultObj == null)
                     return NotFound();
@@ -355,10 +361,12 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValid(propertyBBLE))
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
 
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             try
             {
                 BAL.Fannie.Parameters inParameters = new BAL.Fannie.Parameters();
-                var resultObj = BAL.Fannie.Get(inParameters, externalReferenceId);
+                var resultObj = BAL.Fannie.Get(appContext, inParameters, externalReferenceId);
 
                 if (resultObj == null)
                     return NotFound();

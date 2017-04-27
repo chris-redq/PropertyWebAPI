@@ -18,45 +18,24 @@ namespace PropertyWebAPI.BAL
     using Newtonsoft.Json.Linq;
     using AutoMapper;
     using System.Net.Http.Headers;
+    using WebAPISecurityDB;
 
     public class CallingSystem
     {
         /// <summary>  
-        ///     Helper class for relevant api information to connect and  
-        /// </summary>  
-        private class ApiDetails
-        {
-            public string baseURL;
-            public string apiKey;
-            public string callbackapi;
-        }
-
-        private static ApiDetails GetApiDetails(string username)
-        {
-            if (username != "portal")
-                return null;
-
-            ApiDetails apiDetails = new ApiDetails();
-
-            apiDetails.baseURL = AppSettings.Get(AppSettings.PORTAL_BASE_URL);
-            apiDetails.apiKey = AppSettings.Get(AppSettings.PORTAL_API_KEY);
-            apiDetails.callbackapi = AppSettings.Get(AppSettings.PORTAL_CALLBACK_API);
-
-            return apiDetails;
-        }
-
-        /// <summary>  
         ///     Method returns address corrections and details based on street number, street address and borough for NYC properties
         /// </summary>  
-        public static void PostCallBack(Common.Context appContext, BAL.Results result)
+        public static void PostCallBack(string accountId, CallBack cb, BAL.Results result)
         {
-            string username = appContext.getUserName().ToLower();
+            var userObj = Security.Authentication.GetUser(accountId);
 
-            ApiDetails apiDetails = GetApiDetails(username);
-            if (apiDetails == null)
+            if (userObj == null)
                 return;
 
-            PostCallBack(apiDetails.baseURL, apiDetails.callbackapi, apiDetails.apiKey, username, result);
+            if (cb == null)
+                return;
+
+            PostCallBack(cb.URL, cb.API, cb.APIKey, userObj.UserName, result);
         }
 
         /// <summary>  
@@ -84,15 +63,10 @@ namespace PropertyWebAPI.BAL
             }
         }
 
-        public static bool isAnyCallBack(Common.Context appContext)
+        public static CallBack isAnyCallBack(string accountId)
         {
-            switch (appContext.getUserName().ToLower())
-            {
-                case "portal":
-                    return true;
-                default:
-                    return false;
-            }
+            return Security.Authentication.GetCallBack(accountId, "WEBDATA");
+         
         }
     }
 }

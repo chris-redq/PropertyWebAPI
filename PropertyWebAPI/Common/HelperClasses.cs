@@ -89,12 +89,12 @@ namespace PropertyWebAPI.Common
         private const string HttpContext = "MS_HttpContext";
         private const string RemoteEndpointMessage = "System.ServiceModel.Channels.RemoteEndpointMessageProperty";
 
-        private string userName;
+        private string accountId;
         private string userIPAddress;
 
         public Context(HttpRequestContext requestContext, HttpRequestMessage request)
         {
-            userName = requestContext.Principal.Identity.Name;
+            accountId = requestContext.Principal.Identity.Name;
 
             if (request.Properties.ContainsKey(HttpContext))
             {
@@ -114,9 +114,9 @@ namespace PropertyWebAPI.Common
             }
         }
 
-        public string getUserName()
+        public string getAccountId()
         {
-            return userName;
+            return accountId;
         }
     } 
 

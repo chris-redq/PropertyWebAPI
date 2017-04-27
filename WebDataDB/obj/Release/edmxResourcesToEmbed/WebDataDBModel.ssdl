@@ -16,6 +16,7 @@
     <Property Name="RequestStatusTypeId" Type="int" />
     <Property Name="RequestParameters" Type="varchar(max)" />
     <Property Name="JobId" Type="varchar" MaxLength="50" />
+    <Property Name="AccountId" Type="varchar" MaxLength="16" />
   </EntityType>
   <EntityType Name="DOBViolation">
     <Key>

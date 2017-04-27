@@ -318,7 +318,9 @@ namespace PropertyWebAPI.Controllers
             if (!BAL.BBL.IsValid(propertyBBL))
                 return BadRequest("BBLE - Borough Block Lot & Easement number, not found");
 
-            var resultObj = BAL.NoticeOfPropertyValueDocument.GetDetails(propertyBBL, externalReferenceId);
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
+            var resultObj = BAL.NoticeOfPropertyValueDocument.GetDetails(appContext, propertyBBL, externalReferenceId);
             if (resultObj == null)
                 return Common.HttpResponse.InternalError(Request, "Internal Server Error");
             // return final result

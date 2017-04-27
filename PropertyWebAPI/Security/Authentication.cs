@@ -95,8 +95,12 @@ namespace PropertyWebAPI.Security
 
         public static User GetUser()
         {
-            var accountId = HttpContext.Current.User.Identity.Name;
+            return GetUser(HttpContext.Current.User.Identity.Name);
+        }
 
+
+        public static User GetUser(string accountId)
+        {
             try
             {
                 using (WebAPISecurityEntities securityDBEntities = new WebAPISecurityEntities())
@@ -107,6 +111,23 @@ namespace PropertyWebAPI.Security
             catch (Exception e)
             {
                 Common.Logs.log().Error(string.Format("Error in acquiring HttpContext.Current.User{0}", Common.Logs.FormatException(e)));
+            }
+            return null;
+        }
+
+        public static CallBack GetCallBack(string accountId, string callType)
+        {
+            try
+            {
+                using (WebAPISecurityEntities securityDBEntities = new WebAPISecurityEntities())
+                {
+                    return securityDBEntities.CallBacks.Where(x => x.AccountId == accountId && x.CallType==callType).FirstOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                Common.Logs.log().Error(string.Format("Error in acquiring callback information for  AccountId:{0} and CallType:{1} Exception:{2}", accountId, 
+                                                      callType, Common.Logs.FormatException(e)));
             }
             return null;
         }

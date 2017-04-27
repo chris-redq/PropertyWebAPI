@@ -122,46 +122,41 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method calls back portal for every log record in the list
         /// </summary>
-        private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, NoticeOfProperyValue noticeOfPropertyValueObj)
+        private static void MakeCallBacks(List<DataRequestLog> logs, NoticeOfProperyValue noticeOfPropertyValueObj)
         {
-            if (!CallingSystem.isAnyCallBack(appContext))
-                return;
-
             var resultObj = new BAL.Results();
             resultObj.noticeOfPropertyValueResult = new NoticeOfPropertyValueResult();
             resultObj.noticeOfPropertyValueResult.noticeOfPropertyValue = noticeOfPropertyValueObj;
 
             foreach (var rec in logs)
             {
+                var cb = CallingSystem.isAnyCallBack(rec.AccountId);
+                if (cb == null)
+                    continue;
+
                 resultObj.noticeOfPropertyValueResult.BBL = rec.BBL;
                 resultObj.noticeOfPropertyValueResult.requestId = rec.RequestId;
                 resultObj.noticeOfPropertyValueResult.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.noticeOfPropertyValueResult.externalReferenceId = rec.ExternalReferenceId;
-                CallingSystem.PostCallBack(appContext, resultObj);
+                CallingSystem.PostCallBack(rec.AccountId, cb, resultObj);
             }
         }
         /// <summary>
         ///     This method deals with all the details associated with either returning the Notice Of Property Value details or creating the 
         ///     request for getting the data from the web 
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
         /// <returns></returns>
-        public static NoticeOfPropertyValueResult GetDetails(string propertyBBL, string externalReferenceId)
+        public static NoticeOfPropertyValueResult GetDetails(Common.Context appContext, string propertyBBL, string externalReferenceId)
         {
-            return GetDetails(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+            return GetDetails(appContext, propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
         }
 
         /// <summary>
         ///     This method deals with all the details associated with either returning the Notice Of Property Value details or creating the 
         ///     request for getting the data from the web 
         /// </summary>
-        /// <param name="propertyBBL"></param>
-        /// <param name="externalReferenceId"></param>
-        /// <param name="jobId"></param>
-        /// <param name="priority"></param>
         /// <returns></returns>
-        public static NoticeOfPropertyValueResult GetDetails(string propertyBBL, string externalReferenceId, int priority, string jobId)
+        public static NoticeOfPropertyValueResult GetDetails(Common.Context appContext, string propertyBBL, string externalReferenceId, int priority, string jobId)
         {
             NoticeOfPropertyValueResult NPOVResultObj = new NoticeOfPropertyValueResult();
             NPOVResultObj.BBL = propertyBBL;
@@ -200,7 +195,7 @@ namespace PropertyWebAPI.BAL
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jobId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, appContext.getAccountId(), jsonBillParams);
 
                                 NPOVResultObj.status = RequestStatus.Pending.ToString();
                                 NPOVResultObj.requestId = requestObj.RequestId;
@@ -214,7 +209,8 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 NPOVResultObj.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, 
+                                                                                               jobId, appContext.getAccountId(), jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -334,7 +330,7 @@ namespace PropertyWebAPI.BAL
 
                         webDBEntitiestransaction.Commit();
                         if (logs != null)
-                            MakeCallBacks(appContext, logs, noticeOfPropertyValueObj);
+                            MakeCallBacks(logs, noticeOfPropertyValueObj);
                         return true;
                     }
                     catch (Exception e)

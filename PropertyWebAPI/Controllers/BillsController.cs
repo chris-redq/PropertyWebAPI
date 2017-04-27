@@ -54,6 +54,8 @@ namespace PropertyWebAPI.Controllers
         {                                                            
             Bills billsObj = new Bills();
 
+            Common.Context appContext = new Common.Context(RequestContext, Request);
+
             if (!BAL.BBL.IsValidFormat(propertyBBL))
             {   if (needTaxBill == "Y")
                     BAL.TaxBill.LogFailure(propertyBBL, externalReferenceId, null, (int)HttpStatusCode.BadRequest);
@@ -72,10 +74,10 @@ namespace PropertyWebAPI.Controllers
             }
 
             if (needWaterBill == "Y")
-                billsObj.waterBill = BAL.WaterBill.Get(propertyBBL, externalReferenceId);
+                billsObj.waterBill = BAL.WaterBill.Get(appContext, propertyBBL, externalReferenceId);
 
             if (needTaxBill == "Y")
-                billsObj.taxBill = BAL.TaxBill.Get(propertyBBL, externalReferenceId);
+                billsObj.taxBill = BAL.TaxBill.Get(appContext, propertyBBL, externalReferenceId);
 
             // return final result
             return Ok(billsObj);

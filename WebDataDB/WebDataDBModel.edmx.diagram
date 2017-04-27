@@ -24,11 +24,11 @@
         <EntityTypeShape EntityType="WebDataModel.Zillow" Width="1.5" PointX="10.75" PointY="3.75" />
         <EntityTypeShape EntityType="WebDataModel.Mortgage" Width="1.5" PointX="11.375" PointY="6.75" />
         <EntityTypeShape EntityType="WebDataModel.vwStaleDataBBL" Width="1.5" PointX="8.625" PointY="3.375" />
+        <EntityTypeShape EntityType="WebDataModel.NoticeOfProperyValue" Width="1.5" PointX="0.625" PointY="10.5" />
         <EntityTypeShape EntityType="WebDataModel.DataRequestLog" Width="1.5" PointX="3.375" PointY="4.375" />
         <AssociationConnector Association="WebDataModel.Request1" />
         <AssociationConnector Association="WebDataModel.RequestStatus" />
         <AssociationConnector Association="WebDataModel.RequestType1" />
-        <EntityTypeShape EntityType="WebDataModel.NoticeOfProperyValue" Width="1.5" PointX="0.625" PointY="10.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

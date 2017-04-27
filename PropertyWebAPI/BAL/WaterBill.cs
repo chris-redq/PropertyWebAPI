@@ -78,22 +78,23 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method calls back portal for every log record in the list
         /// </summary>
-        private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, Decimal? billAmount)
+        private static void MakeCallBacks(List<DataRequestLog> logs, Decimal? billAmount)
         {
-            if (!CallingSystem.isAnyCallBack(appContext))
-                return;
-
             var resultObj = new BAL.Results();
             resultObj.waterBill = new WaterBillDetails();
             resultObj.waterBill.billAmount = billAmount;
 
             foreach (var rec in logs)
             {
+                var cb = CallingSystem.isAnyCallBack(rec.AccountId);
+                if (cb == null)
+                    continue;
+
                 resultObj.waterBill.BBL = rec.BBL;
                 resultObj.waterBill.requestId = rec.RequestId;
                 resultObj.waterBill.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.waterBill.externalReferenceId = rec.ExternalReferenceId;
-                CallingSystem.PostCallBack(appContext, resultObj);
+                CallingSystem.PostCallBack(rec.AccountId, cb, resultObj);
             }
         }
 
@@ -110,16 +111,16 @@ namespace PropertyWebAPI.BAL
         ///     This method deals with all the details associated with either returning the water bill details or creating the 
         ///     request for getting is scrapped from the web 
         /// </summary>
-        public static WaterBillDetails Get(string propertyBBL, string externalReferenceId)
+        public static WaterBillDetails Get(Common.Context appContext, string propertyBBL, string externalReferenceId)
         {
-            return Get(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+            return Get(appContext, propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
         }
 
         /// <summary>
         ///     This method deals with all the details associated with either returning the water bill details or creating the 
         ///     request for getting is scrapped from the web 
         /// </summary>
-        public static WaterBillDetails Get(string propertyBBL, string externalReferenceId, int priority, string jobId)
+        public static WaterBillDetails Get(Common.Context appContext, string propertyBBL, string externalReferenceId, int priority, string jobId)
         {
             WaterBillDetails waterBill = new WaterBillDetails();
             waterBill.externalReferenceId = externalReferenceId;
@@ -157,7 +158,7 @@ namespace PropertyWebAPI.BAL
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jobId, parameters);
+                                                                                               externalReferenceId, jobId, appContext.getAccountId(), parameters);
 
                                 waterBill.status = RequestStatus.Pending.ToString();
                                 waterBill.requestId = requestObj.RequestId;
@@ -168,7 +169,7 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 waterBill.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, dataRequestLogObj.RequestId.GetValueOrDefault(), 
-                                                                                               externalReferenceId, jobId, parameters);
+                                                                                               externalReferenceId, jobId, appContext.getAccountId(), parameters);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -286,7 +287,7 @@ namespace PropertyWebAPI.BAL
                         }
                         webDBEntitiestransaction.Commit();
                         if (logs != null)
-                            MakeCallBacks(appContext, logs, billAmount);
+                            MakeCallBacks(logs, billAmount);
                         return true;
                     }
                     catch (Exception e)

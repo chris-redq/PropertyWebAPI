@@ -89,22 +89,23 @@ namespace PropertyWebAPI.BAL
         /// <summary>
         ///     This method calls back portal for every log record in the list
         /// </summary>
-        private static void MakeCallBacks(Common.Context appContext, List<DataRequestLog> logs, WebDataDB.Mortgage mortgageDocumentResultObj)
+        private static void MakeCallBacks(List<DataRequestLog> logs, WebDataDB.Mortgage mortgageDocumentResultObj)
         {
-            if (!CallingSystem.isAnyCallBack(appContext))
-                return;
-
             var resultObj = new BAL.Results();
             resultObj.mortgageDocumentResult = new MortgageDocumentResult();
             resultObj.mortgageDocumentResult.mortgageDetails = mortgageDocumentResultObj;
 
             foreach (var rec in logs)
             {
+                var cb = CallingSystem.isAnyCallBack(rec.AccountId);
+                if (cb == null)
+                    continue;
+
                 resultObj.mortgageDocumentResult.BBL = rec.BBL;
                 resultObj.mortgageDocumentResult.requestId = rec.RequestId;
                 resultObj.mortgageDocumentResult.status = ((RequestStatus)rec.RequestStatusTypeId).ToString();
                 resultObj.mortgageDocumentResult.externalReferenceId = rec.ExternalReferenceId;
-                CallingSystem.PostCallBack(appContext, resultObj);
+                CallingSystem.PostCallBack(rec.AccountId, cb, resultObj);
             }
         }
 
@@ -112,9 +113,9 @@ namespace PropertyWebAPI.BAL
         ///     This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
         ///     request for getting the data from the web 
         /// </summary>
-        public static MortgageDocumentResult GetDetails(string propertyBBL, string documentURI, string externalReferenceId)
+        public static MortgageDocumentResult GetDetails(Common.Context appContext, string propertyBBL, string documentURI, string externalReferenceId)
         {
-            return GetDetails(propertyBBL, documentURI, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+            return GetDetails(appContext, propertyBBL, documentURI, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
         }
 
         /// <summary>
@@ -126,8 +127,9 @@ namespace PropertyWebAPI.BAL
         /// <param name="documentURI"></param>
         /// <param name="jobId"></param>
         /// <param name="priority"></param>
+        /// <param name="appContext"></param>
         /// <returns></returns>
-        public static MortgageDocumentResult GetDetails(string propertyBBL, string documentURI, string externalReferenceId, int priority, string jobId)
+        public static MortgageDocumentResult GetDetails(Common.Context appContext, string propertyBBL, string documentURI, string externalReferenceId, int priority, string jobId)
         {
             MortgageDocumentResult mortgageDocumentResultObj = new MortgageDocumentResult();
             mortgageDocumentResultObj.BBL = propertyBBL;
@@ -165,7 +167,7 @@ namespace PropertyWebAPI.BAL
                                 Request requestObj = DAL.Request.Insert(webDBEntities, requestStr, RequestTypeId, priority, jobId);
 
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId, requestObj.RequestId,
-                                                                                               externalReferenceId, jobId, jsonBillParams);
+                                                                                               externalReferenceId, jobId, appContext.getAccountId(), jsonBillParams);
 
                                 mortgageDocumentResultObj.status = RequestStatus.Pending.ToString();
                                 mortgageDocumentResultObj.requestId = requestObj.RequestId;
@@ -176,7 +178,8 @@ namespace PropertyWebAPI.BAL
                                 //Send the RequestId for the pending request back
                                 mortgageDocumentResultObj.requestId = dataRequestLogObj.RequestId;
                                 dataRequestLogObj = DAL.DataRequestLog.InsertForWebDataRequest(webDBEntities, propertyBBL, RequestTypeId,
-                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, jobId, jsonBillParams);
+                                                                                               dataRequestLogObj.RequestId.GetValueOrDefault(), externalReferenceId, 
+                                                                                               jobId, appContext.getAccountId(), jsonBillParams);
                             }
                         }
                         webDBEntitiestransaction.Commit();
@@ -298,7 +301,7 @@ namespace PropertyWebAPI.BAL
 
                         webDBEntitiestransaction.Commit();
                         if (logs != null)
-                            MakeCallBacks(appContext, logs, mortgageDocumentObj);
+                            MakeCallBacks(logs, mortgageDocumentObj);
                         return true;
                     }
                     catch (DbEntityValidationException dbEx)
@@ -368,9 +371,9 @@ namespace PropertyWebAPI.BAL
         ///     This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
         ///     request for getting the data from the web for all relevant mortgage documents
         /// </summary>
-        public static List<MortgageDocumentResult> GetDetailsAllUnstaisfiedMortgages(string propertyBBL, string externalReferenceId)
+        public static List<MortgageDocumentResult> GetDetailsAllUnstaisfiedMortgages(Common.Context appContext, string propertyBBL, string externalReferenceId)
         {
-            return GetDetailsAllUnstaisfiedMortgages(propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
+            return GetDetailsAllUnstaisfiedMortgages(appContext, propertyBBL, externalReferenceId, DAL.Request.MEDIUMPRIORITY, null);
         }
 
 
@@ -378,7 +381,7 @@ namespace PropertyWebAPI.BAL
         ///     This method deals with all the details associated with either returning the details in the Mortgage Document or creating the 
         ///     request for getting the data from the web for all relevant mortgage documents
         /// </summary>
-        public static List<MortgageDocumentResult> GetDetailsAllUnstaisfiedMortgages(string propertyBBL, string externalReferenceId, int priority, string jobId)
+        public static List<MortgageDocumentResult> GetDetailsAllUnstaisfiedMortgages(Common.Context appContext, string propertyBBL, string externalReferenceId, int priority, string jobId)
         {
             var mortgagesList = BAL.MortgageDocument.GetSynchronizedData(propertyBBL);
 
@@ -389,7 +392,7 @@ namespace PropertyWebAPI.BAL
 
             foreach (var v in mortgagesList)
             {
-                var resultObj = BAL.MortgageDocument.GetDetails(propertyBBL, v.URL, externalReferenceId, priority, jobId);
+                var resultObj = BAL.MortgageDocument.GetDetails(appContext, propertyBBL, v.URL, externalReferenceId, priority, jobId);
                 resultList.Add(resultObj);
             }
             return resultList;

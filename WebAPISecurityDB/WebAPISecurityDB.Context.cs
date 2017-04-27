@@ -28,5 +28,6 @@ namespace WebAPISecurityDB
         public virtual DbSet<APIUser> APIUsers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<vwAPIUser> vwAPIUsers { get; set; }
+        public virtual DbSet<CallBack> CallBacks { get; set; }
     }
 }
