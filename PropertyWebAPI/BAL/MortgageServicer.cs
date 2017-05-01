@@ -146,7 +146,7 @@ namespace PropertyWebAPI.BAL
                         WebDataDB.MortgageServicer mortgageServicerObj = webDBEntities.MortgageServicers.FirstOrDefault(i => i.BBL == propertyBBL);
 
                         // record in database and data is not stale
-                        if (mortgageServicerObj != null && DateTime.UtcNow.Subtract(mortgageServicerObj.LastUpdated).Days <= 30)
+                        if (mortgageServicerObj != null && DateTime.UtcNow.Subtract(mortgageServicerObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             mServicerDetails.servicerName = mortgageServicerObj.Name;
                             mServicerDetails.status = RequestStatus.Success.ToString();
@@ -217,7 +217,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.MortgageServicer mortgageServicerObj = webDBEntities.MortgageServicers.FirstOrDefault(i => i.BBL == parameters.BBL);
 
-                        if (mortgageServicerObj != null && DateTime.UtcNow.Subtract(mortgageServicerObj.LastUpdated).Days <= 30)
+                        if (mortgageServicerObj != null && DateTime.UtcNow.Subtract(mortgageServicerObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             mServicerDetails.servicerName = mortgageServicerObj.Name;
                         else
                             mServicerDetails.status = RequestStatus.Error.ToString();

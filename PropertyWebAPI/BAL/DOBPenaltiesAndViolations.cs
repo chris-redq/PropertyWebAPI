@@ -146,7 +146,7 @@ namespace PropertyWebAPI.BAL
                         WebDataDB.DOBViolation dobViolationObj = webDBEntities.DOBViolations.FirstOrDefault(i => i.BBL == propertyBBL);
 
                         // record in database and data is not stale
-                        if (dobViolationObj != null && DateTime.UtcNow.Subtract(dobViolationObj.LastUpdated).Days <= 15)
+                        if (dobViolationObj != null && DateTime.UtcNow.Subtract(dobViolationObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             dPenaltiesAndViolations.civilPenaltyAmount = dobViolationObj.DOBCivilPenalties;
                             dPenaltiesAndViolations.violationAmount = dobViolationObj.ECBViolationAmount;
@@ -221,7 +221,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.DOBViolation dCivilPenaltiesObj = webDBEntities.DOBViolations.FirstOrDefault(i => i.BBL == parameters.BBL);
 
-                        if (dCivilPenaltiesObj != null && DateTime.UtcNow.Subtract(dCivilPenaltiesObj.LastUpdated).Days <= 30)
+                        if (dCivilPenaltiesObj != null && DateTime.UtcNow.Subtract(dCivilPenaltiesObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             dPenaltiesAndViolations.civilPenaltyAmount = dCivilPenaltiesObj.DOBCivilPenalties;
                             dPenaltiesAndViolations.violationAmount = dCivilPenaltiesObj.ECBViolationAmount;

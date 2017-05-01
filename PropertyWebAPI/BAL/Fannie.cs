@@ -147,7 +147,7 @@ namespace PropertyWebAPI.BAL
                         WebDataDB.FannieMortgage mortgageObj = webDBEntities.FannieMortgages.FirstOrDefault(i => i.BBL == inParameters.BBL);
 
                         // record in database and data is not stale
-                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= 30)
+                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             mDetails.isFannieMortgage = mortgageObj.IsFannie;
                             mDetails.status = RequestStatus.Success.ToString();
@@ -218,7 +218,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.FannieMortgage mortgageObj = webDBEntities.FannieMortgages.FirstOrDefault(i => i.BBL == parameters.BBL);
 
-                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= 30)
+                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             mDetails.isFannieMortgage = mortgageObj.IsFannie;
                         else
                             mDetails.status = RequestStatus.Error.ToString();

@@ -149,7 +149,7 @@ namespace PropertyWebAPI.BAL
                         WebDataDB.FreddieMortgage mortgageObj = webDBEntities.FreddieMortgages.FirstOrDefault(i => i.BBL == inParameters.BBL);
 
                         // record in database and data is not stale
-                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= 30)
+                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             mDetails.isFreddieMortgage = mortgageObj.IsFreddie;
                             mDetails.status = RequestStatus.Success.ToString();
@@ -220,7 +220,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.FreddieMortgage mortgageObj = webDBEntities.FreddieMortgages.FirstOrDefault(i => i.BBL == parameters.BBL);
 
-                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= 30)
+                        if (mortgageObj != null && DateTime.UtcNow.Subtract(mortgageObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             mDetails.isFreddieMortgage = mortgageObj.IsFreddie;
                         else
                             mDetails.status = RequestStatus.Error.ToString();

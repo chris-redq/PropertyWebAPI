@@ -177,7 +177,7 @@ namespace PropertyWebAPI.BAL
                         var noticeOfPropertyValueObj = webDBEntities.NoticeOfProperyValues.FirstOrDefault(i => i.BBL == propertyBBL);
 
                         // record in database and data is not stale
-                        if (noticeOfPropertyValueObj != null && DateTime.UtcNow.Subtract(noticeOfPropertyValueObj.LastUpdated).Days <= 30)
+                        if (noticeOfPropertyValueObj != null && DateTime.UtcNow.Subtract(noticeOfPropertyValueObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             NPOVResultObj.noticeOfPropertyValue = noticeOfPropertyValueObj;
                             NPOVResultObj.status = RequestStatus.Success.ToString();
@@ -251,7 +251,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.NoticeOfProperyValue noticeOfPropetyValueObj = webDBEntities.NoticeOfProperyValues.FirstOrDefault(i => i.BBL == parameters.BBL);
 
-                        if (noticeOfPropetyValueObj != null && DateTime.UtcNow.Subtract(noticeOfPropetyValueObj.LastUpdated).Days <= 30)
+                        if (noticeOfPropetyValueObj != null && DateTime.UtcNow.Subtract(noticeOfPropetyValueObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             resultObj.noticeOfPropertyValue = noticeOfPropetyValueObj;
                         else
                             resultObj.status = RequestStatus.Error.ToString();

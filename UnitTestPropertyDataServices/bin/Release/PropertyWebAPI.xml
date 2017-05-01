@@ -2631,6 +2631,14 @@
                 Update Request object with higher priority and Job Id
             </summary>
         </member>
+        <member name="T:PropertyWebAPI.DAL.RequestType">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:PropertyWebAPI.DAL.RequestType.GetDaysToRefresh(System.Int32)">
+            <summary>
+            </summary>
+        </member>
         <member name="T:PropertyWebAPI.CMAType">
             <summary>Types of CMAs</summary>
         </member>

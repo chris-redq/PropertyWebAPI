@@ -149,7 +149,7 @@ namespace PropertyWebAPI.BAL
                         var mortgageDocumentObj = webDBEntities.Mortgages.FirstOrDefault(i => i.BBL == propertyBBL && i.MortgageDocumentURI == documentURI);
 
                         // record in database and data is not stale
-                        if (mortgageDocumentObj != null && DateTime.UtcNow.Subtract(mortgageDocumentObj.LastUpdated).Days <= 30)
+                        if (mortgageDocumentObj != null && DateTime.UtcNow.Subtract(mortgageDocumentObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             mortgageDocumentResultObj.mortgageDetails = mortgageDocumentObj;
                             mortgageDocumentResultObj.status = RequestStatus.Success.ToString();
@@ -220,7 +220,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.Mortgage mortgageDocumentObj = webDBEntities.Mortgages.FirstOrDefault(i => i.BBL == parameters.BBL && i.MortgageDocumentURI == parameters.URI);
 
-                        if (mortgageDocumentObj != null && DateTime.UtcNow.Subtract(mortgageDocumentObj.LastUpdated).Days <= 30)
+                        if (mortgageDocumentObj != null && DateTime.UtcNow.Subtract(mortgageDocumentObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             resultObj.mortgageDetails = mortgageDocumentObj;
                         else
                             resultObj.status = RequestStatus.Error.ToString();

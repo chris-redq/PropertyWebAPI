@@ -146,7 +146,7 @@ namespace PropertyWebAPI.BAL
                         WebDataDB.Zillow zillowObj = webDBEntities.Zillows.FirstOrDefault(i => i.BBL == propertyBBL);
 
                         // record in database and data is not stale
-                        if (zillowObj != null && DateTime.UtcNow.Subtract(zillowObj.LastUpdated).Days <= 30)
+                        if (zillowObj != null && DateTime.UtcNow.Subtract(zillowObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             zPropertyDetails.zEstimate = zillowObj.zEstimate;
                             zPropertyDetails.status = RequestStatus.Success.ToString();
@@ -216,7 +216,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.Zillow zillowObj = webDBEntities.Zillows.FirstOrDefault(i => i.BBL == parameters.BBL);
 
-                        if (zillowObj != null && DateTime.UtcNow.Subtract(zillowObj.LastUpdated).Days <= 30)
+                        if (zillowObj != null && DateTime.UtcNow.Subtract(zillowObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             zPropertyDetails.zEstimate = zillowObj.zEstimate;
                         else
                             zPropertyDetails.status = RequestStatus.Error.ToString();

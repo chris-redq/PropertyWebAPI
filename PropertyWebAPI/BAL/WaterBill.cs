@@ -140,7 +140,7 @@ namespace PropertyWebAPI.BAL
                         WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == propertyBBL);
 
                         // record in database and data is not stale
-                        if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= 30)
+                        if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             waterBill.billAmount = waterBillObj.BillAmount;
                             waterBill.status = RequestStatus.Success.ToString();
@@ -211,7 +211,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.WaterBill waterBillObj = webDBEntities.WaterBills.FirstOrDefault(i => i.BBL == waterParams.BBL);
 
-                        if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= 30)
+                        if (waterBillObj != null && DateTime.UtcNow.Subtract(waterBillObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             waterBill.billAmount = waterBillObj.BillAmount;
                         else
                             waterBill.status = RequestStatus.Error.ToString();

@@ -138,7 +138,7 @@ namespace PropertyWebAPI.BAL
                         WebDataDB.TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == propertyBBL);
 
                         // record in database and data is not stale
-                        if (taxBillObj != null && DateTime.UtcNow.Subtract(taxBillObj.LastUpdated).Days <= 30)
+                        if (taxBillObj != null && DateTime.UtcNow.Subtract(taxBillObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                         {
                             taxBill.billAmount = taxBillObj.BillAmount;
                             taxBill.status = RequestStatus.Success.ToString();
@@ -209,7 +209,7 @@ namespace PropertyWebAPI.BAL
                         //check if data available
                         WebDataDB.TaxBill taxBillObj = webDBEntities.TaxBills.FirstOrDefault(i => i.BBL == taxParams.BBL);
 
-                        if (taxBillObj != null && DateTime.UtcNow.Subtract(taxBillObj.LastUpdated).Days <= 30)
+                        if (taxBillObj != null && DateTime.UtcNow.Subtract(taxBillObj.LastUpdated).Days <= DAL.RequestType.GetDaysToRefresh(RequestTypeId))
                             taxBill.billAmount = taxBillObj.BillAmount;
                         else
                             taxBill.status = RequestStatus.Error.ToString();

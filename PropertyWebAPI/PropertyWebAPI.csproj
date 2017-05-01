@@ -256,6 +256,7 @@
     <Compile Include="DAL\Liens.cs" />
     <Compile Include="DAL\Property.cs" />
     <Compile Include="DAL\Request.cs" />
+    <Compile Include="DAL\RequestType.cs" />
     <Compile Include="DAL\Violations.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Global.asax.cs">

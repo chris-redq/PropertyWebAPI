@@ -53,9 +53,7 @@ namespace PropertyWebAPI.BAL
             {
                 HttpResponseMessage response = client.PostAsJsonAsync(api, result).Result;
                 if (!response.IsSuccessStatusCode)
-                {
                     Common.Logs.log().Error(string.Format("{0} API callback failed with status code {1}", username, response.StatusCode));
-                }
             }
             catch (Exception e)
             {
@@ -65,8 +63,7 @@ namespace PropertyWebAPI.BAL
 
         public static CallBack isAnyCallBack(string accountId)
         {
-            return Security.Authentication.GetCallBack(accountId, "WEBDATA");
-         
+            return Security.Authentication.GetCallBack(accountId, "WEBDATA");        
         }
     }
 }
