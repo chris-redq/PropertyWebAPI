@@ -92,8 +92,9 @@ namespace GPADB
         public Nullable<int> IsSRORestricted { get; set; }
         public Nullable<int> IsLandmark { get; set; }
         public string ServicerName { get; set; }
-        public int MortgagesSatisfied { get; set; }
+        public Nullable<int> ExistingOrMinMortgageAge { get; set; }
         public Nullable<int> DeedAgeInMonths { get; set; }
+        public Nullable<int> LivingOrMinOwnerAge { get; set; }
         public Nullable<decimal> TaxLienSoldAmount { get; set; }
         public Nullable<int> TaxLiensSold { get; set; }
     }

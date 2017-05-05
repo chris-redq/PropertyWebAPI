@@ -3,6 +3,7 @@
   <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
     <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
+    <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
     <FunctionImport Name="GetPropertyLeads">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
       <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -23,10 +24,11 @@
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
       <Parameter Name="HasFHA" Mode="In" Type="String" />
-      <Parameter Name="MortgagesSatisfied" Mode="In" Type="String" />
       <Parameter Name="DeedAge" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldYear" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
+      <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
+      <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -48,12 +50,12 @@
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
       <Parameter Name="HasFHA" Mode="In" Type="String" />
-      <Parameter Name="MortgagesSatisfied" Mode="In" Type="String" />
       <Parameter Name="DeedAge" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldYear" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
+      <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
+      <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
   </EntityContainer>
   <EntityType Name="vwGeneralPropertyInformation">
     <Key>
@@ -84,20 +86,19 @@
     <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="NeighborhoodName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
     <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
     <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="Decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="Decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="Double" />
     <Property Name="TaxLienList" Type="Int32" />
     <Property Name="PoolA" Type="Boolean" />
     <Property Name="TaxLienLPs" Type="Int32" />
     <Property Name="TaxLienActiveCases" Type="Int32" />
-    <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
     <Property Name="MortgageForeclosureLPs" Type="Int32" />
     <Property Name="MortgageForeclosureActiveCases" Type="Int32" />
     <Property Name="COSPresent" Type="Int32" />
@@ -140,13 +141,17 @@
     <Property Name="IsSRORestricted" Type="Int32" />
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ExistingOrMinMortgageAge" Type="Int32" />
+    <Property Name="DeedAgeInMonths" Type="Int32" />
+    <Property Name="LivingOrMinOwnerAge" Type="Int32" />
+    <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="TaxLiensSold" Type="Int32" />
   </EntityType>
   <EntityType Name="vwGeneralLeadInformation">
     <Key>
       <PropertyRef Name="BBLE" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
-      <PropertyRef Name="MortgagesSatisfied" />
     </Key>
     <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
     <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
@@ -171,14 +176,14 @@
     <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="NeighborhoodName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
     <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
     <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="Decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="Decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="Double" />
     <Property Name="TaxLienList" Type="Int32" />
     <Property Name="PoolA" Type="Boolean" />
@@ -226,8 +231,9 @@
     <Property Name="IsSRORestricted" Type="Int32" />
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="MortgagesSatisfied" Type="Int32" Nullable="false" />
+    <Property Name="ExistingOrMinMortgageAge" Type="Int32" />
     <Property Name="DeedAgeInMonths" Type="Int32" />
+    <Property Name="LivingOrMinOwnerAge" Type="Int32" />
     <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
     <Property Name="TaxLiensSold" Type="Int32" />
   </EntityType>
@@ -259,9 +265,10 @@
     <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="HasFHA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="SatisfiedMortgages" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="DeedAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="TaxLiensSoldYear" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="TaxLiensSoldTotal" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="MortgageExistingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="OwnerLivingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

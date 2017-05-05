@@ -28,10 +28,11 @@
     <Property Name="Servicer" Type="varchar" MaxLength="1000" />
     <Property Name="Landmark" Type="varchar" MaxLength="1000" />
     <Property Name="HasFHA" Type="varchar" MaxLength="1" />
-    <Property Name="SatisfiedMortgages" Type="varchar" MaxLength="1" />
     <Property Name="DeedAge" Type="varchar" MaxLength="1000" />
     <Property Name="TaxLiensSoldYear" Type="varchar" MaxLength="1000" />
     <Property Name="TaxLiensSoldTotal" Type="varchar" MaxLength="1000" />
+    <Property Name="MortgageExistingOrAge" Type="varchar" MaxLength="1000" />
+    <Property Name="OwnerLivingOrAge" Type="varchar" MaxLength="1000" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -40,7 +41,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
       <PropertyRef Name="BBLE" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
-      <PropertyRef Name="MortgagesSatisfied" />
     </Key>
     <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
     <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
@@ -65,14 +65,14 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
     <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
     <Property Name="StreetName" Type="varchar(max)" />
     <Property Name="ZipCode" Type="varchar" MaxLength="30" />
-    <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="250" />
     <Property Name="NTACode" Type="varchar" MaxLength="4" />
     <Property Name="Zoning" Type="nvarchar" MaxLength="9" />
     <Property Name="UnitNumber" Type="nvarchar" MaxLength="5" />
-    <Property Name="East" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="float" />
     <Property Name="TaxLienList" Type="int" />
     <Property Name="PoolA" Type="bit" />
@@ -120,8 +120,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
     <Property Name="IsSRORestricted" Type="int" />
     <Property Name="IsLandmark" Type="int" />
     <Property Name="ServicerName" Type="varchar" MaxLength="250" />
-    <Property Name="MortgagesSatisfied" Type="int" Nullable="false" />
+    <Property Name="ExistingOrMinMortgageAge" Type="int" />
     <Property Name="DeedAgeInMonths" Type="int" />
+    <Property Name="LivingOrMinOwnerAge" Type="int" />
     <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
     <Property Name="TaxLiensSold" Type="int" />
   </EntityType>
@@ -156,20 +157,19 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
     <Property Name="StreetName" Type="varchar(max)" />
     <Property Name="ZipCode" Type="varchar" MaxLength="30" />
-    <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="250" />
     <Property Name="NTACode" Type="varchar" MaxLength="4" />
     <Property Name="Zoning" Type="nvarchar" MaxLength="9" />
     <Property Name="UnitNumber" Type="nvarchar" MaxLength="5" />
-    <Property Name="East" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="float" />
     <Property Name="TaxLienList" Type="int" />
     <Property Name="PoolA" Type="bit" />
     <Property Name="TaxLienLPs" Type="int" />
     <Property Name="TaxLienActiveCases" Type="int" />
-    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
     <Property Name="MortgageForeclosureLPs" Type="int" />
     <Property Name="MortgageForeclosureActiveCases" Type="int" />
     <Property Name="COSPresent" Type="int" />
@@ -212,6 +212,11 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Property Name="IsSRORestricted" Type="int" />
     <Property Name="IsLandmark" Type="int" />
     <Property Name="ServicerName" Type="varchar" MaxLength="250" />
+    <Property Name="ExistingOrMinMortgageAge" Type="int" />
+    <Property Name="DeedAgeInMonths" Type="int" />
+    <Property Name="LivingOrMinOwnerAge" Type="int" />
+    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
+    <Property Name="TaxLiensSold" Type="int" />
   </EntityType>
   <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
     <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
@@ -233,10 +238,11 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Parameter Name="Servicer" Type="varchar" Mode="In" />
     <Parameter Name="Landmark" Type="varchar" Mode="In" />
     <Parameter Name="HasFHA" Type="varchar" Mode="In" />
-    <Parameter Name="MortgagesSatisfied" Type="varchar" Mode="In" />
     <Parameter Name="DeedAge" Type="varchar" Mode="In" />
     <Parameter Name="TaxLiensSoldYear" Type="varchar" Mode="In" />
     <Parameter Name="TaxLiensSoldTotal" Type="varchar" Mode="In" />
+    <Parameter Name="OwnerLivingAge" Type="varchar" Mode="In" />
+    <Parameter Name="MortgageExistingAge" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
     <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
@@ -320,8 +326,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralLeadInformation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralLeadInformation].[IsLandmark] AS [IsLandmark], 
     [vwGeneralLeadInformation].[ServicerName] AS [ServicerName], 
-    [vwGeneralLeadInformation].[MortgagesSatisfied] AS [MortgagesSatisfied], 
+    [vwGeneralLeadInformation].[ExistingOrMinMortgageAge] AS [ExistingOrMinMortgageAge], 
     [vwGeneralLeadInformation].[DeedAgeInMonths] AS [DeedAgeInMonths], 
+    [vwGeneralLeadInformation].[LivingOrMinOwnerAge] AS [LivingOrMinOwnerAge], 
     [vwGeneralLeadInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
     [vwGeneralLeadInformation].[TaxLiensSold] AS [TaxLiensSold]
     FROM [app].[vwGeneralLeadInformation] AS [vwGeneralLeadInformation]</DefiningQuery>
@@ -364,7 +371,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralPropertyInformation].[PoolA] AS [PoolA], 
     [vwGeneralPropertyInformation].[TaxLienLPs] AS [TaxLienLPs], 
     [vwGeneralPropertyInformation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
-    [vwGeneralPropertyInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
     [vwGeneralPropertyInformation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
     [vwGeneralPropertyInformation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
     [vwGeneralPropertyInformation].[COSPresent] AS [COSPresent], 
@@ -406,7 +412,12 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralPropertyInformation].[Grade] AS [Grade], 
     [vwGeneralPropertyInformation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralPropertyInformation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName]
+    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName], 
+    [vwGeneralPropertyInformation].[ExistingOrMinMortgageAge] AS [ExistingOrMinMortgageAge], 
+    [vwGeneralPropertyInformation].[DeedAgeInMonths] AS [DeedAgeInMonths], 
+    [vwGeneralPropertyInformation].[LivingOrMinOwnerAge] AS [LivingOrMinOwnerAge], 
+    [vwGeneralPropertyInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
+    [vwGeneralPropertyInformation].[TaxLiensSold] AS [TaxLiensSold]
     FROM [app].[vwGeneralPropertyInformation] AS [vwGeneralPropertyInformation]</DefiningQuery>
     </EntitySet>
   </EntityContainer>

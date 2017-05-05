@@ -38,7 +38,7 @@ namespace PropertyWebAPI.DAL
         /// <summary>Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ismailingaddressactive { get; set; }
-        /// <summary>Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS and ALL. 
+        /// <summary>Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS, TAX LIEN LIST and ALL. 
         /// By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
         /// the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -76,9 +76,6 @@ namespace PropertyWebAPI.DAL
         /// <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string hasFHA { get; set; }
-        /// <summary>Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public string satisfiedMortgages { get; set; }
         /// <summary>Optional parameter. Always in months. Minimum one value, max two values can be sent. No wildcards.</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string deedAge { get; set; }
@@ -88,6 +85,19 @@ namespace PropertyWebAPI.DAL
         /// <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards.</summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string taxLiensSoldTotal { get; set; }
+        /// <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards. -1 looks for deceased owner(s). 
+        /// In case there are multiple owners, all owners must be deceased for the lead to qualify for this criteria. 
+        /// A single positive number looks for owner(s) with age >= than the number provided. When two positive numbers are provided the owner(s) 
+        /// age must be between the range provided. In case of multiple owners the minimum of the age is considered for query purposes </summary>
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string ownerLivingOrAge { get; set; }
+        /// <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards. -1 means no unsatisfied mortgages ie.  
+        /// no open mortgages. A single positive number looks for mortgage(s) older than the number provided (mortgage age is in Months). When two 
+        /// positive numbers are provided the mortgage(s) age must be between the range provided. In case of multiple mortgages the minimum of 
+        /// the age is considered for query purposes </summary>
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string mortgageExistingOrAge { get; set; }
+
     }
 
     public class Scenario
@@ -128,21 +138,21 @@ namespace PropertyWebAPI.DAL
             return GetPropertyLeads(filterdata.zipcodes, filterdata.neighborhoods, filterdata.isvacant, filterdata.leadgrades, filterdata.buildingclasscodes,
                                     filterdata.counties, filterdata.ismailingaddressactive, filterdata.lientypes, filterdata.ltv, filterdata.equity, filterdata.violations,
                                     filterdata.cities, filterdata.states, filterdata.hasFannie, filterdata.hasFreddie, filterdata.unbuilt, filterdata.servicer,
-                                    filterdata.landmark, filterdata.hasFHA, filterdata.satisfiedMortgages, filterdata.deedAge, filterdata.taxLiensSoldYear,
-                                    filterdata.taxLiensSoldTotal);
+                                    filterdata.landmark, filterdata.hasFHA, filterdata.deedAge, filterdata.taxLiensSoldYear, filterdata.taxLiensSoldTotal, 
+                                    filterdata.ownerLivingOrAge, filterdata.mortgageExistingOrAge);
         }
 
         public static List<LeadSummaryData> GetPropertyLeads(string zipcodes, string neighborhoods, string isvacant, string leadgrades, string buildingclasscodes, string counties, 
                                                              string ismailingaddressactive, string lientypes, string ltv, string equity, string violations, string cities,
                                                              string states,  string hasfannie, string hasfreddie, string unbuilt, string servicer, string landmark, string hasFHA,
-                                                             string satisfiedMortgages, string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal)
+                                                             string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal, string ownerLivingOrAge, string mortgageExistingOrAge)
         {
             using (GPADBEntities1 gpaE = new GPADBEntities1())
             {
                 return Mapper.Map<List<vwGeneralLeadInformation>, List<LeadSummaryData>>(gpaE.GetLeads(zipcodes, buildingclasscodes, counties, isvacant, ismailingaddressactive, violations,
                                                                                                        cities, neighborhoods, states, lientypes, leadgrades, ltv, equity, hasfannie,
-                                                                                                       hasfreddie, unbuilt, servicer, landmark, hasFHA, satisfiedMortgages, deedAge, 
-                                                                                                       taxLiensSoldYear, taxLiensSoldTotal).ToList());
+                                                                                                       hasfreddie, unbuilt, servicer, landmark, hasFHA, deedAge, taxLiensSoldYear, 
+                                                                                                       taxLiensSoldTotal, ownerLivingOrAge, mortgageExistingOrAge).ToList());
             }
         }
 
@@ -207,11 +217,12 @@ namespace PropertyWebAPI.DAL
                     scenarioObj.Vacant = inScenarioObj.filterdata.isvacant;
                     scenarioObj.Violations = inScenarioObj.filterdata.violations;
                     scenarioObj.ZipCode = inScenarioObj.filterdata.zipcodes;
-                    scenarioObj.SatisfiedMortgages = inScenarioObj.filterdata.satisfiedMortgages;
                     scenarioObj.DeedAge = inScenarioObj.filterdata.deedAge;
                     scenarioObj.TaxLiensSoldYear = inScenarioObj.filterdata.taxLiensSoldYear;
                     scenarioObj.TaxLiensSoldTotal = inScenarioObj.filterdata.taxLiensSoldTotal;
-
+                    scenarioObj.OwnerLivingOrAge = inScenarioObj.filterdata.ownerLivingOrAge;
+                    scenarioObj.MortgageExistingOrAge = inScenarioObj.filterdata.mortgageExistingOrAge;
+                    
                     gpaE.SavedScenarios.Add(scenarioObj);
                     gpaE.SaveChanges();
                     return scenarioObj.ScenarioId;

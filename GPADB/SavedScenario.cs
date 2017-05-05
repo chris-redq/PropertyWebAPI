@@ -38,9 +38,10 @@ namespace GPADB
         public string Servicer { get; set; }
         public string Landmark { get; set; }
         public string HasFHA { get; set; }
-        public string SatisfiedMortgages { get; set; }
         public string DeedAge { get; set; }
         public string TaxLiensSoldYear { get; set; }
         public string TaxLiensSoldTotal { get; set; }
+        public string MortgageExistingOrAge { get; set; }
+        public string OwnerLivingOrAge { get; set; }
     }
 }

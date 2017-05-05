@@ -4,6 +4,11 @@
     <EntitySetMapping Name="vwGeneralPropertyInformations">
       <EntityTypeMapping TypeName="GPADBModel.vwGeneralPropertyInformation">
         <MappingFragment StoreEntitySet="vwGeneralPropertyInformation">
+          <ScalarProperty Name="TaxLiensSold" ColumnName="TaxLiensSold" />
+          <ScalarProperty Name="TaxLienSoldAmount" ColumnName="TaxLienSoldAmount" />
+          <ScalarProperty Name="LivingOrMinOwnerAge" ColumnName="LivingOrMinOwnerAge" />
+          <ScalarProperty Name="DeedAgeInMonths" ColumnName="DeedAgeInMonths" />
+          <ScalarProperty Name="ExistingOrMinMortgageAge" ColumnName="ExistingOrMinMortgageAge" />
           <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
           <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
           <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
@@ -46,7 +51,6 @@
           <ScalarProperty Name="COSPresent" ColumnName="COSPresent" />
           <ScalarProperty Name="MortgageForeclosureActiveCases" ColumnName="MortgageForeclosureActiveCases" />
           <ScalarProperty Name="MortgageForeclosureLPs" ColumnName="MortgageForeclosureLPs" />
-          <ScalarProperty Name="TaxLienSoldAmount" ColumnName="TaxLienSoldAmount" />
           <ScalarProperty Name="TaxLienActiveCases" ColumnName="TaxLienActiveCases" />
           <ScalarProperty Name="TaxLienLPs" ColumnName="TaxLienLPs" />
           <ScalarProperty Name="PoolA" ColumnName="PoolA" />
@@ -91,8 +95,9 @@
         <MappingFragment StoreEntitySet="vwGeneralLeadInformation">
           <ScalarProperty Name="TaxLiensSold" ColumnName="TaxLiensSold" />
           <ScalarProperty Name="TaxLienSoldAmount" ColumnName="TaxLienSoldAmount" />
+          <ScalarProperty Name="LivingOrMinOwnerAge" ColumnName="LivingOrMinOwnerAge" />
           <ScalarProperty Name="DeedAgeInMonths" ColumnName="DeedAgeInMonths" />
-          <ScalarProperty Name="MortgagesSatisfied" ColumnName="MortgagesSatisfied" />
+          <ScalarProperty Name="ExistingOrMinMortgageAge" ColumnName="ExistingOrMinMortgageAge" />
           <ScalarProperty Name="ServicerName" ColumnName="ServicerName" />
           <ScalarProperty Name="IsLandmark" ColumnName="IsLandmark" />
           <ScalarProperty Name="IsSRORestricted" ColumnName="IsSRORestricted" />
@@ -174,15 +179,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
-    <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
     <EntitySetMapping Name="SavedScenarios">
       <EntityTypeMapping TypeName="GPADBModel.SavedScenario">
         <MappingFragment StoreEntitySet="SavedScenario">
+          <ScalarProperty Name="OwnerLivingOrAge" ColumnName="OwnerLivingOrAge" />
+          <ScalarProperty Name="MortgageExistingOrAge" ColumnName="MortgageExistingOrAge" />
           <ScalarProperty Name="TaxLiensSoldTotal" ColumnName="TaxLiensSoldTotal" />
           <ScalarProperty Name="TaxLiensSoldYear" ColumnName="TaxLiensSoldYear" />
           <ScalarProperty Name="DeedAge" ColumnName="DeedAge" />
-          <ScalarProperty Name="SatisfiedMortgages" ColumnName="SatisfiedMortgages" />
           <ScalarProperty Name="HasFHA" ColumnName="HasFHA" />
           <ScalarProperty Name="Landmark" ColumnName="Landmark" />
           <ScalarProperty Name="Servicer" ColumnName="Servicer" />
@@ -210,5 +214,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
+    <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
   </EntityContainerMapping>
 </Mapping>
