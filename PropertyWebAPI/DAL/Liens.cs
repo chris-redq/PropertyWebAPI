@@ -15,7 +15,7 @@ namespace PropertyWebAPI.DAL
     using AutoMapper;
     using Newtonsoft.Json;
 
-    public class TaxLienSoldNYC: TaxLienSold
+    public class TaxLienSoldNYC: vwTaxLienSoldExpanded
     {
 
     }
@@ -74,9 +74,9 @@ namespace PropertyWebAPI.DAL
         {
             using (NYCDOFEntities nycdofE = new NYCDOFEntities())
             {
-                return Mapper.Map<List<TaxLienSold>, List <TaxLienSoldNYC>>(nycdofE.TaxLienSolds
-                                                                                   .Where(i => i.BBL == propertyBBL)
-                                                                                   .OrderBy(i=> i.Year).ToList());
+                return Mapper.Map<List<vwTaxLienSoldExpanded>, List <TaxLienSoldNYC>>(nycdofE.vwTaxLienSoldExpandeds
+                                                                                             .Where(i => i.BBL == propertyBBL)
+                                                                                             .OrderBy(i=> i.Year).ToList());
             }
         }
     }

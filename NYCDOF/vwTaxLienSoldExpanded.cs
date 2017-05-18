@@ -12,7 +12,7 @@ namespace NYCDOF
     using System;
     using System.Collections.Generic;
     
-    public partial class TaxLienSold
+    public partial class vwTaxLienSoldExpanded
     {
         public int Year { get; set; }
         public string BBL { get; set; }
@@ -30,5 +30,6 @@ namespace NYCDOF
         public Nullable<decimal> DOFInterestRate { get; set; }
         public Nullable<decimal> DEPInterestRate { get; set; }
         public string Schedule { get; set; }
+        public Nullable<decimal> PotentialLienDebt { get; set; }
     }
 }

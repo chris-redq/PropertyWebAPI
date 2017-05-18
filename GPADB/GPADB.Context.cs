@@ -30,8 +30,13 @@ namespace GPADB
         public virtual DbSet<vwGeneralPropertyInformation> vwGeneralPropertyInformations { get; set; }
         public virtual DbSet<vwGeneralLeadInformation> vwGeneralLeadInformations { get; set; }
         public virtual DbSet<SavedScenario> SavedScenarios { get; set; }
+        public virtual DbSet<SelectScenarioProperty> SelectScenarioProperties { get; set; }
+        public virtual DbSet<SelectListProperty> SelectListProperties { get; set; }
+        public virtual DbSet<SavedList> SavedLists { get; set; }
+        public virtual DbSet<Lead> Leads { get; set; }
+        public virtual DbSet<LeadArchive> LeadArchives { get; set; }
     
-        public virtual int GetPropertyLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA, string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal, string ownerLivingAge, string mortgageExistingAge)
+        public virtual int GetPropertyLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA, string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal, string ownerLivingAge, string mortgageExistingAge, string userName)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -129,10 +134,14 @@ namespace GPADB
                 new ObjectParameter("MortgageExistingAge", mortgageExistingAge) :
                 new ObjectParameter("MortgageExistingAge", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetPropertyLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter, deedAgeParameter, taxLiensSoldYearParameter, taxLiensSoldTotalParameter, ownerLivingAgeParameter, mortgageExistingAgeParameter);
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetPropertyLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter, deedAgeParameter, taxLiensSoldYearParameter, taxLiensSoldTotalParameter, ownerLivingAgeParameter, mortgageExistingAgeParameter, userNameParameter);
         }
     
-        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA, string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal, string ownerLivingAge, string mortgageExistingAge)
+        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA, string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal, string ownerLivingAge, string mortgageExistingAge, string userName)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -230,10 +239,14 @@ namespace GPADB
                 new ObjectParameter("MortgageExistingAge", mortgageExistingAge) :
                 new ObjectParameter("MortgageExistingAge", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter, deedAgeParameter, taxLiensSoldYearParameter, taxLiensSoldTotalParameter, ownerLivingAgeParameter, mortgageExistingAgeParameter);
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter, deedAgeParameter, taxLiensSoldYearParameter, taxLiensSoldTotalParameter, ownerLivingAgeParameter, mortgageExistingAgeParameter, userNameParameter);
         }
     
-        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA, string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal, string ownerLivingAge, string mortgageExistingAge, MergeOption mergeOption)
+        public virtual ObjectResult<vwGeneralLeadInformation> GetLeads(string zipCodes, string buildingClassCodes, string counties, string vacant, string mailingAddressActive, string violations, string cities, string neighborhoods, string states, string lienTypes, string leadGrades, string lTV, string equity, string hasFannie, string hasFreddie, string unbuiltArea, string servicer, string landmark, string hasFHA, string deedAge, string taxLiensSoldYear, string taxLiensSoldTotal, string ownerLivingAge, string mortgageExistingAge, string userName, MergeOption mergeOption)
         {
             var zipCodesParameter = zipCodes != null ?
                 new ObjectParameter("ZipCodes", zipCodes) :
@@ -331,7 +344,11 @@ namespace GPADB
                 new ObjectParameter("MortgageExistingAge", mortgageExistingAge) :
                 new ObjectParameter("MortgageExistingAge", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", mergeOption, zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter, deedAgeParameter, taxLiensSoldYearParameter, taxLiensSoldTotalParameter, ownerLivingAgeParameter, mortgageExistingAgeParameter);
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vwGeneralLeadInformation>("GetLeads", mergeOption, zipCodesParameter, buildingClassCodesParameter, countiesParameter, vacantParameter, mailingAddressActiveParameter, violationsParameter, citiesParameter, neighborhoodsParameter, statesParameter, lienTypesParameter, leadGradesParameter, lTVParameter, equityParameter, hasFannieParameter, hasFreddieParameter, unbuiltAreaParameter, servicerParameter, landmarkParameter, hasFHAParameter, deedAgeParameter, taxLiensSoldYearParameter, taxLiensSoldTotalParameter, ownerLivingAgeParameter, mortgageExistingAgeParameter, userNameParameter);
         }
     }
 }

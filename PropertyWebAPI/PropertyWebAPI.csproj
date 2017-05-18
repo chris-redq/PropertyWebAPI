@@ -229,6 +229,7 @@
     <Compile Include="BAL\Portal.cs" />
     <Compile Include="BAL\Property.cs" />
     <Compile Include="BAL\Results.cs" />
+    <Compile Include="BAL\WebData.cs" />
     <Compile Include="Common\Statistics.cs" />
     <Compile Include="Controllers\CMAController.cs" />
     <Compile Include="Controllers\CourtsController.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="DAL\Request.cs" />
     <Compile Include="DAL\RequestType.cs" />
     <Compile Include="DAL\Violations.cs" />
+    <Compile Include="DefaultExceptionAttribute.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

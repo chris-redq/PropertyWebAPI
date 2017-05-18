@@ -1589,57 +1589,25 @@
             This controller handles all api requests associated with property leads
             </summary>  
         </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(PropertyWebAPI.DAL.Query)">
+            <summary>  
+            Use this api to get a list of leads satisfying the filters provided. At least one filter must exist. All filters support
+            multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
+            </summary>  
+            <param name="query">Filters for the Lead List</param>
+            <returns>Returns a list of filtered leads (properties)</returns>
+        </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">
             <summary>Use this api to get a lead details</summary>  
             <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
             <returns>Returns lead details</returns>
-        </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>  
-            Use this api to get a list of leads satisfying the criteria provided. At least one filter must exist. All filters support
-            multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
-            </summary>  
-            <param name="counties">Optional parameter. Multiple values can be sent. No wildcards.</param>
-            <param name="buildingclasscodes">Optional parameter. Multiple values can be sent along with wildcards. For example: A*,B1</param>
-            <param name="ismailingaddressactive">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
-            <param name="isvacant">Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</param>
-            <param name="zipcodes">Optional parameter. Multiple values can be sent. No wildcards.</param>
-            <param name="violations">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
-            <param name="lientypes">Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS and ALL. 
-            By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
-            the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</param>
-            <param name="states">Optional parameter. Multiple values (state abbreviations) can be sent. No wildcards.</param>
-            <param name="cities">Optional parameter. Multiple values can be sent. No wildcards.</param>
-            <param name="leadgrades">Optional parameter. Multiple values can be sent. Valid values are A, B, C and D. No wildcards</param>
-            <param name="ltv">Optional parameter. Minimum one value, max two values can be sent. No wildcards</param>
-            <param name="neighborhoods">Optional parameter. Multiple values can be sent along with wildcards.</param>
-            <param name="equity">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
-            <param name="hasfannie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-            <param name="hasfreddie">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-            <param name="unbuilt">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-            <param name="servicer">Optional parameter. Multiple values can be sent along with wildcards.</param>
-            <param name="landmark">Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</param>
-            <param name="hasFHA">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-            <param name="satisfiedmortgages">Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</param>
-            <param name="deedage">Optional parameter. Always in months. Minimum one value, max two values can be sent. No wildcards.</param>
-            <param name="taxlienssoldtotal">Optional parameter. Minimum one value, max two values can be sent. No wildcards.</param>
-            <param name="taxlienssoldyear">Optional parameter. Multiple values can be sent. No wildcards.</param>
-            <returns>Returns a list of leads (properties)</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetScenarios(System.String)">
             <summary>  
             Use this api to get a list of all scenarios saved for a user
             </summary>  
             <param name="username">User name associated with scenarios</param>
-            <returns>Returns a list of filtered leads (properties)</returns>
-        </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetFilteredLeads(PropertyWebAPI.DAL.Filters)">
-            <summary>  
-            Use this api to get a list of leads satisfying the filters provided. At least one filter must exist. All filters support
-            multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
-            </summary>  
-            <param name="filterdata">Filters for the Lead List</param>
-            <returns>Returns a list of filtered leads (properties)</returns>
+            <returns>A list of scenarios names and relevant data</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.SaveScenario(PropertyWebAPI.DAL.Scenario)">
             <summary>  
@@ -1648,6 +1616,47 @@
             For more details refer to the documentation for each filter.
             </summary>  
             <param name="scenarioObj"></param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.SaveList(PropertyWebAPI.DAL.List)">
+            <summary>  
+            Use this api to save a new list and select list of properties. 
+            </summary>  
+            <param name="listObj"></param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.UpdateList(System.Int64,PropertyWebAPI.DAL.List)">
+            <summary>  
+            Use this api to update an existing list's attributes and/or select list of properties.
+            </summary>  
+            <param name="listid"></param>
+            <param name="listObj">All attributes are optional, but at least one attribute must exist to make the call meaningful</param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.AddPropertyToList(System.Int64,System.Collections.Generic.List{System.String})">
+            <summary>  
+            Use this api to save additional properties to an existing list. 
+            </summary>  
+            <param name="listid"></param>
+            <param name="bbllist">List of properties to be added to the list</param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.RemovePropertyFromList(System.Int64,System.Collections.Generic.List{System.String})">
+            <summary>  
+            Use this api to remove a set of properties from an existing list. 
+            </summary>  
+            <param name="listid"></param>
+            <param name="bbllist">List of properties to be removed from the list</param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLists(System.String)">
+            <summary>  
+            Use this api to get a list of all user lists saved
+            </summary>  
+            <param name="username">User name associated with lists</param>
+            <returns>A list of list names and relevant data</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.AddLeads(System.Collections.Generic.List{PropertyWebAPI.DAL.LeadInput},System.String)">
+            <summary>  
+            Use this api to add new leads. 
+            </summary>  
+            <param name="leadlist">List of properties and their lead types to be added to the GPA system</param>
+            <param name="externalReferenceId">External Reference Id used by the calling systems to track callbacks</param>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LiensController.GetPropertyLiens(System.String)">
             <summary>  
@@ -2533,7 +2542,7 @@
             <summary>Optional parameter. Valid Values are Y, N or blank. If you send any other value the filter is ignored</summary>
         </member>
         <member name="P:PropertyWebAPI.DAL.Filters.lientypes">
-            <summary>Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS and ALL. 
+            <summary>Optional parameter. Multiple values can be sent. Valid values are MORTGAGE FORECLOSURES, TAX LIENS, TAX LIEN LPS, TAX LIEN LIST and ALL. 
             By default if multiple values are provided the filter applies the OR operator between them. Add an additional value OPERATORAND if
             the operator of choice is AND instead of OR. Eg: 1) MORTGAGE FORECLOSURES,TAX LIENS 2) ALL,OPERATORAND</summary>
         </member>
@@ -2570,9 +2579,6 @@
         <member name="P:PropertyWebAPI.DAL.Filters.hasFHA">
             <summary>Optional parameter. Valid Values are Y, N. Any other value the filter is ignored</summary>
         </member>
-        <member name="P:PropertyWebAPI.DAL.Filters.satisfiedMortgages">
-            <summary>Optional parameter. Multiple values can be sent along. Valid values are Y, N, NULL and NOT NULL.</summary>
-        </member>
         <member name="P:PropertyWebAPI.DAL.Filters.deedAge">
             <summary>Optional parameter. Always in months. Minimum one value, max two values can be sent. No wildcards.</summary>
         </member>
@@ -2581,6 +2587,18 @@
         </member>
         <member name="P:PropertyWebAPI.DAL.Filters.taxLiensSoldTotal">
             <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards.</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.ownerLivingOrAge">
+            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards. -1 looks for deceased owner(s). 
+            In case there are multiple owners, all owners must be deceased for the lead to qualify for this criteria. 
+            A single positive number looks for owner(s) with age >= than the number provided. When two positive numbers are provided the owner(s) 
+            age must be between the range provided. In case of multiple owners the minimum of the age is considered for query purposes </summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.Filters.mortgageExistingOrAge">
+            <summary>Optional parameter. Minimum one value, max two values can be sent. No wildcards. -1 means no unsatisfied mortgages ie.  
+            no open mortgages. A single positive number looks for mortgage(s) older than the number provided (mortgage age is in Months). When two 
+            positive numbers are provided the mortgage(s) age must be between the range provided. In case of multiple mortgages the minimum of 
+            the age is considered for query purposes </summary>
         </member>
         <member name="P:PropertyWebAPI.DAL.Scenario.username">
             <summary>Name of the user saving the scenario</summary>
@@ -2594,6 +2612,27 @@
         <member name="F:PropertyWebAPI.DAL.Scenario.filterdata">
             <summary>Filters for the Lead List</summary>
         </member>
+        <member name="F:PropertyWebAPI.DAL.Scenario.selectPropertyList">
+            <summary>List of selected properties (List of BBLs)</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.List.username">
+            <summary>Name of the user saving the scenario</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.List.listName">
+            <summary>Name of the scenario</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.List.description">
+            <summary>Description of the scenario</summary>
+        </member>
+        <member name="F:PropertyWebAPI.DAL.List.selectPropertyList">
+            <summary>List of selected properties (List of BBLs)</summary>
+        </member>
+        <member name="F:PropertyWebAPI.DAL.LeadInput.propertybbl">
+            <summary>BBL of the Lead</summary>
+        </member>
+        <member name="F:PropertyWebAPI.DAL.LeadInput.leadtype">
+            <summary>Type of lead 1 - Miscellaneous</summary>
+        </member>
         <member name="P:PropertyWebAPI.DAL.ScenarioListData.ScenarioId">
             <summary>Unique Scenario ID</summary>
         </member>
@@ -2605,6 +2644,18 @@
         </member>
         <member name="P:PropertyWebAPI.DAL.ScenarioListData.Description">
             <summary>Description of the filters associated with the scenario. This is provided by the front-end when a save scenario request is made</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.ListId">
+            <summary>Unique List ID</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.ListName">
+            <summary>List Name provided by the User</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.DateTimeSaved">
+            <summary>UTC date and time when list was saved</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.Description">
+            <summary>Optional - Description of the list. This is provided by the front-end when a save scenario request is made</summary>
         </member>
         <member name="T:PropertyWebAPI.DAL.Request">
             <summary>

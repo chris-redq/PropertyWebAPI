@@ -5,6 +5,45 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GPADBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Lead">
+          <Key>
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TaxLienList" Type="int" />
+          <Property Name="TaxLienSold" Type="int" />
+          <Property Name="MortgageForeclosureLienLP" Type="int" />
+          <Property Name="TaxLienLP" Type="int" />
+          <Property Name="Source" Type="int" />
+          <Property Name="LastUpdateDate" Type="datetime" />
+          <Property Name="LeadType" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'GPADB.app.LeadArchive' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LeadArchive">
+          <Key>
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TaxLienList" Type="int" />
+          <Property Name="TaxLienSold" Type="int" />
+          <Property Name="MortgageForeclosureLienLP" Type="int" />
+          <Property Name="TaxLienLP" Type="int" />
+          <Property Name="Source" Type="int" />
+          <Property Name="LastUpdateDate" Type="datetime" />
+          <Property Name="Operation" Type="char" MaxLength="1" />
+          <Property Name="LeadType" Type="int" />
+        </EntityType>
+        <EntityType Name="SavedList">
+          <Key>
+            <PropertyRef Name="ListId" />
+          </Key>
+          <Property Name="ListId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ListName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateTimeSaved" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="4000" />
+        </EntityType>
         <EntityType Name="SavedScenario">
           <Key>
             <PropertyRef Name="ScenarioId" />
@@ -38,6 +77,22 @@
           <Property Name="TaxLiensSoldTotal" Type="varchar" MaxLength="1000" />
           <Property Name="MortgageExistingOrAge" Type="varchar" MaxLength="1000" />
           <Property Name="OwnerLivingOrAge" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="SelectListProperty">
+          <Key>
+            <PropertyRef Name="ListId" />
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="ListId" Type="bigint" Nullable="false" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SelectScenarioProperty">
+          <Key>
+            <PropertyRef Name="ScenarioId" />
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="ScenarioId" Type="bigint" Nullable="false" />
+          <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -223,6 +278,34 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
           <Property Name="TaxLiensSold" Type="int" />
         </EntityType>
+        <Association Name="FK_SelectListProperty_SavedList">
+          <End Role="SavedList" Type="Self.SavedList" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SelectListProperty" Type="Self.SelectListProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavedList">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="SelectListProperty">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SelectScenarioProperty_SaveScenario">
+          <End Role="SavedScenario" Type="Self.SavedScenario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SelectScenarioProperty" Type="Self.SelectScenarioProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavedScenario">
+              <PropertyRef Name="ScenarioId" />
+            </Principal>
+            <Dependent Role="SelectScenarioProperty">
+              <PropertyRef Name="ScenarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
           <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
           <Parameter Name="BuildingClassCodes" Type="varchar" Mode="In" />
@@ -248,9 +331,27 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Parameter Name="TaxLiensSoldTotal" Type="varchar" Mode="In" />
           <Parameter Name="OwnerLivingAge" Type="varchar" Mode="In" />
           <Parameter Name="MortgageExistingAge" Type="varchar" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="GPADBModelStoreContainer">
+          <EntitySet Name="Lead" EntityType="Self.Lead" Schema="app" store:Type="Tables" />
+          <EntitySet Name="SavedList" EntityType="Self.SavedList" Schema="app" store:Type="Tables" />
           <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
+          <EntitySet Name="SelectListProperty" EntityType="Self.SelectListProperty" Schema="app" store:Type="Tables" />
+          <EntitySet Name="SelectScenarioProperty" EntityType="Self.SelectScenarioProperty" Schema="app" store:Type="Tables" />
+          <EntitySet Name="LeadArchive" EntityType="Self.LeadArchive" store:Type="Tables" store:Schema="app">
+            <DefiningQuery>SELECT 
+    [LeadArchive].[BBL] AS [BBL], 
+    [LeadArchive].[TaxLienList] AS [TaxLienList], 
+    [LeadArchive].[TaxLienSold] AS [TaxLienSold], 
+    [LeadArchive].[MortgageForeclosureLienLP] AS [MortgageForeclosureLienLP], 
+    [LeadArchive].[TaxLienLP] AS [TaxLienLP], 
+    [LeadArchive].[Source] AS [Source], 
+    [LeadArchive].[LastUpdateDate] AS [LastUpdateDate], 
+    [LeadArchive].[Operation] AS [Operation], 
+    [LeadArchive].[LeadType] AS [LeadType]
+    FROM [app].[LeadArchive] AS [LeadArchive]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwGeneralLeadInformation" EntityType="Self.vwGeneralLeadInformation" store:Type="Views" store:Schema="app">
             <DefiningQuery>SELECT 
     [vwGeneralLeadInformation].[BBLE] AS [BBLE], 
@@ -425,6 +526,14 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralPropertyInformation].[TaxLiensSold] AS [TaxLiensSold]
     FROM [app].[vwGeneralPropertyInformation] AS [vwGeneralPropertyInformation]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_SelectListProperty_SavedList" Association="Self.FK_SelectListProperty_SavedList">
+            <End Role="SavedList" EntitySet="SavedList" />
+            <End Role="SelectListProperty" EntitySet="SelectListProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SelectScenarioProperty_SaveScenario" Association="Self.FK_SelectScenarioProperty_SaveScenario">
+            <End Role="SavedScenario" EntitySet="SavedScenario" />
+            <End Role="SelectScenarioProperty" EntitySet="SelectScenarioProperty" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -434,6 +543,19 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
           <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
           <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
+          <EntitySet Name="SelectScenarioProperties" EntityType="GPADBModel.SelectScenarioProperty" />
+          <AssociationSet Name="FK_SelectScenarioProperty_SaveScenario" Association="GPADBModel.FK_SelectScenarioProperty_SaveScenario">
+            <End Role="SavedScenario" EntitySet="SavedScenarios" />
+            <End Role="SelectScenarioProperty" EntitySet="SelectScenarioProperties" />
+          </AssociationSet>
+          <EntitySet Name="SelectListProperties" EntityType="GPADBModel.SelectListProperty" />
+          <EntitySet Name="SavedLists" EntityType="GPADBModel.SavedList" />
+          <AssociationSet Name="FK_SelectListProperty_SavedList" Association="GPADBModel.FK_SelectListProperty_SavedList">
+            <End Role="SavedList" EntitySet="SavedLists" />
+            <End Role="SelectListProperty" EntitySet="SelectListProperties" />
+          </AssociationSet>
+          <EntitySet Name="Leads" EntityType="GPADBModel.Lead" />
+          <EntitySet Name="LeadArchives" EntityType="GPADBModel.LeadArchive" />
           <FunctionImport Name="GetPropertyLeads">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
             <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -459,6 +581,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
             <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
             <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
             <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
             <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -485,6 +608,7 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
             <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
             <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
             <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="vwGeneralPropertyInformation">
@@ -700,6 +824,91 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
           <Property Name="TaxLiensSoldTotal" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="MortgageExistingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="OwnerLivingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SelectScenarioProperties" Relationship="GPADBModel.FK_SelectScenarioProperty_SaveScenario" FromRole="SavedScenario" ToRole="SelectScenarioProperty" />
+        </EntityType>
+        <EntityType Name="SelectScenarioProperty">
+          <Key>
+            <PropertyRef Name="ScenarioId" />
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="ScenarioId" Type="Int64" Nullable="false" />
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SavedScenario" Relationship="GPADBModel.FK_SelectScenarioProperty_SaveScenario" FromRole="SelectScenarioProperty" ToRole="SavedScenario" />
+        </EntityType>
+        <Association Name="FK_SelectScenarioProperty_SaveScenario">
+          <End Type="GPADBModel.SavedScenario" Role="SavedScenario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="GPADBModel.SelectScenarioProperty" Role="SelectScenarioProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavedScenario">
+              <PropertyRef Name="ScenarioId" />
+            </Principal>
+            <Dependent Role="SelectScenarioProperty">
+              <PropertyRef Name="ScenarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SelectListProperty">
+          <Key>
+            <PropertyRef Name="ListId" />
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="ListId" Type="Int64" Nullable="false" />
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SavedList" Relationship="GPADBModel.FK_SelectListProperty_SavedList" FromRole="SelectListProperty" ToRole="SavedList" />
+        </EntityType>
+        <EntityType Name="SavedList">
+          <Key>
+            <PropertyRef Name="ListId" />
+          </Key>
+          <Property Name="ListId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ListName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SelectListProperties" Relationship="GPADBModel.FK_SelectListProperty_SavedList" FromRole="SavedList" ToRole="SelectListProperty" />
+        </EntityType>
+        <Association Name="FK_SelectListProperty_SavedList">
+          <End Type="GPADBModel.SavedList" Role="SavedList" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="GPADBModel.SelectListProperty" Role="SelectListProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavedList">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="SelectListProperty">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Lead">
+          <Key>
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TaxLienList" Type="Int32" />
+          <Property Name="TaxLienSold" Type="Int32" />
+          <Property Name="MortgageForeclosureLienLP" Type="Int32" />
+          <Property Name="TaxLienLP" Type="Int32" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="LeadType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LeadArchive">
+          <Key>
+            <PropertyRef Name="BBL" />
+          </Key>
+          <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TaxLienList" Type="Int32" />
+          <Property Name="TaxLienSold" Type="Int32" />
+          <Property Name="MortgageForeclosureLienLP" Type="Int32" />
+          <Property Name="TaxLienLP" Type="Int32" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Operation" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LeadType" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -917,6 +1126,62 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ScenarioName" ColumnName="ScenarioName" />
                 <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SelectScenarioProperties">
+            <EntityTypeMapping TypeName="GPADBModel.SelectScenarioProperty">
+              <MappingFragment StoreEntitySet="SelectScenarioProperty">
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SelectListProperties">
+            <EntityTypeMapping TypeName="GPADBModel.SelectListProperty">
+              <MappingFragment StoreEntitySet="SelectListProperty">
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+                <ScalarProperty Name="ListId" ColumnName="ListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SavedLists">
+            <EntityTypeMapping TypeName="GPADBModel.SavedList">
+              <MappingFragment StoreEntitySet="SavedList">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateTimeSaved" ColumnName="DateTimeSaved" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ListName" ColumnName="ListName" />
+                <ScalarProperty Name="ListId" ColumnName="ListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leads">
+            <EntityTypeMapping TypeName="GPADBModel.Lead">
+              <MappingFragment StoreEntitySet="Lead">
+                <ScalarProperty Name="LeadType" ColumnName="LeadType" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="TaxLienLP" ColumnName="TaxLienLP" />
+                <ScalarProperty Name="MortgageForeclosureLienLP" ColumnName="MortgageForeclosureLienLP" />
+                <ScalarProperty Name="TaxLienSold" ColumnName="TaxLienSold" />
+                <ScalarProperty Name="TaxLienList" ColumnName="TaxLienList" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LeadArchives">
+            <EntityTypeMapping TypeName="GPADBModel.LeadArchive">
+              <MappingFragment StoreEntitySet="LeadArchive">
+                <ScalarProperty Name="LeadType" ColumnName="LeadType" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="TaxLienLP" ColumnName="TaxLienLP" />
+                <ScalarProperty Name="MortgageForeclosureLienLP" ColumnName="MortgageForeclosureLienLP" />
+                <ScalarProperty Name="TaxLienSold" ColumnName="TaxLienSold" />
+                <ScalarProperty Name="TaxLienList" ColumnName="TaxLienList" />
+                <ScalarProperty Name="BBL" ColumnName="BBL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

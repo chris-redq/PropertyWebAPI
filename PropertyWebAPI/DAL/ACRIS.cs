@@ -36,7 +36,7 @@ namespace PropertyWebAPI.DAL
 
     public class DocumentDetail : tfnGetDocuments_Result
     {
-
+        public List<DocumentParty> Parties;
     }
 
     public class MortgageRelatedDocumentDetail
@@ -82,9 +82,19 @@ namespace PropertyWebAPI.DAL
         {
             using (ACRISEntities acrisDBEntities = new ACRISEntities())
             {
-                return Mapper.Map<List<tfnGetDocuments_Result>, List<DocumentDetail>>(acrisDBEntities.tfnGetDocuments(propertyBBL, null)
-                                                                                                       .OrderByDescending(m => (m.DocumentDate != null) ? m.DocumentDate : m.DateRecorded)
-                                                                                                       .ToList());
+                var resList = Mapper.Map<List<tfnGetDocuments_Result>, List<DocumentDetail>>(acrisDBEntities.tfnGetDocuments(propertyBBL, null)
+                                                                                                            .OrderByDescending(m => (m.DocumentDate != null) ? m.DocumentDate : m.DateRecorded)
+                                                                                                            .ToList());
+                foreach (var doc in resList)
+                {
+                    foreach (tfnGetDocumentParties_Result a in acrisDBEntities.tfnGetDocumentParties(doc.UniqueKey, null).OrderBy(x => x.PartyTypeCode).ToList())
+                    {
+                        if (doc.Parties == null)
+                            doc.Parties = new List<DocumentParty>();
+                        doc.Parties.Add(Mapper.Map<DocumentParty>(a));
+                    }
+                }
+                return resList; 
             }
         }
 
@@ -92,10 +102,20 @@ namespace PropertyWebAPI.DAL
         {
             using (ACRISEntities acrisDBEntities = new ACRISEntities())
             {
-                return Mapper.Map<List<tfnGetDocuments_Result>, List<DocumentDetail>>(acrisDBEntities.tfnGetDocuments(propertyBBL, null)
-                                                                                                     .Where(i => i.DocumentType == "DEED" || i.DocumentType == "DEEDO")
-                                                                                                     .OrderByDescending(m => (m.DocumentDate != null) ? m.DocumentDate : m.DateRecorded)
-                                                                                                     .ToList());
+                var resList = Mapper.Map<List<tfnGetDocuments_Result>, List<DocumentDetail>>(acrisDBEntities.tfnGetDocuments(propertyBBL, null)
+                                                                                                            .Where(i => i.DocumentType == "DEED" || i.DocumentType == "DEEDO")
+                                                                                                            .OrderByDescending(m => (m.DocumentDate != null) ? m.DocumentDate : m.DateRecorded)
+                                                                                                            .ToList());
+                foreach (var doc in resList)
+                {
+                    foreach (tfnGetDocumentParties_Result a in acrisDBEntities.tfnGetDocumentParties(doc.UniqueKey, null).OrderBy(x=> x.PartyTypeCode).ToList())
+                    {
+                        if (doc.Parties == null)
+                            doc.Parties = new List<DocumentParty>();
+                        doc.Parties.Add(Mapper.Map<DocumentParty>(a));
+                    }
+                }
+                return resList;
             }
         }
 

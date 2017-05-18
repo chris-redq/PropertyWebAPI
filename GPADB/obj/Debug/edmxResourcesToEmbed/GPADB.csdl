@@ -3,6 +3,20 @@
   <EntityContainer Name="GPADBEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
     <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
+    <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
+    <EntitySet Name="SelectScenarioProperties" EntityType="GPADBModel.SelectScenarioProperty" />
+    <AssociationSet Name="FK_SelectScenarioProperty_SaveScenario" Association="GPADBModel.FK_SelectScenarioProperty_SaveScenario">
+      <End Role="SavedScenario" EntitySet="SavedScenarios" />
+      <End Role="SelectScenarioProperty" EntitySet="SelectScenarioProperties" />
+    </AssociationSet>
+    <EntitySet Name="SelectListProperties" EntityType="GPADBModel.SelectListProperty" />
+    <EntitySet Name="SavedLists" EntityType="GPADBModel.SavedList" />
+    <AssociationSet Name="FK_SelectListProperty_SavedList" Association="GPADBModel.FK_SelectListProperty_SavedList">
+      <End Role="SavedList" EntitySet="SavedLists" />
+      <End Role="SelectListProperty" EntitySet="SelectListProperties" />
+    </AssociationSet>
+    <EntitySet Name="Leads" EntityType="GPADBModel.Lead" />
+    <EntitySet Name="LeadArchives" EntityType="GPADBModel.LeadArchive" />
     <FunctionImport Name="GetPropertyLeads">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
       <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -23,10 +37,12 @@
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
       <Parameter Name="HasFHA" Mode="In" Type="String" />
-      <Parameter Name="MortgagesSatisfied" Mode="In" Type="String" />
       <Parameter Name="DeedAge" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldYear" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
+      <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
+      <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -48,12 +64,13 @@
       <Parameter Name="Servicer" Mode="In" Type="String" />
       <Parameter Name="Landmark" Mode="In" Type="String" />
       <Parameter Name="HasFHA" Mode="In" Type="String" />
-      <Parameter Name="MortgagesSatisfied" Mode="In" Type="String" />
       <Parameter Name="DeedAge" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldYear" Mode="In" Type="String" />
       <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
+      <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
+      <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
   </EntityContainer>
   <EntityType Name="vwGeneralPropertyInformation">
     <Key>
@@ -84,20 +101,19 @@
     <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="NeighborhoodName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
     <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
     <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="Decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="Decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="Double" />
     <Property Name="TaxLienList" Type="Int32" />
     <Property Name="PoolA" Type="Boolean" />
     <Property Name="TaxLienLPs" Type="Int32" />
     <Property Name="TaxLienActiveCases" Type="Int32" />
-    <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
     <Property Name="MortgageForeclosureLPs" Type="Int32" />
     <Property Name="MortgageForeclosureActiveCases" Type="Int32" />
     <Property Name="COSPresent" Type="Int32" />
@@ -140,13 +156,17 @@
     <Property Name="IsSRORestricted" Type="Int32" />
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ExistingOrMinMortgageAge" Type="Int32" />
+    <Property Name="DeedAgeInMonths" Type="Int32" />
+    <Property Name="LivingOrMinOwnerAge" Type="Int32" />
+    <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="TaxLiensSold" Type="Int32" />
   </EntityType>
   <EntityType Name="vwGeneralLeadInformation">
     <Key>
       <PropertyRef Name="BBLE" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
-      <PropertyRef Name="MortgagesSatisfied" />
     </Key>
     <Property Name="BBLE" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
     <Property Name="TaxClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
@@ -171,14 +191,14 @@
     <Property Name="StreetNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ZipCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="NeighborhoodName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="NeighborhoodName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="NTACode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
     <Property Name="Zoning" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
     <Property Name="UnitNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="East" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="Decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="Decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="Decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="Decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="Decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="Double" />
     <Property Name="TaxLienList" Type="Int32" />
     <Property Name="PoolA" Type="Boolean" />
@@ -226,8 +246,9 @@
     <Property Name="IsSRORestricted" Type="Int32" />
     <Property Name="IsLandmark" Type="Int32" />
     <Property Name="ServicerName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="MortgagesSatisfied" Type="Int32" Nullable="false" />
+    <Property Name="ExistingOrMinMortgageAge" Type="Int32" />
     <Property Name="DeedAgeInMonths" Type="Int32" />
+    <Property Name="LivingOrMinOwnerAge" Type="Int32" />
     <Property Name="TaxLienSoldAmount" Type="Decimal" Precision="38" Scale="2" />
     <Property Name="TaxLiensSold" Type="Int32" />
   </EntityType>
@@ -259,9 +280,95 @@
     <Property Name="Servicer" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="HasFHA" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="SatisfiedMortgages" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="DeedAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="TaxLiensSoldYear" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="TaxLiensSoldTotal" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="MortgageExistingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="OwnerLivingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SelectScenarioProperties" Relationship="GPADBModel.FK_SelectScenarioProperty_SaveScenario" FromRole="SavedScenario" ToRole="SelectScenarioProperty" />
+  </EntityType>
+  <EntityType Name="SelectScenarioProperty">
+    <Key>
+      <PropertyRef Name="ScenarioId" />
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="ScenarioId" Type="Int64" Nullable="false" />
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SavedScenario" Relationship="GPADBModel.FK_SelectScenarioProperty_SaveScenario" FromRole="SelectScenarioProperty" ToRole="SavedScenario" />
+  </EntityType>
+  <Association Name="FK_SelectScenarioProperty_SaveScenario">
+    <End Type="GPADBModel.SavedScenario" Role="SavedScenario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GPADBModel.SelectScenarioProperty" Role="SelectScenarioProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SavedScenario">
+        <PropertyRef Name="ScenarioId" />
+      </Principal>
+      <Dependent Role="SelectScenarioProperty">
+        <PropertyRef Name="ScenarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SelectListProperty">
+    <Key>
+      <PropertyRef Name="ListId" />
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="ListId" Type="Int64" Nullable="false" />
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SavedList" Relationship="GPADBModel.FK_SelectListProperty_SavedList" FromRole="SelectListProperty" ToRole="SavedList" />
+  </EntityType>
+  <EntityType Name="SavedList">
+    <Key>
+      <PropertyRef Name="ListId" />
+    </Key>
+    <Property Name="ListId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ListName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SelectListProperties" Relationship="GPADBModel.FK_SelectListProperty_SavedList" FromRole="SavedList" ToRole="SelectListProperty" />
+  </EntityType>
+  <Association Name="FK_SelectListProperty_SavedList">
+    <End Type="GPADBModel.SavedList" Role="SavedList" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GPADBModel.SelectListProperty" Role="SelectListProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SavedList">
+        <PropertyRef Name="ListId" />
+      </Principal>
+      <Dependent Role="SelectListProperty">
+        <PropertyRef Name="ListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Lead">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TaxLienList" Type="Int32" />
+    <Property Name="TaxLienSold" Type="Int32" />
+    <Property Name="MortgageForeclosureLienLP" Type="Int32" />
+    <Property Name="TaxLienLP" Type="Int32" />
+    <Property Name="Source" Type="Int32" />
+    <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="LeadType" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LeadArchive">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TaxLienList" Type="Int32" />
+    <Property Name="TaxLienSold" Type="Int32" />
+    <Property Name="MortgageForeclosureLienLP" Type="Int32" />
+    <Property Name="TaxLienLP" Type="Int32" />
+    <Property Name="Source" Type="Int32" />
+    <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="Operation" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="LeadType" Type="Int32" />
   </EntityType>
 </Schema>

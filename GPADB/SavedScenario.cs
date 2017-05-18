@@ -14,6 +14,12 @@ namespace GPADB
     
     public partial class SavedScenario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SavedScenario()
+        {
+            this.SelectScenarioProperties = new HashSet<SelectScenarioProperty>();
+        }
+    
         public long ScenarioId { get; set; }
         public string ScenarioName { get; set; }
         public string UserName { get; set; }
@@ -43,5 +49,8 @@ namespace GPADB
         public string TaxLiensSoldTotal { get; set; }
         public string MortgageExistingOrAge { get; set; }
         public string OwnerLivingOrAge { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SelectScenarioProperty> SelectScenarioProperties { get; set; }
     }
 }

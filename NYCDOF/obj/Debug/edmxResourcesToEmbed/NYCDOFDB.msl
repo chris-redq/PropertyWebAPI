@@ -35,9 +35,10 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <EntitySetMapping Name="TaxLienSolds">
-      <EntityTypeMapping TypeName="NYCDOFModel.TaxLienSold">
-        <MappingFragment StoreEntitySet="TaxLienSold">
+    <EntitySetMapping Name="vwTaxLienSoldExpandeds">
+      <EntityTypeMapping TypeName="NYCDOFModel.vwTaxLienSoldExpanded">
+        <MappingFragment StoreEntitySet="vwTaxLienSoldExpanded">
+          <ScalarProperty Name="PotentialLienDebt" ColumnName="PotentialLienDebt" />
           <ScalarProperty Name="Schedule" ColumnName="Schedule" />
           <ScalarProperty Name="DEPInterestRate" ColumnName="DEPInterestRate" />
           <ScalarProperty Name="DOFInterestRate" ColumnName="DOFInterestRate" />

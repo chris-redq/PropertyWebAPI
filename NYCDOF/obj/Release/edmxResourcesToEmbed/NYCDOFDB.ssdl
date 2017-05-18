@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="NYCDOFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="TaxLienSold">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'NYCDOF.dof.vwTaxLienSoldExpanded' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwTaxLienSoldExpanded">
     <Key>
       <PropertyRef Name="Year" />
       <PropertyRef Name="BBL" />
@@ -21,9 +23,8 @@
     <Property Name="DOFInterestRate" Type="decimal" Precision="18" Scale="2" />
     <Property Name="DEPInterestRate" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Schedule" Type="varchar" MaxLength="15" />
+    <Property Name="PotentialLienDebt" Type="decimal" Precision="19" Scale="2" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <Function Name="tfnGetGeneralPropertyInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dof">
     <Parameter Name="BBLE" Type="varchar" Mode="In" />
     <ReturnType>
@@ -62,6 +63,26 @@ warning 6002: The table/view 'NYCDOF.dof.vwTaxLien' does not have a primary key 
     </ReturnType>
   </Function>
   <EntityContainer Name="NYCDOFModelStoreContainer">
-    <EntitySet Name="TaxLienSold" EntityType="Self.TaxLienSold" Schema="dof" store:Type="Tables" />
+    <EntitySet Name="vwTaxLienSoldExpanded" EntityType="Self.vwTaxLienSoldExpanded" store:Type="Views" store:Schema="dof">
+      <DefiningQuery>SELECT 
+    [vwTaxLienSoldExpanded].[Year] AS [Year], 
+    [vwTaxLienSoldExpanded].[BBL] AS [BBL], 
+    [vwTaxLienSoldExpanded].[Address] AS [Address], 
+    [vwTaxLienSoldExpanded].[Owner] AS [Owner], 
+    [vwTaxLienSoldExpanded].[Property] AS [Property], 
+    [vwTaxLienSoldExpanded].[Other] AS [Other], 
+    [vwTaxLienSoldExpanded].[ERP] AS [ERP], 
+    [vwTaxLienSoldExpanded].[Environmental] AS [Environmental], 
+    [vwTaxLienSoldExpanded].[CIS] AS [CIS], 
+    [vwTaxLienSoldExpanded].[NoticingFees] AS [NoticingFees], 
+    [vwTaxLienSoldExpanded].[Surchages] AS [Surchages], 
+    [vwTaxLienSoldExpanded].[LienTotal] AS [LienTotal], 
+    [vwTaxLienSoldExpanded].[InterestRate] AS [InterestRate], 
+    [vwTaxLienSoldExpanded].[DOFInterestRate] AS [DOFInterestRate], 
+    [vwTaxLienSoldExpanded].[DEPInterestRate] AS [DEPInterestRate], 
+    [vwTaxLienSoldExpanded].[Schedule] AS [Schedule], 
+    [vwTaxLienSoldExpanded].[PotentialLienDebt] AS [PotentialLienDebt]
+    FROM [dof].[vwTaxLienSoldExpanded] AS [vwTaxLienSoldExpanded]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

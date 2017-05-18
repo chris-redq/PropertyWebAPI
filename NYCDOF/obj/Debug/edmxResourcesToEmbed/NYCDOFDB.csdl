@@ -34,9 +34,9 @@
     <FunctionImport Name="tfnGetGeneralPropertyInformation" IsComposable="true" ReturnType="Collection(NYCDOFModel.tfnGetGeneralPropertyInformation_Result)">
       <Parameter Name="BBLE" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="TaxLienSolds" EntityType="NYCDOFModel.TaxLienSold" />
+    <EntitySet Name="vwTaxLienSoldExpandeds" EntityType="NYCDOFModel.vwTaxLienSoldExpanded" />
   </EntityContainer>
-  <EntityType Name="TaxLienSold">
+  <EntityType Name="vwTaxLienSoldExpanded">
     <Key>
       <PropertyRef Name="Year" />
       <PropertyRef Name="BBL" />
@@ -57,5 +57,6 @@
     <Property Name="DOFInterestRate" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="DEPInterestRate" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Schedule" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="PotentialLienDebt" Type="Decimal" Precision="19" Scale="2" />
   </EntityType>
 </Schema>

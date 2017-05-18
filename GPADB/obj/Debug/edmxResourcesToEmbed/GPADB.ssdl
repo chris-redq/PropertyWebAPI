@@ -1,5 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GPADBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Lead">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TaxLienList" Type="int" />
+    <Property Name="TaxLienSold" Type="int" />
+    <Property Name="MortgageForeclosureLienLP" Type="int" />
+    <Property Name="TaxLienLP" Type="int" />
+    <Property Name="Source" Type="int" />
+    <Property Name="LastUpdateDate" Type="datetime" />
+    <Property Name="LeadType" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'GPADB.app.LeadArchive' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="LeadArchive">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TaxLienList" Type="int" />
+    <Property Name="TaxLienSold" Type="int" />
+    <Property Name="MortgageForeclosureLienLP" Type="int" />
+    <Property Name="TaxLienLP" Type="int" />
+    <Property Name="Source" Type="int" />
+    <Property Name="LastUpdateDate" Type="datetime" />
+    <Property Name="Operation" Type="char" MaxLength="1" />
+    <Property Name="LeadType" Type="int" />
+  </EntityType>
+  <EntityType Name="SavedList">
+    <Key>
+      <PropertyRef Name="ListId" />
+    </Key>
+    <Property Name="ListId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ListName" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DateTimeSaved" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="4000" />
+  </EntityType>
   <EntityType Name="SavedScenario">
     <Key>
       <PropertyRef Name="ScenarioId" />
@@ -28,10 +67,27 @@
     <Property Name="Servicer" Type="varchar" MaxLength="1000" />
     <Property Name="Landmark" Type="varchar" MaxLength="1000" />
     <Property Name="HasFHA" Type="varchar" MaxLength="1" />
-    <Property Name="SatisfiedMortgages" Type="varchar" MaxLength="1" />
     <Property Name="DeedAge" Type="varchar" MaxLength="1000" />
     <Property Name="TaxLiensSoldYear" Type="varchar" MaxLength="1000" />
     <Property Name="TaxLiensSoldTotal" Type="varchar" MaxLength="1000" />
+    <Property Name="MortgageExistingOrAge" Type="varchar" MaxLength="1000" />
+    <Property Name="OwnerLivingOrAge" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="SelectListProperty">
+    <Key>
+      <PropertyRef Name="ListId" />
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="ListId" Type="bigint" Nullable="false" />
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SelectScenarioProperty">
+    <Key>
+      <PropertyRef Name="ScenarioId" />
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="ScenarioId" Type="bigint" Nullable="false" />
+    <Property Name="BBL" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -40,7 +96,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
       <PropertyRef Name="BBLE" />
       <PropertyRef Name="Equity" />
       <PropertyRef Name="LTV" />
-      <PropertyRef Name="MortgagesSatisfied" />
     </Key>
     <Property Name="BBLE" Type="nvarchar" MaxLength="11" Nullable="false" />
     <Property Name="TaxClass" Type="nvarchar" MaxLength="2" />
@@ -65,14 +120,14 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
     <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
     <Property Name="StreetName" Type="varchar(max)" />
     <Property Name="ZipCode" Type="varchar" MaxLength="30" />
-    <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="250" />
     <Property Name="NTACode" Type="varchar" MaxLength="4" />
     <Property Name="Zoning" Type="nvarchar" MaxLength="9" />
     <Property Name="UnitNumber" Type="nvarchar" MaxLength="5" />
-    <Property Name="East" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="float" />
     <Property Name="TaxLienList" Type="int" />
     <Property Name="PoolA" Type="bit" />
@@ -120,8 +175,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralLeadInformation' does not have 
     <Property Name="IsSRORestricted" Type="int" />
     <Property Name="IsLandmark" Type="int" />
     <Property Name="ServicerName" Type="varchar" MaxLength="250" />
-    <Property Name="MortgagesSatisfied" Type="int" Nullable="false" />
+    <Property Name="ExistingOrMinMortgageAge" Type="int" />
     <Property Name="DeedAgeInMonths" Type="int" />
+    <Property Name="LivingOrMinOwnerAge" Type="int" />
     <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
     <Property Name="TaxLiensSold" Type="int" />
   </EntityType>
@@ -156,20 +212,19 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Property Name="StreetNumber" Type="varchar" MaxLength="30" />
     <Property Name="StreetName" Type="varchar(max)" />
     <Property Name="ZipCode" Type="varchar" MaxLength="30" />
-    <Property Name="NeighborhoodName" Type="varchar" MaxLength="60" />
+    <Property Name="NeighborhoodName" Type="varchar" MaxLength="250" />
     <Property Name="NTACode" Type="varchar" MaxLength="4" />
     <Property Name="Zoning" Type="nvarchar" MaxLength="9" />
     <Property Name="UnitNumber" Type="nvarchar" MaxLength="5" />
-    <Property Name="East" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="North" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Longitude" Type="decimal" Precision="28" Scale="4" />
-    <Property Name="Latitude" Type="decimal" Precision="28" Scale="4" />
+    <Property Name="East" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="North" Type="decimal" Precision="24" Scale="15" />
+    <Property Name="Longitude" Type="decimal" Precision="20" Scale="15" />
+    <Property Name="Latitude" Type="decimal" Precision="20" Scale="15" />
     <Property Name="ResidentialUnits" Type="float" />
     <Property Name="TaxLienList" Type="int" />
     <Property Name="PoolA" Type="bit" />
     <Property Name="TaxLienLPs" Type="int" />
     <Property Name="TaxLienActiveCases" Type="int" />
-    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
     <Property Name="MortgageForeclosureLPs" Type="int" />
     <Property Name="MortgageForeclosureActiveCases" Type="int" />
     <Property Name="COSPresent" Type="int" />
@@ -212,7 +267,40 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Property Name="IsSRORestricted" Type="int" />
     <Property Name="IsLandmark" Type="int" />
     <Property Name="ServicerName" Type="varchar" MaxLength="250" />
+    <Property Name="ExistingOrMinMortgageAge" Type="int" />
+    <Property Name="DeedAgeInMonths" Type="int" />
+    <Property Name="LivingOrMinOwnerAge" Type="int" />
+    <Property Name="TaxLienSoldAmount" Type="decimal" Precision="38" Scale="2" />
+    <Property Name="TaxLiensSold" Type="int" />
   </EntityType>
+  <Association Name="FK_SelectListProperty_SavedList">
+    <End Role="SavedList" Type="Self.SavedList" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SelectListProperty" Type="Self.SelectListProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SavedList">
+        <PropertyRef Name="ListId" />
+      </Principal>
+      <Dependent Role="SelectListProperty">
+        <PropertyRef Name="ListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SelectScenarioProperty_SaveScenario">
+    <End Role="SavedScenario" Type="Self.SavedScenario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SelectScenarioProperty" Type="Self.SelectScenarioProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SavedScenario">
+        <PropertyRef Name="ScenarioId" />
+      </Principal>
+      <Dependent Role="SelectScenarioProperty">
+        <PropertyRef Name="ScenarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="GetPropertyLeads" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="app">
     <Parameter Name="ZipCodes" Type="varchar" Mode="In" />
     <Parameter Name="BuildingClassCodes" Type="varchar" Mode="In" />
@@ -233,13 +321,32 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     <Parameter Name="Servicer" Type="varchar" Mode="In" />
     <Parameter Name="Landmark" Type="varchar" Mode="In" />
     <Parameter Name="HasFHA" Type="varchar" Mode="In" />
-    <Parameter Name="MortgagesSatisfied" Type="varchar" Mode="In" />
     <Parameter Name="DeedAge" Type="varchar" Mode="In" />
     <Parameter Name="TaxLiensSoldYear" Type="varchar" Mode="In" />
     <Parameter Name="TaxLiensSoldTotal" Type="varchar" Mode="In" />
+    <Parameter Name="OwnerLivingAge" Type="varchar" Mode="In" />
+    <Parameter Name="MortgageExistingAge" Type="varchar" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="GPADBModelStoreContainer">
+    <EntitySet Name="Lead" EntityType="Self.Lead" Schema="app" store:Type="Tables" />
+    <EntitySet Name="SavedList" EntityType="Self.SavedList" Schema="app" store:Type="Tables" />
     <EntitySet Name="SavedScenario" EntityType="Self.SavedScenario" Schema="app" store:Type="Tables" />
+    <EntitySet Name="SelectListProperty" EntityType="Self.SelectListProperty" Schema="app" store:Type="Tables" />
+    <EntitySet Name="SelectScenarioProperty" EntityType="Self.SelectScenarioProperty" Schema="app" store:Type="Tables" />
+    <EntitySet Name="LeadArchive" EntityType="Self.LeadArchive" store:Type="Tables" store:Schema="app">
+      <DefiningQuery>SELECT 
+    [LeadArchive].[BBL] AS [BBL], 
+    [LeadArchive].[TaxLienList] AS [TaxLienList], 
+    [LeadArchive].[TaxLienSold] AS [TaxLienSold], 
+    [LeadArchive].[MortgageForeclosureLienLP] AS [MortgageForeclosureLienLP], 
+    [LeadArchive].[TaxLienLP] AS [TaxLienLP], 
+    [LeadArchive].[Source] AS [Source], 
+    [LeadArchive].[LastUpdateDate] AS [LastUpdateDate], 
+    [LeadArchive].[Operation] AS [Operation], 
+    [LeadArchive].[LeadType] AS [LeadType]
+    FROM [app].[LeadArchive] AS [LeadArchive]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="vwGeneralLeadInformation" EntityType="Self.vwGeneralLeadInformation" store:Type="Views" store:Schema="app">
       <DefiningQuery>SELECT 
     [vwGeneralLeadInformation].[BBLE] AS [BBLE], 
@@ -320,8 +427,9 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralLeadInformation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralLeadInformation].[IsLandmark] AS [IsLandmark], 
     [vwGeneralLeadInformation].[ServicerName] AS [ServicerName], 
-    [vwGeneralLeadInformation].[MortgagesSatisfied] AS [MortgagesSatisfied], 
+    [vwGeneralLeadInformation].[ExistingOrMinMortgageAge] AS [ExistingOrMinMortgageAge], 
     [vwGeneralLeadInformation].[DeedAgeInMonths] AS [DeedAgeInMonths], 
+    [vwGeneralLeadInformation].[LivingOrMinOwnerAge] AS [LivingOrMinOwnerAge], 
     [vwGeneralLeadInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
     [vwGeneralLeadInformation].[TaxLiensSold] AS [TaxLiensSold]
     FROM [app].[vwGeneralLeadInformation] AS [vwGeneralLeadInformation]</DefiningQuery>
@@ -364,7 +472,6 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralPropertyInformation].[PoolA] AS [PoolA], 
     [vwGeneralPropertyInformation].[TaxLienLPs] AS [TaxLienLPs], 
     [vwGeneralPropertyInformation].[TaxLienActiveCases] AS [TaxLienActiveCases], 
-    [vwGeneralPropertyInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
     [vwGeneralPropertyInformation].[MortgageForeclosureLPs] AS [MortgageForeclosureLPs], 
     [vwGeneralPropertyInformation].[MortgageForeclosureActiveCases] AS [MortgageForeclosureActiveCases], 
     [vwGeneralPropertyInformation].[COSPresent] AS [COSPresent], 
@@ -406,8 +513,21 @@ warning 6002: The table/view 'GPADB.app.vwGeneralPropertyInformation' does not h
     [vwGeneralPropertyInformation].[Grade] AS [Grade], 
     [vwGeneralPropertyInformation].[IsSRORestricted] AS [IsSRORestricted], 
     [vwGeneralPropertyInformation].[IsLandmark] AS [IsLandmark], 
-    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName]
+    [vwGeneralPropertyInformation].[ServicerName] AS [ServicerName], 
+    [vwGeneralPropertyInformation].[ExistingOrMinMortgageAge] AS [ExistingOrMinMortgageAge], 
+    [vwGeneralPropertyInformation].[DeedAgeInMonths] AS [DeedAgeInMonths], 
+    [vwGeneralPropertyInformation].[LivingOrMinOwnerAge] AS [LivingOrMinOwnerAge], 
+    [vwGeneralPropertyInformation].[TaxLienSoldAmount] AS [TaxLienSoldAmount], 
+    [vwGeneralPropertyInformation].[TaxLiensSold] AS [TaxLiensSold]
     FROM [app].[vwGeneralPropertyInformation] AS [vwGeneralPropertyInformation]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK_SelectListProperty_SavedList" Association="Self.FK_SelectListProperty_SavedList">
+      <End Role="SavedList" EntitySet="SavedList" />
+      <End Role="SelectListProperty" EntitySet="SelectListProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SelectScenarioProperty_SaveScenario" Association="Self.FK_SelectScenarioProperty_SaveScenario">
+      <End Role="SavedScenario" EntitySet="SavedScenario" />
+      <End Role="SelectScenarioProperty" EntitySet="SelectScenarioProperty" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

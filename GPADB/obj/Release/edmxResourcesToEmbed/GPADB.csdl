@@ -4,6 +4,19 @@
     <EntitySet Name="vwGeneralPropertyInformations" EntityType="GPADBModel.vwGeneralPropertyInformation" />
     <EntitySet Name="vwGeneralLeadInformations" EntityType="GPADBModel.vwGeneralLeadInformation" />
     <EntitySet Name="SavedScenarios" EntityType="GPADBModel.SavedScenario" />
+    <EntitySet Name="SelectScenarioProperties" EntityType="GPADBModel.SelectScenarioProperty" />
+    <AssociationSet Name="FK_SelectScenarioProperty_SaveScenario" Association="GPADBModel.FK_SelectScenarioProperty_SaveScenario">
+      <End Role="SavedScenario" EntitySet="SavedScenarios" />
+      <End Role="SelectScenarioProperty" EntitySet="SelectScenarioProperties" />
+    </AssociationSet>
+    <EntitySet Name="SelectListProperties" EntityType="GPADBModel.SelectListProperty" />
+    <EntitySet Name="SavedLists" EntityType="GPADBModel.SavedList" />
+    <AssociationSet Name="FK_SelectListProperty_SavedList" Association="GPADBModel.FK_SelectListProperty_SavedList">
+      <End Role="SavedList" EntitySet="SavedLists" />
+      <End Role="SelectListProperty" EntitySet="SelectListProperties" />
+    </AssociationSet>
+    <EntitySet Name="Leads" EntityType="GPADBModel.Lead" />
+    <EntitySet Name="LeadArchives" EntityType="GPADBModel.LeadArchive" />
     <FunctionImport Name="GetPropertyLeads">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
       <Parameter Name="BuildingClassCodes" Mode="In" Type="String" />
@@ -29,6 +42,7 @@
       <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
       <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
       <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetLeads" EntitySet="vwGeneralLeadInformations" ReturnType="Collection(GPADBModel.vwGeneralLeadInformation)">
       <Parameter Name="ZipCodes" Mode="In" Type="String" />
@@ -55,6 +69,7 @@
       <Parameter Name="TaxLiensSoldTotal" Mode="In" Type="String" />
       <Parameter Name="OwnerLivingAge" Mode="In" Type="String" />
       <Parameter Name="MortgageExistingAge" Mode="In" Type="String" />
+      <Parameter Name="UserName" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="vwGeneralPropertyInformation">
@@ -270,5 +285,90 @@
     <Property Name="TaxLiensSoldTotal" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="MortgageExistingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="OwnerLivingOrAge" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SelectScenarioProperties" Relationship="GPADBModel.FK_SelectScenarioProperty_SaveScenario" FromRole="SavedScenario" ToRole="SelectScenarioProperty" />
+  </EntityType>
+  <EntityType Name="SelectScenarioProperty">
+    <Key>
+      <PropertyRef Name="ScenarioId" />
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="ScenarioId" Type="Int64" Nullable="false" />
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SavedScenario" Relationship="GPADBModel.FK_SelectScenarioProperty_SaveScenario" FromRole="SelectScenarioProperty" ToRole="SavedScenario" />
+  </EntityType>
+  <Association Name="FK_SelectScenarioProperty_SaveScenario">
+    <End Type="GPADBModel.SavedScenario" Role="SavedScenario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GPADBModel.SelectScenarioProperty" Role="SelectScenarioProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SavedScenario">
+        <PropertyRef Name="ScenarioId" />
+      </Principal>
+      <Dependent Role="SelectScenarioProperty">
+        <PropertyRef Name="ScenarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SelectListProperty">
+    <Key>
+      <PropertyRef Name="ListId" />
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="ListId" Type="Int64" Nullable="false" />
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SavedList" Relationship="GPADBModel.FK_SelectListProperty_SavedList" FromRole="SelectListProperty" ToRole="SavedList" />
+  </EntityType>
+  <EntityType Name="SavedList">
+    <Key>
+      <PropertyRef Name="ListId" />
+    </Key>
+    <Property Name="ListId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ListName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DateTimeSaved" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SelectListProperties" Relationship="GPADBModel.FK_SelectListProperty_SavedList" FromRole="SavedList" ToRole="SelectListProperty" />
+  </EntityType>
+  <Association Name="FK_SelectListProperty_SavedList">
+    <End Type="GPADBModel.SavedList" Role="SavedList" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GPADBModel.SelectListProperty" Role="SelectListProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SavedList">
+        <PropertyRef Name="ListId" />
+      </Principal>
+      <Dependent Role="SelectListProperty">
+        <PropertyRef Name="ListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Lead">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TaxLienList" Type="Int32" />
+    <Property Name="TaxLienSold" Type="Int32" />
+    <Property Name="MortgageForeclosureLienLP" Type="Int32" />
+    <Property Name="TaxLienLP" Type="Int32" />
+    <Property Name="Source" Type="Int32" />
+    <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="LeadType" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LeadArchive">
+    <Key>
+      <PropertyRef Name="BBL" />
+    </Key>
+    <Property Name="BBL" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TaxLienList" Type="Int32" />
+    <Property Name="TaxLienSold" Type="Int32" />
+    <Property Name="MortgageForeclosureLienLP" Type="Int32" />
+    <Property Name="TaxLienLP" Type="Int32" />
+    <Property Name="Source" Type="Int32" />
+    <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="Operation" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="LeadType" Type="Int32" />
   </EntityType>
 </Schema>

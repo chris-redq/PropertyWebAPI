@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="39c968ca99a74d7fa1c4d0b91af34a36" Name="Diagram1" >
-        <EntityTypeShape EntityType="NYCDOFModel.TaxLienSold" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="NYCDOFModel.vwTaxLienSoldExpanded" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

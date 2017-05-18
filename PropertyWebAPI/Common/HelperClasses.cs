@@ -22,6 +22,14 @@ namespace PropertyWebAPI.Common
     {
     }
 
+    public class AppException: Exception
+    {
+        public AppException(string message): base(message)
+        {
+
+        }
+    }
+
     public static class AppInitialization
     {
         public static void Init()
@@ -52,7 +60,7 @@ namespace PropertyWebAPI.Common
                 cfg.CreateMap<vwViolationSummary, DAL.ViolationSummary>();
                 cfg.CreateMap<vwComplaintsSummary, DAL.DOBComplaintsSummary>();
                 cfg.CreateMap<MultiAgencyViolation, DAL.ECBViolationDetail>();
-                cfg.CreateMap<TaxLienSold, DAL.TaxLienSoldNYC>();
+                cfg.CreateMap<vwTaxLienSoldExpanded, DAL.TaxLienSoldNYC>();
                 cfg.CreateMap<vwSuggestedSubjectPrice, DAL.SuggestedPropertyPrices>();
                 cfg.CreateMap<vwSalesStatisticsByMonthByNeighborhood, DAL.SalesDataDetailsByMonth>();
                 cfg.CreateMap<vwSalesStatisticsByMonthByNeighborhoodByBuildingClass, DAL.SalesDataDetailsByMonth>();

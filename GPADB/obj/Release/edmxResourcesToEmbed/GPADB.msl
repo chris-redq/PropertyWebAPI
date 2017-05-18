@@ -214,6 +214,62 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SelectScenarioProperties">
+      <EntityTypeMapping TypeName="GPADBModel.SelectScenarioProperty">
+        <MappingFragment StoreEntitySet="SelectScenarioProperty">
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+          <ScalarProperty Name="ScenarioId" ColumnName="ScenarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SelectListProperties">
+      <EntityTypeMapping TypeName="GPADBModel.SelectListProperty">
+        <MappingFragment StoreEntitySet="SelectListProperty">
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+          <ScalarProperty Name="ListId" ColumnName="ListId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SavedLists">
+      <EntityTypeMapping TypeName="GPADBModel.SavedList">
+        <MappingFragment StoreEntitySet="SavedList">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateTimeSaved" ColumnName="DateTimeSaved" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ListName" ColumnName="ListName" />
+          <ScalarProperty Name="ListId" ColumnName="ListId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Leads">
+      <EntityTypeMapping TypeName="GPADBModel.Lead">
+        <MappingFragment StoreEntitySet="Lead">
+          <ScalarProperty Name="LeadType" ColumnName="LeadType" />
+          <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="TaxLienLP" ColumnName="TaxLienLP" />
+          <ScalarProperty Name="MortgageForeclosureLienLP" ColumnName="MortgageForeclosureLienLP" />
+          <ScalarProperty Name="TaxLienSold" ColumnName="TaxLienSold" />
+          <ScalarProperty Name="TaxLienList" ColumnName="TaxLienList" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LeadArchives">
+      <EntityTypeMapping TypeName="GPADBModel.LeadArchive">
+        <MappingFragment StoreEntitySet="LeadArchive">
+          <ScalarProperty Name="LeadType" ColumnName="LeadType" />
+          <ScalarProperty Name="Operation" ColumnName="Operation" />
+          <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="TaxLienLP" ColumnName="TaxLienLP" />
+          <ScalarProperty Name="MortgageForeclosureLienLP" ColumnName="MortgageForeclosureLienLP" />
+          <ScalarProperty Name="TaxLienSold" ColumnName="TaxLienSold" />
+          <ScalarProperty Name="TaxLienList" ColumnName="TaxLienList" />
+          <ScalarProperty Name="BBL" ColumnName="BBL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GetPropertyLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
     <FunctionImportMapping FunctionImportName="GetLeads" FunctionName="GPADBModel.Store.GetPropertyLeads" />
   </EntityContainerMapping>

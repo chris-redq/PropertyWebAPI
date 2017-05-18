@@ -66,8 +66,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GPADB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Lead.cs">
+      <DependentUpon>GPADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LeadArchive.cs">
+      <DependentUpon>GPADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SavedList.cs">
+      <DependentUpon>GPADB.tt</DependentUpon>
+    </Compile>
     <Compile Include="SavedScenario.cs">
+      <DependentUpon>GPADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SelectListProperty.cs">
+      <DependentUpon>GPADB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SelectScenarioProperty.cs">
       <DependentUpon>GPADB.tt</DependentUpon>
     </Compile>
     <Compile Include="vwGeneralLeadInformation.cs">

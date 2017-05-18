@@ -1589,6 +1589,14 @@
             This controller handles all api requests associated with property leads
             </summary>  
         </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(PropertyWebAPI.DAL.Query)">
+            <summary>  
+            Use this api to get a list of leads satisfying the filters provided. At least one filter must exist. All filters support
+            multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
+            </summary>  
+            <param name="query">Filters for the Lead List</param>
+            <returns>Returns a list of filtered leads (properties)</returns>
+        </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.GetPropertyLead(System.String)">
             <summary>Use this api to get a lead details</summary>  
             <param name="propertybbl">Borough Block Lot Number. The first character is a number 1-5 followed by 0 padded 5 digit block number followed by 0 padded 4 digit lot number</param>  
@@ -1599,15 +1607,7 @@
             Use this api to get a list of all scenarios saved for a user
             </summary>  
             <param name="username">User name associated with scenarios</param>
-            <returns>Returns a list of filtered leads (properties)</returns>
-        </member>
-        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLeads(PropertyWebAPI.DAL.Filters)">
-            <summary>  
-            Use this api to get a list of leads satisfying the filters provided. At least one filter must exist. All filters support
-            multiple values separated by commas. For string values wildcards are provided. Wildcard is denoted by '*' 
-            </summary>  
-            <param name="filterdata">Filters for the Lead List</param>
-            <returns>Returns a list of filtered leads (properties)</returns>
+            <returns>A list of scenarios names and relevant data</returns>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LeadsController.SaveScenario(PropertyWebAPI.DAL.Scenario)">
             <summary>  
@@ -1616,6 +1616,47 @@
             For more details refer to the documentation for each filter.
             </summary>  
             <param name="scenarioObj"></param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.SaveList(PropertyWebAPI.DAL.List)">
+            <summary>  
+            Use this api to save a new list and select list of properties. 
+            </summary>  
+            <param name="listObj"></param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.UpdateList(System.Int64,PropertyWebAPI.DAL.List)">
+            <summary>  
+            Use this api to update an existing list's attributes and/or select list of properties.
+            </summary>  
+            <param name="listid"></param>
+            <param name="listObj">All attributes are optional, but at least one attribute must exist to make the call meaningful</param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.AddPropertyToList(System.Int64,System.Collections.Generic.List{System.String})">
+            <summary>  
+            Use this api to save additional properties to an existing list. 
+            </summary>  
+            <param name="listid"></param>
+            <param name="bbllist">List of properties to be added to the list</param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.RemovePropertyFromList(System.Int64,System.Collections.Generic.List{System.String})">
+            <summary>  
+            Use this api to remove a set of properties from an existing list. 
+            </summary>  
+            <param name="listid"></param>
+            <param name="bbllist">List of properties to be removed from the list</param>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.GetLists(System.String)">
+            <summary>  
+            Use this api to get a list of all user lists saved
+            </summary>  
+            <param name="username">User name associated with lists</param>
+            <returns>A list of list names and relevant data</returns>
+        </member>
+        <member name="M:PropertyWebAPI.Controllers.LeadsController.AddLeads(System.Collections.Generic.List{PropertyWebAPI.DAL.LeadInput},System.String)">
+            <summary>  
+            Use this api to add new leads. 
+            </summary>  
+            <param name="leadlist">List of properties and their lead types to be added to the GPA system</param>
+            <param name="externalReferenceId">External Reference Id used by the calling systems to track callbacks</param>
         </member>
         <member name="M:PropertyWebAPI.Controllers.LiensController.GetPropertyLiens(System.String)">
             <summary>  
@@ -2571,6 +2612,27 @@
         <member name="F:PropertyWebAPI.DAL.Scenario.filterdata">
             <summary>Filters for the Lead List</summary>
         </member>
+        <member name="F:PropertyWebAPI.DAL.Scenario.selectPropertyList">
+            <summary>List of selected properties (List of BBLs)</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.List.username">
+            <summary>Name of the user saving the scenario</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.List.listName">
+            <summary>Name of the scenario</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.List.description">
+            <summary>Description of the scenario</summary>
+        </member>
+        <member name="F:PropertyWebAPI.DAL.List.selectPropertyList">
+            <summary>List of selected properties (List of BBLs)</summary>
+        </member>
+        <member name="F:PropertyWebAPI.DAL.LeadInput.propertybbl">
+            <summary>BBL of the Lead</summary>
+        </member>
+        <member name="F:PropertyWebAPI.DAL.LeadInput.leadtype">
+            <summary>Type of lead 1 - Miscellaneous</summary>
+        </member>
         <member name="P:PropertyWebAPI.DAL.ScenarioListData.ScenarioId">
             <summary>Unique Scenario ID</summary>
         </member>
@@ -2582,6 +2644,18 @@
         </member>
         <member name="P:PropertyWebAPI.DAL.ScenarioListData.Description">
             <summary>Description of the filters associated with the scenario. This is provided by the front-end when a save scenario request is made</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.ListId">
+            <summary>Unique List ID</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.ListName">
+            <summary>List Name provided by the User</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.DateTimeSaved">
+            <summary>UTC date and time when list was saved</summary>
+        </member>
+        <member name="P:PropertyWebAPI.DAL.SavedListData.Description">
+            <summary>Optional - Description of the list. This is provided by the front-end when a save scenario request is made</summary>
         </member>
         <member name="T:PropertyWebAPI.DAL.Request">
             <summary>
