@@ -7,3 +7,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\EntityFramework
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\bin\Release\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\obj\Release\NYCDOF.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOF\obj\Release\NYCDOF.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\bin\Release\NYCDOF.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\bin\Release\NYCDOF.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\bin\Release\NYCDOF.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\bin\Release\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\bin\Release\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\bin\Release\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\bin\Release\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\obj\Release\NYCDOF.csprojResolveAssemblyReference.cache
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\obj\Release\NYCDOF.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOF\obj\Release\NYCDOF.pdb

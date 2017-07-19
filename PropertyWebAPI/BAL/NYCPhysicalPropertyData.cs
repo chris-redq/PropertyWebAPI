@@ -160,13 +160,13 @@ namespace PropertyWebAPI.BAL
         public static bool CheckIfMessageContainsNotFound(JObject jsonObj, string baseObjectName)
         {
             string msg = (string)jsonObj.SelectToken(baseObjectName + ".message");
-            if (msg != null && msg.Contains("NOT FOUND"))
+            if (msg != null && (msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE")))
                 return true;
             msg = (string)jsonObj.SelectToken(baseObjectName + ".message1");
-            if (msg != null && msg.Contains("NOT FOUND"))
+            if (msg != null && msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE"))
                 return true;
             msg = (string)jsonObj.SelectToken(baseObjectName + ".message2");
-            if (msg != null && msg.Contains("NOT FOUND"))
+            if (msg != null && msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE"))
                 return true;
             return false;
         }

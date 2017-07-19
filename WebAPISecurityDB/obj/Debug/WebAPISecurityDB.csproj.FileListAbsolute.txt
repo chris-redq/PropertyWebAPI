@@ -17,3 +17,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Debug\EntityF
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Debug\WebAPISecurityDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebAPISecurityDB\obj\Debug\WebAPISecurityDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\bin\Debug\WebAPISecurityDB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\bin\Debug\WebAPISecurityDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\bin\Debug\WebAPISecurityDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\bin\Debug\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\bin\Debug\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\bin\Debug\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\bin\Debug\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\obj\Debug\WebAPISecurityDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\obj\Debug\WebAPISecurityDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebAPISecurityDB\obj\Debug\WebAPISecurityDB.csprojResolveAssemblyReference.cache

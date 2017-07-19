@@ -7,3 +7,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Debug\EntityFramework.x
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\obj\Debug\NYCVNL.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCVNL\obj\Debug\NYCVNL.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\bin\Debug\NYCVNL.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\bin\Debug\NYCVNL.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\bin\Debug\NYCVNL.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\bin\Debug\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\bin\Debug\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\bin\Debug\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\bin\Debug\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\obj\Debug\NYCVNL.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\obj\Debug\NYCVNL.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCVNL\obj\Debug\NYCVNL.csprojResolveAssemblyReference.cache

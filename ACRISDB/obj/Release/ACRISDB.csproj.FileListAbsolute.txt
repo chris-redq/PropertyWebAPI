@@ -8,3 +8,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\bin\Release\EntityFramewor
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Release\ACRISDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Release\ACRISDB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\ACRISDB\obj\Release\ACRISDB.csprojResolveAssemblyReference.cache
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\bin\Release\ACRISDB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\bin\Release\ACRISDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\bin\Release\ACRISDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\bin\Release\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\bin\Release\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\bin\Release\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\bin\Release\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\obj\Release\ACRISDB.csprojResolveAssemblyReference.cache
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\obj\Release\ACRISDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\ACRISDB\obj\Release\ACRISDB.pdb

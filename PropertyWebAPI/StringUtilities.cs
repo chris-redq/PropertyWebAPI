@@ -17,6 +17,9 @@ namespace PropertyWebAPI
     {
         public static string ToTitleCase(this string s)
         {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(s.ToLower());
         }
     }

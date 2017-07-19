@@ -18,3 +18,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\bin\Release\EntityFramew
 C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\obj\Release\eCourtsDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\obj\Release\eCourtsDB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\eCourtsDB\obj\Release\eCourtsDB.csprojResolveAssemblyReference.cache
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\bin\Release\eCourtsDB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\bin\Release\eCourtsDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\bin\Release\eCourtsDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\bin\Release\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\bin\Release\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\bin\Release\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\bin\Release\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\obj\Release\eCourtsDB.csprojResolveAssemblyReference.cache
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\obj\Release\eCourtsDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\eCourtsDB\obj\Release\eCourtsDB.pdb

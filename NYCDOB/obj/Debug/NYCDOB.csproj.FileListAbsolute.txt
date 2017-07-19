@@ -7,3 +7,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\EntityFramework.x
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\obj\Debug\NYCDOB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCDOB\obj\Debug\NYCDOB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\bin\Debug\NYCDOB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\bin\Debug\NYCDOB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\bin\Debug\NYCDOB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\bin\Debug\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\bin\Debug\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\bin\Debug\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\bin\Debug\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\obj\Debug\NYCDOB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\obj\Debug\NYCDOB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCDOB\obj\Debug\NYCDOB.csprojResolveAssemblyReference.cache

@@ -8,3 +8,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\bin\Debug\EntityFramework.Sq
 C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Debug\GPADB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Debug\GPADB.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\GPADB\obj\Debug\GPADB.csprojResolveAssemblyReference.cache
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\bin\Debug\GPADB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\bin\Debug\GPADB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\bin\Debug\GPADB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\bin\Debug\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\bin\Debug\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\bin\Debug\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\bin\Debug\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\obj\Debug\GPADB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\obj\Debug\GPADB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\GPADB\obj\Debug\GPADB.csprojResolveAssemblyReference.cache

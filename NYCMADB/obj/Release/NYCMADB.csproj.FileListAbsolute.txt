@@ -7,3 +7,12 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\EntityFramewor
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\bin\Release\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\obj\Release\NYCMADB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\NYCMADB\obj\Release\NYCMADB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\bin\Release\NYCMADB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\bin\Release\NYCMADB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\bin\Release\NYCMADB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\bin\Release\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\bin\Release\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\bin\Release\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\bin\Release\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\obj\Release\NYCMADB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\NYCMADB\obj\Release\NYCMADB.pdb

@@ -7,3 +7,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\EntityFramew
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Release\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Release\WebDataDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Release\WebDataDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Release\WebDataDB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Release\WebDataDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Release\WebDataDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Release\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Release\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Release\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Release\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\obj\Release\WebDataDB.csprojResolveAssemblyReference.cache
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\obj\Release\WebDataDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\obj\Release\WebDataDB.pdb

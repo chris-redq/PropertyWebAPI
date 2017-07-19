@@ -8,3 +8,8 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\bin\Debug\CreateKey.exe
 C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\bin\Debug\CreateKey.pdb
 C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\obj\Debug\CreateKey.exe
 C:\code\Visual Studio\Projects\PropertyWebAPI\CreateKey\obj\Debug\CreateKey.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\CreateKey\bin\Debug\CreateKey.exe.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\CreateKey\bin\Debug\CreateKey.exe
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\CreateKey\bin\Debug\CreateKey.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\CreateKey\obj\Debug\CreateKey.exe
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\CreateKey\obj\Debug\CreateKey.pdb

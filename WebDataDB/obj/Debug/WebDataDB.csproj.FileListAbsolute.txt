@@ -7,3 +7,13 @@ C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Debug\EntityFramewor
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\bin\Debug\EntityFramework.SqlServer.xml
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Debug\WebDataDB.dll
 C:\code\Visual Studio\Projects\PropertyWebAPI\WebDataDB\obj\Debug\WebDataDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Debug\WebDataDB.dll.config
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Debug\WebDataDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Debug\WebDataDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Debug\EntityFramework.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Debug\EntityFramework.SqlServer.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Debug\EntityFramework.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\bin\Debug\EntityFramework.SqlServer.xml
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\obj\Debug\WebDataDB.dll
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\obj\Debug\WebDataDB.pdb
+G:\Working Folder\WebApp\GPAApp\dataservice\propertywebapi\WebDataDB\obj\Debug\WebDataDB.csprojResolveAssemblyReference.cache
