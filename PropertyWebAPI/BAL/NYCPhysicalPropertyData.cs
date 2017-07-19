@@ -159,13 +159,13 @@ namespace PropertyWebAPI.BAL
         public static bool CheckIfMessageContainsNotFound(JObject jsonObj, string baseObjectName)
         {
             string msg = (string)jsonObj.SelectToken(baseObjectName + ".message");
-            if (msg != null && (msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE")))
+            if (msg != null && msg.Contains("NOT FOUND"))
                 return true;
             msg = (string)jsonObj.SelectToken(baseObjectName + ".message1");
-            if (msg != null && (msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE")))
+            if (msg != null && msg.Contains("NOT FOUND"))
                 return true;
             msg = (string)jsonObj.SelectToken(baseObjectName + ".message2");
-            if (msg != null && (msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE")))
+            if (msg != null && msg.Contains("NOT FOUND"))
                 return true;
             return false;
         }
@@ -213,7 +213,7 @@ namespace PropertyWebAPI.BAL
                     if (addresscleanup)
                         jsonObj = GetAddressDetailsFromGeoClientAPI(propertyInfo[0].StreetNumber, propertyInfo[0].StreetName, propertyInfo[0].Borough);
 
-                    if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address"))
+                    if (jsonObj != null && !CheckIfMessageContainsNotFound(jsonObj, "address") && !string.IsNullOrEmpty((string)jsonObj.SelectToken("address.uspsPreferredCityName")))
                     {
                         address = new GeneralAddress();
                         address.addressLine1 = propertyInfo[0].StreetNumber + " " + StringUtilities.ToTitleCase(propertyInfo[0].StreetName);
