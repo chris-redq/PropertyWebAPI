@@ -137,8 +137,7 @@ namespace PropertyWebAPI.BAL
 
             return JObject.Parse(response.Content.ReadAsStringAsync().Result);
         }
-
-
+        
         /// <summary>  
         ///     Method returns building information based on the BIN in NYC
         /// </summary>  
@@ -163,10 +162,10 @@ namespace PropertyWebAPI.BAL
             if (msg != null && (msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE")))
                 return true;
             msg = (string)jsonObj.SelectToken(baseObjectName + ".message1");
-            if (msg != null && msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE"))
+            if (msg != null && (msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE")))
                 return true;
             msg = (string)jsonObj.SelectToken(baseObjectName + ".message2");
-            if (msg != null && msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE"))
+            if (msg != null && (msg.Contains("NOT FOUND") || msg.Contains("OUT OF RANGE")))
                 return true;
             return false;
         }
